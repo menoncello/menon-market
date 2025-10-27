@@ -138,7 +138,7 @@ So that agents can improve their performance over time through experience.
 5. Memory cleanup and optimization algorithms
 6. Learning rate measurement and improvement visualization
 
-**Prerequisites:** Story 1.5
+**Prerequisites:** Story 1.4 (Skill Composition Engine) AND Story 1.5 (MCP Server Template)
 
 ---
 
@@ -192,7 +192,7 @@ So that skills can be discovered, stored, and managed across the ecosystem.
 5. Skill dependency tracking and management
 6. Basic performance metrics collection for skill usage
 
-**Prerequisites:** Story 1.8
+**Prerequisites:** Story 1.3 (Core Skills Implementation Framework) AND Story 1.4 (Skill Composition Engine)
 
 ---
 
@@ -210,7 +210,7 @@ So that agents can collaborate effectively on complex tasks.
 5. Communication security and authentication
 6. Performance monitoring for inter-agent communications
 
-**Prerequisites:** Story 1.9
+**Prerequisites:** Story 1.5 (MCP Server Template Implementation)
 
 ---
 
@@ -228,7 +228,7 @@ So that development workflows maintain high quality standards.
 5. Integration with existing validation frameworks
 6. Quality trend analysis and improvement recommendations
 
-**Prerequisites:** Story 1.10
+**Prerequisites:** Story 1.5 (MCP Server Template Implementation)
 
 ---
 
@@ -271,7 +271,7 @@ So that I can discover and utilize capabilities across the ecosystem.
 5. Skill dependency visualization and conflict detection
 6. Registry backup and recovery mechanisms
 
-**Prerequisites:** Epic 1 Complete
+**Prerequisites:** Story 1.9 (Skill Registry Foundation)
 
 ---
 
@@ -548,7 +548,7 @@ So that agents can be efficiently assigned and managed across projects.
 5. Orchestrator configuration management and persistence
 6. Integration with Claude Code's native tool ecosystem
 
-**Prerequisites:** Epic 2 Complete
+**Prerequisites:** Story 2.1 (Global Skill Registry Implementation)
 
 ---
 
@@ -879,7 +879,7 @@ So that I can gather comprehensive information from diverse sources.
 5. Research result caching and indexing for fast retrieval
 6. Research history tracking and citation management
 
-**Prerequisites:** Epic 3 Complete
+**Prerequisites:** Story 3.1 (Master Orchestrator Core)
 
 ---
 
@@ -1246,7 +1246,7 @@ So that multiple organizations can securely share the same platform instance.
 5. Tenant monitoring and performance analytics
 6. Scalable architecture supporting 1000+ tenants
 
-**Prerequisites:** Epic 4 Complete
+**Prerequisites:** Story 4.1 (Multi-Modal Research Engine Foundation)
 
 ---
 

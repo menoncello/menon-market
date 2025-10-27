@@ -25,8 +25,9 @@
 # WORKFLOW NOTES:
 # ===============
 # - Epics should be 'contexted' before stories can be 'drafted'
-# - SM typically drafts next story ONLY after previous one is 'done' to incorporate learnings
-# - Dev moves story to 'review', dev reviews, then Dev moves to 'done'
+# - Stories can be worked in parallel if team capacity allows
+# - SM typically drafts next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', SM reviews, then Dev moves to 'done'
 
 generated: 2025-10-27
 project: menon-market
@@ -35,8 +36,8 @@ tracking_system: file-system
 story_location: "{project-root}/docs/stories"
 
 development_status:
-  # EPIC 1: FOUNDATION & AGENT CREATOR (12 stories) - Weeks 1-3
-  epic-1: backlog
+  # EPIC 1: FOUNDATION & AGENT CREATOR (12 stories)
+  epic-1: contexted
   1-1-agent-type-schema-definition: done
   1-2-directory-structure-generator: backlog
   1-3-core-skills-implementation-framework: backlog
@@ -51,7 +52,7 @@ development_status:
   1-12-system-integration-testing: backlog
   epic-1-retrospective: optional
 
-  # EPIC 2: SKILL ECOSYSTEM (15 stories) - Weeks 4-5 (Parallel Stream A)
+  # EPIC 2: SKILL ECOSYSTEM (15 stories)
   epic-2: backlog
   2-1-global-skill-registry-implementation: backlog
   2-2-skill-format-standardization-system: backlog
@@ -70,7 +71,7 @@ development_status:
   2-15-ecosystem-analytics-dashboard: backlog
   epic-2-retrospective: optional
 
-  # EPIC 3: MULTI-AGENT ORCHESTRATION (18 stories) - Weeks 6-7 (Parallel Stream B)
+  # EPIC 3: MULTI-AGENT ORCHESTRATION (18 stories)
   epic-3: backlog
   3-1-master-orchestrator-core: backlog
   3-2-workflow-engine-implementation: backlog
@@ -92,7 +93,7 @@ development_status:
   3-18-orchestration-analytics-and-insights: backlog
   epic-3-retrospective: optional
 
-  # EPIC 4: RESEARCH INTELLIGENCE (20 stories) - Weeks 8-9 (Parallel Stream C)
+  # EPIC 4: RESEARCH INTELLIGENCE (20 stories)
   epic-4: backlog
   4-1-multi-modal-research-engine-foundation: backlog
   4-2-advanced-documentation-analysis: backlog
@@ -116,7 +117,7 @@ development_status:
   4-20-research-intelligence-dashboard: backlog
   epic-4-retrospective: optional
 
-  # EPIC 5: ENTERPRISE FEATURES (20 stories) - Weeks 10-11 (Parallel Stream D)
+  # EPIC 5: ENTERPRISE FEATURES (20 stories)
   epic-5: backlog
   5-1-multi-tenant-architecture-foundation: backlog
   5-2-user-role-management-system: backlog
