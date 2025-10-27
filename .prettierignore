@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+.next/
+
+# Coverage
+coverage/
+
+# Logs
+*.log
+
+# Environment files
+.env*
+
+# Package managers
+bun.lockb
+package-lock.json
+yarn.lock
+
+# Documentation
+docs/
+
+# BMAD configurations
+bmad/
+
+# Cache
+.turbo/

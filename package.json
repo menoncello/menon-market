@@ -1,0 +1,54 @@
+{
+  "name": "menon-market",
+  "version": "1.0.0",
+  "description": "ClaudeCode SuperPlugin ecosystem for agent creation and management",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "bun run turbo build",
+    "build:packages": "bun run --filter '*' build",
+    "test": "bun run turbo test",
+    "test:packages": "bun run --filter '*' test",
+    "dev": "bun run dev:packages",
+    "dev:packages": "bun run --filter '*' dev",
+    "lint": "bun run turbo lint",
+    "lint:packages": "bun run --filter '*' lint",
+    "lint:fix": "bun run turbo lint:fix",
+    "typecheck": "bun run turbo typecheck",
+    "typecheck:packages": "bun run --filter '*' typecheck",
+    "format": "bun run turbo format",
+    "format:check": "prettier --check .",
+    "clean": "bun run clean:packages && rm -rf node_modules .turbo",
+    "clean:packages": "bun run --filter '*' clean",
+    "turbo": "bun x turbo"
+  },
+  "devDependencies": {
+    "@eslint/config-helpers": "^0.4.1",
+    "@eslint/js": "^9.38.0",
+    "@types/express": "^5.0.4",
+    "@types/node": "^24.9.1",
+    "@typescript-eslint/eslint-plugin": "^8.46.2",
+    "@typescript-eslint/parser": "^8.46.2",
+    "bun-types": "^1.3.1",
+    "eslint": "^9.38.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jsdoc": "^61.1.9",
+    "eslint-plugin-sonarjs": "^3.0.5",
+    "eslint-plugin-unicorn": "^62.0.0",
+    "express": "^5.1.0",
+    "prettier": "^3.6.2",
+    "turbo": "^2.5.8",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "packageManager": "bun@1.3.1",
+  "dependencies": {
+    "zod": "^4.1.12"
+  }
+}

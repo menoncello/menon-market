@@ -1,0 +1,44 @@
+{
+  "name": "@menon-market/agent-creator",
+  "version": "1.0.0",
+  "description": "Agent creation service for the ClaudeCode SuperPlugin ecosystem",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "bun test",
+    "lint": "eslint src/**/*.ts",
+    "type-check": "tsc --noEmit",
+    "start": "bun run dist/index.js"
+  },
+  "keywords": [
+    "claude-code",
+    "agents",
+    "agent-creator",
+    "superplugin",
+    "typescript"
+  ],
+  "author": "Eduardo Menoncello",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "typescript": "^5.0.0",
+    "bun-types": "latest"
+  },
+  "dependencies": {
+    "@menon-market/core": "^1.0.0",
+    "zod": "^3.22.0",
+    "yaml": "^2.3.0"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
