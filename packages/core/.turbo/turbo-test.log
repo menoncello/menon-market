@@ -1,0 +1,25 @@
+
+[0m[2m[35m$[0m [2m[1mbun test[0m
+[0m[1mbun test [0m[2mv1.3.1 (89fa0f34)[0m
+[0m
+tests/ClaudeCodeIntegration.test.ts:
+Subagent registered: Test Frontend Developer (FrontendDev)
+Subagent registered: Test Backend Developer (BackendDev)
+[0m[32m✓[0m [0mClaude Code Integration[2m > [0mSubagent Registration[2m >[0m[1m should register subagents successfully[0m [0m[2m[0.88ms[0m[2m][0m
+Subagent registered: Test Frontend Developer (FrontendDev)
+Subagent unregistered: test-frontend-001
+[0m[32m✓[0m [0mClaude Code Integration[2m > [0mSubagent Registration[2m >[0m[1m should unregister subagents successfully[0m [0m[2m[0.09ms[0m[2m][0m
+Subagent registered: Test Frontend Developer (FrontendDev)
+Subagent status updated: test-frontend-001 -> busy
+[0m[32m✓[0m [0mClaude Code Integration[2m > [0mSubagent Registration[2m >[0m[1m should update subagent status[0m [0m[2m[0.02ms[0m[2m][0m
+Subagent registered: Test Frontend Developer (FrontendDev)
+Subagent registered: Test Backend Developer (BackendDev)
+[0m[32m✓[0m [0mClaude Code Integration[2m > [0mTask Delegation[2m >[0m[1m should delegate tasks to appropriate agents[0m [0m[2m[[1m511.26ms[0m[2m][0m
+Subagent registered: Test Frontend Developer (FrontendDev)
+Subagent registered: Test Backend Developer (BackendDev)
+[0m[32m✓[0m [0mClaude Code Integration[2m > [0mTask Delegation[2m >[0m[1m should reject tasks for non-existent agents[0m [0m[2m[0.34ms[0m[2m][0m
+Subagent registered: Test Frontend Developer (FrontendDev)
+Subagent registered: Test Backend Developer (BackendDev)
+[0m[32m✓[0m [0mClaude Code Integration[2m > [0mTask Delegation[2m >[0m[1m should validate required tools[0m [0m[2m[0.09ms[0m[2m][0m
+Subagent registered: Test Frontend Developer (FrontendDev)
+Subagent registered: Test Backend Developer (BackendDev)

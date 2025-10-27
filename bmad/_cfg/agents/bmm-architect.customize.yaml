@@ -15,7 +15,18 @@ persona:
   principles: []
 
 # Add custom critical actions (appended after standard config loading)
-critical_actions: []
+critical_actions:
+  - name: code-example-quality
+    description: Ensure all code examples in ADRs meet Eduardo's production quality standards
+    instruction: |
+      All code examples in ADRs and architecture documentation must meet Eduardo's production quality standards:
+      - Compile with TypeScript strict mode (0 errors)
+      - Pass ESLint validation (0 errors)
+      - Follow project Prettier formatting conventions
+      - No eslint-disable or @ts-ignore comments allowed
+
+      Code examples are not pseudocode - they are executable demonstrations that guide developers.
+      I validate all code examples before finalizing documentation to ensure they meet Eduardo's quality standards.
 
 # Add persistent memories for the agent
 memories: []

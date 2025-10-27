@@ -1,0 +1,9 @@
+$ tsc
+src/orchestration/TaskDelegation.ts(172,9): error TS2353: Object literal may only specify known properties, and 'agentId' does not exist in type 'Omit<MetadataParams, "agentId">'.
+src/orchestration/TaskDelegation.ts(200,9): error TS2353: Object literal may only specify known properties, and 'agentId' does not exist in type 'Omit<MetadataParams, "agentId">'.
+src/orchestration/TaskDelegation.ts(236,9): error TS2353: Object literal may only specify known properties, and 'agentId' does not exist in type 'Omit<MetadataParams, "agentId">'.
+src/orchestration/TaskDelegation.ts(271,11): error TS2353: Object literal may only specify known properties, and 'agentId' does not exist in type 'Omit<MetadataParams, "agentId">'.
+src/orchestration/TaskDelegation.ts(300,5): error TS6133: 'taskId' is declared but its value is never read.
+src/orchestration/TaskDelegation.ts(303,48): error TS2345: Argument of type 'Omit<MetadataParams, "agentId">' is not assignable to parameter of type 'MetadataParams'.
+  Property 'agentId' is missing in type 'Omit<MetadataParams, "agentId">' but required in type 'MetadataParams'.
+src/orchestration/types.ts(5,1): error TS6133: 'AgentDefinition' is declared but its value is never read.

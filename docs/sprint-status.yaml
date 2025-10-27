@@ -1,4 +1,4 @@
-# generated: 2025-10-26
+# generated: 2025-10-27
 # project: menon-market
 # project_key: menon-market
 # tracking_system: file-system
@@ -8,85 +8,134 @@
 # ==================
 # Epic Status:
 #   - backlog: Epic exists in epic file but not contexted
-#   - contexted: Epic tech context created (required before drafting stories)
+#   - contexted: Epic tech context created by *epic-tech-context (required)
 #
 # Story Status:
 #   - backlog: Story only exists in epic file
-#   - drafted: Story file created in stories folder
-#   - ready-for-dev: Draft approved and story context created
-#   - in-progress: Developer actively working on implementation
-#   - review: Under SM review (via review-story workflow)
-#   - done: Story completed
+#   - drafted: Story file created in stories folder by *create-story
+#   - ready-for-dev: Draft approved and story context created by *story-ready
+#   - in-progress: Developer actively working on implementation by *dev-story
+#   - review: Implementation complete, ready for review by *review-story
+#   - done: Story completed by *story-done
 #
 # Retrospective Status:
 #   - optional: Can be completed but not required
-#   - completed: Retrospective has been done
+#   - completed: Retrospective has been done by *retrospective
 #
 # WORKFLOW NOTES:
 # ===============
 # - Epics should be 'contexted' before stories can be 'drafted'
-# - Stories can be worked in parallel if team capacity allows
-# - SM typically drafts next story after previous one is 'done' to incorporate learnings
-# - Dev moves story to 'review', SM reviews, then Dev moves to 'done'
+# - SM typically drafts next story ONLY after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', dev reviews, then Dev moves to 'done'
 
-generated: 2025-10-26
+generated: 2025-10-27
 project: menon-market
 project_key: menon-market
 tracking_system: file-system
-story_location: {project-root}/docs/stories
+story_location: "{project-root}/docs/stories"
 
 development_status:
-  # Epic 1: Foundation & Agent Creator (Weeks 1-4)
-  epic-1: contexted
-  1-1-agent-type-definitions: review
+  # EPIC 1: FOUNDATION & AGENT CREATOR (12 stories) - Weeks 1-3
+  epic-1: backlog
+  1-1-agent-type-schema-definition: done
   1-2-directory-structure-generator: backlog
-  1-3-core-skills-implementation: backlog
+  1-3-core-skills-implementation-framework: backlog
   1-4-skill-composition-engine: backlog
-  1-5-mcp-server-template: backlog
-  1-6-basic-memory-system: backlog
-  1-7-validation-framework: backlog
+  1-5-mcp-server-template-implementation: backlog
+  1-6-memory-and-learning-system-foundation: backlog
+  1-7-agent-validation-framework: backlog
+  1-8-agent-creation-cli-interface: backlog
+  1-9-skill-registry-foundation: backlog
+  1-10-multi-agent-communication-protocol: backlog
+  1-11-quality-gates-implementation: backlog
+  1-12-system-integration-testing: backlog
   epic-1-retrospective: optional
 
-  # Epic 2: Skill Ecosystem (Weeks 5-8)
+  # EPIC 2: SKILL ECOSYSTEM (15 stories) - Weeks 4-5 (Parallel Stream A)
   epic-2: backlog
-  2-1-global-skill-registry: backlog
-  2-2-skill-format-standardization: backlog
-  2-3-skill-borrowing-protocol: backlog
-  2-4-performance-based-selection: backlog
-  2-5-adaptive-learning-algorithms: backlog
-  2-6-knowledge-transfer: backlog
-  2-7-skill-analytics: backlog
+  2-1-global-skill-registry-implementation: backlog
+  2-2-skill-format-standardization-system: backlog
+  2-3-advanced-skill-borrowing-protocol: backlog
+  2-4-skill-performance-analytics: backlog
+  2-5-adaptive-learning-integration: backlog
+  2-6-skill-version-control-and-evolution: backlog
+  2-7-skill-composition-engine: backlog
+  2-8-knowledge-transfer-system: backlog
+  2-9-skill-marketplace-features: backlog
+  2-10-skill-security-framework: backlog
+  2-11-skill-performance-optimization: backlog
+  2-12-skill-documentation-generator: backlog
+  2-13-skill-testing-framework: backlog
+  2-14-skill-recommendation-engine: backlog
+  2-15-ecosystem-analytics-dashboard: backlog
   epic-2-retrospective: optional
 
-  # Epic 3: Multi-Agent Orchestration (Weeks 9-12)
+  # EPIC 3: MULTI-AGENT ORCHESTRATION (18 stories) - Weeks 6-7 (Parallel Stream B)
   epic-3: backlog
-  3-1-master-orchestrator: backlog
-  3-2-workflow-engine: backlog
-  3-3-event-driven-communication: backlog
-  3-4-quality-gates: backlog
-  3-5-resource-management: backlog
-  3-6-performance-monitoring: backlog
-  3-7-conflict-resolution: backlog
+  3-1-master-orchestrator-core: backlog
+  3-2-workflow-engine-implementation: backlog
+  3-3-event-driven-communication-system: backlog
+  3-4-advanced-quality-gates-system: backlog
+  3-5-resource-management-system: backlog
+  3-6-performance-monitoring-dashboard: backlog
+  3-7-advanced-conflict-resolution: backlog
+  3-8-agent-scheduling-optimization: backlog
+  3-9-multi-agent-project-templates: backlog
+  3-10-agent-communication-security: backlog
+  3-11-workflow-visualization-tools: backlog
+  3-12-autonomous-problem-resolution: backlog
+  3-13-agent-team-composition-optimizer: backlog
+  3-14-scalability-enhancements: backlog
+  3-15-cross-project-agent-sharing: backlog
+  3-16-intelligent-workflow-adaptation: backlog
+  3-17-multi-agent-debugging-tools: backlog
+  3-18-orchestration-analytics-and-insights: backlog
   epic-3-retrospective: optional
 
-  # Epic 4: Research Intelligence (Weeks 13-16)
+  # EPIC 4: RESEARCH INTELLIGENCE (20 stories) - Weeks 8-9 (Parallel Stream C)
   epic-4: backlog
-  4-1-multi-modal-research-engine: backlog
-  4-2-knowledge-synthesis: backlog
-  4-3-research-to-skill-automation: backlog
-  4-4-competitive-intelligence: backlog
-  4-5-technology-scouting: backlog
-  4-6-knowledge-graph-construction: backlog
-  4-7-citation-tracking: backlog
+  4-1-multi-modal-research-engine-foundation: backlog
+  4-2-advanced-documentation-analysis: backlog
+  4-3-comparative-technology-analysis: backlog
+  4-4-validation-research-automation: backlog
+  4-5-knowledge-synthesis-engine: backlog
+  4-6-research-to-skill-automation: backlog
+  4-7-competitive-intelligence-system: backlog
+  4-8-emerging-technology-scouting: backlog
+  4-9-knowledge-graph-construction: backlog
+  4-10-citation-and-source-management: backlog
+  4-11-research-quality-assurance: backlog
+  4-12-real-time-research-monitoring: backlog
+  4-13-research-collaboration-platform: backlog
+  4-14-research-data-management: backlog
+  4-15-custom-research-agents: backlog
+  4-16-research-predictive-analytics: backlog
+  4-17-research-impact-assessment: backlog
+  4-18-external-integration-apis: backlog
+  4-19-research-automation-workflows: backlog
+  4-20-research-intelligence-dashboard: backlog
   epic-4-retrospective: optional
 
-  # Epic 5: Enterprise Features (Weeks 17-20)
+  # EPIC 5: ENTERPRISE FEATURES (20 stories) - Weeks 10-11 (Parallel Stream D)
   epic-5: backlog
-  5-1-multi-tenant-architecture: backlog
-  5-2-user-role-management: backlog
-  5-3-audit-trails: backlog
-  5-4-enterprise-integration: backlog
+  5-1-multi-tenant-architecture-foundation: backlog
+  5-2-user-role-management-system: backlog
+  5-3-comprehensive-audit-trail-system: backlog
+  5-4-enterprise-system-integration: backlog
   5-5-advanced-security-model: backlog
-  5-6-governance-engine: backlog
-  5-7-analytics-dashboard: backlog
+  5-6-governance-engine-implementation: backlog
+  5-7-analytics-dashboard-for-executives: backlog
+  5-8-advanced-resource-management: backlog
+  5-9-enterprise-backup-and-disaster-recovery: backlog
+  5-10-service-level-agreement-sla-management: backlog
+  5-11-enterprise-configuration-management: backlog
+  5-12-advanced-monitoring-and-observability: backlog
+  5-13-enterprise-api-management: backlog
+  5-14-data-governance-and-privacy: backlog
+  5-15-enterprise-deployment-automation: backlog
+  5-16-advanced-performance-optimization: backlog
+  5-17-enterprise-support-and-maintenance: backlog
+  5-18-customization-and-extension-framework: backlog
+  5-19-enterprise-training-and-onboarding: backlog
+  5-20-enterprise-success-metrics-and-analytics: backlog
   epic-5-retrospective: optional

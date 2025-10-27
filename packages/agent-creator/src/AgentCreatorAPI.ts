@@ -4,19 +4,20 @@
  * Provides endpoints for creating, validating, and managing agents
  */
 
+import { CreateAgentRequest, AgentRole } from '@menon-market/core';
 import { Request, Response } from 'express';
-import {
-  CreateAgentRequest,
-  CreateAgentResponse,
-  AgentDefinition,
-  AgentTemplate,
-  AgentRole
-} from '@menon-market/core';
 import { AgentCreationService } from './AgentCreationService';
+import type { PerformanceMetrics } from './PerformanceMonitor';
 
+/**
+ *
+ */
 export class AgentCreatorAPI {
   private agentCreationService: AgentCreationService;
 
+  /**
+   *
+   */
   constructor() {
     this.agentCreationService = new AgentCreationService();
   }
@@ -24,6 +25,8 @@ export class AgentCreatorAPI {
   /**
    * Create a new agent
    * POST /api/v1/agents/create
+   * @param req
+   * @param res
    */
   async createAgent(req: Request, res: Response): Promise<void> {
     try {
@@ -33,7 +36,7 @@ export class AgentCreatorAPI {
       if (!createRequest.definition && !createRequest.options) {
         res.status(400).json({
           error: 'Invalid request: missing definition or options',
-          code: 'MISSING_REQUIRED_FIELDS'
+          code: 'MISSING_REQUIRED_FIELDS',
         });
         return;
       }
@@ -43,7 +46,7 @@ export class AgentCreatorAPI {
         createRequest.options = {
           skipValidation: false,
           dryRun: false,
-          verbose: false
+          verbose: false,
         };
       }
 
@@ -55,13 +58,13 @@ export class AgentCreatorAPI {
           success: true,
           agent: result.agent,
           metadata: result.metadata,
-          warnings: result.warnings
+          warnings: result.warnings,
         });
       } else {
         res.status(400).json({
           success: false,
           error: result.errors?.join(', ') || 'Unknown error',
-          metadata: result.metadata
+          metadata: result.metadata,
         });
       }
     } catch (error) {
@@ -69,7 +72,7 @@ export class AgentCreatorAPI {
       res.status(500).json({
         success: false,
         error: 'Internal server error',
-        code: 'INTERNAL_ERROR'
+        code: 'INTERNAL_ERROR',
       });
     }
   }
@@ -77,8 +80,10 @@ export class AgentCreatorAPI {
   /**
    * Get list of available predefined agents
    * GET /api/v1/agents/predefined
+   * @param req
+   * @param res
    */
-  async getPredefinedAgents(req: Request, res: Response): Promise<void> {
+  async getPredefinedAgents(_req: Request, res: Response): Promise<void> {
     try {
       const agents = this.agentCreationService.getAvailableAgents();
 
@@ -90,16 +95,16 @@ export class AgentCreatorAPI {
           role: agent.role,
           description: agent.description,
           coreSkills: agent.coreSkills,
-          learningMode: agent.learningMode
+          learningMode: agent.learningMode,
         })),
-        count: agents.length
+        count: agents.length,
       });
     } catch (error) {
       console.error('Error in getPredefinedAgents:', error);
       res.status(500).json({
         success: false,
         error: 'Internal server error',
-        code: 'INTERNAL_ERROR'
+        code: 'INTERNAL_ERROR',
       });
     }
   }
@@ -107,8 +112,10 @@ export class AgentCreatorAPI {
   /**
    * Get list of available templates
    * GET /api/v1/agents/templates
+   * @param req
+   * @param res
    */
-  async getTemplates(req: Request, res: Response): Promise<void> {
+  async getTemplates(_req: Request, res: Response): Promise<void> {
     try {
       const templates = this.agentCreationService.getAvailableTemplates();
 
@@ -125,19 +132,19 @@ export class AgentCreatorAPI {
             description: opt.description,
             type: opt.type,
             defaultValue: opt.defaultValue,
-            required: opt.required
+            required: opt.required,
           })),
           usageCount: template.templateMetadata.usageCount,
-          averageRating: template.templateMetadata.averageRating
+          averageRating: template.templateMetadata.averageRating,
         })),
-        count: templates.length
+        count: templates.length,
       });
     } catch (error) {
       console.error('Error in getTemplates:', error);
       res.status(500).json({
         success: false,
         error: 'Internal server error',
-        code: 'INTERNAL_ERROR'
+        code: 'INTERNAL_ERROR',
       });
     }
   }
@@ -145,6 +152,8 @@ export class AgentCreatorAPI {
   /**
    * Get specific predefined agent by role
    * GET /api/v1/agents/predefined/:role
+   * @param req
+   * @param res
    */
   async getPredefinedAgent(req: Request, res: Response): Promise<void> {
     try {
@@ -154,7 +163,7 @@ export class AgentCreatorAPI {
         res.status(400).json({
           success: false,
           error: 'Invalid agent role',
-          code: 'INVALID_ROLE'
+          code: 'INVALID_ROLE',
         });
         return;
       }
@@ -165,21 +174,21 @@ export class AgentCreatorAPI {
         res.status(404).json({
           success: false,
           error: 'Agent not found',
-          code: 'AGENT_NOT_FOUND'
+          code: 'AGENT_NOT_FOUND',
         });
         return;
       }
 
       res.status(200).json({
         success: true,
-        agent
+        agent,
       });
     } catch (error) {
       console.error('Error in getPredefinedAgent:', error);
       res.status(500).json({
         success: false,
         error: 'Internal server error',
-        code: 'INTERNAL_ERROR'
+        code: 'INTERNAL_ERROR',
       });
     }
   }
@@ -187,6 +196,8 @@ export class AgentCreatorAPI {
   /**
    * Get specific template by role
    * GET /api/v1/agents/templates/:role
+   * @param req
+   * @param res
    */
   async getTemplate(req: Request, res: Response): Promise<void> {
     try {
@@ -196,7 +207,7 @@ export class AgentCreatorAPI {
         res.status(400).json({
           success: false,
           error: 'Invalid agent role',
-          code: 'INVALID_ROLE'
+          code: 'INVALID_ROLE',
         });
         return;
       }
@@ -207,21 +218,21 @@ export class AgentCreatorAPI {
         res.status(404).json({
           success: false,
           error: 'Template not found',
-          code: 'TEMPLATE_NOT_FOUND'
+          code: 'TEMPLATE_NOT_FOUND',
         });
         return;
       }
 
       res.status(200).json({
         success: true,
-        template
+        template,
       });
     } catch (error) {
       console.error('Error in getTemplate:', error);
       res.status(500).json({
         success: false,
         error: 'Internal server error',
-        code: 'INTERNAL_ERROR'
+        code: 'INTERNAL_ERROR',
       });
     }
   }
@@ -229,6 +240,8 @@ export class AgentCreatorAPI {
   /**
    * Validate template customizations
    * POST /api/v1/agents/templates/:role/validate
+   * @param req
+   * @param res
    */
   async validateTemplateCustomizations(req: Request, res: Response): Promise<void> {
     try {
@@ -239,7 +252,7 @@ export class AgentCreatorAPI {
         res.status(400).json({
           success: false,
           error: 'Invalid agent role',
-          code: 'INVALID_ROLE'
+          code: 'INVALID_ROLE',
         });
         return;
       }
@@ -248,7 +261,7 @@ export class AgentCreatorAPI {
         res.status(400).json({
           success: false,
           error: 'Customizations object is required',
-          code: 'MISSING_CUSTOMIZATIONS'
+          code: 'MISSING_CUSTOMIZATIONS',
         });
         return;
       }
@@ -261,14 +274,14 @@ export class AgentCreatorAPI {
       res.status(200).json({
         success: true,
         valid: validation.valid,
-        errors: validation.errors
+        errors: validation.errors,
       });
     } catch (error) {
       console.error('Error in validateTemplateCustomizations:', error);
       res.status(500).json({
         success: false,
         error: 'Internal server error',
-        code: 'INTERNAL_ERROR'
+        code: 'INTERNAL_ERROR',
       });
     }
   }
@@ -276,22 +289,24 @@ export class AgentCreatorAPI {
   /**
    * Get performance metrics
    * GET /api/v1/agents/metrics
+   * @param req
+   * @param res
    */
-  async getPerformanceMetrics(req: Request, res: Response): Promise<void> {
+  async getPerformanceMetrics(_req: Request, res: Response): Promise<void> {
     try {
       const metrics = this.agentCreationService.getPerformanceMetrics();
 
       res.status(200).json({
         success: true,
         metrics,
-        healthy: this.isPerformanceHealthy(metrics)
+        healthy: this.isPerformanceHealthy(metrics),
       });
     } catch (error) {
       console.error('Error in getPerformanceMetrics:', error);
       res.status(500).json({
         success: false,
         error: 'Internal server error',
-        code: 'INTERNAL_ERROR'
+        code: 'INTERNAL_ERROR',
       });
     }
   }
@@ -299,8 +314,10 @@ export class AgentCreatorAPI {
   /**
    * Health check endpoint
    * GET /api/v1/agents/health
+   * @param req
+   * @param res
    */
-  async healthCheck(req: Request, res: Response): Promise<void> {
+  async healthCheck(_req: Request, res: Response): Promise<void> {
     try {
       const metrics = this.agentCreationService.getPerformanceMetrics();
       const healthy = this.isPerformanceHealthy(metrics);
@@ -313,21 +330,22 @@ export class AgentCreatorAPI {
           totalCreations: metrics.totalCreations,
           averageCreationTime: metrics.averageCreationTime,
           successRate: metrics.successRate,
-          performanceTargetMetRate: metrics.performanceTargetMetRate
-        }
+          performanceTargetMetRate: metrics.performanceTargetMetRate,
+        },
       });
     } catch (error) {
       console.error('Error in healthCheck:', error);
       res.status(500).json({
         success: false,
         status: 'unhealthy',
-        error: 'Health check failed'
+        error: 'Health check failed',
       });
     }
   }
 
   /**
    * Check if a string is a valid agent role
+   * @param role
    */
   private isValidAgentRole(role: string): boolean {
     const validRoles: AgentRole[] = [
@@ -338,7 +356,7 @@ export class AgentCreatorAPI {
       'CLI Dev',
       'UX Expert',
       'SM',
-      'Custom'
+      'Custom',
     ];
 
     return validRoles.includes(role as AgentRole);
@@ -346,8 +364,9 @@ export class AgentCreatorAPI {
 
   /**
    * Check if performance metrics are healthy
+   * @param metrics
    */
-  private isPerformanceHealthy(metrics: any): boolean {
+  private isPerformanceHealthy(metrics: PerformanceMetrics): boolean {
     return (
       metrics.averageCreationTime < 30000 && // 30 seconds
       metrics.successRate > 90 && // 90% success rate

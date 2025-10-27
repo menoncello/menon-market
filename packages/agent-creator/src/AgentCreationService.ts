@@ -11,19 +11,26 @@ import {
   CreateAgentResponse,
   CreationMetadata,
   CreationOptions,
-  ValidationResult,
-  AgentRole
+  AgentRole,
+  AGENT_REGISTRY,
+  AGENT_TEMPLATES,
+  validateCustomizations,
 } from '@menon-market/core';
-import { AGENT_REGISTRY, AGENT_TEMPLATES, validateCustomizations } from '@menon-market/core';
+import { PerformanceMonitor } from './PerformanceMonitor';
 import { TemplateEngine } from './TemplateEngine';
 import { ValidationService } from './ValidationService';
-import { PerformanceMonitor } from './PerformanceMonitor';
 
+/**
+ *
+ */
 export class AgentCreationService {
   private templateEngine: TemplateEngine;
   private validationService: ValidationService;
   private performanceMonitor: PerformanceMonitor;
 
+  /**
+   *
+   */
   constructor() {
     this.templateEngine = new TemplateEngine();
     this.validationService = new ValidationService();
@@ -33,108 +40,98 @@ export class AgentCreationService {
   /**
    * Create an agent from a definition or template
    * Performance target: <30 seconds for standard agents
+   * @param request
    */
   async createAgent(request: CreateAgentRequest): Promise<CreateAgentResponse> {
-    const startTime = Date.now();
-    const creationMetadata: CreationMetadata = {
-      createdAt: new Date(),
-      creationTime: 0,
-      performanceTargetMet: false,
-      validationResults: []
-    };
+    const { startTime, creationMetadata, errors, warnings } = this.initializeAgentCreation();
 
     try {
-      let agent: AgentDefinition;
-      const errors: string[] = [];
-      const warnings: string[] = [];
+      const agent = await this.processAgentCreation(request, errors, warnings);
 
-      // Determine if we're using a template ID or direct definition
-      if (typeof request.definition === 'string') {
-        // Using template
-        const templateResult = await this.createFromTemplate(
-          request.definition,
-          request.customizations || {},
-          request.options
-        );
-
-        if (!templateResult.success) {
-          return {
-            success: false,
-            metadata: creationMetadata,
-            errors: templateResult.errors
-          };
-        }
-
-        agent = templateResult.agent!;
-        errors.push(...(templateResult.errors || []));
-        warnings.push(...(templateResult.warnings || []));
-      } else {
-        // Using direct definition
-        agent = request.definition;
-      }
-
-      // Validate the agent definition
-      if (!request.options.skipValidation) {
-        const validationResult = await this.validationService.validateAgent(agent);
-        creationMetadata.validationResults.push(validationResult);
-
-        if (!validationResult.passed) {
-          return {
-            success: false,
-            metadata: creationMetadata,
-            errors: [validationResult.message]
-          };
-        }
-      }
+      // Validate the agent configuration
+      await this.validateAgentConfiguration(agent, request.options, creationMetadata);
 
       // Apply performance overrides if provided
-      if (request.options.performanceOverrides) {
-        agent.configuration.performance = {
-          ...agent.configuration.performance,
-          ...request.options.performanceOverrides
-        };
-      }
+      this.applyPerformanceOverrides(agent, request.options);
 
-      // Update metadata
-      const creationTime = Date.now() - startTime;
-      creationMetadata.creationTime = creationTime;
-      creationMetadata.performanceTargetMet = creationTime < 30000; // 30 seconds
+      // Update metadata with timing information
+      const timingWarnings = this.updateCreationMetadata(creationMetadata, startTime);
+      warnings.push(...timingWarnings);
 
-      if (!creationMetadata.performanceTargetMet) {
-        warnings.push(`Agent creation took ${creationTime}ms, exceeding the 30-second target`);
-      }
+      // Save the agent configuration if not in dry run mode
+      await this.saveAgentIfNotDryRun(agent, request.options);
 
-      // Save the agent configuration to the agents directory
-      if (!request.options.dryRun) {
-        await this.saveAgentConfiguration(agent);
-      }
-
-      return {
-        success: true,
-        agent,
-        metadata: creationMetadata,
-        errors: errors.length > 0 ? errors : undefined,
-        warnings: warnings.length > 0 ? warnings : undefined
-      };
-
+      return this.createAgentResponse(agent, creationMetadata, errors, warnings);
     } catch (error) {
-      creationMetadata.creationTime = Date.now() - startTime;
-
-      return {
-        success: false,
-        metadata: creationMetadata,
-        errors: [`Unexpected error during agent creation: ${error instanceof Error ? error.message : 'Unknown error'}`]
-      };
+      return this.handleCreationError(error, creationMetadata, startTime);
     }
   }
 
   /**
+   * Process agent creation from template or direct definition
+   */
+  private async processAgentCreation(
+    request: CreateAgentRequest,
+    errors: string[],
+    warnings: string[]
+  ): Promise<AgentDefinition> {
+    if (typeof request.definition === 'string') {
+      const result = await this.processTemplateCreation(request);
+      errors.push(...result.errors);
+      warnings.push(...result.warnings);
+      return result.agent;
+    }
+    const result = this.processDirectCreation(request);
+    errors.push(...result.errors);
+    warnings.push(...result.warnings);
+    return result.agent;
+  }
+
+  /**
+   * Handle creation errors
+   */
+  private handleCreationError(
+    error: unknown,
+    creationMetadata: CreationMetadata,
+    startTime: number
+  ): CreateAgentResponse {
+    creationMetadata.creationTime = Date.now() - startTime;
+
+    if (error instanceof Error && error.message.includes('Template creation failed')) {
+      return {
+        success: false,
+        metadata: creationMetadata,
+        errors: [`Template creation failed: ${error.message}`],
+      };
+    }
+
+    if (error instanceof Error && error.message.includes('Validation failed')) {
+      return {
+        success: false,
+        metadata: creationMetadata,
+        errors: [`Validation failed: ${error.message}`],
+      };
+    }
+
+    return {
+      success: false,
+      metadata: creationMetadata,
+      errors: [
+        `Unexpected error during agent creation: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      ],
+    };
+  }
+
+  /**
    * Create agent from template with customizations
+   * @param templateId
+   * @param customizations
+   * @param options
    */
   private async createFromTemplate(
     templateId: string,
     customizations: Record<string, unknown>,
-    options: CreationOptions
+    _options: CreationOptions
   ): Promise<CreateAgentResponse> {
     const template = this.findTemplate(templateId);
 
@@ -145,49 +142,23 @@ export class AgentCreationService {
           createdAt: new Date(),
           creationTime: 0,
           performanceTargetMet: false,
-          validationResults: []
+          validationResults: [],
         },
-        errors: [`Template not found: ${templateId}`]
+        errors: [`Template not found: ${templateId}`],
       };
     }
 
     // Validate customizations against template
-    const validation = validateCustomizations(template, customizations);
-    if (!validation.valid) {
-      return {
-        success: false,
-        metadata: {
-          createdAt: new Date(),
-          creationTime: 0,
-          performanceTargetMet: false,
-          validationResults: []
-        },
-        errors: validation.errors
-      };
+    const validationResult = this.validateTemplateCustomizationsForResponse(
+      template,
+      customizations
+    );
+    if (validationResult) {
+      return validationResult;
     }
 
-    // Generate unique agent ID
-    const agentId = this.generateAgentId(template.baseRole);
-
-    // Merge default values with customizations
-    const mergedCustomizations = this.mergeCustomizations(template, customizations);
-
-    // Process template with customizations
-    const agentDefinition = await this.templateEngine.processTemplate(
-      template.template,
-      { ...mergedCustomizations, agentId }
-    );
-
-    // Set metadata
-    agentDefinition.metadata = {
-      ...agentDefinition.metadata,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      version: '1.0.0',
-      author: mergedCustomizations.author || 'System Generated',
-      tags: template.templateMetadata.tags,
-      dependencies: template.templateMetadata.dependencies || []
-    };
+    // Build agent definition from template and customizations
+    const agentDefinition = await this.buildAgentFromTemplate(template, customizations);
 
     return {
       success: true,
@@ -196,13 +167,14 @@ export class AgentCreationService {
         createdAt: new Date(),
         creationTime: 0,
         performanceTargetMet: true,
-        validationResults: []
-      }
+        validationResults: [],
+      },
     };
   }
 
   /**
    * Find template by ID or role
+   * @param templateId
    */
   private findTemplate(templateId: string): AgentTemplate | null {
     // Try direct template ID lookup
@@ -216,6 +188,7 @@ export class AgentCreationService {
 
   /**
    * Generate unique agent ID based on role
+   * @param role
    */
   private generateAgentId(role: AgentRole): string {
     const timestamp = Date.now();
@@ -225,6 +198,8 @@ export class AgentCreationService {
 
   /**
    * Merge template default values with user customizations
+   * @param template
+   * @param customizations
    */
   private mergeCustomizations(
     template: AgentTemplate,
@@ -260,6 +235,7 @@ export class AgentCreationService {
 
   /**
    * Save agent configuration to file system
+   * @param agent
    */
   private async saveAgentConfiguration(agent: AgentDefinition): Promise<void> {
     const fileName = `${agent.id}.json`;
@@ -287,6 +263,7 @@ export class AgentCreationService {
 
   /**
    * Get predefined agent by role
+   * @param role
    */
   getPredefinedAgent(role: AgentRole): AgentDefinition | undefined {
     return AGENT_REGISTRY[role];
@@ -294,6 +271,7 @@ export class AgentCreationService {
 
   /**
    * Get template by role
+   * @param role
    */
   getTemplate(role: AgentRole): AgentTemplate | undefined {
     return AGENT_TEMPLATES[role];
@@ -301,6 +279,8 @@ export class AgentCreationService {
 
   /**
    * Validate customizations for a template
+   * @param templateId
+   * @param customizations
    */
   validateTemplateCustomizations(
     templateId: string,
@@ -311,11 +291,204 @@ export class AgentCreationService {
     if (!template) {
       return {
         valid: false,
-        errors: [`Template not found: ${templateId}`]
+        errors: [`Template not found: ${templateId}`],
       };
     }
 
     return validateCustomizations(template, customizations);
+  }
+
+  /**
+   * Process template-based agent creation
+   */
+  private async processTemplateCreation(
+    request: CreateAgentRequest
+  ): Promise<{ agent: AgentDefinition; errors: string[]; warnings: string[] }> {
+    const templateResult = await this.createFromTemplate(
+      request.definition as string,
+      request.customizations || {},
+      request.options
+    );
+
+    if (!templateResult.success) {
+      throw new Error((templateResult.errors || []).join('; '));
+    }
+
+    if (!templateResult.agent) {
+      throw new Error('Template creation succeeded but no agent was returned');
+    }
+
+    return {
+      agent: templateResult.agent,
+      errors: templateResult.errors || [],
+      warnings: templateResult.warnings || [],
+    };
+  }
+
+  /**
+   * Process direct definition agent creation
+   */
+  private processDirectCreation(request: CreateAgentRequest): {
+    agent: AgentDefinition;
+    errors: string[];
+    warnings: string[];
+  } {
+    return {
+      agent: request.definition as AgentDefinition,
+      errors: [],
+      warnings: [],
+    };
+  }
+
+  /**
+   * Validate agent configuration
+   */
+  private async validateAgentConfiguration(
+    agent: AgentDefinition,
+    options: CreationOptions,
+    metadata: CreationMetadata
+  ): Promise<void> {
+    if (!options.skipValidation) {
+      const validationResult = await this.validationService.validateAgent(agent);
+      metadata.validationResults.push(validationResult);
+
+      if (!validationResult.passed) {
+        throw new Error(validationResult.message);
+      }
+    }
+  }
+
+  /**
+   * Apply performance overrides to agent
+   */
+  private applyPerformanceOverrides(agent: AgentDefinition, options: CreationOptions): void {
+    if (options.performanceOverrides) {
+      agent.configuration.performance = {
+        ...agent.configuration.performance,
+        ...options.performanceOverrides,
+      };
+    }
+  }
+
+  /**
+   * Update creation metadata with timing information
+   */
+  private updateCreationMetadata(metadata: CreationMetadata, startTime: number): string[] {
+    const creationTime = Date.now() - startTime;
+    metadata.creationTime = creationTime;
+    metadata.performanceTargetMet = creationTime < 30000; // 30 seconds
+
+    const warnings: string[] = [];
+    if (!metadata.performanceTargetMet) {
+      warnings.push(`Agent creation took ${creationTime}ms, exceeding the 30-second target`);
+    }
+
+    return warnings;
+  }
+
+  /**
+   * Save agent configuration if not in dry run mode
+   */
+  private async saveAgentIfNotDryRun(
+    agent: AgentDefinition,
+    options: CreationOptions
+  ): Promise<void> {
+    if (!options.dryRun) {
+      await this.saveAgentConfiguration(agent);
+    }
+  }
+
+  /**
+   * Validate template customizations and return error response if invalid
+   */
+  private validateTemplateCustomizationsForResponse(
+    template: AgentTemplate,
+    customizations: Record<string, unknown>
+  ): CreateAgentResponse | null {
+    const validation = validateCustomizations(template, customizations);
+    if (!validation.valid) {
+      return {
+        success: false,
+        metadata: {
+          createdAt: new Date(),
+          creationTime: 0,
+          performanceTargetMet: false,
+          validationResults: [],
+        },
+        errors: validation.errors,
+      };
+    }
+    return null;
+  }
+
+  /**
+   * Build agent definition from template and customizations
+   */
+  private async buildAgentFromTemplate(
+    template: AgentTemplate,
+    customizations: Record<string, unknown>
+  ): Promise<AgentDefinition> {
+    const agentId = this.generateAgentId(template.baseRole);
+    const mergedCustomizations = this.mergeCustomizations(template, customizations);
+
+    const agentDefinition = await this.templateEngine.processTemplate(template.template, {
+      ...mergedCustomizations,
+      agentId,
+    });
+
+    // Set metadata
+    agentDefinition.metadata = {
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      version: '1.0.0',
+      author: 'Agent Creator',
+      tags: [template.baseRole, 'generated'],
+      dependencies: [],
+    };
+
+    return agentDefinition;
+  }
+
+  /**
+   * Initialize agent creation metadata and variables
+   */
+  private initializeAgentCreation(): {
+    startTime: number;
+    creationMetadata: CreationMetadata;
+    errors: string[];
+    warnings: string[];
+  } {
+    const startTime = Date.now();
+    const creationMetadata: CreationMetadata = {
+      createdAt: new Date(),
+      creationTime: 0,
+      performanceTargetMet: false,
+      validationResults: [],
+    };
+    return {
+      startTime,
+      creationMetadata,
+      errors: [],
+      warnings: [],
+    };
+  }
+
+  /**
+   * Create agent response object
+   */
+  private createAgentResponse(
+    agent: AgentDefinition,
+    metadata: CreationMetadata,
+    errors: string[],
+    warnings: string[]
+  ): CreateAgentResponse {
+    return {
+      success: true,
+      agent,
+      metadata,
+      errors: errors.length > 0 ? errors : undefined,
+      warnings: warnings.length > 0 ? warnings : undefined,
+    };
   }
 
   /**

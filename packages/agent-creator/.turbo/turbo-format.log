@@ -1,0 +1,7 @@
+$ prettier --write src/**/*.ts
+src/AgentCreationService.ts 75ms (unchanged)
+src/AgentCreatorAPI.ts 33ms (unchanged)
+src/index.ts 4ms (unchanged)
+src/PerformanceMonitor.ts 12ms (unchanged)
+src/TemplateEngine.ts 9ms (unchanged)
+src/ValidationService.ts 19ms (unchanged)

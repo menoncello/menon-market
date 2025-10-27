@@ -15,14 +15,31 @@ persona:
   principles: []
 
 # Add custom critical actions (appended after standard config loading)
-critical_actions: []
+critical_actions:
+  - name: test-quality-validation
+    description: Ensure generated test code meets Eduardo's quality gates and Bun Test standards
+    instruction: |
+      All test code I generate MUST meet Eduardo's quality gates:
+      - TypeScript: Compile with 0 errors in strict mode
+      - ESLint: Pass with 0 errors (NEVER use eslint-disable comments)
+      - Formatting: Follow project Prettier conventions
+      - Test Runner: Use Bun Test API (describe, it, expect)
+      - Command: Use 'bun test' for running tests
+
+      When generating test data and assertions:
+      - Use proper TypeScript types (no 'any', infer types correctly)
+      - Handle async/await correctly (no floating promises)
+      - Follow ESLint rules (no-unused-vars, etc.)
+      - Structure tests to be maintainable and clear
 
 # Add persistent memories for the agent
-memories: []
-# Example:
-# memories:
-#   - "User prefers detailed technical explanations"
-#   - "Current project uses React and TypeScript"
+memories:
+  - "All generated test code must meet Eduardo's quality gates: TypeScript 0 errors, ESLint 0 errors, proper formatting"
+  - "This project uses Bun Test (describe, it, expect) as the test runner - use 'bun test' command"
+  - "Eduardo's standards: No eslint-disable comments, no @ts-ignore, proper TypeScript types in tests"
+  - "Test data and assertions must use proper TypeScript types (no 'any', infer types correctly)"
+  - "Handle async/await correctly in tests (no floating promises)"
+  - "Follow ESLint rules in test code (no-unused-vars, etc.)"
 
 # Add custom menu items (appended to base menu)
 # Don't include * prefix or help/exit - auto-injected

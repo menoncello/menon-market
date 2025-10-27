@@ -4,7 +4,10 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach } from 'bun:test';
-import { ClaudeCodeTaskIntegration, TaskDelegationRequest } from '../src/orchestration/TaskDelegation';
+import {
+  ClaudeCodeTaskIntegration,
+  TaskDelegationRequest,
+} from '../src/orchestration/TaskDelegation';
 import { SubagentRegistry } from '../src/orchestration/SubagentRegistry';
 import { AgentDefinition, AgentRole } from '../src/agents/types';
 
@@ -72,7 +75,7 @@ describe('Claude Code Integration', () => {
         agentId: testAgents[0].id,
         task: 'Create a React component for user authentication',
         priority: 8,
-        timeout: 30
+        timeout: 30,
       };
 
       const response = await taskIntegration.delegateTask(request);
@@ -87,7 +90,7 @@ describe('Claude Code Integration', () => {
     it('should reject tasks for non-existent agents', async () => {
       const request: TaskDelegationRequest = {
         agentId: 'non-existent-agent',
-        task: 'Test task'
+        task: 'Test task',
       };
 
       const response = await taskIntegration.delegateTask(request);
@@ -101,7 +104,7 @@ describe('Claude Code Integration', () => {
       const request: TaskDelegationRequest = {
         agentId: testAgents[0].id,
         task: 'Test task',
-        requiredTools: ['NonExistentTool']
+        requiredTools: ['NonExistentTool'],
       };
 
       const response = await taskIntegration.delegateTask(request);
@@ -114,7 +117,7 @@ describe('Claude Code Integration', () => {
     it('should track task execution metrics', async () => {
       const request: TaskDelegationRequest = {
         agentId: testAgents[0].id,
-        task: 'Create a TypeScript interface'
+        task: 'Create a TypeScript interface',
       };
 
       const response = await taskIntegration.delegateTask(request);
@@ -143,7 +146,7 @@ describe('Claude Code Integration', () => {
       const filter = {
         role: 'FrontendDev' as AgentRole,
         status: 'active' as const,
-        minSuccessRate: 90
+        minSuccessRate: 90,
       };
 
       const results = subagentRegistry.findSubagents(filter);
@@ -164,10 +167,9 @@ describe('Claude Code Integration', () => {
     });
 
     it('should return null when no suitable subagent found', () => {
-      const bestAgent = subagentRegistry.getBestSubagent(
-        'Complex database architecture design',
-        ['NonExistentTool']
-      );
+      const bestAgent = subagentRegistry.getBestSubagent('Complex database architecture design', [
+        'NonExistentTool',
+      ]);
 
       expect(bestAgent).toBeNull();
     });
@@ -230,7 +232,7 @@ describe('Claude Code Integration', () => {
     it('should handle invalid task requests', async () => {
       const request = {
         agentId: testAgents[0].id,
-        task: '' // Empty task
+        task: '', // Empty task
       } as TaskDelegationRequest;
 
       const response = await taskIntegration.delegateTask(request);
@@ -245,7 +247,7 @@ describe('Claude Code Integration', () => {
 
       const request: TaskDelegationRequest = {
         agentId: testAgents[0].id,
-        task: 'Test task'
+        task: 'Test task',
       };
 
       const response = await taskIntegration.delegateTask(request);
@@ -275,7 +277,7 @@ describe('Claude Code Integration', () => {
         agentId: agent.id,
         task: 'Build a modern React dashboard with TypeScript',
         requiredTools: ['Read', 'Write', 'Edit'],
-        outputFormat: 'markdown'
+        outputFormat: 'markdown',
       };
 
       const response = await taskIntegration.delegateTask(request);
@@ -284,11 +286,7 @@ describe('Claude Code Integration', () => {
       expect(response.result).toBeDefined();
 
       // 4. Record completion
-      subagentRegistry.recordTaskCompletion(
-        agent.id,
-        response.success,
-        response.metadata.duration
-      );
+      subagentRegistry.recordTaskCompletion(agent.id, response.success, response.metadata.duration);
 
       // 5. Verify updated statistics
       const registration = subagentRegistry.getSubagent(agent.id);
@@ -313,7 +311,7 @@ describe('Claude Code Integration', () => {
             maxExecutionTime: 45,
             memoryLimit: 512,
             maxConcurrentTasks: 3,
-            priority: 8
+            priority: 8,
           },
           capabilities: {
             allowedTools: ['Read', 'Write', 'Edit', 'Glob', 'Grep', 'WebSearch'],
@@ -321,15 +319,15 @@ describe('Claude Code Integration', () => {
               read: true,
               write: true,
               execute: false,
-              allowedPaths: ['src', 'components']
+              allowedPaths: ['src', 'components'],
             },
             networkAccess: {
               http: true,
               https: true,
               externalApis: true,
-              allowedDomains: []
+              allowedDomains: [],
             },
-            agentIntegration: true
+            agentIntegration: true,
           },
           communication: {
             style: 'technical',
@@ -337,9 +335,9 @@ describe('Claude Code Integration', () => {
             collaboration: {
               enabled: true,
               roles: ['contributor'],
-              conflictResolution: 'collaborative'
-            }
-          }
+              conflictResolution: 'collaborative',
+            },
+          },
         },
         metadata: {
           createdAt: new Date(),
@@ -347,8 +345,8 @@ describe('Claude Code Integration', () => {
           version: '1.0.0',
           author: 'Test',
           tags: ['test', 'frontend'],
-          dependencies: ['@menon-market/core']
-        }
+          dependencies: ['@menon-market/core'],
+        },
       },
       {
         id: 'test-backend-001',
@@ -364,7 +362,7 @@ describe('Claude Code Integration', () => {
             maxExecutionTime: 60,
             memoryLimit: 1024,
             maxConcurrentTasks: 4,
-            priority: 9
+            priority: 9,
           },
           capabilities: {
             allowedTools: ['Read', 'Write', 'Edit', 'Bash', 'WebSearch'],
@@ -372,15 +370,15 @@ describe('Claude Code Integration', () => {
               read: true,
               write: true,
               execute: true,
-              allowedPaths: ['src', 'api', 'config']
+              allowedPaths: ['src', 'api', 'config'],
             },
             networkAccess: {
               http: true,
               https: true,
               externalApis: true,
-              allowedDomains: []
+              allowedDomains: [],
             },
-            agentIntegration: true
+            agentIntegration: true,
           },
           communication: {
             style: 'technical',
@@ -388,9 +386,9 @@ describe('Claude Code Integration', () => {
             collaboration: {
               enabled: true,
               roles: ['implementer', 'leader'],
-              conflictResolution: 'collaborative'
-            }
-          }
+              conflictResolution: 'collaborative',
+            },
+          },
         },
         metadata: {
           createdAt: new Date(),
@@ -398,9 +396,9 @@ describe('Claude Code Integration', () => {
           version: '1.0.0',
           author: 'Test',
           tags: ['test', 'backend'],
-          dependencies: ['@menon-market/core']
-        }
-      }
+          dependencies: ['@menon-market/core'],
+        },
+      },
     ];
   }
 });

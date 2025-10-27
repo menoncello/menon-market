@@ -5,9 +5,14 @@
 
 import { AgentDefinition } from '@menon-market/core';
 
+/**
+ *
+ */
 export class TemplateEngine {
   /**
    * Process template with variable substitution
+   * @param template
+   * @param variables
    */
   async processTemplate(
     template: Omit<AgentDefinition, 'id' | 'metadata'>,
@@ -28,19 +33,21 @@ export class TemplateEngine {
       createdAt: new Date(),
       updatedAt: new Date(),
       version: '1.0.0',
-      author: variables.author as string || 'System Generated',
+      author: (variables.author as string) || 'System Generated',
       tags: processedTemplate.metadata?.tags || [],
-      dependencies: processedTemplate.metadata?.dependencies || []
+      dependencies: processedTemplate.metadata?.dependencies || [],
     };
 
     return {
       ...processedTemplate,
-      metadata
+      metadata,
     } as AgentDefinition;
   }
 
   /**
    * Recursively replace template variables
+   * @param obj
+   * @param variables
    */
   private replaceVariables(obj: unknown, variables: Record<string, unknown>): void {
     if (typeof obj === 'string') {
@@ -72,17 +79,21 @@ export class TemplateEngine {
 
   /**
    * Replace variables in a string
+   * @param str
+   * @param variables
    */
   private replaceStringVariables(str: string, variables: Record<string, unknown>): string {
     // Handle {{variable}} syntax
-    return str.replace(/\{\{([^}]+)\}\}/g, (match, variablePath) => {
+    return str.replace(/{{([^}]+)}}/g, (match, variablePath) => {
       const value = this.getNestedValue(variables, variablePath.trim());
-      return value !== undefined ? String(value) : match;
+      return value === undefined ? match : String(value);
     });
   }
 
   /**
    * Get nested value from object using dot notation
+   * @param obj
+   * @param path
    */
   private getNestedValue(obj: unknown, path: string): unknown {
     const keys = path.split('.');

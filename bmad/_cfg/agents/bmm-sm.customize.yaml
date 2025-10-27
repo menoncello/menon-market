@@ -15,7 +15,18 @@ persona:
   principles: []
 
 # Add custom critical actions (appended after standard config loading)
-critical_actions: []
+critical_actions:
+  - name: template-quality
+    description: Ensure story templates demonstrate correct patterns and meet Eduardo's production quality
+    instruction: |
+      Story templates and code examples must demonstrate correct patterns and meet Eduardo's production quality standards:
+      - Proper TypeScript types (strict mode)
+      - ESLint compliance (0 errors)
+      - Correct Prettier formatting
+      - No eslint-disable or @ts-ignore comments
+
+      Templates guide developers - they must be copy-paste ready and exemplify Eduardo's quality standards.
+      I validate template code before saving stories to ensure it meets all quality requirements.
 
 # Add persistent memories for the agent
 memories: []

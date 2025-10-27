@@ -12,7 +12,11 @@ export { AgentCreatorAPI } from './AgentCreatorAPI';
 // Export supporting services
 export { TemplateEngine } from './TemplateEngine';
 export { ValidationService } from './ValidationService';
-export { PerformanceMonitor, type PerformanceMetrics, type CreationMetric } from './PerformanceMonitor';
+export {
+  PerformanceMonitor,
+  type PerformanceMetrics,
+  type CreationMetric,
+} from './PerformanceMonitor';
 
 // Export types for external use
 export type {
@@ -22,5 +26,5 @@ export type {
   AgentTemplate,
   AgentRole,
   LearningMode,
-  ValidationResult
+  ValidationResult,
 } from '@menon-market/core';

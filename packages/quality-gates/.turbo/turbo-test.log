@@ -1,0 +1,9 @@
+
+[0m[2m[35m$[0m [2m[1mbun test[0m
+[0m[1mbun test [0m[2mv1.3.1 (89fa0f34)[0m
+[33mNo tests found![0m
+
+Tests need ".test", "_test_", ".spec" or "_spec_" in the filename [2m(ex: "MyApp.test.ts")[0m
+
+Learn more about bun test: [35mhttps://bun.com/docs/cli/test[0m
+[0m[31merror[0m[2m:[0m script [1m"test"[0m exited with code 1[0m

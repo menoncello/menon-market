@@ -22,10 +22,16 @@ export interface CreationMetric {
   error?: string;
 }
 
+/**
+ *
+ */
 export class PerformanceMonitor {
   private metrics: PerformanceMetrics;
   private readonly MAX_RECENT_CREATIONS = 100;
 
+  /**
+   *
+   */
   constructor() {
     this.metrics = {
       totalCreations: 0,
@@ -34,12 +40,13 @@ export class PerformanceMonitor {
       slowestCreation: 0,
       successRate: 100,
       performanceTargetMetRate: 100,
-      recentCreations: []
+      recentCreations: [],
     };
   }
 
   /**
    * Record agent creation performance
+   * @param metric
    */
   recordCreation(metric: CreationMetric): void {
     this.metrics.totalCreations++;
@@ -120,7 +127,10 @@ export class PerformanceMonitor {
   /**
    * Get performance metrics by agent type
    */
-  getAgentTypePerformance(): Record<string, { averageTime: number; count: number; successRate: number }> {
+  getAgentTypePerformance(): Record<
+    string,
+    { averageTime: number; count: number; successRate: number }
+  > {
     const agentTypeMetrics: Record<string, CreationMetric[]> = {};
 
     // Group by agent type
@@ -142,7 +152,7 @@ export class PerformanceMonitor {
       result[agentType] = {
         averageTime: totalTime / metrics.length,
         count: metrics.length,
-        successRate: (successCount / metrics.length) * 100
+        successRate: (successCount / metrics.length) * 100,
       };
     }
 
@@ -160,7 +170,7 @@ export class PerformanceMonitor {
       slowestCreation: 0,
       successRate: 100,
       performanceTargetMetRate: 100,
-      recentCreations: []
+      recentCreations: [],
     };
   }
 
@@ -168,15 +178,22 @@ export class PerformanceMonitor {
    * Export metrics for analysis
    */
   exportMetrics(): string {
-    return JSON.stringify({
-      timestamp: new Date().toISOString(),
-      metrics: this.metrics,
-      agentTypePerformance: this.getAgentTypePerformance(),
-      healthy: this.isPerformanceHealthy(),
-      recommendations: this.getRecommendations()
-    }, null, 2);
+    return JSON.stringify(
+      {
+        timestamp: new Date().toISOString(),
+        metrics: this.metrics,
+        agentTypePerformance: this.getAgentTypePerformance(),
+        healthy: this.isPerformanceHealthy(),
+        recommendations: this.getRecommendations(),
+      },
+      null,
+      2
+    );
   }
 
+  /**
+   *
+   */
   private updateAverageCreationTime(): void {
     if (this.metrics.recentCreations.length === 0) {
       this.metrics.averageCreationTime = 0;
@@ -187,6 +204,9 @@ export class PerformanceMonitor {
     this.metrics.averageCreationTime = totalTime / this.metrics.recentCreations.length;
   }
 
+  /**
+   *
+   */
   private updateSuccessRate(): void {
     if (this.metrics.recentCreations.length === 0) {
       this.metrics.successRate = 100;
@@ -197,6 +217,9 @@ export class PerformanceMonitor {
     this.metrics.successRate = (successCount / this.metrics.recentCreations.length) * 100;
   }
 
+  /**
+   *
+   */
   private updatePerformanceTargetRate(): void {
     if (this.metrics.recentCreations.length === 0) {
       this.metrics.performanceTargetMetRate = 100;
@@ -204,6 +227,7 @@ export class PerformanceMonitor {
     }
 
     const targetMetCount = this.metrics.recentCreations.filter(m => m.targetMet).length;
-    this.metrics.performanceTargetMetRate = (targetMetCount / this.metrics.recentCreations.length) * 100;
+    this.metrics.performanceTargetMetRate =
+      (targetMetCount / this.metrics.recentCreations.length) * 100;
   }
 }
