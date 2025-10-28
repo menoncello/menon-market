@@ -200,7 +200,7 @@ export class ClaudeCodeTaskIntegration {
     /**
      * Create task metadata
      */
-    createTaskMetadata(taskId, params) {
+    createTaskMetadata(_taskId, params) {
         return this.metadataService.createMetadata(params);
     }
     /**

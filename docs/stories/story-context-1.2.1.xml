@@ -1,0 +1,138 @@
+<story-context id="bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>1.2</storyId>
+    <title>Directory Structure Generator</title>
+    <status>drafted</status>
+    <generatedAt>2025-10-27</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/stories/story-1.2.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>developer</asA>
+    <iWant>automatically generate modular agent directory structures</iWant>
+    <soThat>each agent has a consistent, organized foundation for development</soThat>
+    <tasks>1. Template Engine Implementation (AC: 1, 2)
+2. Configuration Generation System (AC: 3)
+3. Documentation and Setup Automation (AC: 4, 5)
+4. Claude Code Integration Layer (AC: 6)
+5. Quality Assurance and Testing (All ACs)</tasks>
+  </story>
+
+  <acceptanceCriteria>1. Template-based directory generation for each agent type
+2. MCP server integration structure in each agent directory
+3. Configuration files generation (package.json, tsconfig, etc.)
+4. README template generation per agent type
+5. Development environment setup scripts
+6. Integration with Claude Code's native subagent system</acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc path="docs/tech-spec-epic-1.md" title="Technical Specification: Foundation & Agent Creator" section="AC002: Directory Structure Generator">
+        Create modular agent templates with MCP integration. Generate complete agent directory structure automatically. Include all necessary configuration files and dependencies. Validate generated structure against standards. Support for custom agent type templates. Integration with Claude Code's subagent system.
+      </doc>
+      <doc path="docs/architecture.md" title="Architecture Document" section="Monorepo Structure">
+        The monorepo structure with /packages/agent-creator/ for agent creation logic, /agents/{agent-type}/ for generated agent directories, integration with existing TypeScript configuration, compliance with Bun-based toolchain, and alignment with quality gates and testing standards.
+      </doc>
+      <doc path="docs/architecture.md" title="Architecture Document" section="Bun Native Features Optimization">
+        Leverage Bun's built-in capabilities to minimize external dependencies and maximize performance. Native package management, test runner, bundling, and runtime features for optimal development workflow.
+      </doc>
+      <doc path="docs/epics.md" title="Epic Breakdown" section="Story 1.2: Directory Structure Generator">
+        Template-based directory generation for each agent type, MCP server integration structure, configuration files generation, README template generation, development environment setup scripts, and integration with Claude Code's native subagent system.
+      </doc>
+    </docs>
+    <code>
+      <file path="package.json" kind="config" symbol="package.json" lines="1-54" reason="Root monorepo configuration with Bun workspaces and scripts - template for generated agent packages">
+      </file>
+      <file path="tsconfig.json" kind="config" symbol="tsconfig.json" lines="1-43" reason="TypeScript strict mode configuration with path aliases - template for agent TypeScript configs">
+      </file>
+      <file path="eslint.config.js" kind="config" symbol="eslint.config.js" lines="1-138" reason="Strict ESLint configuration with TypeScript support - template for agent linting configs">
+      </file>
+      <file path="packages/core/package.json" kind="package" symbol="@menon-market/core" lines="1-42" reason="Existing package structure example for agent template generation">
+      </file>
+      <file path="turbo.json" kind="config" symbol="turbo.json" reason="Turborepo configuration for build optimization - reference for agent build processes">
+      </file>
+      <file path=".prettierrc" kind="config" symbol=".prettierrc" reason="Code formatting configuration - template for agent formatting rules">
+      </file>
+    </code>
+    <dependencies>
+      <ecosystem name="bun" version="1.3.1" packages="native">
+        Runtime and package manager with native TypeScript support, test runner, and bundling capabilities
+      </ecosystem>
+      <ecosystem name="typescript" version="5.9.3" packages="typescript, @types/node, bun-types">
+        Type-safe development with strict mode enabled and comprehensive type checking
+      </ecosystem>
+      <ecosystem name="eslint" version="9.38.0" packages="eslint, @typescript-eslint/eslint-plugin, @typescript-eslint/parser, eslint-config-prettier">
+        Code quality enforcement with TypeScript support and Prettier integration
+      </ecosystem>
+      <ecosystem name="testing" version="native" packages="bun test">
+        Native test framework with built-in coverage reporting and TypeScript support
+      </ecosystem>
+      <ecosystem name="validation" version="4.1.12" packages="zod">
+        Runtime type validation and schema definition for agent configurations
+      </ecosystem>
+      <ecosystem name="build" version="2.5.8" packages="turbo">
+        Monorepo build system with incremental builds and package optimization
+      </ecosystem>
+      <ecosystem name="formatting" version="3.6.2" packages="prettier">
+        Code formatting with consistent style enforcement
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint name="TypeScript Strict Mode" type="required">
+      All generated code must use TypeScript strict mode with noImplicitAny, strictNullChecks, and other strict checks enabled as shown in root tsconfig.json
+    </constraint>
+    <constraint name="ESLint Compliance" type="required">
+      Generated code must pass ESLint validation without any eslint-disable comments. Use the existing eslint.config.js as template for agent-specific configurations.
+    </constraint>
+    <constraint name="Bun Native Integration" type="required">
+      All generated packages must use Bun as package manager and leverage native Bun features (test runner, bundler, runtime) for optimal performance.
+    </constraint>
+    <constraint name="Monorepo Structure Compliance" type="required">
+      Generated agent directories must follow established monorepo patterns with proper package.json naming (@menon-market/{agent-type}) and workspace integration.
+    </constraint>
+    <constraint name="Path Aliases" type="recommended">
+      Use TypeScript path aliases following the pattern @menon-market/{package} for consistent imports across generated agents.
+    </constraint>
+    <constraint name="Performance Requirements" type="required">
+      Agent generation time must be less than 30 seconds per agent. Memory usage should be under 50MB during generation process.
+    </constraint>
+  </constraints>
+  <interfaces>
+    <interface name="Agent Template Interface" kind="typescript" signature="interface AgentTemplate { id: string; name: string; type: AgentType; specializations: string[]; coreSkills: string[]; }" path="packages/core/src/types/agent.ts">
+      TypeScript interface for agent type definitions used in template generation
+    </interface>
+    <interface name="Package Generation API" kind="function" signature="function generateAgentPackage(template: AgentTemplate, options: GenerationOptions): Promise&lt;GeneratedPackage&gt;" path="packages/agent-creator/src/generator.ts">
+      Core function for generating agent packages from templates
+    </interface>
+    <interface name="MCP Server Template" kind="mcp" signature="MCP Server configuration with Claude Code tool schema compliance" path="packages/agent-creator/templates/mcp-server/">
+      MCP server template structure for Claude Code integration
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>
+      Use Bun Test as the primary testing framework with native TypeScript support. All tests must be placed in dedicated test directories within each generated agent package. Test files should follow the pattern *.test.ts or *.spec.ts. Maintain 90%+ code coverage for critical generation logic. Include integration tests for template generation, validation tests for generated structures, and performance tests to ensure &lt;30 second generation time.
+    </standards>
+    <locations>
+      - packages/agent-creator/src/**/*.test.ts (Unit tests for generation logic)
+      - packages/agent-creator/tests/**/*.test.ts (Integration tests)
+      - Generated agents: {agent}/tests/ (Test structure template)
+      - Generated agents: {agent}/src/**/*.test.ts (Component tests)
+    </locations>
+    <ideas>
+      <testidea ac="1" name="Template Generation Validation">Test that all 7 agent types generate correct directory structures with required subdirectories (src/, tests/, config/, docs/)</testidea>
+      <testidea ac="2" name="MCP Server Integration">Validate generated MCP server templates comply with Claude Code tool schema requirements and can be registered successfully</testidea>
+      <testidea ac="3" name="Configuration File Generation">Test generated package.json, tsconfig.json, and eslint.config.js files are valid and properly formatted</testidea>
+      <testidea ac="4" name="README Template Quality">Validate generated README files contain proper setup instructions and agent-specific documentation</testidea>
+      <testidea ac="5" name="Setup Script Functionality">Test generated setup.sh scripts properly prepare development environments and install dependencies</testidea>
+      <testidea ac="6" name="Claude Code Integration">Test generated agent structures integrate seamlessly with Claude Code subagent system and episodic-memory</testidea>
+      <testidea name="Performance Benchmarks">Measure generation time for all agent types to ensure &lt;30 second requirement is met</testidea>
+      <testidea name="Memory Usage Validation">Monitor memory consumption during generation to verify &lt;50MB requirement</testidea>
+      <testidea name="ESLint Compliance">Test all generated code passes ESLint validation without rule violations</testidea>
+      <testidea name="TypeScript Compilation">Verify generated TypeScript configurations compile without errors in strict mode</testidea>
+    </ideas>
+  </tests>
+</story-context>

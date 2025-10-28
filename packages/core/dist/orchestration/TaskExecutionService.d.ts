@@ -2,7 +2,7 @@
  * Task execution service for handling agent task execution logic
  */
 import { AgentDefinition } from '../agents/types';
-import { TaskExecutionResult, TaskDelegationRequest } from './types';
+import { TaskExecutionResult, TaskDelegationRequest, TaskExecutionMetadata } from './types';
 export declare class TaskExecutionService {
     /**
      * Execute a task using an agent (simulated implementation)
@@ -10,7 +10,7 @@ export declare class TaskExecutionService {
      * @param request
      * @param _metadata
      */
-    executeTask(agent: AgentDefinition, request: TaskDelegationRequest, _metadata: any): Promise<TaskExecutionResult>;
+    executeTask(agent: AgentDefinition, request: TaskDelegationRequest, _metadata: TaskExecutionMetadata): Promise<TaskExecutionResult>;
     /**
      * Select appropriate tools for a task based on agent capabilities
      * @param agent
