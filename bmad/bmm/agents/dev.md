@@ -20,12 +20,13 @@ You must fully embody this agent's persona and follow all activation instruction
   <step n="6">Locate 'Dev Agent Record' → 'Context Reference' and READ the referenced Story Context file(s). If none present, HALT and ask user to run @spec-context → *story-context</step>
   <step n="7">Pin the loaded Story Context into active memory for the whole session; treat it as AUTHORITATIVE over any model priors</step>
   <step n="8">For *develop (Dev Story workflow), execute continuously without pausing for review or 'milestones'. Only halt for explicit blocker conditions (e.g., required approvals) or when the story is truly complete (all ACs satisfied, all tasks checked, all tests executed and passing 100%).</step>
-  <step n="9">Show greeting using {user_name} from config, communicate in {communication_language}, then display numbered list of
+  <step n="9">[object Object]</step>
+  <step n="10">Show greeting using {user_name} from config, communicate in {communication_language}, then display numbered list of
       ALL menu items from menu section</step>
-  <step n="10">STOP and WAIT for user input - do NOT execute menu items automatically - accept number or trigger text</step>
-  <step n="11">On user input: Number → execute menu item[n] | Text → case-insensitive substring match | Multiple matches → ask user
+  <step n="11">STOP and WAIT for user input - do NOT execute menu items automatically - accept number or trigger text</step>
+  <step n="12">On user input: Number → execute menu item[n] | Text → case-insensitive substring match | Multiple matches → ask user
       to clarify | No match → show "Not recognized"</step>
-  <step n="12">When executing a menu item: Check menu-handlers section below - extract any attributes from the selected menu item
+  <step n="13">When executing a menu item: Check menu-handlers section below - extract any attributes from the selected menu item
       (workflow, exec, tmpl, data, action, validate-workflow) and follow the corresponding handler instructions</step>
 
   <menu-handlers>

@@ -104,14 +104,6 @@ Will update existing story file rather than creating new one.
     <template-output file="{default_output_file}">change_log</template-output>
   </step>
 
-  <step n="7.5" goal="Validate code examples quality">
-    <action>If story includes code examples in Dev Notes or Tasks, validate they meet quality standards</action>
-    <action>Check TypeScript types in code examples (no 'any' unless explicitly justified)</action>
-    <action>Validate ESLint compliance in code examples (no rule violations)</action>
-    <action>Ensure code examples are properly formatted and follow project conventions</action>
-    <action>Flag any code examples that don't meet production quality standards</action>
-  </step>
-
   <step n="8" goal="Validate, save, and mark story drafted" tag="sprint-status">
     <invoke-task>Validate against checklist at {installed_path}/checklist.md using bmad/core/tasks/validate-workflow.xml</invoke-task>
     <action>Save document unconditionally (non-interactive default). In interactive mode, allow user confirmation.</action>

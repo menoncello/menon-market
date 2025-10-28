@@ -1,6 +1,6 @@
 $ prettier --write src/**/*.ts
-src/AgentValidationService.ts 56ms (unchanged)
-src/EdgeCaseTests.ts 20ms (unchanged)
+src/AgentValidationService.ts 57ms (unchanged)
+src/EdgeCaseTests.ts 16ms (unchanged)
 src/index.ts 1ms (unchanged)
-src/TestBuilders.ts 13ms (unchanged)
+src/TestBuilders.ts 8ms (unchanged)
 src/TestingFramework.ts 29ms (unchanged)

@@ -1,3 +1,7 @@
+---
+description: 'Initialize a new BMM project by determining level, type, and creating workflow path'
+---
+
 # workflow-init
 
 IT IS CRITICAL THAT YOU FOLLOW THESE STEPS - while staying in character as the current agent persona you may have loaded:
