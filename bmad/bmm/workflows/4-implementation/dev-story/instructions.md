@@ -120,9 +120,9 @@ Expected ready-for-dev or in-progress. Continuing anyway...
     <critical>Quality validation is MANDATORY - ALL substeps must pass with ZERO errors</critical>
 
     <substep n="4.1" goal="TypeScript type checking">
-      <action>Run: bun run typecheck (or tsc --noEmit if typecheck not configured)</action>
+      <action>Run: bun run typecheck (or tsc --noEmit)</action>
       <check>ZERO TypeScript errors required - no exceptions</check>
-      <critical>NEVER use @ts-ignore or @ts-expect-error - fix the actual type issue</critical>
+      <critical>NEVER use @ts-ignore - fix the actual type issue</critical>
     </substep>
 
     <substep n="4.2" goal="ESLint validation">
@@ -131,21 +131,27 @@ Expected ready-for-dev or in-progress. Continuing anyway...
       <critical>NEVER add eslint-disable comments - refactor code to satisfy the rule</critical>
     </substep>
 
-    <substep n="4.3" goal="Code formatting check">
-      <action>Run: bun run format:check</action>
+    <substep n="4.3" goal="Code formatting">
+      <action>Check for formatting: bun run format:check (if available)</action>
       <check>100% Prettier compliance required</check>
     </substep>
 
-    <substep n="4.4" goal="Unit and integration tests">
-      <action>Determine test command (use bun test for this project)</action>
-      <action>Run all existing tests to ensure no regressions</action>
-      <action>Run the new tests to verify implementation correctness</action>
+    <substep n="4.4" goal="Test execution">
+      <action>Run: bun test</action>
       <check>100% test pass rate required</check>
+      <critical>All tests must pass before implementation is complete</critical>
+    </substep>
+
+    <substep n="4.5" goal="Mutation testing (if configured)">
+      <action>Check if mutation testing is configured for this project</action>
+      <check if="stryker.config.json exists or package.json has mutation scripts">
+        <action>Run mutation tests</action>
+        <check>≥ 85% mutation score required (per Tech Spec Epic 1)</check>
+      </check>
     </substep>
 
     <action>Validate implementation meets ALL story acceptance criteria</action>
-    <action if="any quality gate fails">STOP and fix before continuing</action>
-    <action if="regression tests fail">STOP and fix before continuing</action>
+    <action if="any quality gate fails">STOP and fix before continuing - quality gates are mandatory</action>
   </step>
 
   <step n="5" goal="Mark task complete and update story">

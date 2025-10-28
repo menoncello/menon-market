@@ -90,7 +90,8 @@
     <action>Scan implementation files for eslint-disable comments and flag as violations</action>
     <action>Scan implementation files for @ts-ignore/@ts-expect-error and flag as violations</action>
     <action>Verify all tests pass 100% and test coverage is adequate</action>
-    <action>If quality gates were not properly enforced, flag as High Severity finding</action>
+    <action if="mutation testing configured">Verify mutation score meets ≥ 85% threshold</action>
+    <action if="quality gates were not properly enforced">flag as High Severity finding</action>
   </step>
 
   <step n="6" goal="Decide review outcome and prepare notes">
