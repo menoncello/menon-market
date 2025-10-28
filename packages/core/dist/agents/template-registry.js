@@ -2,9 +2,9 @@
  * Template registry functionality for agent templates
  * Provides registry functions and template management utilities
  */
-import { FrontendDevTemplate, BackendDevTemplate, } from './template-definitions';
-import { QATemplate, ArchitectTemplate, CLIDevTemplate, } from './template-definitions-part2';
-import { UXExpertTemplate, SMTemplate, } from './template-definitions-part3';
+import { FrontendDevTemplate, BackendDevTemplate } from './template-definitions';
+import { QATemplate, ArchitectTemplate, CLIDevTemplate } from './template-definitions-part2';
+import { UXExpertTemplate, SMTemplate } from './template-definitions-part3';
 /**
  * Registry of all agent templates
  */

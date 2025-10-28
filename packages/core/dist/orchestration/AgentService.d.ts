@@ -2,7 +2,7 @@
  * Agent service for handling agent-related operations
  */
 import { AgentDefinition } from '../agents/types';
-import { AgentCapability } from './types';
+import { AgentCapability, TaskExecutionMetadata } from './types';
 export declare class AgentService {
     private registeredAgents;
     constructor(registeredAgents: Map<string, AgentDefinition>);
@@ -21,7 +21,7 @@ export declare class AgentService {
      * Check if an agent is available for task delegation
      * @param agentId
      */
-    isAgentAvailable(agentId: string, runningTasks: Map<string, any>): Promise<boolean>;
+    isAgentAvailable(agentId: string, runningTasks: Map<string, TaskExecutionMetadata>): Promise<boolean>;
     /**
      * Check if an agent is suitable for a task
      * @param agent
