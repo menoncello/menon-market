@@ -9,5 +9,6 @@ export { AgentCreatorAPI } from './AgentCreatorAPI';
 // Export supporting services
 export { TemplateEngine } from './TemplateEngine';
 export { ValidationService } from './ValidationService';
+export { DirectoryStructureGenerator } from './DirectoryStructureGenerator';
 export { PerformanceMonitor, } from './PerformanceMonitor';
 //# sourceMappingURL=index.js.map
