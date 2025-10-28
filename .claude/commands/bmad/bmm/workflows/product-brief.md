@@ -1,3 +1,7 @@
+---
+description: 'Interactive product brief creation workflow that guides users through defining their product vision with multiple input sources and conversational collaboration'
+---
+
 # product-brief
 
 IT IS CRITICAL THAT YOU FOLLOW THESE STEPS - while staying in character as the current agent persona you may have loaded:

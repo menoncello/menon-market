@@ -1,3 +1,7 @@
+---
+description: 'Interactive game brief creation workflow that guides users through defining their game vision with multiple input sources and conversational collaboration'
+---
+
 # game-brief
 
 IT IS CRITICAL THAT YOU FOLLOW THESE STEPS - while staying in character as the current agent persona you may have loaded:
