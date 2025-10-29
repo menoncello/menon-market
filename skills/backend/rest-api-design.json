@@ -1,0 +1,332 @@
+{
+  "id": "rest-api-design",
+  "name": "RESTful API Design",
+  "description": "Comprehensive skill for designing and implementing RESTful APIs following industry best practices. Includes resource modeling, HTTP methods, status codes, authentication, error handling, and API documentation.",
+  "domain": "backend",
+  "category": "api-design",
+  "version": "1.0.0",
+  "dependencies": [
+    {
+      "skillId": "nodejs-fundamentals",
+      "minVersion": "1.0.0",
+      "required": true,
+      "reason": "Node.js knowledge is essential for API implementation"
+    },
+    {
+      "skillId": "typescript-fundamentals",
+      "minVersion": "1.0.0",
+      "required": true,
+      "reason": "TypeScript is required for type-safe API development"
+    }
+  ],
+  "compatibility": [
+    {
+      "agentRole": "BackendDev",
+      "level": "full",
+      "enhancements": [
+        "Advanced API design patterns",
+        "Performance optimization techniques",
+        "Security best practices",
+        "API documentation generation"
+      ]
+    },
+    {
+      "agentRole": "FrontendDev",
+      "level": "partial",
+      "restrictions": [
+        "Focus on API consumption patterns and data modeling"
+      ],
+      "enhancements": [
+        "Understanding of REST principles",
+        "API integration patterns"
+      ]
+    },
+    {
+      "agentRole": "QA",
+      "level": "partial",
+      "restrictions": [
+        "Focus on API testing strategies and validation"
+      ],
+      "enhancements": [
+        "API testing methodologies",
+        "Error handling verification"
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "resource-modeling",
+      "name": "Resource Modeling",
+      "description": "Design RESTful resources with proper relationships and hierarchies",
+      "type": "knowledge",
+      "implementation": {
+        "approach": "Identify business entities and model them as REST resources with proper relationships",
+        "tools": ["OpenAPI", "Swagger", "UML"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "http-methods-mapping",
+      "name": "HTTP Methods Mapping",
+      "description": "Map CRUD operations to appropriate HTTP methods and status codes",
+      "type": "pattern",
+      "implementation": {
+        "approach": "Use GET for retrieval, POST for creation, PUT/PATCH for updates, DELETE for removal",
+        "tools": ["HTTP", "REST", "OpenAPI"],
+        "performance": {
+          "complexity": "low",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "error-handling",
+      "name": "Error Handling",
+      "description": "Implement consistent error responses with proper HTTP status codes",
+      "type": "action",
+      "implementation": {
+        "approach": "Create structured error responses with consistent format and appropriate status codes",
+        "tools": ["HTTP", "JSON", "TypeScript"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "api-authentication",
+      "name": "API Authentication",
+      "description": "Implement authentication and authorization for API endpoints",
+      "type": "action",
+      "implementation": {
+        "approach": "Use JWT tokens, API keys, or OAuth2 for authentication and authorization",
+        "tools": ["JWT", "OAuth2", "Passport.js", "bcrypt"],
+        "performance": {
+          "complexity": "complex",
+          "resourceUsage": "medium"
+        }
+      }
+    },
+    {
+      "id": "rate-limiting",
+      "name": "Rate Limiting",
+      "description": "Implement rate limiting to protect APIs from abuse",
+      "type": "action",
+      "implementation": {
+        "approach": "Use sliding window or token bucket algorithms for rate limiting",
+        "tools": ["express-rate-limit", "Redis", "in-memory storage"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "medium"
+        }
+      }
+    },
+    {
+      "id": "api-documentation",
+      "name": "API Documentation",
+      "description": "Generate comprehensive API documentation using OpenAPI/Swagger",
+      "type": "tool",
+      "implementation": {
+        "approach": "Use OpenAPI specification to generate interactive API documentation",
+        "tools": ["OpenAPI", "Swagger UI", "swagger-jsdoc"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    }
+  ],
+  "examples": [
+    {
+      "title": "Building a User Management API",
+      "scenario": "Design and implement a complete RESTful API for user management with authentication",
+      "steps": [
+        "Define user resource model and relationships",
+        "Design endpoint routes following REST conventions",
+        "Implement CRUD operations with proper HTTP methods",
+        "Add input validation and error handling",
+        "Implement JWT-based authentication",
+        "Add rate limiting and security middleware",
+        "Generate OpenAPI documentation",
+        "Write comprehensive API tests"
+      ],
+      "code": [
+        "// Express.js route implementation",
+        "import { Router } from 'express';",
+        "import { UserController } from '../controllers/user.controller';",
+        "import { validateUser } from '../middleware/validation';",
+        "import { authenticate } from '../middleware/auth';",
+        "import { rateLimit } from 'express-rate-limit';",
+        "",
+        "const router = Router();",
+        "const userController = new UserController();",
+        "",
+        "// Rate limiting for user endpoints",
+        "const userRateLimit = rateLimit({",
+        "  windowMs: 15 * 60 * 1000, // 15 minutes",
+        "  max: 100, // limit each IP to 100 requests per windowMs",
+        "  message: 'Too many requests from this IP'",
+        "});",
+        "",
+        "/**",
+        " * @swagger",
+        " * /api/users:",
+        " *   get:",
+        " *     summary: Get all users",
+        " *     tags: [Users]",
+        " *     security:",
+        " *       - bearerAuth: []",
+        " *     responses:",
+        " *       200:",
+        " *         description: List of users",
+        " *         content:",
+        " *           application/json:",
+        " *             schema:",
+        " *               type: array",
+        " *               items:",
+        " *                 $ref: '#/components/schemas/User'",
+        " */",
+        "router.get('/',",
+        "  authenticate,",
+        "  userRateLimit,",
+        "  userController.getAllUsers",
+        ");",
+        "",
+        "router.post('/',",
+        "  validateUser,",
+        "  userRateLimit,",
+        "  userController.createUser",
+        ");",
+        "",
+        "router.get('/:id',",
+        "  authenticate,",
+        "  userController.getUserById",
+        ");",
+        "",
+        "router.put('/:id',",
+        "  authenticate,",
+        "  validateUser,",
+        "  userController.updateUser",
+        ");",
+        "",
+        "router.delete('/:id',",
+        "  authenticate,",
+        "  userController.deleteUser",
+        ");",
+        "",
+        "export { router as userRoutes };"
+      ],
+      "outcomes": [
+        "Complete RESTful API for user management",
+        "JWT-based authentication system",
+        "Comprehensive error handling",
+        "Rate limiting and security measures",
+        "Interactive API documentation"
+      ],
+      "relevantFor": ["BackendDev", "FrontendDev", "QA"]
+    }
+  ],
+  "performance": {
+    "executionTime": {
+      "min": 10,
+      "max": 120,
+      "average": 45
+    },
+    "resourceUsage": {
+      "memory": "medium",
+      "cpu": "medium",
+      "network": "low"
+    },
+    "complexity": "moderate",
+    "successRate": 92,
+    "knownIssues": [
+      "Complex nested resources can be difficult to model in REST",
+      "Over-fetching and under-fetching data can be problematic",
+      "Real-time features require additional implementations"
+    ]
+  },
+  "metadata": {
+    "createdAt": "2025-10-28T13:00:00Z",
+    "updatedAt": "2025-10-28T13:00:00Z",
+    "author": "Eduardo Menoncello",
+    "versionHistory": [
+      {
+        "version": "1.0.0",
+        "releasedAt": "2025-10-28T13:00:00Z",
+        "notes": "Initial release with comprehensive REST API design capabilities",
+        "newFeatures": [
+          "Resource modeling and relationships",
+          "HTTP methods mapping",
+          "Error handling patterns",
+          "Authentication and authorization",
+          "Rate limiting implementation",
+          "API documentation generation"
+        ]
+      }
+    ],
+    "tags": ["rest", "api", "backend", "nodejs", "typescript", "authentication"],
+    "relatedSkills": {
+      "similar": ["graphql-api-design", "microservices-architecture"],
+      "complementary": ["database-design-sql", "nodejs-express", "testing-api"],
+      "alternative": ["graphql-api-design", "grpc-api-design"]
+    },
+    "resources": [
+      {
+        "type": "documentation",
+        "title": "REST API Design Guidelines",
+        "url": "https://restfulapi.net/",
+        "description": "Comprehensive guide to REST API design principles and best practices",
+        "level": "beginner",
+        "estimatedTime": 180
+      },
+      {
+        "type": "documentation",
+        "title": "OpenAPI Specification",
+        "url": "https://swagger.io/specification/",
+        "description": "Official OpenAPI specification for API documentation",
+        "level": "intermediate",
+        "estimatedTime": 120
+      },
+      {
+        "type": "tutorial",
+        "title": "Building Secure APIs with Node.js",
+        "url": "https://github.com/websockets/ws/wiki/Node.js-Express-Security-Best-Practices",
+        "description": "Security best practices for Node.js API development",
+        "level": "advanced",
+        "estimatedTime": 90
+      }
+    ],
+    "usage": {
+      "totalUses": 0,
+      "uniqueAgents": 0,
+      "satisfactionRating": 0,
+      "commonUseCases": [
+        "Web application backends",
+        "Mobile app APIs",
+        "Microservices communication",
+        "Third-party integrations"
+      ],
+      "trend": "stable",
+      "lastUpdated": "2025-10-28T13:00:00Z"
+    },
+    "quality": {
+      "testCoverage": 85,
+      "documentationScore": 95,
+      "openIssues": 0,
+      "communityRating": 0,
+      "lastAssessed": "2025-10-28T13:00:00Z",
+      "badges": [
+        {
+          "id": "api-design-expert",
+          "name": "API Design Expert",
+          "description": "Advanced REST API design expertise",
+          "awardedAt": "2025-10-28T13:00:00Z",
+          "authority": "Menon Market Skills"
+        }
+      ]
+    }
+  }
+}

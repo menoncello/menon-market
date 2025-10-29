@@ -1,0 +1,100 @@
+<story-context id="bmad/bmm/workflows/4-implementation/story-context" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>3</storyId>
+    <title>Core Skills Implementation Framework</title>
+    <status>drafted</status>
+    <generatedAt>2025-10-28</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/stories/1-3-core-skills-implementation-framework.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>an agent creator</asA>
+    <iWant>implement role-specific skill frameworks for each agent type</iWant>
+    <soThat>agents have immediate access to their domain-specific capabilities</soThat>
+    <tasks>Task 1: Define Core Skill Sets (AC: 1)
+- Subtask 1.1: Analyze role-specific capabilities for each agent type
+- Subtask 1.2: Create skill definition schema and TypeScript interfaces
+- Subtask 1.3: Implement core skills for FrontendDev and BackendDev agents
+- Subtask 1.4: Implement core skills for remaining agent types (QA, Architect, CLI Dev, UX Expert, SM)
+Task 2: Build Skill Framework (AC: 2)
+- Subtask 2.1: Implement skill loading mechanism with TypeScript
+- Subtask 2.2: Create standardized skill interface and registration system
+- Subtask 2.3: Implement skill discovery and initialization
+- Subtask 2.4: Add skill hot-reloading for development
+Task 3: Implement Skill Validation System (AC: 3)
+- Subtask 3.1: Create skill validation framework with schema compliance
+- Subtask 3.2: Implement automated skill testing system
+- Subtask 3.3: Add skill compatibility checking
+- Subtask 3.4: Create skill validation reports and recommendations
+Task 4: Develop Dependency Management (AC: 4)
+- Subtask 4.1: Implement skill dependency resolution system
+- Subtask 4.2: Create conflict detection and resolution algorithms
+- Subtask 4.3: Add skill version compatibility checking
+- Subtask 4.4: Implement dependency graph visualization
+Task 5: Implement Performance Metrics (AC: 5)
+- Subtask 5.1: Create performance tracking system for skill execution
+- Subtask 5.2: Implement metrics collection and storage
+- Subtask 5.3: Add performance analytics and reporting
+- Subtask 5.4: Create performance optimization recommendations
+Task 6: Create Documentation System (AC: 6)
+- Subtask 6.1: Generate skill documentation from metadata
+- Subtask 6.2: Create integration guides and examples
+- Subtask 6.3: Document skill creation patterns and best practices
+- Subtask 6.4: Create troubleshooting and FAQ documentation</tasks>
+  </story>
+
+  <acceptanceCriteria>1. Core Skill Sets Definition - Define comprehensive skill sets for each of the 7 agent types with metadata, dependencies, and compatibility information
+2. Skill Framework Implementation - Create standardized skill interface and loading mechanism with registration system and hot-reloading
+3. Skill Validation and Testing System - Implement skill validation framework with schema compliance, automated testing, and compatibility checking
+4. Skill Dependency Management and Conflict Resolution - Implement skill dependency resolution system with conflict detection and version compatibility
+5. Performance Metrics Collection - Create performance tracking system for skill execution with analytics and optimization recommendations
+6. Documentation and Integration Patterns - Generate comprehensive skill documentation with integration guides and best practices</acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc path="docs/tech-spec-epic-1.md" title="Technical Specification: Foundation & Agent Creator" section="Core Skills Implementation" snippet="Develop role-specific skill sets for each agent type (FrontendDev, BackendDev, QA, Architect, CLI Dev, UX Expert, SM). Skills include UI development patterns, API design, testing strategies, etc."/>
+      <doc path="docs/epics.md" title="Epic Breakdown" section="Story 1.3" snippet="Core skill sets defined for each of the 7 agent types. Skill framework with standardized interface and loading mechanism. Skill validation and testing system."/>
+      <doc path="docs/architecture.md" title="Architecture Document" section="Skill Management System" snippet="Skill structure with YAML definitions and compatibility matrix. Skill borrowing system enables temporary cross-agent capability sharing with access tokens and expiration."/>
+      <doc path="docs/architecture.md" title="Architecture Document" section="Monorepo Structure" snippet="packages/core/src/skills/ - Core skill system implementation. skills/frontend/, skills/backend/, skills/testing/ - Domain-specific skill directories."/>
+    </docs>
+    <code>
+    </code>
+    <dependencies>
+      <ecosystem name="bun" version="1.3.1" packages="native"/>
+      <ecosystem name="typescript" version="5.9.3" packages="native"/>
+      <ecosystem name="claude-code" version="2.0+" packages="episodic-memory, task-delegation"/>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint type="architecture">Follow monorepo structure with /packages/core/src/skills/ for core framework</constraint>
+    <constraint type="architecture">Domain-specific skills organized under /skills/{domain}/ directories</constraint>
+    <constraint type="development">Use TypeScript strict mode and Bun native features</constraint>
+    <constraint type="development">Integrate with Claude Code Task tool for skill execution</constraint>
+    <constraint type="development">Support episodic-memory integration for skill learning</constraint>
+    <constraint type="testing">Use Bun Test for all unit and integration testing</constraint>
+    <constraint type="testing">Achieve ≥ 90% code coverage for skill framework components</constraint>
+    <constraint type="testing">Implement mutation testing with ≥ 85% threshold</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface name="SkillDefinition" kind="TypeScript interface" signature="interface SkillDefinition { name: string; domain: string; category: string; version: string; dependencies: string[]; compatibility: AgentCompatibility[]; capabilities: string[]; examples: SkillExample[]; metadata: SkillMetadata; }" path="packages/core/src/skills/types.ts"/>
+    <interface name="SkillRegistry" kind="TypeScript class" signature="class SkillRegistry { register(skill: SkillDefinition): void; unregister(skillName: string): void; findCompatible(agentType: string): SkillDefinition[]; resolveDependencies(skill: SkillDefinition): SkillDefinition[]; }" path="packages/core/src/skills/registry.ts"/>
+    <interface name="SkillLoader" kind="TypeScript interface" signature="interface SkillLoader { load(skillPath: string): Promise&lt;SkillDefinition&gt;; unload(skillName: string): Promise&lt;void&gt;; reload(skillName: string): Promise&lt;SkillDefinition&gt;; }" path="packages/core/src/skills/loader.ts"/>
+  </interfaces>
+
+  <tests>
+    <standards>Use Bun Test for all unit and integration testing with ≥ 90% code coverage. Implement mutation testing with ≥ 85% threshold. Create automated validation tests for all skill definitions. Performance benchmarking for skill loading and execution.</standards>
+    <locations>packages/core/src/skills/**/*.test.ts, skills/**/*.test.ts, tests/unit/skills/, tests/integration/skills/</locations>
+    <ideas>
+      <test idea="Test skill registration and discovery" ac="1,2"/>
+      <test idea="Test skill validation and schema compliance" ac="3"/>
+      <test idea="Test dependency resolution and conflict detection" ac="4"/>
+      <test idea="Test performance metrics collection" ac="5"/>
+      <test idea="Test skill hot-reloading functionality" ac="2"/>
+      <test idea="Test compatibility checking between agent types" ac="3"/>
+    </ideas>
+  </tests>
+</story-context>

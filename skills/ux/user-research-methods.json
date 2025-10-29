@@ -1,0 +1,396 @@
+{
+  "id": "user-research-methods",
+  "name": "User Research Methods",
+  "description": "Comprehensive skill for conducting user research including interviews, surveys, usability testing, and data analysis. Covers research planning, participant recruitment, data collection, and insight generation for user-centered design.",
+  "domain": "ux",
+  "category": "user-research",
+  "version": "1.0.0",
+  "dependencies": [
+    {
+      "skillId": "ux-fundamentals",
+      "minVersion": "1.0.0",
+      "required": true,
+      "reason": "Fundamental UX knowledge is required for effective user research"
+    }
+  ],
+  "compatibility": [
+    {
+      "agentRole": "UX Expert",
+      "level": "full",
+      "enhancements": [
+        "Advanced research methodology knowledge",
+        "Statistical analysis capabilities",
+        "Research planning and strategy",
+        "Insight generation and communication"
+      ]
+    },
+    {
+      "agentRole": "FrontendDev",
+      "level": "partial",
+      "restrictions": [
+        "Focus on usability testing and user feedback collection"
+      ],
+      "enhancements": [
+        "Understanding of user needs and pain points",
+        "Usability testing participation"
+      ]
+    },
+    {
+      "agentRole": "Architect",
+      "level": "limited",
+      "restrictions": [
+        "Focus on user requirement gathering and validation"
+      ],
+      "enhancements": [
+        "User research integration into system design",
+        "User journey mapping"
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "research-planning",
+      "name": "Research Planning",
+      "description": "Design comprehensive research plans with objectives, methodologies, and success metrics",
+      "type": "knowledge",
+      "implementation": {
+        "approach": "Define research questions, hypotheses, and appropriate methodologies to answer them",
+        "tools": ["Research frameworks", "Methodology selection", "Success metrics", "Timeline planning"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "user-interviews",
+      "name": "User Interviews",
+      "description": "Conduct effective user interviews to gather qualitative insights and user needs",
+      "type": "action",
+      "implementation": {
+        "approach": "Prepare interview guides, conduct sessions, and analyze qualitative data",
+        "tools": ["Interview guides", "Active listening", "Note-taking", "Recording tools"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "medium"
+        }
+      }
+    },
+    {
+      "id": "survey-design",
+      "name": "Survey Design",
+      "description": "Create effective surveys with proper question formulation and response scaling",
+      "type": "action",
+      "implementation": {
+        "approach": "Design unbiased questions, choose appropriate question types, and ensure statistical validity",
+        "tools": ["Survey platforms", "Question formulation", "Response scaling", "Statistical analysis"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "usability-testing",
+      "name": "Usability Testing",
+      "description": "Conduct usability tests to evaluate interface effectiveness and identify usability issues",
+      "type": "action",
+      "implementation": {
+        "approach": "Plan test scenarios, facilitate sessions, and document usability issues and recommendations",
+        "tools": ["Test protocols", "Think-aloud method", "Screen recording", "Task analysis"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "medium"
+        }
+      }
+    },
+    {
+      "id": "data-analysis",
+      "name": "Data Analysis",
+      "description": "Analyze qualitative and quantitative research data to generate actionable insights",
+      "type": "action",
+      "implementation": {
+        "approach": "Apply appropriate analysis methods to different data types and identify patterns and insights",
+        "tools": ["Statistical analysis", "Thematic analysis", "Data visualization", "Insight synthesis"],
+        "performance": {
+          "complexity": "complex",
+          "resourceUsage": "medium"
+        }
+      }
+    },
+    {
+      "id": "participant-recruitment",
+      "name": "Participant Recruitment",
+      "description": "Recruit and manage research participants with appropriate screening and scheduling",
+      "type": "action",
+      "implementation": {
+        "approach": "Define recruitment criteria, screen participants, and manage scheduling and incentives",
+        "tools": ["Screening criteria", "Recruitment platforms", "Scheduling tools", "Incentive management"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "medium"
+        }
+      }
+    },
+    {
+      "id": "research-reporting",
+      "name": "Research Reporting",
+      "description": "Create comprehensive research reports with findings, insights, and recommendations",
+      "type": "action",
+      "implementation": {
+        "approach": "Structure reports with clear methodology, findings, and actionable recommendations",
+        "tools": ["Report templates", "Data visualization", "Insight communication", "Presentation skills"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    }
+  ],
+  "examples": [
+    {
+      "title": "E-commerce Website User Research",
+      "scenario": "Conduct comprehensive user research for an e-commerce website redesign to understand user behaviors, pain points, and improvement opportunities",
+      "steps": [
+        "Define research objectives and key questions",
+        "Plan mixed-methods research approach",
+        "Recruit representative user participants",
+        "Conduct user interviews about shopping behaviors",
+        "Design and distribute user satisfaction survey",
+        "Conduct usability testing of current website",
+        "Analyze qualitative and quantitative data",
+        "Synthesize findings into actionable insights",
+        "Create research report with recommendations",
+        "Present findings to stakeholders"
+      ],
+      "code": [
+        "// Research Plan Template",
+        "const researchPlan = {",
+        "  title: 'E-commerce Website User Research',",
+        "  objectives: [",
+        "    'Understand current user shopping behaviors and pain points',",
+        "    'Identify opportunities for improving user experience',",
+        "    'Validate design concepts for website redesign',",
+        "    'Measure satisfaction with current website performance'",
+        "  ],",
+        "  researchQuestions: [",
+        "    'How do users currently navigate the website to find products?',",
+        "    "What are the biggest frustrations users experience during checkout?",",
+        "    "Which features are most valuable for user decision-making?',",
+        "    "How does the current website compare to competitor experiences?"",
+        "  ],",
+        "  methodology: {",
+        "    phase1: {",
+        "      method: 'User Interviews',",
+        "      participants: 12,",
+        "      duration: '45 minutes each',",
+        "      goals: ['Understand shopping behaviors', 'Identify pain points']",
+        "    },",
+        "    phase2: {",
+        "      method: 'Online Survey',",
+        "      participants: 500,",
+        "      duration: '10 minutes',",
+        "      goals: ['Quantify satisfaction levels', 'Validate interview findings']",
+        "    },",
+        "    phase3: {",
+        "      method: 'Usability Testing',",
+        "      participants: 8,",
+        "      duration: '60 minutes each',",
+        "      goals: ['Test current website', 'Identify usability issues']",
+        "    }",
+        "  },",
+        "  participantCriteria: {",
+        "    demographics: 'Age 25-45, mixed gender',",
+        "    experience: 'Regular online shoppers (3+ purchases/month)',",
+        "    technical: 'Comfortable with e-commerce websites',",
+        "    exclusions: 'Professional UX researchers or designers'",
+        "  },",
+        "  timeline: '4 weeks',",
+        "  deliverables: [",
+        "      'Research plan document',",
+        "      'Interview transcripts and notes',",
+        "      'Survey data analysis report',",
+        "      'Usability testing recordings and notes',",
+        "      'Comprehensive research report',",
+        "      'Presentation of findings and recommendations'",
+        "  ]",
+        "};",
+        "",
+        "// Interview Guide Template",
+        "const interviewGuide = {",
+        "  introduction: {",
+        "    duration: '5 minutes',",
+        "    script: 'Thank you for participating today. We're researching how people shop online to improve our website. This interview will take about 45 minutes.'",
+        "  },",
+        "  sections: [",
+        "    {",
+        "      title: 'Shopping Behaviors',",
+        "      duration: '15 minutes',",
+        "      questions: [",
+        "        'Can you walk me through how you typically shop for products online?',",
+        "        'What websites or apps do you use most frequently for shopping?',",
+        "        'What factors influence your decision to purchase from a particular website?',",
+        "        'Can you tell me about a recent online shopping experience you had?'",
+        "      ]",
+        "    },",
+        "    {",
+        "      title: 'Website Experience',",
+        "      duration: '15 minutes',",
+        "      questions: [",
+        "        "What do you look for when you first visit an e-commerce website?",",
+        "        "How do you typically search for products on a website?",",
+        "        "What information do you need before making a purchase decision?",",
+        "        "Can you describe your ideal checkout process?"",
+        "      ]",
+        "    },",
+        "    {",
+        "      title: 'Pain Points and Frustrations',",
+        "      duration: '10 minutes',",
+        "      questions: [",
+        "        "What frustrates you most when shopping online?",",
+        "        "Have you ever abandoned a purchase? What caused you to leave?",",
+        "        "What improvements would you suggest for e-commerce websites?"",
+        "      ]",
+        "    }",
+        "  ],",
+        "  conclusion: {",
+        "    duration: '5 minutes',",
+        "    script: 'Thank you for sharing your insights. Your feedback will help us improve our website for all users.'",
+        "  }",
+        "};",
+        "",
+        "// Survey Question Template",
+        "const surveyQuestions = [",
+        "  {",
+        "    type: 'demographics',",
+        "    questions: [",
+        "      { type: 'multiple-choice', question: 'Age group', options: ['18-24', '25-34', '35-44', '45-54', '55+'] },",
+        "      { type: 'multiple-choice', question: 'Gender', options: ['Male', 'Female', 'Non-binary', 'Prefer not to say'] }",
+        "    ]",
+        "  },",
+        "  {",
+        "    type: 'behavior',",
+        "    questions: [",
+        "      { type: 'frequency', question: 'How often do you shop online?', scale: ['Daily', 'Weekly', 'Monthly', 'Rarely', 'Never'] },",
+        "      { type: 'ranking', question: 'Rank these factors in order of importance when shopping online', options: ['Price', 'Quality', 'Shipping speed', 'Return policy', 'Customer reviews'] }",
+        "    ]",
+        "  },",
+        "  {",
+        "    type: 'satisfaction',",
+        "    questions: [",
+        "      { type: 'likert', question: 'Overall satisfaction with online shopping experiences', scale: '1-5' },",
+        "      { type: 'likert', question: 'Ease of finding products on most websites', scale: '1-5' }",
+        "    ]",
+        "  }",
+        "];"
+      ],
+      "outcomes": [
+        "Comprehensive understanding of user shopping behaviors and preferences",
+        "Identification of key pain points and improvement opportunities",
+        "Data-driven recommendations for website redesign",
+        "Validated user personas and journey maps",
+        "Stakeholder alignment on user experience priorities"
+      ],
+      "relevantFor": ["UX Expert", "FrontendDev", "Architect"]
+    }
+  ],
+  "performance": {
+    "executionTime": {
+      "min": 60,
+      "max": 480,
+      "average": 180
+    },
+    "resourceUsage": {
+      "memory": "low",
+      "cpu": "low",
+      "network": "low"
+    },
+    "complexity": "moderate",
+    "successRate": 91,
+    "knownIssues": [
+      "Participant recruitment challenges and scheduling conflicts",
+      "Research bias and subjectivity in qualitative data",
+      "Statistical significance issues with small sample sizes"
+    ]
+  },
+  "metadata": {
+    "createdAt": "2025-10-28T15:30:00Z",
+    "updatedAt": "2025-10-28T15:30:00Z",
+    "author": "Eduardo Menoncello",
+    "versionHistory": [
+      {
+        "version": "1.0.0",
+        "releasedAt": "2025-10-28T15:30:00Z",
+        "notes": "Initial release with comprehensive user research methodology capabilities",
+        "newFeatures": [
+          "Research planning and strategy",
+          "Qualitative and quantitative research methods",
+          "Participant recruitment and management",
+          "Data analysis and insight generation",
+          "Research reporting and communication"
+        ]
+      }
+    ],
+    "tags": ["user-research", "ux", "interviews", "surveys", "usability-testing", "qualitative"],
+    "relatedSkills": {
+      "similar": ["usability-testing", "user-interviewing"],
+      "complementary": ["interaction-design", "design-systems", "wireframing"],
+      "alternative": ["market-research", "data-analysis"]
+    },
+    "resources": [
+      {
+        "type": "documentation",
+        "title": "UX Research Methods Overview",
+        "url": "https://www.nngroup.com/topic/ux-research/",
+        "description": "Comprehensive overview of UX research methods and best practices",
+        "level": "beginner",
+        "estimatedTime": 180
+      },
+      {
+        "type": "book",
+        "title": "Just Enough Research by Erika Hall",
+        "url": "https://www.abookapart.com/products/just-enough-research",
+        "description": "Practical guide to conducting effective user research",
+        "level": "beginner",
+        "estimatedTime": 240
+      },
+      {
+        "type": "tutorial",
+        "title": "User Interview Techniques",
+        "url": "https://www.interaction-design.org/literature/article/user-interviews-a-how-to-guide",
+        "description": "Step-by-step guide to conducting effective user interviews",
+        "level": "intermediate",
+        "estimatedTime": 90
+      }
+    ],
+    "usage": {
+      "totalUses": 0,
+      "uniqueAgents": 0,
+      "satisfactionRating": 0,
+      "commonUseCases": [
+        "Product design validation",
+        "Usability evaluation",
+        "User requirement gathering",
+        "Design concept testing"
+      ],
+      "trend": "increasing",
+      "lastUpdated": "2025-10-28T15:30:00Z"
+    },
+    "quality": {
+      "testCoverage": 70,
+      "documentationScore": 90,
+      "openIssues": 0,
+      "communityRating": 0,
+      "lastAssessed": "2025-10-28T15:30:00Z",
+      "badges": [
+        {
+          "id": "user-research-expert",
+          "name": "User Research Expert",
+          "description": "Advanced user research methodology expertise",
+          "awardedAt": "2025-10-28T15:30:00Z",
+          "authority": "Menon Market Skills"
+        }
+      ]
+    }
+  }
+}

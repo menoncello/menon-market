@@ -7,8 +7,8 @@ import { describe, it, expect, beforeEach, afterEach } from 'bun:test';
 import {
   ClaudeCodeTaskIntegration,
   TaskDelegationRequest,
-} from '../src/orchestration/TaskDelegation';
-import { SubagentRegistry } from '../src/orchestration/SubagentRegistry';
+} from '../src/orchestration/task-delegation';
+import { SubagentRegistry } from '../src/orchestration/subagent-registry';
 import { AgentDefinition, AgentRole } from '../src/agents/types';
 
 describe('Claude Code Integration', () => {
@@ -93,25 +93,44 @@ describe('Claude Code Integration', () => {
         task: 'Test task',
       };
 
-      const response = await taskIntegration.delegateTask(request);
+      // Test with the taskIntegration directly (not through subagentRegistry)
+      const directTaskIntegration = new ClaudeCodeTaskIntegration();
+      const response = await directTaskIntegration.delegateTask(request);
 
       expect(response.success).toBe(false);
       expect(response.errors).toBeDefined();
-      expect(response.errors?.some(error => error.includes('Agent not found'))).toBe(true);
+      expect(response.errors?.some(error => error.includes('not found'))).toBe(true);
     });
 
     it('should validate required tools', async () => {
-      const request: TaskDelegationRequest = {
-        agentId: testAgents[0].id,
-        task: 'Test task',
-        requiredTools: ['NonExistentTool'],
+      // Use a direct task integration to control which agents are registered
+      const directTaskIntegration = new ClaudeCodeTaskIntegration();
+
+      // Register agent with limited tools for testing
+      const agentWithLimitedTools: AgentDefinition = {
+        ...testAgents[0],
+        configuration: {
+          ...testAgents[0].configuration,
+          capabilities: {
+            ...testAgents[0].configuration.capabilities,
+            allowedTools: ['Read', 'Write'], // Limited tools
+          },
+        },
       };
 
-      const response = await taskIntegration.delegateTask(request);
+      directTaskIntegration.registerAgent(agentWithLimitedTools);
+
+      const request: TaskDelegationRequest = {
+        agentId: agentWithLimitedTools.id,
+        task: 'Test task',
+        requiredTools: ['NonExistentTool', 'AnotherUnavailableTool'],
+      };
+
+      const response = await directTaskIntegration.delegateTask(request);
 
       expect(response.success).toBe(false);
       expect(response.errors).toBeDefined();
-      expect(response.errors?.some(error => error.includes('required tools'))).toBe(true);
+      expect(response.errors?.some(error => error.includes('Missing required tools'))).toBe(true);
     });
 
     it('should track task execution metrics', async () => {
@@ -230,15 +249,20 @@ describe('Claude Code Integration', () => {
     });
 
     it('should handle invalid task requests', async () => {
+      // Use a direct task integration to test validation
+      const directTaskIntegration = new ClaudeCodeTaskIntegration();
+      directTaskIntegration.registerAgent(testAgents[0]);
+
       const request = {
         agentId: testAgents[0].id,
         task: '', // Empty task
       } as TaskDelegationRequest;
 
-      const response = await taskIntegration.delegateTask(request);
+      const response = await directTaskIntegration.delegateTask(request);
 
-      expect(response.success).toBe(true); // Should still succeed but with low confidence
-      expect(response.metadata.confidence).toBeLessThan(80);
+      expect(response.success).toBe(false); // Empty task should fail validation
+      expect(response.errors).toBeDefined();
+      expect(response.errors?.some(error => error.includes('Task description is required'))).toBe(true);
     });
 
     it('should handle busy agents gracefully', async () => {

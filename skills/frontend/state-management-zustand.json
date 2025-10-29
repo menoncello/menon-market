@@ -1,0 +1,256 @@
+{
+  "id": "state-management-zustand",
+  "name": "State Management with Zustand",
+  "description": "Modern state management using Zustand library for React applications. Provides simple, fast, and scalable state management with TypeScript support and devtools integration.",
+  "domain": "frontend",
+  "category": "state-management",
+  "version": "1.0.0",
+  "dependencies": [
+    {
+      "skillId": "react-component-development",
+      "minVersion": "1.0.0",
+      "required": true,
+      "reason": "React component knowledge is required for state management integration"
+    },
+    {
+      "skillId": "typescript-fundamentals",
+      "minVersion": "1.0.0",
+      "required": true,
+      "reason": "TypeScript is essential for type-safe state management"
+    }
+  ],
+  "compatibility": [
+    {
+      "agentRole": "FrontendDev",
+      "level": "full",
+      "enhancements": [
+        "Advanced state patterns",
+        "Performance optimization techniques",
+        "Testing strategies for state management"
+      ]
+    },
+    {
+      "agentRole": "BackendDev",
+      "level": "limited",
+      "restrictions": [
+        "Focus on data fetching patterns and API integration"
+      ],
+      "enhancements": [
+        "Understanding of client-side state management",
+        "Integration with backend APIs"
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "store-creation",
+      "name": "Store Creation",
+      "description": "Create TypeScript-typed Zustand stores with actions and selectors",
+      "type": "action",
+      "implementation": {
+        "approach": "Define store interfaces and implement using create function with hooks",
+        "tools": ["Zustand", "TypeScript", "React"],
+        "performance": {
+          "complexity": "low",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "state-slicing",
+      "name": "State Slicing",
+      "description": "Create selective state subscriptions using selectors for performance optimization",
+      "type": "pattern",
+      "implementation": {
+        "approach": "Use shallow comparisons and selector functions to prevent unnecessary re-renders",
+        "tools": ["Zustand", "React"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "persisted-state",
+      "name": "State Persistence",
+      "description": "Implement state persistence using localStorage and sessionStorage",
+      "type": "action",
+      "implementation": {
+        "approach": "Use Zustand persist middleware with custom storage configuration",
+        "tools": ["Zustand", "localStorage", "sessionStorage"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "devtools-integration",
+      "name": "Redux DevTools Integration",
+      "description": "Integrate with Redux DevTools for state debugging and time-travel debugging",
+      "type": "tool",
+      "implementation": {
+        "approach": "Configure devtools middleware with custom naming and options",
+        "tools": ["Zustand", "Redux DevTools"],
+        "performance": {
+          "complexity": "low",
+          "resourceUsage": "low"
+        }
+      }
+    }
+  ],
+  "examples": [
+    {
+      "title": "Creating a User Store",
+      "scenario": "Build a type-safe user store with authentication state and user profile management",
+      "steps": [
+        "Define TypeScript interfaces for user state and actions",
+        "Create Zustand store with initial state and actions",
+        "Add persist middleware for localStorage integration",
+        "Implement authentication actions (login, logout, update profile)",
+        "Add TypeScript selectors for derived state",
+        "Integrate Redux DevTools for debugging"
+      ],
+      "code": [
+        "interface UserState {",
+        "  user: User | null;",
+        "  isLoading: boolean;",
+        "  error: string | null;",
+        "}",
+        "",
+        "interface UserActions {",
+        "  login: (email: string, password: string) => Promise<void>;",
+        "  logout: () => void;",
+        "  updateProfile: (updates: Partial<User>) => void;",
+        "  clearError: () => void;",
+        "}",
+        "",
+        "type UserStore = UserState & UserActions;",
+        "",
+        "export const useUserStore = create<UserStore>()(",
+        "  devTools(",
+        "    persist(",
+        "      (set, get) => ({",
+        "        user: null,",
+        "        isLoading: false,",
+        "        error: null,",
+        "        login: async (email, password) => {",
+        "          set({ isLoading: true, error: null });",
+        "          try {",
+        "            const user = await authService.login(email, password);",
+        "            set({ user, isLoading: false });",
+        "          } catch (error) {",
+        "            set({ error: error.message, isLoading: false });",
+        "          }",
+        "        },",
+        "        logout: () => set({ user: null, error: null }),",
+        "        updateProfile: (updates) => set((state) => ({",
+        "          user: state.user ? { ...state.user, ...updates } : null",
+        "        })),",
+        "        clearError: () => set({ error: null })",
+        "      }),",
+        "      { name: 'user-store' }",
+        "    ),",
+        "    { name: 'User Store' }",
+        "  )",
+        ");"
+      ],
+      "outcomes": [
+        "Type-safe state management store",
+        "Persistent authentication state",
+        "Comprehensive error handling",
+        "DevTools integration for debugging"
+      ],
+      "relevantFor": ["FrontendDev"]
+    }
+  ],
+  "performance": {
+    "executionTime": {
+      "min": 3,
+      "max": 30,
+      "average": 15
+    },
+    "resourceUsage": {
+      "memory": "low",
+      "cpu": "low",
+      "network": "none"
+    },
+    "complexity": "simple",
+    "successRate": 98,
+    "knownIssues": [
+      "Large state objects can cause performance issues without proper selectors",
+      "Storage quota limits may affect persist functionality"
+    ]
+  },
+  "metadata": {
+    "createdAt": "2025-10-28T12:30:00Z",
+    "updatedAt": "2025-10-28T12:30:00Z",
+    "author": "Eduardo Menoncello",
+    "versionHistory": [
+      {
+        "version": "1.0.0",
+        "releasedAt": "2025-10-28T12:30:00Z",
+        "notes": "Initial release with core Zustand state management capabilities",
+        "newFeatures": [
+          "Store creation with TypeScript",
+          "State persistence middleware",
+          "Redux DevTools integration",
+          "Performance optimization patterns"
+        ]
+      }
+    ],
+    "tags": ["zustand", "state-management", "react", "typescript", "frontend"],
+    "relatedSkills": {
+      "similar": ["state-management-redux", "state-management-context"],
+      "complementary": ["react-component-development", "data-fetching-axios"],
+      "alternative": ["state-management-jotai", "state-management-valtio"]
+    },
+    "resources": [
+      {
+        "type": "documentation",
+        "title": "Zustand Official Documentation",
+        "url": "https://docs.pmnd.rs/zustand",
+        "description": "Official Zustand documentation with examples and API reference",
+        "level": "beginner",
+        "estimatedTime": 90
+      },
+      {
+        "type": "tutorial",
+        "title": "State Management Patterns with Zustand",
+        "url": "https://egghead.io/courses/the-beginner-s-guide-to-zustand",
+        "description": "Comprehensive guide to state management patterns using Zustand",
+        "level": "intermediate",
+        "estimatedTime": 120
+      }
+    ],
+    "usage": {
+      "totalUses": 0,
+      "uniqueAgents": 0,
+      "satisfactionRating": 0,
+      "commonUseCases": [
+        "User authentication state",
+        "Application settings",
+        "Form state management",
+        "Data caching"
+      ],
+      "trend": "increasing",
+      "lastUpdated": "2025-10-28T12:30:00Z"
+    },
+    "quality": {
+      "testCoverage": 90,
+      "documentationScore": 85,
+      "openIssues": 0,
+      "communityRating": 0,
+      "lastAssessed": "2025-10-28T12:30:00Z",
+      "badges": [
+        {
+          "id": "state-management-expert",
+          "name": "State Management Expert",
+          "description": "Advanced state management expertise with Zustand",
+          "awardedAt": "2025-10-28T12:30:00Z",
+          "authority": "Menon Market Skills"
+        }
+      ]
+    }
+  }
+}

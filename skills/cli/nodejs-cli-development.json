@@ -1,0 +1,454 @@
+{
+  "id": "nodejs-cli-development",
+  "name": "Node.js CLI Development",
+  "description": "Comprehensive skill for building command-line interface tools using Node.js. Includes argument parsing, command organization, configuration management, interactive prompts, and package distribution.",
+  "domain": "cli",
+  "category": "command-line-tools",
+  "version": "1.0.0",
+  "dependencies": [
+    {
+      "skillId": "javascript-modern-es6",
+      "minVersion": "1.0.0",
+      "required": true,
+      "reason": "Modern JavaScript knowledge is required for CLI development"
+    },
+    {
+      "skillId": "typescript-fundamentals",
+      "minVersion": "1.0.0",
+      "required": true,
+      "reason": "TypeScript enhances CLI reliability and maintainability"
+    }
+  ],
+  "compatibility": [
+    {
+      "agentRole": "CLI Dev",
+      "level": "full",
+      "enhancements": [
+        "Advanced CLI pattern knowledge",
+        "Package distribution expertise",
+        "Configuration management skills",
+        "Interactive command design"
+      ]
+    },
+    {
+      "agentRole": "BackendDev",
+      "level": "partial",
+      "restrictions": [
+        "Focus on utility CLI tools and development scripts"
+      ],
+      "enhancements": [
+        "CLI tool development for automation",
+        "Build and deployment scripting"
+      ]
+    },
+    {
+      "agentRole": "Architect",
+      "level": "limited",
+      "restrictions": [
+        "Focus on CLI tool architecture and extensibility"
+      ],
+      "enhancements": [
+        "CLI design patterns",
+        "Plugin architecture understanding"
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "argument-parsing",
+      "name": "Argument Parsing",
+      "description": "Parse command-line arguments and options with validation and help generation",
+      "type": "action",
+      "implementation": {
+        "approach": "Use argument parsing libraries to define commands, options, and validation rules",
+        "tools": ["Commander.js", "Yargs", "Inquirer.js", "Help generation"],
+        "performance": {
+          "complexity": "low",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "command-organization",
+      "name": "Command Organization",
+      "description": "Structure CLI commands with subcommands and modular architecture",
+      "type": "pattern",
+      "implementation": {
+        "approach": "Organize commands in hierarchical structure with separate modules for major features",
+        "tools": ["Command registry", "Plugin system", "Modular architecture"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "interactive-prompts",
+      "name": "Interactive Prompts",
+      "description": "Create interactive command-line experiences with prompts, selections, and progress indicators",
+      "type": "action",
+      "implementation": {
+        "approach": "Use prompt libraries for interactive user input and real-time feedback",
+        "tools": ["Inquirer.js", "Prompts", "Progress bars", "Spinner animations"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "configuration-management",
+      "name": "Configuration Management",
+      "description": "Handle configuration files, environment variables, and user preferences",
+      "type": "action",
+      "implementation": {
+        "approach": "Support multiple configuration sources with proper precedence and validation",
+        "tools": ["Cosmiconfig", "Environment variables", "JSON/YAML config", "Validation"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "error-handling",
+      "name": "Error Handling and Logging",
+      "description": "Implement comprehensive error handling and logging for CLI applications",
+      "type": "action",
+      "implementation": {
+        "approach": "Use structured logging with appropriate log levels and graceful error handling",
+        "tools": ["Winston", "Pino", "Exit codes", "Error formatting"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "package-distribution",
+      "name": "Package Distribution",
+      "description": "Package and distribute CLI tools via npm with proper executable configuration",
+      "type": "action",
+      "implementation": {
+        "approach": "Configure package.json for CLI distribution with shebang and bin configuration",
+        "tools": ["npm", "package.json", "shebang", "executable permissions"],
+        "performance": {
+          "complexity": "low",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "testing-cli",
+      "name": "CLI Testing",
+      "description": "Test CLI applications with mock stdin/stdout and command execution",
+      "type": "tool",
+      "implementation": {
+        "approach": "Test CLI commands by spawning child processes and capturing output",
+        "tools": ["Jest", "Child process testing", "Mock stdin/stdout", "Snapshot testing"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "medium"
+        }
+      }
+    }
+  ],
+  "examples": [
+    {
+      "title": "Project Scaffolding CLI Tool",
+      "scenario": "Create a comprehensive CLI tool for scaffolding new projects with templates, configuration management, and interactive setup",
+      "steps": [
+        "Design command structure with subcommands for different project types",
+        "Implement argument parsing with validation and help generation",
+        "Create interactive prompts for project configuration",
+        "Implement template engine for project generation",
+        "Add configuration file support and management",
+        "Create progress indicators for long-running operations",
+        "Implement comprehensive error handling and logging",
+        "Set up package distribution and executable configuration",
+        "Write tests for all CLI commands and functionality"
+      ],
+      "code": [
+        "// bin/cli.js",
+        "#!/usr/bin/env node",
+        "const { Command } = require('commander');",
+        "const inquirer = require('inquirer');",
+        "const chalk = require('chalk');",
+        "const ora = require('ora');",
+        "const fs = require('fs-extra');",
+        "const path = require('path');",
+        "const { createProject } = require('../lib/project-creator');",
+        "const { loadConfig } = require('../lib/config');",
+        "",
+        "const program = new Command();",
+        "",
+        "program",
+        "  .name('create-project')",
+        "  .description('CLI tool for scaffolding new projects')",
+        "  .version('1.0.0');",
+        "",
+        "// Create command",
+        "program",
+        "  .command('create [project-name]')",
+        "  .description('Create a new project')",
+        "  .option('-t, --template <template>', 'Project template to use')",
+        "  .option('-d, --directory <directory>', 'Output directory')",
+        "  .option('-c, --config <config>', 'Configuration file path')",
+        "  .option('--no-interactive', 'Disable interactive prompts')",
+        "  .action(async (projectName, options) => {",
+        "    try {",
+        "      // Load configuration",
+        "      const config = await loadConfig(options.config);",
+        "      ",
+        "      // Interactive setup if not disabled",
+        "      if (options.interactive) {",
+        "        const answers = await inquirer.prompt([",
+        "          {",
+        "            type: 'input',",
+        "            name: 'projectName',",
+        "            message: 'Project name:',",
+        "            when: !projectName,",
+        "            validate: input => input.trim() !== '' || 'Project name is required'",
+        "          },",
+        "          {",
+        "            type: 'list',",
+        "            name: 'template',",
+        "            message: 'Choose a template:',",
+        "            choices: [",
+        "              { name: 'React TypeScript', value: 'react-ts' },",
+        "              { name: 'Node.js Express', value: 'node-express' },",
+        "              { name: 'Python Flask', value: 'python-flask' },",
+        "              { name: 'Go API', value: 'go-api' }",
+        "            ],",
+        "            when: !options.template",
+        "          },",
+        "          {",
+        "            type: 'input',",
+        "            name: 'description',",
+        "            message: 'Project description:',",
+        "            default: 'A new project'",
+        "          },",
+        "          {",
+        "            type: 'confirm',",
+        "            name: 'initializeGit',",
+        "            message: 'Initialize git repository?',",
+        "            default: true",
+        "          },",
+        "          {",
+        "            type: 'checkbox',",
+        "            name: 'features',",
+        "            message: 'Select additional features:',",
+        "            choices: [",
+        "              { name: 'ESLint configuration', value: 'eslint' },",
+        "              { name: 'Prettier configuration', value: 'prettier' },",
+        "              { name: 'GitHub Actions CI', value: 'ci' },",
+        "              { name: 'Docker support', value: 'docker' }",
+        "            ]",
+        "          }",
+        "        ]);",
+        "        ",
+        "        Object.assign(options, answers);",
+        "      }",
+        "      ",
+        "      // Validate inputs",
+        "      if (!options.projectName) {",
+        "        console.error(chalk.red('Error: Project name is required'));",
+        "        process.exit(1);",
+        "      }",
+        "      ",
+        "      // Create project with progress indicator",
+        "      const spinner = ora('Creating project...').start();",
+        "      ",
+        "      try {",
+        "        const projectPath = await createProject({",
+        "          name: options.projectName,",
+        "          template: options.template,",
+        "          description: options.description,",
+        "          directory: options.directory,",
+        "          features: options.features || [],",
+        "          initializeGit: options.initializeGit,",
+        "          config",
+        "        });",
+        "        ",
+        "        spinner.succeed(chalk.green('Project created successfully!'));",
+        "        ",
+        "        console.log(chalk.blue('\\nNext steps:'));",
+        "        console.log(`  cd ${projectPath}`);",
+        "        console.log('  npm install');",
+        "        console.log('  npm run dev');",
+        "        ",
+        "      } catch (error) {",
+        "        spinner.fail(chalk.red('Failed to create project'));",
+        "        console.error(chalk.red(error.message));",
+        "        process.exit(1);",
+        "      }",
+        "      ",
+        "    } catch (error) {",
+        "      console.error(chalk.red('Error:'), error.message);",
+        "      process.exit(1);",
+        "    }",
+        "  });",
+        "",
+        "// List templates command",
+        "program",
+        "  .command('list-templates')",
+        "  .description('List available project templates')",
+        "  .action(async () => {",
+        "    try {",
+        "      const templates = await require('../lib/template-registry').getAvailableTemplates();",
+        "      ",
+        "      console.log(chalk.blue('Available templates:'));",
+        "      templates.forEach(template => {",
+        "        console.log(`  ${chalk.green(template.name)} - ${template.description}`);",
+        "      });",
+        "      ",
+        "    } catch (error) {",
+        "      console.error(chalk.red('Error:'), error.message);",
+        "      process.exit(1);",
+        "    }",
+        "  });",
+        "",
+        "// Config command",
+        "program",
+        "  .command('config')",
+        "  .description('Manage CLI configuration')",
+        "  .option('--get <key>', 'Get configuration value')",
+        "  .option('--set <key=value>', 'Set configuration value')",
+        "  .option('--list', 'List all configuration')",
+        "  .action(async (options) => {",
+        "    try {",
+        "      const configManager = require('../lib/config-manager');",
+        "      ",
+        "      if (options.get) {",
+        "        const value = await configManager.get(options.get);",
+        "        console.log(`${options.get} = ${value}`);",
+        "      } else if (options.set) {",
+        "        const [key, value] = options.set.split('=');",
+        "        await configManager.set(key, value);",
+        "        console.log(chalk.green(`Set ${key} = ${value}`));",
+        "      } else if (options.list) {",
+        "        const config = await configManager.getAll();",
+        "        console.log(chalk.blue('Configuration:'));",
+        "        Object.entries(config).forEach(([key, value]) => {",
+        "          console.log(`  ${key} = ${value}`);",
+        "        });",
+        "      }",
+        "      ",
+        "    } catch (error) {",
+        "      console.error(chalk.red('Error:'), error.message);",
+        "      process.exit(1);",
+        "    }",
+        "  });",
+        "",
+        "program.parse();"
+      ],
+      "outcomes": [
+        "Fully functional CLI tool with multiple commands",
+        "Interactive project setup with prompts and validation",
+        "Template-based project generation",
+        "Configuration management and persistence",
+        "Professional error handling and user feedback"
+      ],
+      "relevantFor": ["CLI Dev", "BackendDev"]
+    }
+  ],
+  "performance": {
+    "executionTime": {
+      "min": 2,
+      "max": 30,
+      "average": 10
+    },
+    "resourceUsage": {
+      "memory": "low",
+      "cpu": "low",
+      "network": "none"
+    },
+    "complexity": "moderate",
+    "successRate": 96,
+    "knownIssues": [
+      "Cross-platform compatibility challenges",
+      "Terminal color and formatting inconsistencies",
+      "Dependency management in distributed CLIs"
+    ]
+  },
+  "metadata": {
+    "createdAt": "2025-10-28T15:00:00Z",
+    "updatedAt": "2025-10-28T15:00:00Z",
+    "author": "Eduardo Menoncello",
+    "versionHistory": [
+      {
+        "version": "1.0.0",
+        "releasedAt": "2025-10-28T15:00:00Z",
+        "notes": "Initial release with comprehensive Node.js CLI development capabilities",
+        "newFeatures": [
+          "Command-line argument parsing",
+          "Interactive prompts and user input",
+          "Configuration management",
+          "Package distribution setup",
+          "CLI testing strategies"
+        ]
+      }
+    ],
+    "tags": ["nodejs", "cli", "command-line", "tools", "automation", "typescript"],
+    "relatedSkills": {
+      "similar": ["python-cli-development", "go-cli-development"],
+      "complementary": ["bash-scripting", "package-management", "testing-cli"],
+      "alternative": ["python-cli-development", "rust-cli-development"]
+    },
+    "resources": [
+      {
+        "type": "documentation",
+        "title": "Commander.js Documentation",
+        "url": "https://github.com/tj/commander.js",
+        "description": "Complete solution for Node.js command-line interfaces",
+        "level": "beginner",
+        "estimatedTime": 90
+      },
+      {
+        "type": "documentation",
+        "title": "Inquirer.js Documentation",
+        "url": "https://github.com/SBoudrias/Inquirer.js",
+        "description": "Interactive command-line prompts for Node.js",
+        "level": "intermediate",
+        "estimatedTime": 60
+      },
+      {
+        "type": "tutorial",
+        "title": "Building CLI Tools with Node.js",
+        "url": "https://www.npmjs.com/package/cli",
+        "description": "Comprehensive guide to building Node.js CLI applications",
+        "level": "beginner",
+        "estimatedTime": 120
+      }
+    ],
+    "usage": {
+      "totalUses": 0,
+      "uniqueAgents": 0,
+      "satisfactionRating": 0,
+      "commonUseCases": [
+        "Development tooling",
+        "Build automation",
+        "Project scaffolding",
+        "System administration"
+      ],
+      "trend": "stable",
+      "lastUpdated": "2025-10-28T15:00:00Z"
+    },
+    "quality": {
+      "testCoverage": 85,
+      "documentationScore": 90,
+      "openIssues": 0,
+      "communityRating": 0,
+      "lastAssessed": "2025-10-28T15:00:00Z",
+      "badges": [
+        {
+          "id": "cli-development-expert",
+          "name": "CLI Development Expert",
+          "description": "Advanced CLI development expertise with Node.js",
+          "awardedAt": "2025-10-28T15:00:00Z",
+          "authority": "Menon Market Skills"
+        }
+      ]
+    }
+  }
+}

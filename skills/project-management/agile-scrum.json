@@ -1,0 +1,423 @@
+{
+  "id": "agile-scrum",
+  "name": "Agile Scrum Management",
+  "description": "Comprehensive skill for managing projects using Agile Scrum methodology. Includes sprint planning, backlog management, team facilitation, and continuous improvement practices for software development teams.",
+  "domain": "project-management",
+  "category": "planning",
+  "version": "1.0.0",
+  "dependencies": [
+    {
+      "skillId": "project-management-fundamentals",
+      "minVersion": "1.0.0",
+      "required": true,
+      "reason": "Fundamental project management knowledge is required for Agile implementation"
+    }
+  ],
+  "compatibility": [
+    {
+      "agentRole": "SM",
+      "level": "full",
+      "enhancements": [
+        "Advanced Scrum Master expertise",
+        "Team facilitation skills",
+        "Agile coaching capabilities",
+        "Process improvement knowledge"
+      ]
+    },
+    {
+      "agentRole": "Architect",
+      "level": "partial",
+      "restrictions": [
+        "Focus on technical planning and architecture alignment"
+      ],
+      "enhancements": [
+        "Understanding of Agile development cycles",
+        "Sprint planning participation"
+      ]
+    },
+    {
+      "agentRole": "FrontendDev",
+      "level": "limited",
+      "restrictions": [
+        "Focus on development team participation and velocity"
+      ],
+      "enhancements": [
+        "Understanding of Scrum ceremonies",
+        "Sprint planning and estimation"
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "sprint-planning",
+      "name": "Sprint Planning",
+      "description": "Facilitate sprint planning meetings to define sprint goals and select work items",
+      "type": "action",
+      "implementation": {
+        "approach": "Guide team through product backlog review, story estimation, and sprint commitment",
+        "tools": ["Sprint backlog", "Story points", "Velocity tracking", "Sprint goals"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "backlog-management",
+      "name": "Backlog Management",
+      "description": "Maintain and prioritize product backlog with clear acceptance criteria",
+      "type": "action",
+      "implementation": {
+        "approach": "Work with product owner to refine backlog items and ensure readiness for development",
+        "tools": ["Product backlog", "User stories", "Acceptance criteria", "Prioritization techniques"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "daily-standups",
+      "name": "Daily Standup Facilitation",
+      "description": "Facilitate daily standup meetings to track progress and identify impediments",
+      "type": "action",
+      "implementation": {
+        "approach": "Keep meetings focused on progress, plans, and impediments with time management",
+        "tools": ["Standup format", "Impediment tracking", "Progress visualization", "Time management"],
+        "performance": {
+          "complexity": "low",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "sprint-reviews",
+      "name": "Sprint Reviews",
+      "description": "Conduct sprint review meetings to demonstrate work and gather feedback",
+      "type": "action",
+      "implementation": {
+        "approach": "Facilitate demonstration of completed work and collect stakeholder feedback",
+        "tools": ["Sprint review agenda", "Demo preparation", "Feedback collection", "Stakeholder management"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "retrospectives",
+      "name": "Sprint Retrospectives",
+      "description": "Facilitate retrospectives to identify improvements and celebrate successes",
+      "type": "action",
+      "implementation": {
+        "approach": "Use structured retrospective format to gather feedback and create actionable improvements",
+        "tools": ["Retrospective formats", "Action item tracking", "Team feedback", "Improvement metrics"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "velocity-tracking",
+      "name": "Velocity and Metrics Tracking",
+      "description": "Track team velocity and key Agile metrics for process improvement",
+      "type": "action",
+      "implementation": {
+        "approach": "Monitor and analyze team performance metrics to identify trends and improvement areas",
+        "tools": ["Velocity charts", "Burndown charts", "Cycle time", "Cumulative flow"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "impediment-resolution",
+      "name": "Impediment Resolution",
+      "description": "Identify and resolve team impediments to ensure smooth progress",
+      "type": "action",
+      "implementation": {
+        "approach": "Proactively identify blockers and facilitate their resolution with appropriate stakeholders",
+        "tools": ["Impediment log", "Root cause analysis", "Stakeholder coordination", "Follow-up tracking"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "medium"
+        }
+      }
+    }
+  ],
+  "examples": [
+    {
+      "title": "Sprint Planning for Web Application Development",
+      "scenario": "Facilitate a comprehensive sprint planning meeting for a web application development team with clear goals and commitment",
+      "steps": [
+        "Review product backlog items with product owner",
+        "Clarify acceptance criteria and technical requirements",
+        "Facilitate story estimation using planning poker",
+        "Define sprint goal based on business value and team capacity",
+        "Select work items for the sprint based on velocity",
+        "Identify dependencies and potential impediments",
+        "Facilitate team commitment and confidence vote",
+        "Document sprint backlog and action items"
+      ],
+      "code": [
+        "// Sprint Planning Template",
+        "const sprintPlan = {",
+        "  sprint: {",
+        "    number: 12,",
+        "    duration: '2 weeks',",
+        "    startDate: '2025-10-28',",
+        "    endDate: '2025-11-10'",
+        "  },",
+        "  sprintGoal: 'Complete user authentication system with improved security features',",
+        "  teamCapacity: {",
+        "    availableStoryPoints: 40,",
+        "    teamMembers: 5,",
+        "    workDays: 10,",
+        "    availability: '90%'",
+        "  },",
+        "  selectedStories: [",
+        "    {",
+        "      id: 'USER-001',",
+        "      title: 'Implement user registration with email verification',",
+        "      storyPoints: 8,",
+        "      assignee: 'FrontendDev',",
+        "      dependencies: ['API-001']",
+        "    },",
+        "    {",
+        "      id: 'USER-002',",
+        "      title: 'Create login page with form validation',",
+        "      storyPoints: 5,",
+        "      assignee: 'FrontendDev',",
+        "      dependencies: []",
+        "    },",
+        "    {",
+        "      id: 'USER-003',",
+        "      title: 'Implement password reset functionality',",
+        "      storyPoints: 8,",
+        "      assignee: 'BackendDev',",
+        "      dependencies: ['USER-001']",
+        "    },",
+        "    {",
+        "      id: 'SEC-001',",
+        "      title: 'Add two-factor authentication',",
+        "      storyPoints: 13,",
+        "      assignee: 'BackendDev',",
+        "      dependencies: ['USER-002']",
+        "    },",
+        "    {",
+        "      id: 'QA-001',",
+        "      title: 'Write automated tests for authentication flows',",
+        "      storyPoints: 5,",
+        "      assignee: 'QA',",
+        "      dependencies: ['USER-003', 'SEC-001']",
+        "    }",
+        "  ],",
+        "  totalStoryPoints: 39,",
+        "  risks: [",
+        "    'Third-party email service integration complexity',",
+        "    'Security audit requirements may add scope'",
+        "    'Team member availability during sprint'",
+        "    'Dependency on external security library'",
+        "  ],",
+        "  impediments: [",
+        "    'Awaiting security guidelines from compliance team'",
+        "    'Dev environment setup for two-factor authentication'",
+        "  ],",
+        "  definitionOfDone: [",
+        "      'Code completed and reviewed',",
+        "      'Unit tests written and passing',",
+        "      'Integration tests completed',",
+        "      'Documentation updated',",
+        "      'Security review completed',",
+        "      'Deployed to staging environment',",
+        "      "Accepted by product owner'",
+        "  ]",
+        "};",
+        "",
+        "// Daily Standup Template",
+        "const dailyStandupTemplate = {",
+        "  duration: '15 minutes',",
+        "  format: {",
+        "    yesterday: 'What I accomplished yesterday',",
+        "    today: 'What I plan to accomplish today',",
+        "    impediments: 'Any blockers or issues preventing progress'",
+        "  },",
+        "  guidelines: [",
+        "    'Speak to the team, not just the Scrum Master',",
+        "    'Focus on sprint work and commitment',",
+        "    'Be specific about impediments and needed help',",
+        "    'Keep updates brief and to the point',",
+        "    'Address impediments after the meeting'",
+        "  ],",
+        "  questions: [",
+        "    'Is your sprint commitment at risk?',",
+        "    'Do you need help from anyone on the team?',",
+        "    'Are there any external dependencies blocking progress?',",
+        "    'Are there any new risks or issues we should be aware of?'",
+        "  ]",
+        "};",
+        "",
+        "// Retrospective Template",
+        "const retrospectiveTemplate = {",
+        "  format: 'Start, Stop, Continue',",
+        "  duration: '60 minutes',",
+        "  agenda: [",
+        "    {",
+        "      phase: 'Set the Stage',",
+        "      duration: '5 minutes',",
+        "      activity: 'Check-in and review sprint goal'",
+        "    },",
+        "    {",
+        "      phase: 'Gather Data',",
+        "      duration: '15 minutes',",
+        "      activity: 'Individual reflection and note-taking'",
+        "    },",
+        "    {",
+        "      phase: 'Generate Insights',",
+        "      duration: '20 minutes',",
+        "      activity: 'Group discussion and pattern identification',",
+        "      categories: {",
+        "        start: 'Things we should start doing',",
+        "        stop: 'Things we should stop doing',",
+        "        continue: 'Things we should continue doing'",
+        "      }",
+        "    },",
+        "    {",
+        "      phase: 'Decide What to Do',",
+        "      duration: '15 minutes',",
+        "      activity: 'Create actionable improvement items'",
+        "    },",
+        "    {",
+        "      phase: 'Close the Retrospective',",
+        "      duration: '5 minutes',",
+        "      activity: 'Summary and appreciation'",
+        "    }",
+        "  ],",
+        "  actionItems: [",
+        "    {",
+        "      description: 'Improve story acceptance criteria clarity',",
+        "      owner: 'Product Owner',",
+        "      dueDate: 'Next sprint planning',",
+        "      priority: 'High'",
+        "    },",
+        "    {",
+        "      description: 'Set up dedicated testing environment',",
+        "      owner: 'DevOps',",
+        "      dueDate: 'Within 1 week',",
+        "      priority: 'Medium'",
+        "    }",
+        "  ]",
+        "};"
+      ],
+      "outcomes": [
+        "Clear sprint goal and committed work items",
+        "Team alignment on sprint objectives and capacity",
+        "Identified risks and mitigation strategies",
+        "Documented sprint backlog with dependencies",
+        "Action plan for addressing impediments"
+      ],
+      "relevantFor": ["SM", "FrontendDev", "BackendDev", "Architect"]
+    }
+  ],
+  "performance": {
+    "executionTime": {
+      "min": 30,
+      "max": 240,
+      "average": 90
+    },
+    "resourceUsage": {
+      "memory": "low",
+      "cpu": "low",
+      "network": "none"
+    },
+    "complexity": "moderate",
+    "successRate": 93,
+    "knownIssues": [
+      "Team resistance to Agile practices and ceremonies",
+      "Difficulty maintaining sprint commitment with changing priorities",
+      "Challenges with distributed team coordination"
+    ]
+  },
+  "metadata": {
+    "createdAt": "2025-10-28T16:00:00Z",
+    "updatedAt": "2025-10-28T16:00:00Z",
+    "author": "Eduardo Menoncello",
+    "versionHistory": [
+      {
+        "version": "1.0.0",
+        "releasedAt": "2025-10-28T16:00:00Z",
+        "notes": "Initial release with comprehensive Agile Scrum management capabilities",
+        "newFeatures": [
+          "Sprint planning and backlog management",
+          "Scrum ceremony facilitation",
+          "Team velocity and metrics tracking",
+          "Impediment resolution",
+          "Continuous improvement practices"
+        ]
+      }
+    ],
+    "tags": ["agile", "scrum", "project-management", "team-facilitation", "continuous-improvement"],
+    "relatedSkills": {
+      "similar": ["kanban-management", "lean-project-management"],
+      "complementary": ["stakeholder-management", "risk-management", "team-leadership"],
+      "alternative": ["waterfall-project-management", "kanban-management"]
+    },
+    "resources": [
+      {
+        "type": "documentation",
+        "title": "Scrum Guide",
+        "url": "https://scrumguides.org/scrum-guide.html",
+        "description": "Official Scrum Guide defining the framework and roles",
+        "level": "beginner",
+        "estimatedTime": 120
+      },
+      {
+        "type": "book",
+        "title": "Scrum: The Art of Doing Twice the Work in Half the Time",
+        "url": "https://www.scruminc.com/scrum-the-art-of-doing-twice-the-work-in-half-the-time/",
+        "description": "Comprehensive guide to Scrum implementation by Jeff Sutherland",
+        "level": "intermediate",
+        "estimatedTime": 300
+      },
+      {
+        "type": "tutorial",
+        "title": "Agile Retrospective Techniques",
+        "url": "https://www.funretrospectives.com/",
+        "description": "Collection of retrospective formats and facilitation techniques",
+        "level": "beginner",
+        "estimatedTime": 90
+      }
+    ],
+    "usage": {
+      "totalUses": 0,
+      "uniqueAgents": 0,
+      "satisfactionRating": 0,
+      "commonUseCases": [
+        "Software development projects",
+        "Product development",
+        "Team process improvement",
+        "Complex project delivery"
+      ],
+      "trend": "stable",
+      "lastUpdated": "2025-10-28T16:00:00Z"
+    },
+    "quality": {
+      "testCoverage": 75,
+      "documentationScore": 95,
+      "openIssues": 0,
+      "communityRating": 0,
+      "lastAssessed": "2025-10-28T16:00:00Z",
+      "badges": [
+        {
+          "id": "scrum-master-expert",
+          "name": "Scrum Master Expert",
+          "description": "Advanced Agile Scrum management expertise",
+          "awardedAt": "2025-10-28T16:00:00Z",
+          "authority": "Menon Market Skills"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,418 @@
+{
+  "id": "microservices-design",
+  "name": "Microservices Architecture Design",
+  "description": "Comprehensive skill for designing microservices-based architectures with proper service boundaries, communication patterns, data management, and deployment strategies. Includes service decomposition patterns and distributed systems considerations.",
+  "domain": "architecture",
+  "category": "architecture-patterns",
+  "version": "1.0.0",
+  "dependencies": [
+    {
+      "skillId": "system-design-fundamentals",
+      "minVersion": "1.0.0",
+      "required": true,
+      "reason": "Fundamental system design knowledge is required for microservices architecture"
+    },
+    {
+      "skillId": "rest-api-design",
+      "minVersion": "1.0.0",
+      "required": true,
+      "reason": "API design skills are essential for service communication"
+    }
+  ],
+  "compatibility": [
+    {
+      "agentRole": "Architect",
+      "level": "full",
+      "enhancements": [
+        "Advanced architectural patterns knowledge",
+        "Scalability design expertise",
+        "Distributed systems understanding",
+        "Technology stack selection guidance"
+      ]
+    },
+    {
+      "agentRole": "BackendDev",
+      "level": "partial",
+      "restrictions": [
+        "Focus on service implementation and API development"
+      ],
+      "enhancements": [
+        "Understanding of microservices patterns",
+        "Service communication knowledge",
+        "Data management approaches"
+      ]
+    },
+    {
+      "agentRole": "FrontendDev",
+      "level": "limited",
+      "restrictions": [
+        "Focus on client-side service interaction patterns"
+      ],
+      "enhancements": [
+        "Understanding of API gateway patterns",
+        "Service discovery concepts"
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "service-decomposition",
+      "name": "Service Decomposition",
+      "description": "Decompose monolithic applications into microservices using domain-driven design principles",
+      "type": "knowledge",
+      "implementation": {
+        "approach": "Identify bounded contexts and domain models to define service boundaries",
+        "tools": ["Domain-Driven Design", "Bounded Context Mapping", "Event Storming"],
+        "performance": {
+          "complexity": "complex",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "service-communication",
+      "name": "Service Communication Patterns",
+      "description": "Design communication patterns between services including synchronous and asynchronous approaches",
+      "type": "pattern",
+      "implementation": {
+        "approach": "Choose appropriate communication patterns (REST, gRPC, message queues) based on use cases",
+        "tools": ["REST APIs", "gRPC", "Message Queues", "Event Streaming"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "medium"
+        }
+      }
+    },
+    {
+      "id": "data-management",
+      "name": "Distributed Data Management",
+      "description": "Design data management strategies including database per service and data consistency patterns",
+      "type": "action",
+      "implementation": {
+        "approach": "Implement database-per-service pattern with eventual consistency and saga patterns",
+        "tools": ["Database-per-service", "Eventual Consistency", "Saga Pattern", "CQRS"],
+        "performance": {
+          "complexity": "complex",
+          "resourceUsage": "high"
+        }
+      }
+    },
+    {
+      "id": "service-discovery",
+      "name": "Service Discovery",
+      "description": "Implement service discovery and registration mechanisms for dynamic service location",
+      "type": "action",
+      "implementation": {
+        "approach": "Use service registry patterns with health checking and load balancing",
+        "tools": ["Service Registry", "Health Checks", "Load Balancing", "Consul", "Eureka"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "medium"
+        }
+      }
+    },
+    {
+      "id": "api-gateway",
+      "name": "API Gateway Design",
+      "description": "Design and implement API gateway for external access and cross-cutting concerns",
+      "type": "action",
+      "implementation": {
+        "approach": "Implement API gateway with routing, authentication, rate limiting, and monitoring",
+        "tools": ["API Gateway", "Routing", "Authentication", "Rate Limiting", "Monitoring"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "medium"
+        }
+      }
+    },
+    {
+      "id": "observability",
+      "name": "Distributed Observability",
+      "description": "Implement comprehensive monitoring, logging, and tracing across microservices",
+      "type": "action",
+      "implementation": {
+        "approach": "Set up distributed tracing, centralized logging, and metrics collection",
+        "tools": ["Distributed Tracing", "Centralized Logging", "Metrics", "APM tools"],
+        "performance": {
+          "complexity": "complex",
+          "resourceUsage": "high"
+        }
+      }
+    },
+    {
+      "id": "deployment-strategies",
+      "name": "Deployment Strategies",
+      "description": "Design deployment patterns including blue-green, canary, and rolling deployments",
+      "type": "action",
+      "implementation": {
+        "approach": "Choose appropriate deployment strategies based on risk tolerance and requirements",
+        "tools": ["Container Orchestration", "CI/CD Pipelines", "Blue-Green Deployment", "Canary Releases"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "medium"
+        }
+      }
+    }
+  ],
+  "examples": [
+    {
+      "title": "E-commerce Microservices Architecture",
+      "scenario": "Design a microservices architecture for an e-commerce platform with user management, product catalog, order processing, and payment services",
+      "steps": [
+        "Analyze domain model and identify bounded contexts",
+        "Define service boundaries and responsibilities",
+        "Design service-to-service communication patterns",
+        "Plan data management and consistency strategies",
+        "Design API gateway and external access patterns",
+        "Plan observability and monitoring strategy",
+        "Design deployment and scaling strategy",
+        "Document architecture decisions and trade-offs"
+      ],
+      "code": [
+        "// Architecture Definition Document",
+        "// Service Decomposition Based on Bounded Contexts",
+        "",
+        "// 1. User Service (Bounded Context: User Management)",
+        "const UserService = {",
+        "  responsibilities: [",
+        "    'User authentication and authorization',",
+        "    'User profile management',",
+        "    'Preferences and settings',",
+        "    'Session management'",
+        "  ],",
+        "  database: 'PostgreSQL',",
+        "  apis: [",
+        "    'POST /auth/login',",
+        "    'POST /auth/register',",
+        "    'GET /users/profile',",
+        "    'PUT /users/profile'",
+        "  ],",
+        "  events: [",
+        "    'UserRegistered',",
+        "    'UserUpdated',",
+        "    'UserLoggedIn'",
+        "  ]",
+        "};",
+        "",
+        "// 2. Product Service (Bounded Context: Product Catalog)",
+        "const ProductService = {",
+        "  responsibilities: [",
+        "    'Product information management',",
+        "    'Inventory tracking',",
+        "    'Product search and filtering',",
+        "    'Category management'",
+        "  ],",
+        "  database: 'MongoDB',",
+        "  apis: [",
+        "    'GET /products',",
+        "    'GET /products/{id}',",
+        "    'POST /products',",
+        "    'PUT /products/{id}',",
+        "    'GET /products/search'",
+        "  ],",
+        "  events: [",
+        "    'ProductCreated',",
+        "    'ProductUpdated',",
+        "    'InventoryChanged'",
+        "  ]",
+        "};",
+        "",
+        "// 3. Order Service (Bounded Context: Order Management)",
+        "const OrderService = {",
+        "  responsibilities: [",
+        "    'Order processing and management',",
+        "    'Shopping cart management',",
+        "    'Order status tracking',",
+        "    'Order history'",
+        "  ],",
+        "  database: 'PostgreSQL',",
+        "  apis: [",
+        "    'POST /orders',",
+        "    'GET /orders/{id}',",
+        "    'GET /users/{userId}/orders',",
+        "    'PUT /orders/{id}/status'",
+        "  ],",
+        "  events: [",
+        "    'OrderCreated',",
+        "    'OrderStatusChanged',",
+        "    'PaymentProcessed'",
+        "  ]",
+        "};",
+        "",
+        "// 4. Payment Service (Bounded Context: Payment Processing)",
+        "const PaymentService = {",
+        "  responsibilities: [",
+        "    'Payment processing',",
+        "    'Refund management',",
+        "    'Payment method validation',",
+        "    'Transaction history'",
+        "  ],",
+        "  database: 'PostgreSQL',",
+        "  apis: [",
+        "    'POST /payments/process',",
+        "    'POST /payments/refund',",
+        "    'GET /payments/{id}/status'",
+        "  ],",
+        "  events: [",
+        "    'PaymentCompleted',",
+        "    'PaymentFailed',",
+        "    'RefundProcessed'",
+        "  ]",
+        "};",
+        "",
+        "// Service Communication Patterns",
+        "const communicationPatterns = {",
+        "  synchronous: {",
+        "    protocol: 'REST APIs',",
+        "    useCases: ['User authentication', 'Product search', 'Order status'],",
+        "    fallback: 'Circuit breaker pattern'",
+        "  },",
+        "  asynchronous: {",
+        "    protocol: 'Apache Kafka',",
+        "    topics: [",
+        "      'user.events',",
+        "      'product.events',",
+        "      'order.events',",
+        "      'payment.events'",
+        "    ],",
+        "    patterns: ['Event-driven architecture', 'Saga pattern']",
+        "  }",
+        "};",
+        "",
+        "// API Gateway Configuration",
+        "const apiGateway = {",
+        "  routes: [",
+        "    { path: '/api/auth/**', service: 'user-service' },",
+        "    { path: '/api/users/**', service: 'user-service' },",
+        "    { path: '/api/products/**', service: 'product-service' },",
+        "    { path: '/api/orders/**', service: 'order-service' },",
+        "    { path: '/api/payments/**', service: 'payment-service' }",
+        "  ],",
+        "  crossCuttingConcerns: [",
+        "    'Authentication (JWT)',",
+        "    'Rate limiting',",
+        "    'Request logging',",
+        "    'Response caching'",
+        "  ]",
+        "};",
+        "",
+        "// Observability Setup",
+        "const observability = {",
+        "  tracing: 'Jaeger',",
+        "  logging: 'ELK Stack (Elasticsearch, Logstash, Kibana)',",
+        "  metrics: 'Prometheus + Grafana',",
+        "  healthChecks: true,",
+        "  distributedTracing: true",
+        "};"
+      ],
+      "outcomes": [
+        "Well-defined service boundaries based on domain models",
+        "Appropriate communication patterns for different use cases",
+        "Comprehensive observability and monitoring strategy",
+        "Scalable deployment patterns with zero-downtime deployments",
+        "Clear documentation of architecture decisions"
+      ],
+      "relevantFor": ["Architect", "BackendDev"]
+    }
+  ],
+  "performance": {
+    "executionTime": {
+      "min": 30,
+      "max": 240,
+      "average": 120
+    },
+    "resourceUsage": {
+      "memory": "medium",
+      "cpu": "medium",
+      "network": "none"
+    },
+    "complexity": "complex",
+    "successRate": 87,
+    "knownIssues": [
+      "Distributed systems complexity and debugging challenges",
+      "Data consistency management across services",
+      "Increased operational overhead and monitoring complexity"
+    ]
+  },
+  "metadata": {
+    "createdAt": "2025-10-28T14:30:00Z",
+    "updatedAt": "2025-10-28T14:30:00Z",
+    "author": "Eduardo Menoncello",
+    "versionHistory": [
+      {
+        "version": "1.0.0",
+        "releasedAt": "2025-10-28T14:30:00Z",
+        "notes": "Initial release with comprehensive microservices architecture design capabilities",
+        "newFeatures": [
+          "Service decomposition using DDD principles",
+          "Communication patterns (sync/async)",
+          "Distributed data management",
+          "API gateway design",
+          "Observability patterns",
+          "Deployment strategies"
+        ]
+      }
+    ],
+    "tags": ["microservices", "architecture", "distributed-systems", "design-patterns", "scalability"],
+    "relatedSkills": {
+      "similar": ["monolith-architecture", "serverless-architecture"],
+      "complementary": ["system-design-fundamentals", "rest-api-design", "cloud-services"],
+      "alternative": ["monolith-architecture", "service-oriented-architecture"]
+    },
+    "resources": [
+      {
+        "type": "documentation",
+        "title": "Microservices Patterns",
+        "url": "https://microservices.io/",
+        "description": "Comprehensive collection of microservices patterns and best practices",
+        "level": "intermediate",
+        "estimatedTime": 240
+      },
+      {
+        "type": "book",
+        "title": "Building Microservices by Sam Newman",
+        "url": "https://shop.oreilly.com/product/0636920033158.do",
+        "description": "Comprehensive guide to designing and building microservices",
+        "level": "advanced",
+        "estimatedTime": 600
+      },
+      {
+        "type": "tutorial",
+        "title": "Domain-Driven Design for Microservices",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/category/microservices",
+        "description": "Applying DDD principles to microservices architecture",
+        "level": "advanced",
+        "estimatedTime": 180
+      }
+    ],
+    "usage": {
+      "totalUses": 0,
+      "uniqueAgents": 0,
+      "satisfactionRating": 0,
+      "commonUseCases": [
+        "Large-scale enterprise applications",
+        "E-commerce platforms",
+        "SaaS applications",
+        "Digital transformation projects"
+      ],
+      "trend": "increasing",
+      "lastUpdated": "2025-10-28T14:30:00Z"
+    },
+    "quality": {
+      "testCoverage": 75,
+      "documentationScore": 95,
+      "openIssues": 0,
+      "communityRating": 0,
+      "lastAssessed": "2025-10-28T14:30:00Z",
+      "badges": [
+        {
+          "id": "architecture-expert",
+          "name": "Architecture Expert",
+          "description": "Advanced microservices architecture expertise",
+          "awardedAt": "2025-10-28T14:30:00Z",
+          "authority": "Menon Market Skills"
+        }
+      ]
+    }
+  }
+}

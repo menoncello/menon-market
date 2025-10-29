@@ -4,7 +4,7 @@
  */
 
 // Export main testing framework
-export { TestingFramework } from './TestingFramework';
+export { TestingFramework } from './testing-framework';
 
 // Export types
-export type { TestResult, TestSuite, ValidationReport } from './TestingFramework';
+export type { TestResult, TestSuite, ValidationReport } from './testing-types';
