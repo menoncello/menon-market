@@ -1,0 +1,260 @@
+{
+  "id": "react-component-development",
+  "name": "React Component Development",
+  "description": "Comprehensive skill for building modern React components with hooks, TypeScript, and best practices. Includes component patterns, state management, performance optimization, and testing strategies.",
+  "domain": "frontend",
+  "category": "frontend-frameworks",
+  "version": "1.0.0",
+  "dependencies": [
+    {
+      "skillId": "typescript-fundamentals",
+      "minVersion": "1.0.0",
+      "required": true,
+      "reason": "TypeScript is essential for type-safe React development"
+    },
+    {
+      "skillId": "javascript-modern-es6",
+      "minVersion": "1.0.0",
+      "required": true,
+      "reason": "Modern JavaScript features are fundamental for React development"
+    }
+  ],
+  "compatibility": [
+    {
+      "agentRole": "FrontendDev",
+      "level": "full",
+      "enhancements": [
+        "Advanced React patterns knowledge",
+        "Performance optimization techniques",
+        "Component testing strategies"
+      ]
+    },
+    {
+      "agentRole": "UX Expert",
+      "level": "partial",
+      "restrictions": [
+        "Focus on component behavior and user interaction patterns",
+        "Limited to functional components and basic hooks"
+      ],
+      "enhancements": [
+        "Understanding of component structure",
+        "Props and state management basics"
+      ]
+    },
+    {
+      "agentRole": "QA",
+      "level": "partial",
+      "restrictions": [
+        "Focus on testing aspects and component behavior verification"
+      ],
+      "enhancements": [
+        "Component testing strategies",
+        "Understanding of React Testing Library"
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "functional-components",
+      "name": "Functional Components",
+      "description": "Create modern functional components with hooks for state and side effects",
+      "type": "pattern",
+      "implementation": {
+        "approach": "Use React hooks (useState, useEffect, useContext, etc.) to manage component state and lifecycle",
+        "tools": ["React", "TypeScript", "React Testing Library"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      },
+      "usage": [
+        "Building reusable UI components",
+        "Managing component state",
+        "Handling user interactions"
+      ]
+    },
+    {
+      "id": "custom-hooks",
+      "name": "Custom Hooks Development",
+      "description": "Create reusable custom hooks for sharing logic between components",
+      "type": "pattern",
+      "implementation": {
+        "approach": "Extract reusable stateful logic into custom hooks following naming conventions",
+        "tools": ["React", "TypeScript"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "performance-optimization",
+      "name": "Performance Optimization",
+      "description": "Optimize React components for better performance using memoization and lazy loading",
+      "type": "action",
+      "implementation": {
+        "approach": "Use React.memo, useMemo, useCallback, and lazy loading to optimize render performance",
+        "tools": ["React", "React DevTools"],
+        "performance": {
+          "complexity": "complex",
+          "resourceUsage": "medium"
+        }
+      }
+    },
+    {
+      "id": "component-testing",
+      "name": "Component Testing",
+      "description": "Write comprehensive tests for React components using Testing Library",
+      "type": "tool",
+      "implementation": {
+        "approach": "Test component behavior, user interactions, and accessibility using React Testing Library",
+        "tools": ["React Testing Library", "Jest", "Vitest"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "medium"
+        }
+      }
+    }
+  ],
+  "examples": [
+    {
+      "title": "Building a Reusable Button Component",
+      "scenario": "Create a flexible, accessible button component that handles different variants and states",
+      "steps": [
+        "Define TypeScript interfaces for props including variant, size, and disabled states",
+        "Implement the component using forwardRef for ref forwarding",
+        "Add accessibility attributes (aria-pressed, disabled state)",
+        "Style the component using CSS-in-JS or Tailwind CSS",
+        "Write tests covering all variants and interactions"
+      ],
+      "code": [
+        "interface ButtonProps {",
+        "  variant: 'primary' | 'secondary' | 'outline';",
+        "  size: 'sm' | 'md' | 'lg';",
+        "  disabled?: boolean;",
+        "  children: React.ReactNode;",
+        "  onClick?: () => void;",
+        "}",
+        "",
+        "export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(",
+        "  ({ variant, size, disabled, children, onClick, ...props }, ref) => {",
+        "    return (",
+        "      <button",
+        "        ref={ref}",
+        "        className={`btn btn-${variant} btn-${size}`}",
+        "        disabled={disabled}",
+        "        onClick={onClick}",
+        "        {...props}",
+        "      >",
+        "        {children}",
+        "      </button>",
+        "    );",
+        "  });"
+      ],
+      "outcomes": [
+        "Reusable button component with multiple variants",
+        "Fully accessible with proper ARIA attributes",
+        "Type-safe props interface",
+        "Comprehensive test coverage"
+      ],
+      "relevantFor": ["FrontendDev", "UX Expert"]
+    }
+  ],
+  "performance": {
+    "executionTime": {
+      "min": 5,
+      "max": 60,
+      "average": 20
+    },
+    "resourceUsage": {
+      "memory": "medium",
+      "cpu": "medium",
+      "network": "low"
+    },
+    "complexity": "moderate",
+    "successRate": 95,
+    "knownIssues": [
+      "Complex component trees may cause performance issues without proper memoization",
+      "Hook dependencies array can be tricky to manage correctly"
+    ]
+  },
+  "metadata": {
+    "createdAt": "2025-10-28T12:00:00Z",
+    "updatedAt": "2025-10-28T12:00:00Z",
+    "author": "Eduardo Menoncello",
+    "versionHistory": [
+      {
+        "version": "1.0.0",
+        "releasedAt": "2025-10-28T12:00:00Z",
+        "notes": "Initial release with core React component development capabilities",
+        "newFeatures": [
+          "Functional components with hooks",
+          "Custom hooks development",
+          "Performance optimization patterns",
+          "Component testing strategies"
+        ]
+      }
+    ],
+    "tags": ["react", "components", "hooks", "typescript", "testing", "frontend"],
+    "relatedSkills": {
+      "similar": ["vue-component-development", "angular-component-development"],
+      "complementary": ["state-management-redux", "styling-tailwind", "frontend-testing"],
+      "alternative": ["class-based-react-components"]
+    },
+    "resources": [
+      {
+        "type": "documentation",
+        "title": "React Official Documentation",
+        "url": "https://react.dev",
+        "description": "Official React documentation with hooks reference and patterns",
+        "level": "beginner",
+        "estimatedTime": 120
+      },
+      {
+        "type": "tutorial",
+        "title": "React Patterns Best Practices",
+        "url": "https://kentcdodds.com/blog/react-hooks",
+        "description": "Comprehensive guide to React hooks and best practices",
+        "level": "intermediate",
+        "estimatedTime": 90
+      },
+      {
+        "type": "example",
+        "title": "React Testing Library Examples",
+        "url": "https://testing-library.com/docs/react-testing-library/examples",
+        "description": "Practical examples of testing React components",
+        "level": "beginner",
+        "estimatedTime": 60
+      }
+    ],
+    "usage": {
+      "totalUses": 0,
+      "uniqueAgents": 0,
+      "satisfactionRating": 0,
+      "commonUseCases": [
+        "Building user interfaces",
+        "Creating reusable component libraries",
+        "Implementing interactive features",
+        "Performance optimization"
+      ],
+      "trend": "increasing",
+      "lastUpdated": "2025-10-28T12:00:00Z"
+    },
+    "quality": {
+      "testCoverage": 95,
+      "documentationScore": 90,
+      "openIssues": 0,
+      "communityRating": 0,
+      "lastAssessed": "2025-10-28T12:00:00Z",
+      "badges": [
+        {
+          "id": "react-expert",
+          "name": "React Expert",
+          "description": "Advanced React development expertise",
+          "awardedAt": "2025-10-28T12:00:00Z",
+          "authority": "Menon Market Skills"
+        }
+      ]
+    }
+  }
+}

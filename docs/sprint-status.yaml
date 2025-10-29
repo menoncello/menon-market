@@ -40,7 +40,7 @@ development_status:
   epic-1: contexted
   1-1-agent-type-schema-definition: done
   1-2-directory-structure-generator: done
-  1-3-core-skills-implementation-framework: backlog
+  1-3-core-skills-implementation-framework: done
   1-4-skill-composition-engine: backlog
   1-5-mcp-server-template-implementation: backlog
   1-6-memory-and-learning-system-foundation: backlog

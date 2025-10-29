@@ -1,0 +1,338 @@
+{
+  "id": "database-design-sql",
+  "name": "SQL Database Design",
+  "description": "Comprehensive skill for designing and implementing SQL databases with proper normalization, indexing, relationships, and performance optimization. Includes both relational database design and query optimization.",
+  "domain": "backend",
+  "category": "databases",
+  "version": "1.0.0",
+  "dependencies": [
+    {
+      "skillId": "sql-fundamentals",
+      "minVersion": "1.0.0",
+      "required": true,
+      "reason": "Fundamental SQL knowledge is required for database design"
+    }
+  ],
+  "compatibility": [
+    {
+      "agentRole": "BackendDev",
+      "level": "full",
+      "enhancements": [
+        "Advanced database design patterns",
+        "Performance optimization techniques",
+        "Database security implementation",
+        "Migration strategy planning"
+      ]
+    },
+    {
+      "agentRole": "Architect",
+      "level": "partial",
+      "restrictions": [
+        "Focus on data modeling and architectural considerations"
+      ],
+      "enhancements": [
+        "Understanding of database architecture patterns",
+        "Data consistency principles"
+      ]
+    },
+    {
+      "agentRole": "QA",
+      "level": "limited",
+      "restrictions": [
+        "Focus on data validation and integrity testing"
+      ],
+      "enhancements": [
+        "Database testing strategies",
+        "Data integrity verification"
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "entity-relationship-modeling",
+      "name": "Entity-Relationship Modeling",
+      "description": "Design database schemas using entity-relationship diagrams and normalization principles",
+      "type": "knowledge",
+      "implementation": {
+        "approach": "Identify entities, attributes, and relationships, then apply normalization rules",
+        "tools": ["ERD tools", "Normalization theory", "UML"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "normalization",
+      "name": "Database Normalization",
+      "description": "Apply normalization principles (1NF, 2NF, 3NF, BCNF) to eliminate data redundancy",
+      "type": "action",
+      "implementation": {
+        "approach": "Progressively normalize database schema through standard forms",
+        "tools": ["Normalization algorithms", "Functional dependencies"],
+        "performance": {
+          "complexity": "complex",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "indexing-strategies",
+      "name": "Indexing Strategies",
+      "description": "Design optimal indexing strategies for query performance optimization",
+      "type": "action",
+      "implementation": {
+        "approach": "Analyze query patterns and create appropriate indexes (B-tree, hash, composite)",
+        "tools": ["Database query analyzers", "EXPLAIN plans", "Index tuning tools"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "medium"
+        }
+      }
+    },
+    {
+      "id": "relationship-design",
+      "name": "Relationship Design",
+      "description": "Implement proper relationships (one-to-one, one-to-many, many-to-many) with foreign keys",
+      "type": "action",
+      "implementation": {
+        "approach": "Define foreign key constraints and implement junction tables for many-to-many relationships",
+        "tools": ["Foreign key constraints", "Junction tables", "Referential integrity"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    },
+    {
+      "id": "query-optimization",
+      "name": "Query Optimization",
+      "description": "Optimize SQL queries for better performance using proper indexing and query structure",
+      "type": "action",
+      "implementation": {
+        "approach": "Analyze execution plans and optimize queries using appropriate joins and indexing",
+        "tools": ["EXPLAIN/EXPLAIN ANALYZE", "Query analyzers", "Performance monitoring"],
+        "performance": {
+          "complexity": "complex",
+          "resourceUsage": "medium"
+        }
+      }
+    },
+    {
+      "id": "migration-design",
+      "name": "Migration Design",
+      "description": "Design database migrations for schema evolution and deployment",
+      "type": "action",
+      "implementation": {
+        "approach": "Create version-controlled migration scripts with rollback capabilities",
+        "tools": ["Migration frameworks", "Version control", "Database comparison tools"],
+        "performance": {
+          "complexity": "medium",
+          "resourceUsage": "low"
+        }
+      }
+    }
+  ],
+  "examples": [
+    {
+      "title": "Designing an E-commerce Database",
+      "scenario": "Create a normalized database schema for an e-commerce platform with users, products, orders, and reviews",
+      "steps": [
+        "Identify core entities (Users, Products, Categories, Orders, OrderItems, Reviews)",
+        "Define relationships between entities",
+        "Apply normalization to eliminate redundancy",
+        "Design primary and foreign key constraints",
+        "Create appropriate indexes for common queries",
+        "Write migration scripts for database setup",
+        "Add constraints for data integrity",
+        "Create views for complex queries"
+      ],
+      "code": [
+        "-- Users table",
+        "CREATE TABLE users (",
+        "    id SERIAL PRIMARY KEY,",
+        "    email VARCHAR(255) UNIQUE NOT NULL,",
+        "    password_hash VARCHAR(255) NOT NULL,",
+        "    first_name VARCHAR(100) NOT NULL,",
+        "    last_name VARCHAR(100) NOT NULL,",
+        "    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,",
+        "    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
+        ");",
+        "",
+        "-- Categories table",
+        "CREATE TABLE categories (",
+        "    id SERIAL PRIMARY KEY,",
+        "    name VARCHAR(100) UNIQUE NOT NULL,",
+        "    description TEXT,",
+        "    parent_id INTEGER REFERENCES categories(id),",
+        "    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
+        ");",
+        "",
+        "-- Products table",
+        "CREATE TABLE products (",
+        "    id SERIAL PRIMARY KEY,",
+        "    name VARCHAR(255) NOT NULL,",
+        "    description TEXT,",
+        "    price DECIMAL(10, 2) NOT NULL,",
+        "    stock_quantity INTEGER NOT NULL DEFAULT 0,",
+        "    category_id INTEGER REFERENCES categories(id),",
+        "    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,",
+        "    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
+        ");",
+        "",
+        "-- Orders table",
+        "CREATE TABLE orders (",
+        "    id SERIAL PRIMARY KEY,",
+        "    user_id INTEGER NOT NULL REFERENCES users(id),",
+        "    total_amount DECIMAL(10, 2) NOT NULL,",
+        "    status VARCHAR(50) NOT NULL DEFAULT 'pending',",
+        "    shipping_address TEXT NOT NULL,",
+        "    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,",
+        "    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
+        ");",
+        "",
+        "-- Order items table (many-to-many relationship)",
+        "CREATE TABLE order_items (",
+        "    id SERIAL PRIMARY KEY,",
+        "    order_id INTEGER NOT NULL REFERENCES orders(id) ON DELETE CASCADE,",
+        "    product_id INTEGER NOT NULL REFERENCES products(id),",
+        "    quantity INTEGER NOT NULL CHECK (quantity > 0),",
+        "    unit_price DECIMAL(10, 2) NOT NULL,",
+        "    UNIQUE(order_id, product_id)",
+        ");",
+        "",
+        "-- Create indexes for performance",
+        "CREATE INDEX idx_users_email ON users(email);",
+        "CREATE INDEX idx_products_category_id ON products(category_id);",
+        "CREATE INDEX idx_orders_user_id ON orders(user_id);",
+        "CREATE INDEX idx_orders_status ON orders(status);",
+        "CREATE INDEX idx_orders_created_at ON orders(created_at);",
+        "CREATE INDEX idx_order_items_order_id ON order_items(order_id);",
+        "CREATE INDEX idx_order_items_product_id ON order_items(product_id);",
+        "",
+        "-- Create views for common queries",
+        "CREATE VIEW order_summary AS",
+        "SELECT ",
+        "    o.id as order_id,",
+        "    o.user_id,",
+        "    u.email as user_email,",
+        "    o.total_amount,",
+        "    o.status,",
+        "    o.created_at as order_date,",
+        "    COUNT(oi.id) as item_count",
+        "FROM orders o",
+        "JOIN users u ON o.user_id = u.id",
+        "LEFT JOIN order_items oi ON o.id = oi.order_id",
+        "GROUP BY o.id, o.user_id, u.email, o.total_amount, o.status, o.created_at;"
+      ],
+      "outcomes": [
+        "Normalized database schema eliminating data redundancy",
+        "Proper relationships with referential integrity",
+        "Optimized indexes for common query patterns",
+        "Migration scripts for deployment",
+        "Database views for complex queries"
+      ],
+      "relevantFor": ["BackendDev", "Architect"]
+    }
+  ],
+  "performance": {
+    "executionTime": {
+      "min": 15,
+      "max": 180,
+      "average": 60
+    },
+    "resourceUsage": {
+      "memory": "medium",
+      "cpu": "medium",
+      "network": "none"
+    },
+    "complexity": "complex",
+    "successRate": 89,
+    "knownIssues": [
+      "Over-normalization can hurt performance",
+      "Complex queries may require denormalization",
+      "Index management can be challenging in large databases"
+    ]
+  },
+  "metadata": {
+    "createdAt": "2025-10-28T13:30:00Z",
+    "updatedAt": "2025-10-28T13:30:00Z",
+    "author": "Eduardo Menoncello",
+    "versionHistory": [
+      {
+        "version": "1.0.0",
+        "releasedAt": "2025-10-28T13:30:00Z",
+        "notes": "Initial release with comprehensive SQL database design capabilities",
+        "newFeatures": [
+          "Entity-relationship modeling",
+          "Database normalization",
+          "Indexing strategies",
+          "Relationship design",
+          "Query optimization",
+          "Migration design and management"
+        ]
+      }
+    ],
+    "tags": ["sql", "database", "design", "normalization", "indexing", "backend"],
+    "relatedSkills": {
+      "similar": ["nosql-database-design", "database-optimization"],
+      "complementary": ["rest-api-design", "data-modeling", "performance-tuning"],
+      "alternative": ["nosql-database-design", "graph-database-design"]
+    },
+    "resources": [
+      {
+        "type": "documentation",
+        "title": "Database Design Fundamentals",
+        "url": "https://www.guru99.com/database-design.html",
+        "description": "Comprehensive guide to database design principles and normalization",
+        "level": "beginner",
+        "estimatedTime": 150
+      },
+      {
+        "type": "documentation",
+        "title": "PostgreSQL Documentation",
+        "url": "https://www.postgresql.org/docs/",
+        "description": "Official PostgreSQL documentation with design guidelines",
+        "level": "intermediate",
+        "estimatedTime": 200
+      },
+      {
+        "type": "tutorial",
+        "title": "SQL Indexing Best Practices",
+        "url": "https://use-the-index-luke.com/",
+        "description": "Comprehensive guide to SQL indexing for performance optimization",
+        "level": "advanced",
+        "estimatedTime": 120
+      }
+    ],
+    "usage": {
+      "totalUses": 0,
+      "uniqueAgents": 0,
+      "satisfactionRating": 0,
+      "commonUseCases": [
+        "Web application backends",
+        "Data warehousing",
+        "Analytics platforms",
+        "Enterprise applications"
+      ],
+      "trend": "stable",
+      "lastUpdated": "2025-10-28T13:30:00Z"
+    },
+    "quality": {
+      "testCoverage": 80,
+      "documentationScore": 90,
+      "openIssues": 0,
+      "communityRating": 0,
+      "lastAssessed": "2025-10-28T13:30:00Z",
+      "badges": [
+        {
+          "id": "database-design-expert",
+          "name": "Database Design Expert",
+          "description": "Advanced SQL database design expertise",
+          "awardedAt": "2025-10-28T13:30:00Z",
+          "authority": "Menon Market Skills"
+        }
+      ]
+    }
+  }
+}

@@ -1,4 +1,4 @@
-# Senior Developer Review - Workflow Instructions
+# Review Story - Workflow Instructions
 
 ```xml
 <critical>The workflow execution engine is governed by: {project-root}/bmad/core/tasks/workflow.xml</critical>
@@ -90,7 +90,7 @@
     <action>Scan implementation files for eslint-disable comments and flag as violations</action>
     <action>Scan implementation files for @ts-ignore/@ts-expect-error and flag as violations</action>
     <action>Verify all tests pass 100% and test coverage is adequate</action>
-    <action if="mutation testing configured">Verify mutation score meets ≥ 85% threshold</action>
+    <check if="mutation testing configured">Verify mutation score meets ≥85% threshold</check>
     <action if="quality gates were not properly enforced">flag as High Severity finding</action>
   </step>
 
@@ -184,3 +184,10 @@ Review was saved to story file, but sprint-status.yaml may be out of sync.
 
 </workflow>
 ```
+
+## Notes
+
+- **Quality Gates Integration**: Step 5.5 ensures that quality gates compliance is verified during code review
+- **Critical Quality Checks**: Explicit verification of TypeScript compilation, ESLint compliance, test execution, and mutation testing
+- **Zero-Tolerance Enforcement**: Scans for eslint-disable and @ts-ignore comments and flags as violations
+- **Action Item Tracking**: Structured persistence of review findings with severity levels and ownership

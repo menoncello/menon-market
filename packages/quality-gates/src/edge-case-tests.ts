@@ -4,21 +4,42 @@
  */
 
 import { AgentCreationService } from '@menon-market/agent-creator';
-import { CreateAgentRequest, AgentDefinition } from '@menon-market/core';
-import { TestResult, EdgeCaseTestResult } from './TestingFramework';
+import {
+  CreateAgentRequest,
+  AgentDefinition,
+  AgentConfiguration,
+  AgentMetadata,
+  PerformanceConfig,
+  CapabilityConfig,
+  CommunicationConfig,
+} from '@menon-market/core';
+import { type TestResult, type EdgeCaseTestResult } from './testing-types';
+
+/** Constants for testing */
+const DEFAULT_TEST_ARRAY_SIZE = 5;
+const DEFAULT_MAX_EXECUTION_TIME = 60;
+const DEFAULT_MEMORY_LIMIT = 512;
+const DEFAULT_MAX_CONCURRENT_TASKS = 1;
+const DEFAULT_PRIORITY = 5;
+const TEST_VERSION = '1.0.0';
+const TEST_AUTHOR = 'test';
 
 /**
- * Edge case test methods
+ * Edge case test methods for agent validation and creation
  */
 export class EdgeCaseTests {
   private agentCreationService: AgentCreationService;
 
+  /**
+   * Create a new EdgeCaseTests instance
+   */
   constructor() {
     this.agentCreationService = new AgentCreationService();
   }
 
   /**
    * Test empty request
+   * @returns {Promise<EdgeCaseTestResult>} Promise resolving to edge case test result
    */
   async testEmptyRequest(): Promise<EdgeCaseTestResult> {
     try {
@@ -37,6 +58,7 @@ export class EdgeCaseTests {
 
   /**
    * Test invalid template ID
+   * @returns {Promise<EdgeCaseTestResult>} Promise resolving to edge case test result
    */
   async testInvalidTemplateId(): Promise<EdgeCaseTestResult> {
     try {
@@ -58,6 +80,7 @@ export class EdgeCaseTests {
 
   /**
    * Test invalid customizations
+   * @returns {Promise<EdgeCaseTestResult>} Promise resolving to edge case test result
    */
   async testInvalidCustomizations(): Promise<EdgeCaseTestResult> {
     try {
@@ -78,6 +101,7 @@ export class EdgeCaseTests {
 
   /**
    * Test missing required fields
+   * @returns {Promise<EdgeCaseTestResult>} Promise resolving to edge case test result
    */
   async testMissingRequiredFields(): Promise<EdgeCaseTestResult> {
     try {
@@ -97,6 +121,7 @@ export class EdgeCaseTests {
 
   /**
    * Create request with missing required fields for testing
+   * @returns {CreateAgentRequest} CreateAgentRequest with intentionally missing required fields
    */
   private createMissingFieldsRequest(): CreateAgentRequest {
     return {
@@ -118,50 +143,76 @@ export class EdgeCaseTests {
 
   /**
    * Create minimal configuration for testing
+   * @returns {AgentConfiguration} Minimal agent configuration
    */
-  private createMinimalConfiguration() {
+  private createMinimalConfiguration(): AgentConfiguration {
     return {
-      performance: {
-        maxExecutionTime: 60,
-        memoryLimit: 512,
-        maxConcurrentTasks: 1,
-        priority: 5,
+      performance: this.createPerformanceConfig(),
+      capabilities: this.createCapabilityConfig(),
+      communication: this.createCommunicationConfig(),
+    };
+  }
+
+  /**
+   * Create performance configuration
+   * @returns {PerformanceConfig} Performance configuration object
+   */
+  private createPerformanceConfig(): PerformanceConfig {
+    return {
+      maxExecutionTime: DEFAULT_MAX_EXECUTION_TIME,
+      memoryLimit: DEFAULT_MEMORY_LIMIT,
+      maxConcurrentTasks: DEFAULT_MAX_CONCURRENT_TASKS,
+      priority: DEFAULT_PRIORITY,
+    };
+  }
+
+  /**
+   * Create capability configuration
+   * @returns {CapabilityConfig} Capability configuration object
+   */
+  private createCapabilityConfig(): CapabilityConfig {
+    return {
+      allowedTools: [],
+      fileSystemAccess: {
+        read: true,
+        write: false,
+        execute: false,
       },
-      capabilities: {
-        allowedTools: [],
-        fileSystemAccess: {
-          read: true,
-          write: false,
-          execute: false,
-        },
-        networkAccess: {
-          http: false,
-          https: false,
-          externalApis: false,
-        },
-        agentIntegration: false,
+      networkAccess: {
+        http: false,
+        https: false,
+        externalApis: false,
       },
-      communication: {
-        style: 'formal' as const,
-        responseFormat: 'markdown' as const,
-        collaboration: {
-          enabled: false,
-          roles: ['contributor' as const],
-          conflictResolution: 'collaborative' as const,
-        },
+      agentIntegration: false,
+    };
+  }
+
+  /**
+   * Create communication configuration
+   * @returns {CommunicationConfig} Communication configuration object
+   */
+  private createCommunicationConfig(): CommunicationConfig {
+    return {
+      style: 'formal' as const,
+      responseFormat: 'markdown' as const,
+      collaboration: {
+        enabled: false,
+        roles: ['contributor' as const],
+        conflictResolution: 'collaborative' as const,
       },
     };
   }
 
   /**
    * Create minimal metadata for testing
+   * @returns {AgentMetadata} Minimal agent metadata
    */
-  private createMinimalMetadata() {
+  private createMinimalMetadata(): AgentMetadata {
     return {
       createdAt: new Date(),
       updatedAt: new Date(),
-      version: '1.0.0',
-      author: 'test',
+      version: TEST_VERSION,
+      author: TEST_AUTHOR,
       tags: [],
       dependencies: [],
     };
@@ -169,10 +220,11 @@ export class EdgeCaseTests {
 
   /**
    * Test concurrent creation
+   * @returns {Promise<EdgeCaseTestResult>} Promise resolving to edge case test result
    */
   async testConcurrentCreation(): Promise<EdgeCaseTestResult> {
     try {
-      const requests = Array(5)
+      const requests = Array(DEFAULT_TEST_ARRAY_SIZE)
         .fill(null)
         .map(() => ({
           definition: 'FrontendDev',
@@ -199,6 +251,8 @@ export class EdgeCaseTests {
 
   /**
    * Test valid agent validation
+   * @param {AgentDefinition} agent - The agent definition to test
+   * @returns {Promise<TestResult>} Promise resolving to test result
    */
   async testValidAgentValidation(agent: AgentDefinition): Promise<TestResult> {
     const startTime = Date.now();
@@ -226,6 +280,7 @@ export class EdgeCaseTests {
 
   /**
    * Test template validation framework
+   * @returns {Promise<TestResult>} Promise resolving to test result
    */
   async testTemplateValidationFramework(): Promise<TestResult> {
     const startTime = Date.now();
