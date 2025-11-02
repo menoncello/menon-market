@@ -1,0 +1,78 @@
+{
+  "name": "menon-marketplace",
+  "owner": {
+    "name": "Eduardo Menoncello",
+    "email": "eduardo@menoncello.com"
+  },
+  "description": "A curated marketplace for Claude Code plugins and skills by Eduardo Menoncello",
+  "version": "1.0.0",
+  "license": "MIT",
+  "repository": "https://github.com/menoncello/menon-marketplace",
+  "homepage": "https://menoncello.com/marketplace",
+  "plugins": [
+    {
+      "name": "studio-cc",
+      "author": {
+        "name": "Eduardo Menoncello",
+        "email": "eduardo@menoncello.com"
+      },
+      "source": "./plugins/studio-cc",
+      "version": "1.0.0",
+      "description": "Studio Control Center plugin for Claude Code with integrated skills for code analysis, optimization, and best practices.",
+      "category": "development",
+      "tags": [
+        "studio",
+        "code-analysis",
+        "optimization",
+        "best-practices",
+        "ai"
+      ]
+    },
+    {
+      "name": "research-tools",
+      "author": {
+        "name": "Eduardo Menoncello",
+        "email": "eduardo@menoncello.com"
+      },
+      "source": "./plugins/research-tools",
+      "version": "1.0.0",
+      "description": "Comprehensive research tools plugin with advanced data analysis and deep research capabilities for academic and professional research workflows.",
+      "category": "research",
+      "tags": [
+        "research",
+        "data-analysis",
+        "academic",
+        "deep-research",
+        "analysis"
+      ]
+    }
+  ],
+  "categories": {
+    "plugins": [
+      "development",
+      "productivity",
+      "communication",
+      "data-processing",
+      "integration",
+      "utilities",
+      "security",
+      "testing"
+    ],
+    "skills": [
+      "automation",
+      "analysis",
+      "generation",
+      "integration",
+      "management",
+      "monitoring",
+      "optimization",
+      "research"
+    ]
+  },
+  "settings": {
+    "autoValidate": true,
+    "enableTelemetry": false,
+    "logLevel": "info",
+    "maxConcurrentOperations": 5
+  }
+}

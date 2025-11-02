@@ -1,0 +1,34 @@
+{
+  "name": "research-tools",
+  "version": "1.0.0",
+  "description": "Comprehensive research tools plugin for Claude Code with advanced data analysis and deep research capabilities",
+  "type": "module",
+  "main": "index.ts",
+  "author": {
+    "name": "Eduardo Menoncello",
+    "email": "eduardo@menoncello.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/menoncello/menon-marketplace.git"
+  },
+  "keywords": [
+    "research",
+    "data-analysis",
+    "academic",
+    "deep-research",
+    "claude-code",
+    "plugin"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "latest",
+    "bun-types": "latest"
+  },
+  "scripts": {
+    "dev": "bun --hot index.ts",
+    "build": "bun build index.ts --outdir ./dist --target bun",
+    "test": "bun test"
+  }
+}

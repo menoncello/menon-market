@@ -1,0 +1,346 @@
+{
+  "source_configurations": {
+    "financial_research": {
+      "primary_sources": [
+        "sec.gov",
+        "investor.company.com",
+        "finance.yahoo.com",
+        "seekingalpha.com",
+        "morningstar.com"
+      ],
+      "secondary_sources": [
+        "reuters.com",
+        "bloomberg.com",
+        "wsj.com",
+        "ft.com",
+        "cnbc.com"
+      ],
+      "search_patterns": [
+        "{company} SEC filings 10-K 10-Q",
+        "{company} investor relations",
+        "{company} quarterly earnings",
+        "{company} annual report",
+        "{company} stock performance"
+      ]
+    },
+    "market_research": {
+      "primary_sources": [
+        "statista.com",
+        "gartner.com",
+        "forrester.com",
+        "mckinsey.com",
+        "ibisworld.com"
+      ],
+      "secondary_sources": [
+        "grandviewresearch.com",
+        "marketsandmarkets.com",
+        "alliedmarketresearch.com",
+        "researchandmarkets.com",
+        "fortunebusinessinsights.com"
+      ],
+      "search_patterns": [
+        "{industry} market size 2024",
+        "{industry} market growth forecast",
+        "{industry} market trends analysis",
+        "{industry} competitive landscape",
+        "{industry} market segmentation"
+      ]
+    },
+    "technology_research": {
+      "primary_sources": [
+        "github.com",
+        "stackoverflow.com",
+        "techcrunch.com",
+        "arxiv.org",
+        "developer.mozilla.org"
+      ],
+      "secondary_sources": [
+        "hackernews.com",
+        "venturebeat.com",
+        "wired.com",
+        "theverge.com",
+        "zdnet.com"
+      ],
+      "search_patterns": [
+        "{technology} documentation",
+        "{technology} vs {alternative} comparison",
+        "{technology} best practices",
+        "{technology} performance benchmarks",
+        "{technology} implementation guide"
+      ]
+    },
+    "company_culture_research": {
+      "primary_sources": [
+        "glassdoor.com",
+        "indeed.com",
+        "linkedin.com",
+        "comparably.com",
+        "builtin.com"
+      ],
+      "secondary_sources": [
+        "fortune.com",
+        "forbes.com",
+        "businessinsider.com",
+        "inc.com",
+        "fastcompany.com"
+      ],
+      "search_patterns": [
+        "{company} employee reviews",
+        "{company} company culture",
+        "{company} work life balance",
+        "{company} benefits compensation",
+        "{company} diversity inclusion"
+      ]
+    },
+    "competitive_intelligence": {
+      "primary_sources": [
+        "crunchbase.com",
+        "pitchbook.com",
+        "cbinsights.com",
+        "similarweb.com",
+        "alexa.com"
+      ],
+      "secondary_sources": [
+        "techcrunch.com",
+        "venturebeat.com",
+        "forbes.com",
+        "businessinsider.com",
+        "reuters.com"
+      ],
+      "search_patterns": [
+        "{company} competitors",
+        "{company} market share",
+        "{company} competitive advantages",
+        "{company} business model",
+        "{company} strategic partnerships"
+      ]
+    }
+  },
+  "reliable_sources": {
+    "news": [
+      {
+        "domain": "reuters.com",
+        "reliability": "high",
+        "authority": "global news agency",
+        "bias": "low"
+      },
+      {
+        "domain": "bloomberg.com",
+        "reliability": "high",
+        "authority": "financial news",
+        "bias": "low"
+      },
+      {
+        "domain": "wsj.com",
+        "reliability": "high",
+        "authority": "financial newspaper",
+        "bias": "low-medium"
+      },
+      {
+        "domain": "ft.com",
+        "reliability": "high",
+        "authority": "financial newspaper",
+        "bias": "low"
+      },
+      {
+        "domain": "apnews.com",
+        "reliability": "high",
+        "authority": "news agency",
+        "bias": "low"
+      }
+    ],
+    "business": [
+      {
+        "domain": "hbr.org",
+        "reliability": "high",
+        "authority": "harvard business review",
+        "bias": "low"
+      },
+      {
+        "domain": "mckinsey.com",
+        "reliability": "high",
+        "authority": "management consulting",
+        "bias": "low-medium"
+      },
+      {
+        "domain": "bcg.com",
+        "reliability": "high",
+        "authority": "management consulting",
+        "bias": "low-medium"
+      },
+      {
+        "domain": "deloitte.com",
+        "reliability": "high",
+        "authority": "professional services",
+        "bias": "low-medium"
+      },
+      {
+        "domain": "gartner.com",
+        "reliability": "high",
+        "authority": "technology research",
+        "bias": "low-medium"
+      }
+    ],
+    "technology": [
+      {
+        "domain": "arxiv.org",
+        "reliability": "high",
+        "authority": "academic papers",
+        "bias": "low"
+      },
+      {
+        "domain": "techcrunch.com",
+        "reliability": "medium-high",
+        "authority": "technology news",
+        "bias": "low-medium"
+      },
+      {
+        "domain": "wired.com",
+        "reliability": "medium-high",
+        "authority": "technology magazine",
+        "bias": "low-medium"
+      },
+      {
+        "domain": "theverge.com",
+        "reliability": "medium-high",
+        "authority": "technology news",
+        "bias": "low-medium"
+      },
+      {
+        "domain": "developer.mozilla.org",
+        "reliability": "high",
+        "authority": "technical documentation",
+        "bias": "low"
+      }
+    ],
+    "academic": [
+      {
+        "domain": "scholar.google.com",
+        "reliability": "high",
+        "authority": "academic search",
+        "bias": "low"
+      },
+      {
+        "domain": "ieee.org",
+        "reliability": "high",
+        "authority": "engineering research",
+        "bias": "low"
+      },
+      {
+        "domain": "acm.org",
+        "reliability": "high",
+        "authority": "computer science research",
+        "bias": "low"
+      },
+      {
+        "domain": "sciencedirect.com",
+        "reliability": "high",
+        "authority": "scientific journals",
+        "bias": "low"
+      },
+      {
+        "domain": "springer.com",
+        "reliability": "high",
+        "authority": "academic publisher",
+        "bias": "low"
+      }
+    ],
+    "government": [
+      {
+        "domain": "sec.gov",
+        "reliability": "high",
+        "authority": "securities regulator",
+        "bias": "low"
+      },
+      {
+        "domain": "census.gov",
+        "reliability": "high",
+        "authority": "official statistics",
+        "bias": "low"
+      },
+      {
+        "domain": "bls.gov",
+        "reliability": "high",
+        "authority": "labor statistics",
+        "bias": "low"
+      },
+      {
+        "domain": "fred.stlouisfed.org",
+        "reliability": "high",
+        "authority": "economic data",
+        "bias": "low"
+      },
+      {
+        "domain": "data.gov",
+        "reliability": "high",
+        "authority": "government data",
+        "bias": "low"
+      }
+    ]
+  },
+  "search_engines": [
+    {
+      "name": "duckduckgo",
+      "url": "https://duckduckgo.com/html/?q=",
+      "reliability": "medium-high",
+      "privacy": "high"
+    },
+    {
+      "name": "google",
+      "url": "https://www.google.com/search?q=",
+      "reliability": "high",
+      "privacy": "low"
+    },
+    {
+      "name": "bing",
+      "url": "https://www.bing.com/search?q=",
+      "reliability": "medium-high",
+      "privacy": "medium"
+    }
+  ],
+  "quality_thresholds": {
+    "minimum_sources_per_claim": 3,
+    "maximum_source_age_months": {
+      "technology": 12,
+      "business": 18,
+      "financial": 6,
+      "market": 12,
+      "general": 24
+    },
+    "authority_weights": {
+      "academic": 0.3,
+      "government": 0.25,
+      "industry": 0.2,
+      "news": 0.15,
+      "other": 0.1
+    },
+    "recency_weights": {
+      "last_3_months": 0.4,
+      "last_6_months": 0.3,
+      "last_12_months": 0.2,
+      "older": 0.1
+    }
+  },
+  "output_formats": {
+    "executive_summary": {
+      "max_length": 2000,
+      "sections": ["key_findings", "recommendations", "next_steps"],
+      "include_sources": false
+    },
+    "comprehensive_analysis": {
+      "max_length": 20000,
+      "sections": ["methodology", "findings", "analysis", "recommendations", "sources"],
+      "include_sources": true
+    },
+    "competitive_intelligence": {
+      "max_length": 8000,
+      "sections": ["overview", "competitors", "market_position", "strategic_implications"],
+      "include_sources": true
+    },
+    "technical_evaluation": {
+      "max_length": 10000,
+      "sections": ["requirements", "options", "comparison", "recommendation", "implementation"],
+      "include_sources": true
+    }
+  }
+}

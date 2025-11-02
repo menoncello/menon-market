@@ -1,0 +1,36 @@
+{
+  "name": "studio-cc",
+  "version": "1.0.0",
+  "description": "Claude Code Plugin Studio - A comprehensive plugin development and management toolkit",
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "build": "bun build ./index.ts --outdir ./dist --target node",
+    "dev": "bun --hot ./index.ts",
+    "test": "bun test",
+    "lint": "eslint src --ext .ts,.tsx",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "claude-code",
+    "plugin",
+    "development",
+    "studio",
+    "cli"
+  ],
+  "author": "Eduardo Menoncello",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "bun-types": "latest"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  }
+}

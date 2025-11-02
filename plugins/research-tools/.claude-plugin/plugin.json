@@ -1,0 +1,14 @@
+{
+  "name": "research-tools",
+  "description": "Comprehensive research tools plugin for Claude Code with advanced data analysis and deep research capabilities",
+  "version": "1.0.0",
+  "author": {
+    "name": "Eduardo Menoncello",
+    "email": "eduardo@menoncello.com"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/menoncello/menon-marketplace.git",
+  "skills": [
+    "./skills/deep-research"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "marketplace": {
+    "name": "studio-cc",
+    "displayName": "Studio CC",
+    "description": "Claude Code Plugin Studio - A comprehensive plugin development and management toolkit",
+    "category": "development",
+    "tags": ["claude-code", "plugin-development", "studio", "cli", "management"],
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/menoncello/studio-cc.git"
+    },
+    "documentation": {
+      "readme": "README.md",
+      "changelog": "CHANGELOG.md",
+      "license": "LICENSE"
+    },
+    "installation": {
+      "methods": ["marketplace", "git", "local"],
+      "supportedPlatforms": ["darwin", "linux", "windows"],
+      "requirements": {
+        "claude-code": ">=1.0.0",
+        "bun": ">=1.0.0"
+      }
+    },
+    "versions": {
+      "latest": "1.0.0",
+      "stable": "1.0.0"
+    },
+    "author": {
+      "name": "Eduardo Menoncello",
+      "email": "eduardo@menoncello.com",
+      "url": "https://github.com/menoncello"
+    },
+    "license": "MIT",
+    "keywords": [
+      "claude-code",
+      "plugin",
+      "development",
+      "studio",
+      "cli"
+    ],
+    "featured": false,
+    "verified": false,
+    "downloads": 0,
+    "rating": 0,
+    "reviews": 0
+  }
+}

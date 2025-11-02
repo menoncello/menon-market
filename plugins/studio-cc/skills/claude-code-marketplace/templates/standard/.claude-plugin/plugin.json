@@ -1,0 +1,50 @@
+{
+  "name": "[marketplace-name]",
+  "version": "1.0.0",
+  "description": "[Marketplace description]",
+  "author": {
+    "name": "[Author Name]",
+    "email": "[author@example.com]",
+    "url": "https://github.com/[username]"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/[username]/[marketplace-name].git"
+  },
+  "license": "MIT",
+  "keywords": ["claude-code", "marketplace", "plugins", "skills"],
+  "homepage": "https://github.com/[username]/[marketplace-name]#readme",
+  "bugs": {
+    "url": "https://github.com/[username]/[marketplace-name]/issues"
+  },
+  "engines": {
+    "claude-code": ">=1.0.0"
+  },
+  "categories": ["productivity", "development"],
+  "permissions": {
+    "tools": ["Read", "Write", "Bash", "WebFetch"],
+    "domains": ["github.com", "docs.claude.com"],
+    "fileSystem": {
+      "allowedPaths": ["./workspace", "/tmp"],
+      "deniedPaths": ["/etc", "/usr/bin"]
+    }
+  },
+  "commands": [
+    {
+      "name": "[command-name]",
+      "description": "[Command description]",
+      "usage": "/[command-name] [options]",
+      "examples": [
+        "/[command-name] --help",
+        "/[command-name] input.txt output.txt"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "name": "[skill-name]",
+      "description": "[Skill description]",
+      "category": "development"
+    }
+  ]
+}
