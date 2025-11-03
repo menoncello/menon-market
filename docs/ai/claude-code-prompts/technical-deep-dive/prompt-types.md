@@ -27,14 +27,14 @@ Claude Code supports four distinct types of prompts, each designed for specific 
 
 ### Characteristics
 
-| Property | Value |
-|----------|-------|
-| **Purpose** | Quick automation and repetitive tasks |
-| **Character Limit** | 15,000 characters |
-| **Execution Speed** | Fast (sub-second to few seconds) |
-| **Complexity** | Low to moderate |
-| **State Management** | Minimal to none |
-| **Best For** | Single-purpose, frequently used operations |
+| Property             | Value                                      |
+| -------------------- | ------------------------------------------ |
+| **Purpose**          | Quick automation and repetitive tasks      |
+| **Character Limit**  | 15,000 characters                          |
+| **Execution Speed**  | Fast (sub-second to few seconds)           |
+| **Complexity**       | Low to moderate                            |
+| **State Management** | Minimal to none                            |
+| **Best For**         | Single-purpose, frequently used operations |
 
 ### Architecture
 
@@ -85,6 +85,7 @@ User Input: /command [arguments...]
 ### Implementation Examples
 
 #### Basic Command Registration
+
 ```typescript
 interface SlashCommand {
   name: string;
@@ -131,27 +132,28 @@ const commitCommand: SlashCommand = {
       type: 'boolean',
       required: false,
       description: 'Include scope in commit message',
-      defaultValue: true
+      defaultValue: true,
     },
     {
       name: 'verbose',
       type: 'boolean',
       required: false,
       description: 'Include detailed commit body',
-      defaultValue: false
-    }
+      defaultValue: false,
+    },
   ],
   permissions: {
     tools: ['git'],
     operations: ['read', 'write'],
-    resources: ['filesystem']
+    resources: ['filesystem'],
   },
   model: 'haiku',
-  costLimit: 0.001
+  costLimit: 0.001,
 };
 ```
 
 #### Advanced Command with Conditional Logic
+
 ```typescript
 // Example: /review-pr command
 const reviewPRCommand: SlashCommand = {
@@ -200,7 +202,7 @@ const reviewPRCommand: SlashCommand = {
       name: 'prNumber',
       type: 'number',
       required: true,
-      description: 'Pull request number to review'
+      description: 'Pull request number to review',
     },
     {
       name: 'reviewAspects',
@@ -209,17 +211,17 @@ const reviewPRCommand: SlashCommand = {
       description: 'Aspects to review',
       defaultValue: ['code-quality', 'security', 'performance', 'testing'],
       validation: {
-        allowedValues: ['code-quality', 'security', 'performance', 'testing', 'documentation']
-      }
-    }
+        allowedValues: ['code-quality', 'security', 'performance', 'testing', 'documentation'],
+      },
+    },
   ],
   permissions: {
     tools: ['git', 'gh'],
     operations: ['read', 'write'],
-    resources: ['filesystem', 'network']
+    resources: ['filesystem', 'network'],
   },
   model: 'sonnet',
-  costLimit: 0.01
+  costLimit: 0.01,
 };
 ```
 
@@ -236,14 +238,14 @@ const reviewPRCommand: SlashCommand = {
 
 ### Characteristics
 
-| Property | Value |
-|----------|-------|
-| **Purpose** | Complex, domain-specific workflows |
-| **Character Limit** | Flexible (typically 50,000+ characters) |
-| **Execution Speed** | Moderate to slow (seconds to minutes) |
-| **Complexity** | High |
-| **State Management** | Full state persistence |
-| **Best For** | Multi-step, specialized tasks requiring expertise |
+| Property             | Value                                             |
+| -------------------- | ------------------------------------------------- |
+| **Purpose**          | Complex, domain-specific workflows                |
+| **Character Limit**  | Flexible (typically 50,000+ characters)           |
+| **Execution Speed**  | Moderate to slow (seconds to minutes)             |
+| **Complexity**       | High                                              |
+| **State Management** | Full state persistence                            |
+| **Best For**         | Multi-step, specialized tasks requiring expertise |
 
 ### Skill Architecture
 
@@ -294,6 +296,7 @@ Skill Request
 ### Skill Implementation Structure
 
 #### Core Skill Definition
+
 ```typescript
 interface Skill {
   // Metadata
@@ -351,6 +354,7 @@ interface WorkflowStep {
 ```
 
 #### Example: Code Architecture Skill
+
 ```typescript
 // Example: feature-dev:code-architect skill
 const codeArchitectSkill: Skill = {
@@ -407,13 +411,13 @@ const codeArchitectSkill: Skill = {
             featureDescription: {
               type: 'string',
               required: true,
-              description: 'Description of the feature to architect'
-            }
-          }
+              description: 'Description of the feature to architect',
+            },
+          },
         },
         dependencies: [],
         timeout: 60000,
-        retryPolicy: { maxRetries: 2, backoffStrategy: 'exponential' }
+        retryPolicy: { maxRetries: 2, backoffStrategy: 'exponential' },
       },
       {
         id: 'design-architecture',
@@ -455,11 +459,11 @@ const codeArchitectSkill: Skill = {
             - Deployment considerations
 
             Ensure the architecture aligns with existing patterns and follows the project's established conventions.
-          `
+          `,
         },
         dependencies: ['analyze-codebase'],
         timeout: 120000,
-        retryPolicy: { maxRetries: 1, backoffStrategy: 'linear' }
+        retryPolicy: { maxRetries: 1, backoffStrategy: 'linear' },
       },
       {
         id: 'validate-design',
@@ -488,45 +492,46 @@ const codeArchitectSkill: Skill = {
             - Performance impact on existing features
 
             Provide detailed feedback on any concerns and suggest improvements or alternatives where needed.
-          `
+          `,
         },
         dependencies: ['design-architecture'],
         timeout: 60000,
-        retryPolicy: { maxRetries: 1 }
-      }
+        retryPolicy: { maxRetries: 1 },
+      },
     ],
     parallelExecution: false,
     checkpointStrategy: {
       enabled: true,
       frequency: 'after-each-step',
-      persistence: 'filesystem'
-    }
+      persistence: 'filesystem',
+    },
   },
 
   errorHandling: {
     strategy: 'graceful-degradation',
     fallbackActions: ['provide-partial-results', 'suggest-alternatives'],
-    errorReporting: 'detailed-with-context'
+    errorReporting: 'detailed-with-context',
   },
 
   rollbackStrategy: {
     enabled: true,
     checkpoints: ['after-codebase-analysis', 'after-architecture-design'],
-    cleanupActions: ['temporary-files', 'state-reset']
+    cleanupActions: ['temporary-files', 'state-reset'],
   },
 
   examples: [
     {
       name: 'E-commerce Product Search Feature',
       input: {
-        featureDescription: 'Add advanced product search with filters, sorting, and faceted navigation'
+        featureDescription:
+          'Add advanced product search with filters, sorting, and faceted navigation',
       },
       expectedOutput: {
         components: ['SearchService', 'ProductFilter', 'SearchController', 'SearchIndex'],
         apis: ['/api/products/search', '/api/products/filters'],
-        databaseChanges: ['products_search_index table', 'search_filters table']
-      }
-    }
+        databaseChanges: ['products_search_index table', 'search_filters table'],
+      },
+    },
   ],
 
   tests: [
@@ -534,54 +539,61 @@ const codeArchitectSkill: Skill = {
       name: 'Simple Feature Architecture',
       mockCodebase: 'basic-crud-app',
       featureDescription: 'Add user authentication',
-      validationCriteria: ['includes-auth-components', 'defines-api-endpoints', 'considers-security']
-    }
+      validationCriteria: [
+        'includes-auth-components',
+        'defines-api-endpoints',
+        'considers-security',
+      ],
+    },
   ],
 
   resourceRequirements: {
     memory: '512MB',
     diskSpace: '100MB',
     networkAccess: true,
-    externalTools: ['git', 'file-system']
+    externalTools: ['git', 'file-system'],
   },
 
   performanceMetrics: {
     averageExecutionTime: 180000,
     successRate: 0.95,
-    userSatisfactionScore: 4.5
+    userSatisfactionScore: 4.5,
   },
 
   userInterface: {
     type: 'interactive',
     progressReporting: 'detailed',
     userInputs: ['featureDescription', 'constraints', 'preferences'],
-    outputFormat: 'structured-markdown'
+    outputFormat: 'structured-markdown',
   },
 
   documentation: {
     usageGuide: 'docs/usage.md',
     apiReference: 'docs/api.md',
     examples: 'docs/examples.md',
-    troubleshooting: 'docs/troubleshooting.md'
-  }
+    troubleshooting: 'docs/troubleshooting.md',
+  },
 };
 ```
 
 ### Skill Categories and Use Cases
 
 #### 1. Development Skills
+
 - **Code Generation**: Create boilerplate, implement patterns, generate components
 - **Refactoring**: Improve code structure, apply design patterns, optimize performance
 - **Testing**: Generate test cases, create test suites, implement mocking strategies
 - **Documentation**: Generate API docs, create user guides, maintain technical documentation
 
 #### 2. Analysis Skills
+
 - **Code Review**: Analyze code quality, identify issues, suggest improvements
 - **Security Analysis**: Identify vulnerabilities, assess security posture, recommend fixes
 - **Performance Analysis**: Identify bottlenecks, analyze resource usage, optimize performance
 - **Architecture Analysis**: Evaluate system design, assess scalability, identify improvements
 
 #### 3. Domain-Specific Skills
+
 - **Frontend Development**: React, Vue, Angular expertise and patterns
 - **Backend Development**: API design, database architecture, microservices
 - **DevOps**: CI/CD pipelines, infrastructure as code, deployment strategies
@@ -591,13 +603,13 @@ const codeArchitectSkill: Skill = {
 
 ### Characteristics
 
-| Property | Value |
-|----------|-------|
-| **Purpose** | Project-level configuration and conventions |
-| **Character Limit** | Flexible (project-dependent) |
-| **Persistence** | Permanent (version-controlled) |
-| **Scope** | Project-wide or team-wide |
-| **Best For** | Establishing standards, conventions, and preferences |
+| Property            | Value                                                |
+| ------------------- | ---------------------------------------------------- |
+| **Purpose**         | Project-level configuration and conventions          |
+| **Character Limit** | Flexible (project-dependent)                         |
+| **Persistence**     | Permanent (version-controlled)                       |
+| **Scope**           | Project-wide or team-wide                            |
+| **Best For**        | Establishing standards, conventions, and preferences |
 
 ### CLAUDE.md Structure
 
@@ -605,6 +617,7 @@ const codeArchitectSkill: Skill = {
 # Project Configuration and Preferences
 
 ## Project Information
+
 - **Name**: [Project Name]
 - **Type**: [Project Type: web-app, api, library, etc.]
 - **Framework**: [Primary framework(s) used]
@@ -613,18 +626,21 @@ const codeArchitectSkill: Skill = {
 ## Development Standards
 
 ### Code Style
+
 - **Linting**: [ESLint configuration and rules]
 - **Formatting**: [Prettier configuration]
 - **Naming Conventions**: [Specific naming rules]
 - **File Organization**: [Directory structure preferences]
 
 ### Testing Requirements
+
 - **Framework**: [Testing framework used]
 - **Coverage**: [Minimum coverage requirements]
 - **Test Types**: [Unit, integration, E2E requirements]
 - **Mocking Strategy**: [Approach to mocking and stubbing]
 
 ### Documentation Standards
+
 - **API Documentation**: [Requirements and format]
 - **Code Comments**: [When and how to comment]
 - **README Requirements**: [Structure and content expectations]
@@ -633,16 +649,19 @@ const codeArchitectSkill: Skill = {
 ## Tool and Technology Preferences
 
 ### Build Tools
+
 - **Primary Build Tool**: [Webpack, Vite, Rollup, etc.]
 - **Package Manager**: [npm, yarn, pnpm, bun]
 - **Script Management**: [How to organize and run scripts]
 
 ### Development Tools
+
 - **IDE/Editor**: [Preferred editors and configurations]
 - **Version Control**: [Git workflow and conventions]
 - **CI/CD**: [Pipeline tools and processes]
 
 ### External Services
+
 - **Database**: [Database systems and ORMs]
 - **Authentication**: [Auth providers and strategies]
 - **Monitoring**: [Logging and monitoring tools]
@@ -650,16 +669,19 @@ const codeArchitectSkill: Skill = {
 ## Code Quality Requirements
 
 ### Performance Standards
+
 - **Bundle Size Limits**: [Maximum acceptable bundle sizes]
 - **Load Time Targets**: [Performance benchmarks]
 - **Memory Usage**: [Memory optimization requirements]
 
 ### Security Requirements
+
 - **Input Validation**: [Security validation rules]
 - **Data Handling**: [Sensitive data management]
 - **Dependency Management**: [Security scanning requirements]
 
 ### Accessibility Standards
+
 - **WCAG Compliance**: [Accessibility target level]
 - **Testing Requirements**: [Accessibility testing approach]
 - **Browser Support**: [Supported browser versions]
@@ -667,16 +689,19 @@ const codeArchitectSkill: Skill = {
 ## Communication Preferences
 
 ### Commit Message Format
+
 - **Style**: [Conventional commits, custom format, etc.]
 - **Content Requirements**: [What to include in commit messages]
 - **Branch Naming**: [Branch naming conventions]
 
 ### Pull Request Process
+
 - **Template**: [PR template requirements]
 - **Review Requirements**: [Who must review and what to check]
 - **Merge Strategy**: [Merge method and requirements]
 
 ### Issue Tracking
+
 - **Bug Reports**: [Bug report format and information]
 - **Feature Requests**: [Feature request process]
 - **Task Management**: [How tasks are organized and tracked]
@@ -684,16 +709,19 @@ const codeArchitectSkill: Skill = {
 ## AI Assistant Preferences
 
 ### Response Format
+
 - **Code Style**: [Preferred code formatting]
 - **Explanation Style**: [Technical depth preference]
 - **Example Requirements**: [When to provide examples]
 
 ### Task Preferences
+
 - **Testing**: [Whether to always include tests]
 - **Documentation**: [Documentation generation preferences]
 - **Error Handling**: [Error handling approach preferences]
 
 ### Tool Usage
+
 - **Preferred Tools**: [Which tools to use by default]
 - **Tool Configuration**: [Specific tool configurations]
 - **Security Settings**: [Tool permission preferences]
@@ -705,6 +733,7 @@ const codeArchitectSkill: Skill = {
 # E-commerce Platform - Claude Configuration
 
 ## Project Overview
+
 - **Name**: ShopHub E-commerce Platform
 - **Type**: Full-stack web application
 - **Framework**: Next.js 14 with TypeScript
@@ -714,6 +743,7 @@ const codeArchitectSkill: Skill = {
 ## Development Standards
 
 ### Code Style Requirements
+
 - **CRITICAL**: NEVER disable ESLint rules via inline comments
 - **ESLint Configuration**: Strict mode with @typescript-eslint/recommended
 - **Prettier Configuration**: 2-space indentation, trailing commas
@@ -721,12 +751,14 @@ const codeArchitectSkill: Skill = {
 - **File Naming**: PascalCase for components, camelCase for utilities
 
 ### Testing Requirements
+
 - **Framework**: Jest with React Testing Library
 - **Coverage**: Minimum 80% line coverage, 90% function coverage
 - **Test Structure**: AAA pattern (Arrange, Act, Assert)
 - **Mock Strategy**: Use MSW for API mocking, Jest mocks for utilities
 
 ### Documentation Standards
+
 - **API Documentation**: OpenAPI 3.0 specification in /docs/api
 - **Component Documentation**: Storybook stories with MDX documentation
 - **Code Comments**: JSDoc for all public functions and complex logic
@@ -735,11 +767,13 @@ const codeArchitectSkill: Skill = {
 ## Performance Standards
 
 ### Bundle Size Requirements
+
 - **JavaScript bundles**: Max 250KB gzipped per route
 - **CSS bundles**: Max 50KB gzilled per page
 - **Image optimization**: WebP format with responsive loading
 
 ### Performance Metrics
+
 - **First Contentful Paint**: < 1.5 seconds
 - **Largest Contentful Paint**: < 2.5 seconds
 - **Cumulative Layout Shift**: < 0.1
@@ -748,17 +782,20 @@ const codeArchitectSkill: Skill = {
 ## Security Requirements
 
 ### Code Security
+
 - **Input Validation**: Zod schemas for all API inputs
 - **Authentication**: NextAuth.js with session management
 - **Authorization**: Role-based access control (RBAC)
 - **Data Sanitization**: DOMPurify for user-generated content
 
 ### Dependency Security
+
 - **Scanning**: npm audit for security vulnerabilities
 - **Updates**: Automated Dependabot PRs for security updates
 - **Licenses**: Only MIT, Apache-2.0, or BSD licenses allowed
 
 ## Testing Commands
+
 - **Primary**: Use `bun test` for all testing operations
 - **Watch Mode**: `bun test --watch` during development
 - **Coverage**: `bun test --coverage` for coverage reports
@@ -767,12 +804,14 @@ const codeArchitectSkill: Skill = {
 ## Code Quality Standards
 
 ### Mutation Testing
+
 - **Threshold**: Minimum 80% mutation score
 - **Tool**: Stryker for mutation testing
 - **Strategy**: NEVER reduce thresholds to pass tests
 - **Reporting**: Detailed mutation reports in coverage/ directory
 
 ### Review Requirements
+
 - **Code Review**: Required for all changes > 50 lines
 - **Security Review**: Required for authentication/authorization changes
 - **Performance Review**: Required for database query changes
@@ -781,18 +820,21 @@ const codeArchitectSkill: Skill = {
 ## AI Assistant Preferences
 
 ### Response Format
+
 - **Language**: English only for all code, comments, and documentation
 - **Code Style**: Follow established ESLint and Prettier configurations
 - **Type Safety**: Always prefer explicit types over inference
 - **Error Handling**: Comprehensive error handling with proper typing
 
 ### Development Workflow
+
 - **Testing**: Always include tests for new functionality
 - **Documentation**: Update relevant documentation for API changes
 - **Performance**: Consider performance implications of all changes
 - **Security**: Follow security best practices for all user-facing features
 
 ### Tool Usage Preferences
+
 - **Database**: Use Prisma client for all database operations
 - **API Routes**: Follow RESTful conventions with proper HTTP status codes
 - **State Management**: Use React Query for server state, Zustand for client state
@@ -802,11 +844,13 @@ const codeArchitectSkill: Skill = {
 
 ### Commit Message Format
 ```
+
 type(scope): description
 
 [optional body]
 
 [optional footer]
+
 ```
 
 **Types**: feat, fix, docs, style, refactor, test, chore
@@ -831,13 +875,13 @@ type(scope): description
 
 ### Characteristics
 
-| Property | Value |
-|----------|-------|
-| **Purpose** | Multi-agent orchestration and complex coordination |
-| **Complexity** | Very high |
-| **Execution Model** | Distributed with coordination |
-| **State Management** | Multi-agent state synchronization |
-| **Best For** | Complex workflows requiring specialized expertise |
+| Property             | Value                                              |
+| -------------------- | -------------------------------------------------- |
+| **Purpose**          | Multi-agent orchestration and complex coordination |
+| **Complexity**       | Very high                                          |
+| **Execution Model**  | Distributed with coordination                      |
+| **State Management** | Multi-agent state synchronization                  |
+| **Best For**         | Complex workflows requiring specialized expertise  |
 
 ### Agent Orchestration Architecture
 
@@ -888,24 +932,28 @@ Complex Request
 ### Agent Types and Specializations
 
 #### 1. Analysis Agents
+
 - **Code Analysis Agents**: Specialize in understanding code structure, patterns, and quality
 - **Security Analysis Agents**: Focus on vulnerability detection and security assessment
 - **Performance Analysis Agents**: Analyze performance characteristics and optimization opportunities
 - **Architecture Analysis Agents**: Evaluate system design and architectural decisions
 
 #### 2. Development Agents
+
 - **Code Generation Agents**: Create code following specific patterns and requirements
 - **Refactoring Agents**: Improve code structure and apply design patterns
 - **Testing Agents**: Generate comprehensive test suites and testing strategies
 - **Documentation Agents**: Create and maintain technical documentation
 
 #### 3. Review Agents
+
 - **Code Review Agents**: Perform thorough code reviews with domain expertise
 - **Security Review Agents**: Specialize in security-focused code reviews
 - **Performance Review Agents**: Focus on performance implications and optimizations
 - **Quality Review Agents**: Assess overall code quality and maintainability
 
 #### 4. Orchestration Agents
+
 - **Workflow Agents**: Manage complex multi-step workflows
 - **Coordination Agents**: Handle inter-agent communication and coordination
 - **Resource Management Agents**: Optimize resource allocation and scheduling
@@ -914,6 +962,7 @@ Complex Request
 ### Example Agent Orchestration
 
 #### Comprehensive Feature Implementation
+
 ```typescript
 interface FeatureImplementationRequest {
   featureDescription: string;
@@ -938,87 +987,87 @@ const featureImplementationPlan: AgentOrchestrationPlan = {
       agents: [
         {
           type: 'code-architect',
-          tasks: ['analyze-requirements', 'design-architecture', 'plan-implementation']
+          tasks: ['analyze-requirements', 'design-architecture', 'plan-implementation'],
         },
         {
           type: 'security-analyst',
-          tasks: ['security-requirements-analysis', 'threat-modeling']
-        }
+          tasks: ['security-requirements-analysis', 'threat-modeling'],
+        },
       ],
-      executionMode: 'parallel'
+      executionMode: 'parallel',
     },
     {
       name: 'Implementation',
       agents: [
         {
           type: 'code-generator',
-          tasks: ['generate-components', 'implement-logic', 'create-tests']
+          tasks: ['generate-components', 'implement-logic', 'create-tests'],
         },
         {
           type: 'documentation-generator',
-          tasks: ['generate-api-docs', 'create-user-guide']
-        }
+          tasks: ['generate-api-docs', 'create-user-guide'],
+        },
       ],
-      executionMode: 'pipeline'
+      executionMode: 'pipeline',
     },
     {
       name: 'Quality Assurance',
       agents: [
         {
           type: 'code-reviewer',
-          tasks: ['review-implementation', 'check-standards-compliance']
+          tasks: ['review-implementation', 'check-standards-compliance'],
         },
         {
           type: 'security-reviewer',
-          tasks: ['security-review', 'vulnerability-assessment']
+          tasks: ['security-review', 'vulnerability-assessment'],
         },
         {
           type: 'test-analyzer',
-          tasks: ['verify-test-coverage', 'analyze-test-quality']
-        }
+          tasks: ['verify-test-coverage', 'analyze-test-quality'],
+        },
       ],
-      executionMode: 'parallel'
-    }
+      executionMode: 'parallel',
+    },
   ],
   agentAssignments: [
     {
       agentType: 'feature-dev:code-architect',
       capabilities: ['system-design', 'pattern-analysis', 'planning'],
       model: 'opus',
-      priority: 'high'
+      priority: 'high',
     },
     {
       agentType: 'superpowers:code-reviewer',
       capabilities: ['code-analysis', 'quality-assessment', 'standards-compliance'],
       model: 'sonnet',
-      priority: 'medium'
+      priority: 'medium',
     },
     {
       agentType: 'pr-review-toolkit:security-reviewer',
       capabilities: ['vulnerability-detection', 'security-analysis', 'compliance-checking'],
       model: 'sonnet',
-      priority: 'high'
-    }
+      priority: 'high',
+    },
   ],
   dependencies: [
     {
       from: 'analysis-and-planning',
       to: 'implementation',
-      type: 'completion'
+      type: 'completion',
     },
     {
       from: 'implementation',
       to: 'quality-assurance',
-      type: 'completion'
-    }
+      type: 'completion',
+    },
   ],
   estimatedDuration: 900000, // 15 minutes
   resourceRequirements: {
     agents: 6,
     parallelExecutions: 3,
     memoryRequirement: '2GB',
-    costEstimate: 0.50
-  }
+    costEstimate: 0.5,
+  },
 };
 ```
 
@@ -1026,19 +1075,20 @@ const featureImplementationPlan: AgentOrchestrationPlan = {
 
 ### Decision Matrix
 
-| Scenario | Recommended Type | Rationale |
-|----------|------------------|-----------|
-| Quick git operations | Slash Command | Simple, repetitive, fast execution |
-| Complex refactoring | Skill | Multi-step workflow, state management |
-| Project standards | CLAUDE.md | Persistent configuration, team-wide |
-| Feature implementation | Agent Orchestration | Multiple specialized capabilities needed |
-| Code generation | Skill or Agent | Depends on complexity and requirements |
-| Security review | Agent or Skill | Domain expertise required |
-| Documentation updates | Slash Command or Skill | Based on scope and complexity |
+| Scenario               | Recommended Type       | Rationale                                |
+| ---------------------- | ---------------------- | ---------------------------------------- |
+| Quick git operations   | Slash Command          | Simple, repetitive, fast execution       |
+| Complex refactoring    | Skill                  | Multi-step workflow, state management    |
+| Project standards      | CLAUDE.md              | Persistent configuration, team-wide      |
+| Feature implementation | Agent Orchestration    | Multiple specialized capabilities needed |
+| Code generation        | Skill or Agent         | Depends on complexity and requirements   |
+| Security review        | Agent or Skill         | Domain expertise required                |
+| Documentation updates  | Slash Command or Skill | Based on scope and complexity            |
 
 ### Selection Criteria
 
 #### Use Slash Commands when:
+
 - Task is simple and well-defined
 - Execution time should be under 10 seconds
 - Minimal state management required
@@ -1046,6 +1096,7 @@ const featureImplementationPlan: AgentOrchestrationPlan = {
 - Template-based approach is sufficient
 
 #### Use Skills when:
+
 - Task requires multiple steps or workflow management
 - Domain-specific expertise is needed
 - State persistence is important
@@ -1053,6 +1104,7 @@ const featureImplementationPlan: AgentOrchestrationPlan = {
 - Quality assurance and validation are critical
 
 #### Use CLAUDE.md when:
+
 - Configuration needs to be persistent
 - Standards apply across the entire project
 - Team collaboration is required
@@ -1060,6 +1112,7 @@ const featureImplementationPlan: AgentOrchestrationPlan = {
 - Long-term consistency is important
 
 #### Use Agent Orchestration when:
+
 - Task requires multiple specialized capabilities
 - Complex coordination is needed
 - Different aspects require different expertise
@@ -1070,22 +1123,22 @@ const featureImplementationPlan: AgentOrchestrationPlan = {
 
 ### Cost Optimization by Prompt Type
 
-| Prompt Type | Average Cost | Optimization Strategies |
-|-------------|--------------|------------------------|
-| Slash Commands | $0.0001 - $0.001 | Use Haiku model, minimize context |
-| Skills | $0.005 - $0.05 | Intelligent caching, progressive disclosure |
-| CLAUDE.md | $0 (one-time) | Careful initial design, periodic updates |
-| Agent Orchestration | $0.10 - $1.00+ | Parallel execution, optimal model selection |
+| Prompt Type         | Average Cost     | Optimization Strategies                     |
+| ------------------- | ---------------- | ------------------------------------------- |
+| Slash Commands      | $0.0001 - $0.001 | Use Haiku model, minimize context           |
+| Skills              | $0.005 - $0.05   | Intelligent caching, progressive disclosure |
+| CLAUDE.md           | $0 (one-time)    | Careful initial design, periodic updates    |
+| Agent Orchestration | $0.10 - $1.00+   | Parallel execution, optimal model selection |
 
 ### Latency Optimization
 
-| Prompt Type | Average Latency | Optimization Techniques |
-|-------------|-----------------|------------------------|
-| Slash Commands | < 2 seconds | Pre-compiled templates, minimal context |
-| Skills | 10 - 60 seconds | Workflow optimization, checkpointing |
-| CLAUDE.md | 0 seconds (cached) | Efficient parsing, smart caching |
-| Agent Orchestration | 30 - 300 seconds | Parallel execution, resource pooling |
+| Prompt Type         | Average Latency    | Optimization Techniques                 |
+| ------------------- | ------------------ | --------------------------------------- |
+| Slash Commands      | < 2 seconds        | Pre-compiled templates, minimal context |
+| Skills              | 10 - 60 seconds    | Workflow optimization, checkpointing    |
+| CLAUDE.md           | 0 seconds (cached) | Efficient parsing, smart caching        |
+| Agent Orchestration | 30 - 300 seconds   | Parallel execution, resource pooling    |
 
 ---
 
-*Understanding these prompt types and their optimal use cases is essential for maximizing productivity and effectiveness with Claude Code.*
+_Understanding these prompt types and their optimal use cases is essential for maximizing productivity and effectiveness with Claude Code._

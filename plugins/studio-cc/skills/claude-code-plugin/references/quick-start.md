@@ -34,11 +34,7 @@ Create `.claude-plugin/plugin.json`:
     "minVersion": "1.0.0",
     "maxVersion": "2.0.0"
   },
-  "permissions": [
-    "file:read",
-    "file:write",
-    "network:request"
-  ],
+  "permissions": ["file:read", "file:write", "network:request"],
   "dependencies": {},
   "keywords": ["utility", "productivity"]
 }
@@ -48,16 +44,16 @@ Create `.claude-plugin/plugin.json`:
 
 Create `commands/hello.md`:
 
-```markdown
+````markdown
 ---
 name: hello
-description: "Say hello with a custom message"
+description: 'Say hello with a custom message'
 parameters:
   - name: name
     type: string
-    description: "Name to greet"
+    description: 'Name to greet'
     required: false
-    default: "World"
+    default: 'World'
 ---
 
 Hello! This is a custom command from my first plugin.
@@ -67,13 +63,15 @@ Hello! This is a custom command from my first plugin.
 ```bash
 /hello --name="Claude"
 ```
+````
 
 ## Output
 
 ```
 Hello, Claude! This message comes from my-first-plugin.
 ```
-```
+
+````
 
 ## Step 4: Create a Skill
 
@@ -103,7 +101,7 @@ Use this skill when you need to perform simple demonstration tasks.
 - Simple calculations
 - File operations
 - Example workflows
-```
+````
 
 ## Step 5: Test Your Plugin
 
@@ -134,18 +132,18 @@ zip -r my-first-plugin.zip . -x ".git/*" "node_modules/*" "dist/*"
 
 ### Basic Command Template
 
-```markdown
+````markdown
 ---
 name: command-name
-description: "Brief description of the command"
+description: 'Brief description of the command'
 parameters:
   - name: param1
     type: string
-    description: "Description of parameter"
+    description: 'Description of parameter'
     required: true
   - name: param2
     type: boolean
-    description: "Description of optional parameter"
+    description: 'Description of optional parameter'
     required: false
     default: false
 ---
@@ -157,7 +155,9 @@ Command description and usage examples.
 ```bash
 /command-name --param1="value" --param2
 ```
-```
+````
+
+````
 
 ### Basic Skill Template
 
@@ -182,7 +182,7 @@ Use this skill when you need to...
 ## Capabilities
 
 List of what the skill can do.
-```
+````
 
 ## Next Steps
 

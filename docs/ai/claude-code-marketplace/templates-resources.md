@@ -20,6 +20,7 @@
 #### Repository: `ivan-magda/claude-code-plugin-template`
 
 **Features:**
+
 - Complete plugin structure with all required files
 - Development toolkit with helper scripts
 - Sample `hello-world` plugin for reference
@@ -28,6 +29,7 @@
 - MIT License for maximum compatibility
 
 **Quick Start:**
+
 ```bash
 # 1. Use as template on GitHub
 # Visit: https://github.com/ivan-magda/claude-code-plugin-template
@@ -47,6 +49,7 @@ cd your-plugin-name
 ```
 
 **Template Structure:**
+
 ```
 claude-code-plugin-template/
 ├── .claude-plugin/
@@ -85,26 +88,31 @@ claude-code-plugin-template/
 **Available Skills Categories:**
 
 **Creative & Design Skills:**
+
 - `algorithmic-art`: Generative art creation with p5.js
 - `canvas-design`: Visual design tools and canvas manipulation
 - `slack-gif-creator`: GIF creation and optimization for Slack
 
 **Development & Technical Skills:**
+
 - `artifacts-builder`: Code artifact creation and management
 - `mcp-server`: MCP server development tools
 - `webapp-testing`: Web application testing with Playwright
 - `agent-sdk-verifier`: SDK application verification (Python/TypeScript)
 
 **Enterprise & Communication Skills:**
+
 - `brand-guidelines`: Brand compliance and guideline enforcement
 - `internal-comms`: Internal communication templates
 - `theme-factory`: Theme and styling system tools
 
 **Meta Skills:**
+
 - `skill-creator`: Interactive skill creation guidance
 - `template-skill`: Skill template and boilerplate generator
 
 **Document Processing Skills:**
+
 - `document-skills`: Complete document processing suite
 - `docx`: Microsoft Word document operations
 - `pdf`: PDF analysis and manipulation
@@ -112,6 +120,7 @@ claude-code-plugin-template/
 - `pptx`: PowerPoint presentation handling
 
 **Installation:**
+
 ```bash
 # Add official skills marketplace
 /plugin marketplace add anthropics/skills
@@ -128,6 +137,7 @@ claude-code-plugin-template/
 #### Repository: `davila7/claude-code-templates`
 
 **Statistics:**
+
 - 100+ AI agents
 - 159+ custom commands
 - Comprehensive settings and hooks
@@ -135,6 +145,7 @@ claude-code-plugin-template/
 - Interactive web interface at aitmpl.com
 
 **Features:**
+
 - Production-ready configurations
 - Extensive agent collection for specialized tasks
 - Custom commands for enhanced productivity
@@ -142,6 +153,7 @@ claude-code-plugin-template/
 - Web-based configuration interface
 
 **Installation:**
+
 ```bash
 # Add the templates marketplace
 /plugin marketplace add davila7/claude-code-templates
@@ -158,6 +170,7 @@ claude-code-plugin-template/
 #### Repository: `hesreallyhim/awesome-claude-code`
 
 **Contents:**
+
 - Curated list of slash commands
 - CLAUDE.md file templates
 - CLI tools and utilities
@@ -165,6 +178,7 @@ claude-code-plugin-template/
 - Integration guides
 
 **Categories:**
+
 - Essential configurations
 - Productivity tools
 - Development workflows
@@ -176,6 +190,7 @@ claude-code-plugin-template/
 #### Repository: `travisvn/awesome-claude-skills`
 
 **Features:**
+
 - Comprehensive skill collection
 - Community-contributed skills
 - Categorized by functionality
@@ -183,6 +198,7 @@ claude-code-plugin-template/
 - Development resources
 
 **Skill Categories:**
+
 - Document processing
 - Data analysis
 - Development tools
@@ -194,6 +210,7 @@ claude-code-plugin-template/
 ### Basic Skill Template
 
 #### Template Structure
+
 ```bash
 my-skill-template/
 ├── SKILL.md                 # Main skill definition
@@ -212,6 +229,7 @@ my-skill-template/
 ```
 
 #### SKILL.md Template
+
 ```yaml
 ---
 name: your-skill-name
@@ -293,6 +311,7 @@ Guidelines for contributing to this skill.
 ### Specialized Skill Templates
 
 #### Document Processing Skill Template
+
 ```yaml
 ---
 name: document-processor
@@ -312,12 +331,13 @@ parameters:
     type: object
     description: Processing options
     properties:
-      extract_text: {type: boolean, default: true}
-      extract_metadata: {type: boolean, default: true}
-      preserve_formatting: {type: boolean, default: false}
+      extract_text: { type: boolean, default: true }
+      extract_metadata: { type: boolean, default: true }
+      preserve_formatting: { type: boolean, default: false }
 ```
 
 #### Data Analysis Skill Template
+
 ```yaml
 ---
 name: data-analyzer
@@ -341,6 +361,7 @@ parameters:
 ```
 
 #### Code Generation Skill Template
+
 ```yaml
 ---
 name: code-generator
@@ -372,6 +393,7 @@ parameters:
 ### Basic Plugin Template
 
 #### Plugin Structure
+
 ```bash
 my-plugin-template/
 ├── .claude-plugin/
@@ -416,6 +438,7 @@ my-plugin-template/
 ```
 
 #### plugin.json Template
+
 ```json
 {
   "name": "my-awesome-plugin",
@@ -470,6 +493,7 @@ my-plugin-template/
 ```
 
 #### marketplace.json Template
+
 ```json
 {
   "name": "my-awesome-marketplace",
@@ -509,39 +533,41 @@ my-plugin-template/
 ### Specialized Plugin Templates
 
 #### Development Tools Plugin Template
+
 ```json
 {
   "name": "dev-tools-plugin",
   "description": "Development tools and utilities",
   "categories": ["development", "tools"],
   "commands": [
-    {"name": "lint", "description": "Run code linting"},
-    {"name": "test", "description": "Run test suite"},
-    {"name": "build", "description": "Build project"},
-    {"name": "deploy", "description": "Deploy project"}
+    { "name": "lint", "description": "Run code linting" },
+    { "name": "test", "description": "Run test suite" },
+    { "name": "build", "description": "Build project" },
+    { "name": "deploy", "description": "Deploy project" }
   ],
   "skills": [
-    {"name": "code-review", "description": "Code review assistance"},
-    {"name": "debug-helper", "description": "Debugging assistance"}
+    { "name": "code-review", "description": "Code review assistance" },
+    { "name": "debug-helper", "description": "Debugging assistance" }
   ]
 }
 ```
 
 #### Productivity Plugin Template
+
 ```json
 {
   "name": "productivity-plugin",
   "description": "Productivity enhancement tools",
   "categories": ["productivity", "automation"],
   "commands": [
-    {"name": "task", "description": "Task management"},
-    {"name": "note", "description": "Note taking"},
-    {"name": "reminder", "description": "Set reminders"},
-    {"name": "report", "description": "Generate reports"}
+    { "name": "task", "description": "Task management" },
+    { "name": "note", "description": "Note taking" },
+    { "name": "reminder", "description": "Set reminders" },
+    { "name": "report", "description": "Generate reports" }
   ],
   "skills": [
-    {"name": "time-management", "description": "Time management assistance"},
-    {"name": "organizer", "description": "Organization assistance"}
+    { "name": "time-management", "description": "Time management assistance" },
+    { "name": "organizer", "description": "Organization assistance" }
   ]
 }
 ```
@@ -551,6 +577,7 @@ my-plugin-template/
 ### Local Development Tools
 
 #### Plugin Development CLI
+
 ```bash
 # Install plugin development tools
 npm install -g claude-plugin-dev
@@ -572,6 +599,7 @@ claude-plugin publish
 ```
 
 #### Skill Development Tools
+
 ```bash
 # Install skill development tools
 npm install -g claude-skill-dev
@@ -592,6 +620,7 @@ claude-skill package
 ### Testing Framework
 
 #### Plugin Test Framework
+
 ```javascript
 // tests/plugin-test.js
 const { PluginTester } = require('claude-plugin-test-framework');
@@ -602,7 +631,7 @@ describe('My Awesome Plugin', () => {
   beforeEach(() => {
     tester = new PluginTester({
       pluginPath: './my-awesome-plugin',
-      claudeCodePath: '/path/to/claude-code'
+      claudeCodePath: '/path/to/claude-code',
     });
   });
 
@@ -624,6 +653,7 @@ describe('My Awesome Plugin', () => {
 ```
 
 #### Skill Test Framework
+
 ```javascript
 // tests/skill-test.js
 const { SkillTester } = require('claude-skill-test-framework');
@@ -634,7 +664,7 @@ describe('My Awesome Skill', () => {
   beforeEach(() => {
     tester = new SkillTester({
       skillPath: './my-awesome-skill',
-      claudeCodePath: '/path/to/claude-code'
+      claudeCodePath: '/path/to/claude-code',
     });
   });
 
@@ -654,6 +684,7 @@ describe('My Awesome Skill', () => {
 ### Validation Tools
 
 #### Plugin Validator
+
 ```bash
 # Validate plugin structure
 claude-validator plugin --path ./my-plugin
@@ -669,6 +700,7 @@ claude-validator marketplace --path ./my-marketplace --all
 ```
 
 #### Skill Validator
+
 ```bash
 # Validate skill structure
 claude-validator skill --path ./my-skill
@@ -688,12 +720,14 @@ claude-validator skills --path ./skills --all
 ### Official Resources
 
 #### Claude Code Documentation
+
 - **Main Documentation**: https://docs.claude.com
 - **Plugin Documentation**: https://docs.claude.com/en/docs/claude-code/plugins
 - **Skills Documentation**: https://docs.claude.com/en/docs/claude-code/skills
 - **MCP Documentation**: https://modelcontextprotocol.io
 
 #### GitHub Repositories
+
 - **Claude Code**: https://github.com/anthropics/claude-code
 - **Official Skills**: https://github.com/anthropics/skills
 - **MCP Servers**: https://github.com/modelcontextprotocol/servers
@@ -702,12 +736,14 @@ claude-validator skills --path ./skills --all
 ### Community Resources
 
 #### Awesome Lists
+
 - **Awesome Claude Skills**: https://github.com/travisvn/awesome-claude-skills
 - **Awesome Claude Code**: https://github.com/hesreallyhim/awesome-claude-code
 - **Awesome MCP Servers**: https://github.com/punkpeye/awesome-mcp-servers
 - **Awesome Claude**: https://awesomeclaude.ai
 
 #### Community Collections
+
 - **Claude Code Templates**: https://github.com/davila7/claude-code-templates
 - **Plugin Hub**: https://github.com/jeremylongshore/claude-code-plugins-plus
 - **Skill Collection**: https://github.com/claude-code-community/skills
@@ -715,18 +751,21 @@ claude-validator skills --path ./skills --all
 ### Learning Resources
 
 #### Tutorials and Guides
+
 - **Claude Code Tutorial**: https://medium.com/aimonks/claude-code-tutorial
 - **Plugin Development Guide**: https://levelup.gitconnected.com/claude-code-plugins
 - **Skills Development Tutorial**: https://www.cursor-ide.com/blog/claude-code-skills
 - **MCP Integration Guide**: https://intuitionlabs.ai/articles/mcp-servers-claude-code
 
 #### Video Resources
+
 - **Claude Code Complete Guide**: https://www.youtube.com/watch?v=A0SV-DExypQ
 - **Plugin Development Tutorial**: https://www.youtube.com/watch?v=QHcH1qYam-M
 - **Skills Tutorial**: https://www.youtube.com/watch?v=V7YSfaQZrIw
 - **Advanced Workflows**: https://www.youtube.com/watch?v=3bej6c3O8d0
 
 #### Blog Posts and Articles
+
 - **Claude Code Best Practices**: https://www.anthropic.com/engineering/claude-code-best-practices
 - **Skills Overview**: https://www.anthropic.com/news/skills
 - **Plugin Introduction**: https://www.anthropic.com/news/claude-code-plugins
@@ -737,12 +776,14 @@ claude-validator skills --path ./skills --all
 ### API References
 
 #### Claude Code API
+
 - **Commands API**: Reference for creating custom commands
 - **Skills API**: Reference for skill development
 - **Hooks API**: Reference for event handling
 - **MCP API**: Reference for MCP server integration
 
 #### Plugin API
+
 ```javascript
 // Plugin API example
 const plugin = {
@@ -753,32 +794,33 @@ const plugin = {
   commands: {
     'my-command': {
       description: 'Description of my command',
-      handler: async (args) => {
+      handler: async args => {
         // Command implementation
-      }
-    }
+      },
+    },
   },
 
   // Skill registration
   skills: {
     'my-skill': {
       description: 'Description of my skill',
-      handler: async (input) => {
+      handler: async input => {
         // Skill implementation
-      }
-    }
+      },
+    },
   },
 
   // Hook registration
   hooks: {
-    'startup': async () => {
+    startup: async () => {
       // Startup hook implementation
-    }
-  }
+    },
+  },
 };
 ```
 
 #### Skill API
+
 ```yaml
 # Skill API reference
 api:
@@ -792,7 +834,7 @@ api:
       type: string
       required: true
       validation:
-        pattern: "^[a-zA-Z0-9]+$"
+        pattern: '^[a-zA-Z0-9]+$'
 
   tools:
     - Read
@@ -800,16 +842,17 @@ api:
     - Bash
 
   triggers:
-    - "trigger phrase"
+    - 'trigger phrase'
 
   examples:
-    - input: "example input"
-      output: "expected output"
+    - input: 'example input'
+      output: 'expected output'
 ```
 
 ### Configuration References
 
 #### Claude Code Settings
+
 ```json
 {
   "defaultModel": "claude-3-5-sonnet-20241022",
@@ -835,6 +878,7 @@ api:
 ```
 
 #### Plugin Configuration
+
 ```json
 {
   "plugin": {
@@ -852,6 +896,7 @@ api:
 ### Cheat Sheets
 
 #### Quick Reference Commands
+
 ```bash
 # Marketplace management
 /plugin marketplace add <repository>
@@ -878,6 +923,7 @@ api:
 ```
 
 #### Development Commands
+
 ```bash
 # Plugin development
 claude-plugin create <name>
@@ -901,24 +947,29 @@ claude-validator marketplace --path <path>
 ### Troubleshooting References
 
 #### Common Issues and Solutions
+
 ```markdown
 ## Installation Issues
+
 - **Permission denied**: Check file permissions
 - **Network error**: Verify internet connection
 - **Repository not found**: Check repository URL
 
 ## Plugin Issues
+
 - **Plugin not loading**: Check plugin.json format
 - **Commands not available**: Verify command files
 - **Skills not working**: Check SKILL.md format
 
 ## Performance Issues
+
 - **Slow loading**: Reduce plugin complexity
 - **Memory issues**: Optimize skill code
 - **Timeout errors**: Increase timeout values
 ```
 
 #### Debug Commands
+
 ```bash
 # Enable debug mode
 claude --debug
@@ -941,23 +992,27 @@ claude --verbose
 ## Getting Started with Templates
 
 ### 1. Choose the Right Template
+
 - **Plugin Template**: For creating new plugins
 - **Skill Template**: For creating individual skills
 - **Marketplace Template**: For creating plugin collections
 
 ### 2. Customize for Your Needs
+
 - Update metadata and descriptions
 - Modify functionality to match requirements
 - Add custom commands and skills
 - Configure permissions and dependencies
 
 ### 3. Test and Validate
+
 - Use validation tools to check structure
 - Test functionality locally
 - Verify installation process
 - Test with different scenarios
 
 ### 4. Document and Share
+
 - Write comprehensive documentation
 - Provide clear examples
 - Create troubleshooting guides
@@ -965,4 +1020,4 @@ claude --verbose
 
 ---
 
-*This templates and resources guide provides a comprehensive collection of tools, templates, and references for Claude Code Market development. Use these resources to accelerate your development process and ensure high-quality results.*
+_This templates and resources guide provides a comprehensive collection of tools, templates, and references for Claude Code Market development. Use these resources to accelerate your development process and ensure high-quality results._

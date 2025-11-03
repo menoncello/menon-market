@@ -34,10 +34,7 @@
       "name": "[command-name]",
       "description": "[Command description]",
       "usage": "/[command-name] [options]",
-      "examples": [
-        "/[command-name] --help",
-        "/[command-name] input.txt output.txt"
-      ]
+      "examples": ["/[command-name] --help", "/[command-name] input.txt output.txt"]
     }
   ],
   "skills": [

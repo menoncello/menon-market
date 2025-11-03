@@ -5,7 +5,7 @@
  * company analysis, and competitive research.
  */
 
-import { ResearchResult, ResearchSource, ResearchToolsConfig } from '../../index';
+import { ResearchResult, ResearchSource } from '../../index';
 
 export interface DeepResearchConfig {
   maxSources: number;
@@ -89,7 +89,7 @@ async function executeResearchWorkflow(
     summary,
     keyFindings,
     confidence,
-    timestamp: new Date()
+    timestamp: new Date(),
   };
 }
 
@@ -108,7 +108,7 @@ async function collectWorkflowSpecificSources(
       url: 'https://example.com/analysis',
       content: `Comprehensive ${workflow} analysis for ${query} with detailed findings and recommendations.`,
       relevanceScore: 0.9,
-      type: 'academic' as const
+      type: 'academic' as const,
     },
     {
       id: '2',
@@ -116,7 +116,7 @@ async function collectWorkflowSpecificSources(
       url: 'https://example.com/industry',
       content: `Industry report covering ${query} with market trends and competitive analysis.`,
       relevanceScore: 0.85,
-      type: 'technical' as const
+      type: 'technical' as const,
     },
     {
       id: '3',
@@ -124,8 +124,8 @@ async function collectWorkflowSpecificSources(
       url: 'https://example.com/market',
       content: `Market intelligence for ${query} including size, growth, and opportunity analysis.`,
       relevanceScore: 0.8,
-      type: 'news' as const
-    }
+      type: 'news' as const,
+    },
   ];
 
   return baseSources.slice(0, maxSources);
@@ -148,12 +148,16 @@ async function synthesizeWorkflowResearch(
   workflow: ResearchWorkflow
 ): Promise<string> {
   const workflowSpecificInsights = {
-    'company-research': 'Company analysis reveals strong market position with growth potential in emerging markets.',
-    'competitor-analysis': 'Competitive landscape shows fragmentation opportunities for differentiated positioning.',
+    'company-research':
+      'Company analysis reveals strong market position with growth potential in emerging markets.',
+    'competitor-analysis':
+      'Competitive landscape shows fragmentation opportunities for differentiated positioning.',
     'market-analysis': 'Market analysis indicates growing demand with increasing adoption rates.',
     'trend-analysis': 'Trend analysis shows acceleration in digital transformation initiatives.',
-    'tool-comparison': 'Tool comparison reveals significant differences in feature sets and integration capabilities.',
-    'technical-analysis': 'Technical analysis highlights robust architecture with scalability considerations.'
+    'tool-comparison':
+      'Tool comparison reveals significant differences in feature sets and integration capabilities.',
+    'technical-analysis':
+      'Technical analysis highlights robust architecture with scalability considerations.',
   };
 
   return `Based on ${sources.length} sources, ${workflowSpecificInsights[workflow]} The research indicates multiple opportunities for strategic positioning and growth.`;
@@ -171,33 +175,33 @@ async function extractWorkflowFindings(
     'company-research': [
       'Strong financial performance with consistent revenue growth',
       'Expanding market presence in key geographic regions',
-      'Innovation pipeline shows promising future prospects'
+      'Innovation pipeline shows promising future prospects',
     ],
     'competitor-analysis': [
       'Market leaders show signs of complacency creating opportunities',
       'Emerging competitors focus on niche segments',
-      'Technology differentiation becoming key competitive advantage'
+      'Technology differentiation becoming key competitive advantage',
     ],
     'market-analysis': [
       'Total addressable market growing at 15% annually',
       'Customer acquisition costs decreasing with digital channels',
-      'Market consolidation trends creating scale opportunities'
+      'Market consolidation trends creating scale opportunities',
     ],
     'trend-analysis': [
       'Digital transformation accelerating across all industries',
       'AI and automation driving significant efficiency gains',
-      'Sustainability becoming key decision criteria'
+      'Sustainability becoming key decision criteria',
     ],
     'tool-comparison': [
       'Integration capabilities critical for tool selection',
       'Total cost of ownership varies significantly between options',
-      'Vendor support quality impacts long-term success'
+      'Vendor support quality impacts long-term success',
     ],
     'technical-analysis': [
       'Architecture supports current and future scalability needs',
       'Security posture meets industry standards',
-      'Performance optimization opportunities identified'
-    ]
+      'Performance optimization opportunities identified',
+    ],
   };
 
   return workflowFindings[workflow] || ['Research findings analysis completed'];
@@ -218,7 +222,7 @@ function calculateWorkflowConfidence(
     'market-analysis': 0.8,
     'trend-analysis': 0.75,
     'tool-comparison': 0.95,
-    'technical-analysis': 0.9
+    'technical-analysis': 0.9,
   };
 
   return baseConfidence * (workflowMultiplier[workflow] || 0.8);
@@ -230,11 +234,13 @@ function calculateWorkflowConfidence(
 function calculateBaseConfidence(sources: ResearchSource[]): number {
   if (sources.length === 0) return 0;
 
-  const avgRelevance = sources.reduce((sum, source) => sum + source.relevanceScore, 0) / sources.length;
-  const sourceQuality = sources.filter(s => s.type === 'academic' || s.type === 'technical').length / sources.length;
+  const avgRelevance =
+    sources.reduce((sum, source) => sum + source.relevanceScore, 0) / sources.length;
+  const sourceQuality =
+    sources.filter(s => s.type === 'academic' || s.type === 'technical').length / sources.length;
   const sourceCount = Math.min(sources.length / 5, 1); // More sources = higher confidence up to 5
 
-  return Math.min(1, (avgRelevance * 0.5) + (sourceQuality * 0.3) + (sourceCount * 0.2));
+  return Math.min(1, avgRelevance * 0.5 + sourceQuality * 0.3 + sourceCount * 0.2);
 }
 
 /**
@@ -244,7 +250,7 @@ async function generateResearchReport(
   query: string,
   workflow: ResearchWorkflow,
   researchResult: ResearchResult,
-  config: DeepResearchConfig
+  _config: DeepResearchConfig
 ): Promise<ResearchReport> {
   const findings = await generateStructuredFindings(researchResult, workflow);
   const recommendations = await generateRecommendations(findings, workflow);
@@ -259,7 +265,7 @@ async function generateResearchReport(
     confidence: researchResult.confidence,
     limitations,
     recommendations,
-    generatedAt: new Date()
+    generatedAt: new Date(),
   };
 }
 
@@ -274,8 +280,8 @@ async function generateStructuredFindings(
     category: mapWorkflowToCategory(workflow),
     insight: finding,
     evidence: [researchResult.summary],
-    impact: index === 0 ? 'high' : index < 3 ? 'medium' : 'low',
-    confidence: researchResult.confidence
+    impact: index === 0 ? 'high' : (index < 3 ? 'medium' : 'low'),
+    confidence: researchResult.confidence,
   }));
 }
 
@@ -289,7 +295,7 @@ function mapWorkflowToCategory(workflow: ResearchWorkflow): ResearchFinding['cat
     'market-analysis': 'market',
     'trend-analysis': 'market',
     'tool-comparison': 'technical',
-    'technical-analysis': 'technical'
+    'technical-analysis': 'technical',
   };
 
   return mapping[workflow] || 'market';
@@ -300,7 +306,7 @@ function mapWorkflowToCategory(workflow: ResearchWorkflow): ResearchFinding['cat
  */
 async function generateRecommendations(
   findings: ResearchFinding[],
-  workflow: ResearchWorkflow
+  _workflow: ResearchWorkflow
 ): Promise<string[]> {
   const highImpactFindings = findings.filter(f => f.impact === 'high' && f.confidence > 0.7);
 
@@ -309,13 +315,11 @@ async function generateRecommendations(
     return [
       'Continue monitoring key metrics and trends',
       'Consider additional research for deeper insights',
-      'Develop strategic action plans based on current findings'
+      'Develop strategic action plans based on current findings',
     ];
   }
 
-  return highImpactFindings
-    .slice(0, 3)
-    .map(f => `Address: ${f.insight.substring(0, 100)}...`);
+  return highImpactFindings.slice(0, 3).map(f => `Address: ${f.insight.substring(0, 100)}...`);
 }
 
 /**
@@ -323,7 +327,7 @@ async function generateRecommendations(
  */
 async function identifyLimitations(
   researchResult: ResearchResult,
-  workflow: ResearchWorkflow
+  _workflow: ResearchWorkflow
 ): Promise<string[]> {
   const limitations = [];
 
@@ -347,5 +351,5 @@ export {
   ResearchWorkflow,
   DeepResearchConfig,
   ResearchReport,
-  ResearchFinding
+  ResearchFinding,
 };

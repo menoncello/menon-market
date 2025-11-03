@@ -12,12 +12,14 @@ Este documento descreve a abordagem simplificada para transformar o projeto mark
 ## Contexto
 
 ### Motivação
+
 - Focar puramente em plugins Claude Code marketplace
 - Remover complexidade de servidor web
 - Manter estrutura padrão Claude Code
 - Simplificar manutenção
 
 ### Estrutura Alvo
+
 Mantida exatamente a estrutura padrão Claude Code marketplace:
 
 ```
@@ -33,6 +35,7 @@ project/
 ## Design Simplificado
 
 ### Componentes Removidos
+
 - `server.ts` - Servidor web Bun
 - `index.html` - Interface web principal
 - `frontend.tsx` - Frontend React
@@ -40,6 +43,7 @@ project/
 - `static/styles.css` - Estilos CSS
 
 ### Componentes Mantidos
+
 - Estrutura `.claude-plugin/` e `plugins/`
 - Implementação dos plugins existentes
 - Testes dos plugins
@@ -49,9 +53,11 @@ project/
 ### Foco Principal: Plugins
 
 #### research-tools Plugin
+
 **Objetivo**: Completar implementação funcional real
 
 **Tarefas Principais**:
+
 1. Implementar funcionalidade real de pesquisa
 2. Completar skill deep-research
 3. Remover dados hardcoded
@@ -59,9 +65,11 @@ project/
 5. Melhorar documentação
 
 #### studio-cc Plugin
+
 **Objetivo**: Manter e melhorar implementação existente
 
 **Tarefas Principais**:
+
 1. Manter funcionalidade existente
 2. Melhorar se necessário
 3. Garantir compatibilidade
@@ -69,16 +77,19 @@ project/
 ## Plano de Implementação
 
 ### Fase 1: Remoção de Componentes Web
+
 - Remover `server.ts` e arquivos relacionados
 - Limpar dependências web
 - Manter estrutura de plugins
 
 ### Fase 2: research-tools Plugin
+
 - Implementar core functionality real
 - Completar deep-research skill
 - Substituir dados estáticos por funcionalidade real
 
 ### Fase 3: Testes e Documentação
+
 - Adicionar testes abrangentes
 - Melhorar documentação dos plugins
 - Garantir qualidade do código
@@ -86,16 +97,19 @@ project/
 ## Benefícios
 
 ### Simplicidade
+
 - Estrutura padrão Claude Code marketplace
 - Sem complexidade de servidor
 - Foco puramente nos plugins
 
 ### Manutenibilidade
+
 - Menos componentes para manter
 - Estrutura familiar para usuários Claude Code
 - Foco claro na funcionalidade principal
 
 ### Compatibilidade
+
 - 100% compatível com estrutura Claude Code marketplace
 - Fácil instalação e uso
 - Segue padrões estabelecidos

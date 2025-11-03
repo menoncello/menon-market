@@ -43,16 +43,19 @@ studio-cc/
 ## Installation
 
 ### From Marketplace
+
 ```bash
 claude marketplace install studio-cc
 ```
 
 ### From Git Repository
+
 ```bash
 claude marketplace install https://github.com/menoncello/studio-cc.git
 ```
 
 ### From Local Directory
+
 ```bash
 claude marketplace install ./studio-cc
 ```

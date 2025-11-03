@@ -1,4 +1,5 @@
-import Handlebars from "handlebars";
+
+type HandlebarsTemplateDelegate = any;
 
 export class TemplateCache {
   private cache: Map<string, HandlebarsTemplateDelegate> = new Map();

@@ -10,12 +10,14 @@ A comprehensive research tools plugin for Claude Code with advanced data analysi
 ## 🚀 Features
 
 ### Core Research Capabilities
+
 - **Multi-source Research**: Collects and analyzes information from diverse sources
 - **Intelligent Synthesis**: Automatically synthesizes research findings into coherent summaries
 - **Confidence Scoring**: Provides confidence scores for research results based on source quality
 - **Key Findings Extraction**: Automatically identifies and extracts key insights from research data
 
 ### Deep Research Workflows
+
 - **Company Research**: Comprehensive company analysis for job applications and partnerships
 - **Competitor Analysis**: In-depth competitive intelligence and market positioning
 - **Market Analysis**: Market size, trends, and opportunity assessment
@@ -24,6 +26,7 @@ A comprehensive research tools plugin for Claude Code with advanced data analysi
 - **Technical Analysis**: Deep technical research and implementation analysis
 
 ### Advanced Features
+
 - **Cross-validation**: Validates information across multiple independent sources
 - **Quality Scoring**: Evaluates source credibility and research quality
 - **Structured Reports**: Generates professional research reports with actionable insights
@@ -32,17 +35,20 @@ A comprehensive research tools plugin for Claude Code with advanced data analysi
 ## 📦 Installation
 
 ### Prerequisites
+
 - Claude Code (latest version)
 - Bun runtime (recommended)
 - TypeScript 5.0+
 
 ### Install from Marketplace
+
 1. Open Claude Code
 2. Navigate to Marketplace
 3. Search for "research-tools"
 4. Click Install
 
 ### Manual Installation
+
 ```bash
 # Clone the repository
 git clone https://github.com/menoncello/menon-marketplace.git
@@ -63,6 +69,7 @@ cp -r . ~/.claude/plugins/research-tools
 ## 🔧 Configuration
 
 ### Basic Configuration
+
 ```typescript
 import { initialize } from 'research-tools';
 
@@ -71,23 +78,24 @@ const config = initialize({
   maxSources: 50,
   outputFormat: 'markdown',
   timeout: 30000,
-  cacheEnabled: true
+  cacheEnabled: true,
 });
 ```
 
 ### Configuration Options
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `enableDeepResearch` | `boolean` | `true` | Enable advanced deep research workflows |
-| `maxSources` | `number` | `50` | Maximum number of sources to analyze |
-| `outputFormat` | `'markdown'\|'json'\|'html'\|'text'` | `'markdown'` | Output format for research results |
-| `timeout` | `number` | `30000` | Request timeout in milliseconds |
-| `cacheEnabled` | `boolean` | `true` | Enable result caching for performance |
+| Option               | Type                                 | Default      | Description                             |
+| -------------------- | ------------------------------------ | ------------ | --------------------------------------- |
+| `enableDeepResearch` | `boolean`                            | `true`       | Enable advanced deep research workflows |
+| `maxSources`         | `number`                             | `50`         | Maximum number of sources to analyze    |
+| `outputFormat`       | `'markdown'\|'json'\|'html'\|'text'` | `'markdown'` | Output format for research results      |
+| `timeout`            | `number`                             | `30000`      | Request timeout in milliseconds         |
+| `cacheEnabled`       | `boolean`                            | `true`       | Enable result caching for performance   |
 
 ## 📚 Usage
 
 ### Basic Research
+
 ```typescript
 import { performResearch, initialize } from 'research-tools';
 
@@ -104,20 +112,17 @@ console.log('Sources:', result.sources.length);
 ```
 
 ### Deep Research Workflows
+
 ```typescript
 import performDeepResearch from 'research-tools/skills/deep-research';
 
 // Company research
-const companyReport = await performDeepResearch(
-  'Apple Inc.',
-  'company-research',
-  {
-    maxSources: 10,
-    requireCrossValidation: true,
-    qualityThreshold: 0.8,
-    includeSentiment: true
-  }
-);
+const companyReport = await performDeepResearch('Apple Inc.', 'company-research', {
+  maxSources: 10,
+  requireCrossValidation: true,
+  qualityThreshold: 0.8,
+  includeSentiment: true,
+});
 
 console.log('Company Analysis:', companyReport.summary);
 console.log('Key Findings:', companyReport.findings);
@@ -125,6 +130,7 @@ console.log('Recommendations:', companyReport.recommendations);
 ```
 
 ### Available Workflows
+
 - `company-research` - Company analysis and research
 - `competitor-analysis` - Competitive intelligence
 - `market-analysis` - Market research and analysis
@@ -135,22 +141,27 @@ console.log('Recommendations:', companyReport.recommendations);
 ### Output Formats
 
 #### Markdown Output
+
 ```markdown
 # Research Report: AI Trends
 
 ## Summary
+
 Based on 15 sources, artificial intelligence involves rapid advancement...
 
 ## Key Findings
+
 - AI adoption accelerating across industries
 - Machine learning models becoming more sophisticated
 - Ethical considerations gaining importance
 
 ## Sources
+
 1. [AI Research Institute] - Comprehensive analysis...
 ```
 
 #### JSON Output
+
 ```json
 {
   "query": "artificial intelligence trends",
@@ -168,16 +179,19 @@ Based on 15 sources, artificial intelligence involves rapid advancement...
 ## 🧪 Testing
 
 ### Run All Tests
+
 ```bash
 bun test
 ```
 
 ### Run with Coverage
+
 ```bash
 bun test --coverage
 ```
 
 ### Test Categories
+
 - **Unit Tests**: Individual function and component testing
 - **Integration Tests**: End-to-end workflow testing
 - **Performance Tests**: Performance and memory efficiency testing
@@ -187,6 +201,7 @@ Current test coverage: **99.76% line coverage**, **100% function coverage**
 ## 🏗️ Development
 
 ### Project Structure
+
 ```
 research-tools/
 ├── index.ts                 # Main plugin implementation
@@ -205,6 +220,7 @@ research-tools/
 ```
 
 ### Development Setup
+
 ```bash
 # Clone repository
 git clone https://github.com/menoncello/menon-marketplace.git
@@ -226,6 +242,7 @@ bun run build
 ```
 
 ### Contributing
+
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
@@ -238,12 +255,14 @@ bun run build
 ## 📊 Performance
 
 ### Benchmarks
+
 - **Basic Research**: < 50ms for typical queries
 - **Deep Research**: < 500ms for comprehensive analysis
 - **Memory Usage**: < 10MB for typical workloads
 - **Concurrent Requests**: Supports 10+ concurrent operations
 
 ### Optimization Features
+
 - Intelligent caching for repeated queries
 - Configurable source limits for resource management
 - Efficient data structures and algorithms
@@ -252,12 +271,14 @@ bun run build
 ## 🔒 Security & Privacy
 
 ### Data Handling
+
 - All processing happens locally on your machine
 - No data is sent to external servers without explicit configuration
 - Research sources are validated and sanitized
 - Input validation prevents injection attacks
 
 ### Privacy Features
+
 - Local-only processing by default
 - No telemetry or data collection
 - Configurable data retention policies
@@ -266,16 +287,20 @@ bun run build
 ## 🤝 Support
 
 ### Documentation
+
 - [API Reference](./docs/api.md)
 - [Examples](./docs/examples.md)
 - [Troubleshooting](./docs/troubleshooting.md)
 
 ### Community
+
 - [GitHub Issues](https://github.com/menoncello/menon-marketplace/issues)
 - [Discussions](https://github.com/menoncello/menon-marketplace/discussions)
 
 ### Reporting Issues
+
 When reporting issues, please include:
+
 - Plugin version
 - Claude Code version
 - Operating system
@@ -297,12 +322,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📈 Roadmap
 
 ### Version 1.1.0 (Planned)
+
 - [ ] Additional research workflows
 - [ ] Enhanced source validation
 - [ ] Real-time research monitoring
 - [ ] Custom report templates
 
 ### Version 1.2.0 (Future)
+
 - [ ] AI-powered source ranking
 - [ ] Collaborative research features
 - [ ] Advanced visualization options

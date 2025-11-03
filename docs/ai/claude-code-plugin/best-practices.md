@@ -139,19 +139,16 @@ const DEFAULT_PLUGIN_PATH = '/plugins'; // Constant
 function validatePluginManifest() {} // Function
 
 // File naming
-plugin-manager.ts // kebab-case for files
-PluginManager // PascalCase for classes
-validatePlugin() // camelCase for functions
+plugin - manager.ts; // kebab-case for files
+PluginManager; // PascalCase for classes
+validatePlugin(); // camelCase for functions
 ```
 
 ### ESLint Configuration
 
 ```json
 {
-  "extends": [
-    "@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
-  ],
+  "extends": ["@typescript-eslint/recommended", "plugin:prettier/recommended"],
   "rules": {
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/explicit-function-return-type": "warn",
@@ -219,7 +216,8 @@ interface CacheEntry<T> {
 class Cache<T> {
   private cache = new Map<string, CacheEntry<T>>();
 
-  set(key: string, value: T, ttl: number = 300000): void { // 5 minutes default
+  set(key: string, value: T, ttl: number = 300000): void {
+    // 5 minutes default
     this.cache.set(key, {
       value,
       timestamp: Date.now(),
@@ -268,7 +266,7 @@ class ResourceManager {
   }
 
   async cleanup(): Promise<void> {
-    const cleanupPromises = Array.from(this.resources).map(async (cleanup) => {
+    const cleanupPromises = Array.from(this.resources).map(async cleanup => {
       try {
         await cleanup();
       } catch (error) {
@@ -357,7 +355,8 @@ class PerformanceMonitor {
     }
 
     // Alert on performance issues
-    if (metrics.executionTime > 5000) { // 5 seconds
+    if (metrics.executionTime > 5000) {
+      // 5 seconds
       console.warn(`Slow operation detected: ${operationName} took ${metrics.executionTime}ms`);
     }
   }
@@ -379,7 +378,9 @@ import Joi from 'joi';
 
 const pluginConfigSchema = Joi.object({
   name: Joi.string().alphanum().min(1).max(50).required(),
-  version: Joi.string().pattern(/^\d+\.\d+\.\d+$/).required(),
+  version: Joi.string()
+    .pattern(/^\d+\.\d+\.\d+$/)
+    .required(),
   description: Joi.string().max(500).optional(),
   permissions: Joi.array().items(Joi.string()).optional(),
 });
@@ -471,10 +472,7 @@ interface SecureExecutionContext {
 }
 
 class SecurePluginRunner {
-  async executePlugin(
-    plugin: Plugin,
-    context: SecureExecutionContext
-  ): Promise<unknown> {
+  async executePlugin(plugin: Plugin, context: SecureExecutionContext): Promise<unknown> {
     const permissionManager = new PermissionManager(context.permissions);
     const monitor = new ResourceMonitor(context.memoryLimit);
 
@@ -675,21 +673,25 @@ class Logger {
   }
 
   error(message: string, error?: Error, context?: Record<string, unknown>): void {
-    const errorRecord = error ? {
-      name: error.name,
-      message: error.message,
-      stack: error.stack,
-    } : undefined;
+    const errorRecord = error
+      ? {
+          name: error.name,
+          message: error.message,
+          stack: error.stack,
+        }
+      : undefined;
 
     this.log(LogLevel.ERROR, message, context, errorRecord);
   }
 
   fatal(message: string, error?: Error, context?: Record<string, unknown>): void {
-    const errorRecord = error ? {
-      name: error.name,
-      message: error.message,
-      stack: error.stack,
-    } : undefined;
+    const errorRecord = error
+      ? {
+          name: error.name,
+          message: error.message,
+          stack: error.stack,
+        }
+      : undefined;
 
     this.log(LogLevel.FATAL, message, context, errorRecord);
   }
@@ -804,15 +806,17 @@ describe('PluginManager', () => {
     it('should reject plugin with invalid name', () => {
       const plugin = new MockPlugin('', '1.0.0');
 
-      expect(() => pluginManager.register(plugin))
-        .toThrow('Plugin name must be a non-empty string');
+      expect(() => pluginManager.register(plugin)).toThrow(
+        'Plugin name must be a non-empty string'
+      );
     });
 
     it('should reject plugin with invalid version', () => {
       const plugin = new MockPlugin('test-plugin', 'invalid');
 
-      expect(() => pluginManager.register(plugin))
-        .toThrow('Plugin version must follow semantic versioning');
+      expect(() => pluginManager.register(plugin)).toThrow(
+        'Plugin version must follow semantic versioning'
+      );
     });
 
     it('should reject duplicate plugin registration', () => {
@@ -821,8 +825,9 @@ describe('PluginManager', () => {
 
       pluginManager.register(plugin1);
 
-      expect(() => pluginManager.register(plugin2))
-        .toThrow('Plugin with name "test-plugin" is already registered');
+      expect(() => pluginManager.register(plugin2)).toThrow(
+        'Plugin with name "test-plugin" is already registered'
+      );
     });
   });
 
@@ -851,9 +856,9 @@ describe('PluginManager', () => {
     });
 
     it('should reject unknown commands', async () => {
-      await expect(
-        pluginManager.executeCommand('unknown-command', {})
-      ).rejects.toThrow('Command not found: unknown-command');
+      await expect(pluginManager.executeCommand('unknown-command', {})).rejects.toThrow(
+        'Command not found: unknown-command'
+      );
     });
   });
 });
@@ -936,10 +941,7 @@ describe('Performance Tests', () => {
     const iterations = 1000;
 
     for (let i = 0; i < iterations; i++) {
-      await monitor.measure(
-        () => plugin.process(`test-data-${i}`),
-        'process-operation'
-      );
+      await monitor.measure(() => plugin.process(`test-data-${i}`), 'process-operation');
     }
 
     const finalMemory = process.memoryUsage().heapUsed;
@@ -1040,7 +1042,7 @@ export function createTestContext(overrides: Partial<PluginContext> = {}): Plugi
 
 ### Code Documentation
 
-```typescript
+````typescript
 /**
  * Plugin manager for handling plugin lifecycle and execution.
  *
@@ -1109,17 +1111,14 @@ export class PluginManager {
     const command = this.findCommand(commandName);
     const context = this.createExecutionContext(options);
 
-    return await this.withMonitoring(
-      () => command.handler(parameters, context),
-      commandName
-    );
+    return await this.withMonitoring(() => command.handler(parameters, context), commandName);
   }
 }
-```
+````
 
 ### README Template
 
-```markdown
+````markdown
 # Plugin Name
 
 > Brief description of what the plugin does
@@ -1135,6 +1134,7 @@ export class PluginManager {
 ```bash
 claude marketplace install plugin-name
 ```
+````
 
 ## Usage
 
@@ -1172,10 +1172,12 @@ Add to your `.claude/settings.json`:
 Description of the command.
 
 **Parameters:**
+
 - `param1` (string, required): Description of parameter
 - `param2` (number, optional): Description of parameter
 
 **Example:**
+
 ```bash
 /command-name --param1="value" --param2=42
 ```
@@ -1214,7 +1216,8 @@ License information.
 
 - Initial release
 - Added basic functionality
-```
+
+````
 
 ## Version Management
 
@@ -1266,7 +1269,7 @@ interface Version {
   patch: number;
   prerelease: string | null;
 }
-```
+````
 
 ### Changelog Management
 
@@ -1295,7 +1298,9 @@ class ChangelogManager {
       sections.push('### Changed\n' + changes.changed.map(change => `- ${change}`).join('\n'));
     }
     if (changes.deprecated?.length) {
-      sections.push('### Deprecated\n' + changes.deprecated.map(change => `- ${change}`).join('\n'));
+      sections.push(
+        '### Deprecated\n' + changes.deprecated.map(change => `- ${change}`).join('\n')
+      );
     }
     if (changes.removed?.length) {
       sections.push('### Removed\n' + changes.removed.map(change => `- ${change}`).join('\n'));
@@ -1423,11 +1428,11 @@ class PluginEventEmitter {
 // Usage
 const eventEmitter = new PluginEventEmitter();
 
-eventEmitter.on('plugin:loaded', (event) => {
+eventEmitter.on('plugin:loaded', event => {
   console.log(`Plugin loaded: ${event.plugin}`);
 });
 
-eventEmitter.on('plugin:error', (event) => {
+eventEmitter.on('plugin:error', event => {
   console.error(`Plugin error in ${event.plugin}:`, event.data);
 });
 ```
@@ -1496,9 +1501,10 @@ class AnalyticsCollector {
     const successfulExecutions = filteredMetrics.filter(m => m.success).length;
     const successRate = totalExecutions > 0 ? successfulExecutions / totalExecutions : 0;
 
-    const averageExecutionTime = totalExecutions > 0
-      ? filteredMetrics.reduce((sum, m) => sum + m.executionTime, 0) / totalExecutions
-      : 0;
+    const averageExecutionTime =
+      totalExecutions > 0
+        ? filteredMetrics.reduce((sum, m) => sum + m.executionTime, 0) / totalExecutions
+        : 0;
 
     const pluginCounts = new Map<string, number>();
     filteredMetrics.forEach(m => {

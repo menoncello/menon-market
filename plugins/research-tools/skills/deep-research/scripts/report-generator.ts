@@ -6,7 +6,7 @@
  */
 
 import { Command } from 'commander';
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync } from 'fs';
 import { join } from 'path';
 
 interface ReportGenerationOptions {
@@ -67,7 +67,6 @@ class ReportGenerator {
       }
 
       return report;
-
     } catch (error) {
       console.error('❌ Report generation failed:', error);
       throw error;
@@ -88,7 +87,7 @@ class ReportGenerator {
 
     try {
       return readFileSync(templatePath, 'utf-8');
-    } catch (error) {
+    } catch {
       // Fallback to default template
       return this.getDefaultTemplate();
     }
@@ -150,69 +149,150 @@ Detailed data and additional information can be found in the appendix.
 `;
   }
 
-  private processTemplate(template: string, data: ReportData, options: ReportGenerationOptions): string {
+  private processTemplate(
+    template: string,
+    data: ReportData,
+    options: ReportGenerationOptions
+  ): string {
     let report = template;
 
-    // Replace simple variables
-    report = report.replace(/\{\{title\}\}/g, data.title);
-    report = report.replace(/\{\{author\}\}/g, data.author || 'Research Analyst');
-    report = report.replace(/\{\{date\}\}/g, data.date);
-
-    // Replace metadata
-    if (data.metadata) {
-      report = report.replace(/\{\{research_objectives\}\}/g, data.metadata.research_objectives || 'Not specified');
-      report = report.replace(/\{\{methodology\}\}/g, data.metadata.methodology || 'Standard research methodology');
-
-      // Process sources
-      const sourcesSection = data.metadata.sources?.map(source =>
-        `- [${source.title}](${source.url}) - ${source.reliability} reliability - Accessed ${new Date(source.access_date).toLocaleDateString()}`
-      ).join('\n') || 'No sources specified';
-
-      report = report.replace(/\{\{#each sources\}\}[\s\S]*?\{\{\/each\}\}/g, sourcesSection);
-
-      // Process limitations
-      const limitationsSection = data.metadata.limitations?.map(limitation =>
-        `- ${limitation}`
-      ).join('\n') || 'No limitations specified';
-
-      report = report.replace(/\{\{#each limitations\}\}[\s\S]*?\{\{\/each\}\}/g, limitationsSection);
-    }
-
-    // Process sections
-    const sectionsSection = data.sections?.map(section => {
-      let sectionText = `### ${section.title}\n\n${section.content}\n\n`;
-
-      if (section.subsections && section.subsections.length > 0) {
-        sectionText += section.subsections.map(subsection =>
-          `#### ${subsection.title}\n\n${subsection.content}\n\n`
-        ).join('');
-      }
-
-      return sectionText;
-    }).join('\n') || 'No sections available';
-
-    report = report.replace(/\{\{#each sections\}\}[\s\S]*?\{\{\/each\}\}/g, sectionsSection);
-
-    // Handle conditional blocks
-    report = report.replace(/\{\{#if include_appendix\}\}([\s\S]*?)\{\{\/if\}\}/g,
-      options.includeAppendix ? '$1' : '');
-
-    // Clean up any remaining template syntax
-    report = report.replace(/\{\{[^}]*\}\}/g, '');
+    report = this.replaceSimpleVariables(report, data);
+    report = this.replaceMetadata(report, data.metadata);
+    report = this.replaceSections(report, data.sections);
+    report = this.handleConditionalBlocks(report, options);
+    report = this.cleanupRemainingTemplateSyntax(report);
 
     return report;
   }
 
+  private replaceSimpleVariables(template: string, data: ReportData): string {
+    let report = template;
+    report = report.replace(/\{\{title\}\}/g, data.title);
+    report = report.replace(/\{\{author\}\}/g, data.author || 'Research Analyst');
+    report = report.replace(/\{\{date\}\}/g, data.date);
+    return report;
+  }
+
+  private replaceMetadata(template: string, metadata: ReportData['metadata']): string {
+    let report = template;
+
+    if (metadata) {
+      report = report.replace(
+        /\{\{research_objectives\}\}/g,
+        metadata.research_objectives || 'Not specified'
+      );
+      report = report.replace(
+        /\{\{methodology\}\}/g,
+        metadata.methodology || 'Standard research methodology'
+      );
+
+      report = this.replaceSourcesSection(report, metadata.sources);
+      report = this.replaceLimitationsSection(report, metadata.limitations);
+    }
+
+    return report;
+  }
+
+  private replaceSourcesSection(template: string, sources: ReportData['metadata']['sources']): string {
+    if (!sources || sources.length === 0) {
+      return template.replace(/\{\{#each sources\}\}[\s\S]*?\{\{\/each\}\}/g, 'No sources specified');
+    }
+
+    const sourcesSection = sources
+      .map(source =>
+        `- [${source.title}](${source.url}) - ${source.reliability} reliability - Accessed ${new Date(source.access_date).toLocaleDateString()}`
+      )
+      .join('\n');
+
+    return template.replace(/\{\{#each sources\}\}[\s\S]*?\{\{\/each\}\}/g, sourcesSection);
+  }
+
+  private replaceLimitationsSection(template: string, limitations: ReportData['metadata']['limitations']): string {
+    const limitationsSection = limitations?.map(limitation => `- ${limitation}`).join('\n') || 'No limitations specified';
+    return template.replace(/\{\{#each limitations\}\}[\s\S]*?\{\{\/each\}\}/g, limitationsSection);
+  }
+
+  private replaceSections(template: string, sections: ReportData['sections']): string {
+    if (!sections || sections.length === 0) {
+      return template.replace(/\{\{#each sections\}\}[\s\S]*?\{\{\/each\}\}/g, 'No sections available');
+    }
+
+    const sectionsSection = sections
+      .map(section => this.formatSection(section))
+      .join('\n');
+
+    return template.replace(/\{\{#each sections\}\}[\s\S]*?\{\{\/each\}\}/g, sectionsSection);
+  }
+
+  private formatSection(section: ReportData['sections'][0]): string {
+    let sectionText = `### ${section.title}\n\n${section.content}\n\n`;
+
+    if (section.subsections && section.subsections.length > 0) {
+      const subsectionsText = section.subsections
+        .map(subsection => `#### ${subsection.title}\n\n${subsection.content}\n\n`)
+        .join('');
+      sectionText += subsectionsText;
+    }
+
+    return sectionText;
+  }
+
+  private handleConditionalBlocks(template: string, options: ReportGenerationOptions): string {
+    return template.replace(
+      /\{\{#if include_appendix\}\}([\s\S]*?)\{\{\/if\}\}/g,
+      options.includeAppendix ? '$1' : ''
+    );
+  }
+
+  private cleanupRemainingTemplateSyntax(template: string): string {
+    return template.replace(/\{\{[^}]*\}\}/g, '');
+  }
+
   async generateHTMLReport(markdownContent: string): Promise<string> {
-    // Convert markdown to HTML
-    const htmlContent = `
-<!DOCTYPE html>
+    const htmlStructure = this.createHTMLStructure();
+    const cssStyles = this.generateCSSStyles();
+    const bodyContent = this.markdownToHTML(markdownContent);
+
+    return htmlStructure
+      .replace('{{CSS_STYLES}}', cssStyles)
+      .replace('{{BODY_CONTENT}}', bodyContent);
+  }
+
+  private createHTMLStructure(): string {
+    return `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Research Report</title>
     <style>
+{{CSS_STYLES}}
+    </style>
+</head>
+<body>
+{{BODY_CONTENT}}
+</body>
+</html>`;
+  }
+
+  private generateCSSStyles(): string {
+    const cssSections = [
+      this.generateBodyCSS(),
+      this.generateHeadingCSS(),
+      this.generateLinkCSS(),
+      this.generateListCSS(),
+      this.generateBlockquoteCSS(),
+      this.generateCodeCSS(),
+      this.generateTableCSS(),
+      this.generateUtilityCSS(),
+      this.generatePrintCSS()
+    ];
+
+    return cssSections.join('\n\n');
+  }
+
+  private generateBodyCSS(): string {
+    return `
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
@@ -220,7 +300,11 @@ Detailed data and additional information can be found in the appendix.
             margin: 0 auto;
             padding: 2rem;
             color: #333;
-        }
+        }`;
+  }
+
+  private generateHeadingCSS(): string {
+    return `
         h1, h2, h3, h4 {
             color: #2c3e50;
             margin-top: 2rem;
@@ -233,27 +317,43 @@ Detailed data and additional information can be found in the appendix.
         h2 {
             border-bottom: 1px solid #ecf0f1;
             padding-bottom: 0.3rem;
-        }
+        }`;
+  }
+
+  private generateLinkCSS(): string {
+    return `
         a {
             color: #3498db;
             text-decoration: none;
         }
         a:hover {
             text-decoration: underline;
-        }
+        }`;
+  }
+
+  private generateListCSS(): string {
+    return `
         ul, ol {
             padding-left: 2rem;
         }
         li {
             margin-bottom: 0.5rem;
-        }
+        }`;
+  }
+
+  private generateBlockquoteCSS(): string {
+    return `
         blockquote {
             border-left: 4px solid #3498db;
             padding-left: 1rem;
             margin: 1rem 0;
             background-color: #f8f9fa;
             padding: 1rem;
-        }
+        }`;
+  }
+
+  private generateCodeCSS(): string {
+    return `
         code {
             background-color: #f1f2f6;
             padding: 0.2rem 0.4rem;
@@ -266,7 +366,11 @@ Detailed data and additional information can be found in the appendix.
             padding: 1rem;
             border-radius: 5px;
             overflow-x: auto;
-        }
+        }`;
+  }
+
+  private generateTableCSS(): string {
+    return `
         table {
             border-collapse: collapse;
             width: 100%;
@@ -280,7 +384,11 @@ Detailed data and additional information can be found in the appendix.
         th {
             background-color: #3498db;
             color: white;
-        }
+        }`;
+  }
+
+  private generateUtilityCSS(): string {
+    return `
         .executive-summary {
             background-color: #e8f4fd;
             padding: 1.5rem;
@@ -292,7 +400,11 @@ Detailed data and additional information can be found in the appendix.
             background-color: #f8f9fa;
             padding: 1rem;
             border-radius: 5px;
-        }
+        }`;
+  }
+
+  private generatePrintCSS(): string {
+    return `
         @media print {
             body {
                 font-size: 12pt;
@@ -301,15 +413,7 @@ Detailed data and additional information can be found in the appendix.
             .no-print {
                 display: none;
             }
-        }
-    </style>
-</head>
-<body>
-    ${this.markdownToHTML(markdownContent)}
-</body>
-</html>`;
-
-    return htmlContent;
+        }`;
   }
 
   private markdownToHTML(markdown: string): string {
@@ -334,7 +438,7 @@ Detailed data and additional information can be found in the appendix.
 
     // Line breaks
     html = html.replace(/\n\n/g, '</p><p>');
-    html = '<p>' + html + '</p>';
+    html = `<p>${  html  }</p>`;
 
     // Clean up
     html = html.replace(/<p><h/g, '<h');
@@ -361,7 +465,7 @@ Detailed data and additional information can be found in the appendix.
         'comprehensive-analysis',
         'competitive-intelligence',
         'technical-evaluation',
-        'market-analysis'
+        'market-analysis',
       ];
 
       console.log('📋 Available Report Templates:');
@@ -392,7 +496,7 @@ program
   .option('-f, --format <string>', 'Output format', 'markdown')
   .option('--include-executive-summary', 'Include executive summary')
   .option('--include-appendix', 'Include appendix')
-  .action(async (options) => {
+  .action(async options => {
     const generator = new ReportGenerator();
 
     try {
@@ -402,7 +506,7 @@ program
         output: options.output,
         format: options.format,
         includeExecutiveSummary: options.includeExecutiveSummary,
-        includeAppendix: options.includeAppendix
+        includeAppendix: options.includeAppendix,
       });
 
       // Convert to different formats if requested
@@ -419,7 +523,6 @@ program
       } else {
         console.log(report);
       }
-
     } catch (error) {
       console.error('❌ Error:', error.message);
       process.exit(1);

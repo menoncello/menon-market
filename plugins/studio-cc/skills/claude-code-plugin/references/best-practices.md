@@ -7,6 +7,7 @@ This guide covers best practices for developing high-quality, maintainable, and 
 ### TypeScript Best Practices
 
 #### Configuration
+
 ```json
 {
   "compilerOptions": {
@@ -23,6 +24,7 @@ This guide covers best practices for developing high-quality, maintainable, and 
 ```
 
 #### Interface Design
+
 ```typescript
 // Use clear interfaces
 interface PluginConfig {
@@ -53,6 +55,7 @@ class PluginManager<T extends PluginConfig> {
 ```
 
 #### Error Handling
+
 ```typescript
 // Implement proper error handling
 class PluginError extends Error {
@@ -73,11 +76,7 @@ async function loadPlugin(pluginPath: string): Promise<Plugin> {
     const plugin = await import(pluginPath);
     return new plugin.default(manifest);
   } catch (error) {
-    throw new PluginError(
-      `Failed to load plugin from ${pluginPath}`,
-      'LOAD_ERROR',
-      pluginPath
-    );
+    throw new PluginError(`Failed to load plugin from ${pluginPath}`, 'LOAD_ERROR', pluginPath);
   }
 }
 ```
@@ -85,6 +84,7 @@ async function loadPlugin(pluginPath: string): Promise<Plugin> {
 ### Code Organization
 
 #### Directory Structure
+
 ```
 src/
 ├── types/
@@ -109,6 +109,7 @@ src/
 ```
 
 #### Naming Conventions
+
 ```typescript
 // Use descriptive names
 class PluginConfigurationValidator {} // Good
@@ -121,14 +122,15 @@ const DEFAULT_PLUGIN_PATH = '/plugins'; // Constant
 function validatePluginManifest() {} // Function
 
 // File naming
-plugin-manager.ts // kebab-case for files
-PluginManager // PascalCase for classes
-validatePlugin() // camelCase for functions
+plugin - manager.ts; // kebab-case for files
+PluginManager; // PascalCase for classes
+validatePlugin(); // camelCase for functions
 ```
 
 ## Performance Optimization
 
 ### Lazy Loading
+
 ```typescript
 class PluginRegistry {
   private plugins = new Map<string, () => Promise<Plugin>>();
@@ -154,6 +156,7 @@ class PluginRegistry {
 ```
 
 ### Caching Strategies
+
 ```typescript
 interface CacheEntry<T> {
   value: T;
@@ -164,7 +167,8 @@ interface CacheEntry<T> {
 class Cache<T> {
   private cache = new Map<string, CacheEntry<T>>();
 
-  set(key: string, value: T, ttl: number = 300000): void { // 5 minutes default
+  set(key: string, value: T, ttl: number = 300000): void {
+    // 5 minutes default
     this.cache.set(key, {
       value,
       timestamp: Date.now(),
@@ -199,6 +203,7 @@ class Cache<T> {
 ```
 
 ### Resource Management
+
 ```typescript
 class ResourceManager {
   private resources = new Set<() => Promise<void>>();
@@ -208,7 +213,7 @@ class ResourceManager {
   }
 
   async cleanup(): Promise<void> {
-    const cleanupPromises = Array.from(this.resources).map(async (cleanup) => {
+    const cleanupPromises = Array.from(this.resources).map(async cleanup => {
       try {
         await cleanup();
       } catch (error) {
@@ -245,12 +250,15 @@ class Plugin {
 ## Security Considerations
 
 ### Input Validation
+
 ```typescript
 import Joi from 'joi';
 
 const pluginConfigSchema = Joi.object({
   name: Joi.string().alphanum().min(1).max(50).required(),
-  version: Joi.string().pattern(/^\d+\.\d+\.\d+$/).required(),
+  version: Joi.string()
+    .pattern(/^\d+\.\d+\.\d+$/)
+    .required(),
   description: Joi.string().max(500).optional(),
   permissions: Joi.array().items(Joi.string()).optional(),
 });
@@ -275,6 +283,7 @@ class PluginValidator {
 ```
 
 ### Permission Management
+
 ```typescript
 enum Permission {
   FILE_READ = 'file:read',
@@ -318,6 +327,7 @@ class PermissionManager {
 ```
 
 ### Secure Plugin Execution
+
 ```typescript
 interface SecureExecutionContext {
   permissions: Permission[];
@@ -326,10 +336,7 @@ interface SecureExecutionContext {
 }
 
 class SecurePluginRunner {
-  async executePlugin(
-    plugin: Plugin,
-    context: SecureExecutionContext
-  ): Promise<unknown> {
+  async executePlugin(plugin: Plugin, context: SecureExecutionContext): Promise<unknown> {
     const permissionManager = new PermissionManager(context.permissions);
     const monitor = new ResourceMonitor(context.memoryLimit);
 
@@ -354,6 +361,7 @@ class SecurePluginRunner {
 ## Error Handling and Logging
 
 ### Structured Error Handling
+
 ```typescript
 abstract class PluginError extends Error {
   abstract readonly code: string;
@@ -391,6 +399,7 @@ enum ErrorCategory {
 ```
 
 ### Comprehensive Logging
+
 ```typescript
 interface LogEntry {
   level: LogLevel;
@@ -424,11 +433,13 @@ class Logger {
   }
 
   error(message: string, error?: Error, context?: Record<string, unknown>): void {
-    const errorRecord = error ? {
-      name: error.name,
-      message: error.message,
-      stack: error.stack,
-    } : undefined;
+    const errorRecord = error
+      ? {
+          name: error.name,
+          message: error.message,
+          stack: error.stack,
+        }
+      : undefined;
 
     this.log(LogLevel.ERROR, message, context, errorRecord);
   }
@@ -467,6 +478,7 @@ class Logger {
 ## Testing Strategies
 
 ### Unit Testing
+
 ```typescript
 import { describe, it, expect, beforeEach, afterEach } from 'bun:test';
 import { PluginManager } from '../src/plugin-manager';
@@ -494,14 +506,16 @@ describe('PluginManager', () => {
     it('should reject plugin with invalid name', () => {
       const plugin = new MockPlugin('', '1.0.0');
 
-      expect(() => pluginManager.register(plugin))
-        .toThrow('Plugin name must be a non-empty string');
+      expect(() => pluginManager.register(plugin)).toThrow(
+        'Plugin name must be a non-empty string'
+      );
     });
   });
 });
 ```
 
 ### Integration Testing
+
 ```typescript
 describe('Plugin Integration', () => {
   let client: ClaudeCodeClient;
@@ -543,6 +557,7 @@ describe('Plugin Integration', () => {
 ```
 
 ### Performance Testing
+
 ```typescript
 describe('Performance Tests', () => {
   it('should handle high load without memory leaks', async () => {
@@ -553,10 +568,7 @@ describe('Performance Tests', () => {
     const iterations = 1000;
 
     for (let i = 0; i < iterations; i++) {
-      await monitor.measure(
-        () => plugin.process(`test-data-${i}`),
-        'process-operation'
-      );
+      await monitor.measure(() => plugin.process(`test-data-${i}`), 'process-operation');
     }
 
     const finalMemory = process.memoryUsage().heapUsed;
@@ -571,7 +583,8 @@ describe('Performance Tests', () => {
 ## Documentation Standards
 
 ### Code Documentation
-```typescript
+
+````typescript
 /**
  * Plugin manager for handling plugin lifecycle and execution.
  *
@@ -601,10 +614,11 @@ export class PluginManager {
     this.plugins.set(plugin.name, plugin);
   }
 }
-```
+````
 
 ### README Template
-```markdown
+
+````markdown
 # Plugin Name
 
 > Brief description of what the plugin does
@@ -620,6 +634,7 @@ export class PluginManager {
 ```bash
 claude marketplace install plugin-name
 ```
+````
 
 ## Usage
 
@@ -661,7 +676,8 @@ npm test
 ## License
 
 License information.
-```
+
+````
 
 ## Version Management
 
@@ -699,11 +715,12 @@ class VersionManager {
     return 0;
   }
 }
-```
+````
 
 ## Design Patterns
 
 ### Plugin Factory Pattern
+
 ```typescript
 abstract class PluginFactory {
   abstract create(config: PluginConfig): Plugin;
@@ -725,6 +742,7 @@ abstract class PluginFactory {
 ```
 
 ### Observer Pattern for Plugin Events
+
 ```typescript
 class PluginEventEmitter {
   private handlers = new Map<string, PluginEventHandler[]>();
@@ -754,6 +772,7 @@ class PluginEventEmitter {
 ## Quality Assurance Checklist
 
 ### Before Release
+
 - [ ] Code follows all style guidelines
 - [ ] All tests pass successfully
 - [ ] Documentation is complete and accurate
@@ -764,6 +783,7 @@ class PluginEventEmitter {
 - [ ] Dependencies validated
 
 ### Code Review
+
 - [ ] Functions have clear single responsibilities
 - [ ] Error handling is comprehensive
 - [ ] Logging is appropriate and informative
@@ -773,4 +793,4 @@ class PluginEventEmitter {
 
 ---
 
-*Following these best practices will help ensure your Claude Code plugins are high-quality, secure, and well-maintained.*
+_Following these best practices will help ensure your Claude Code plugins are high-quality, secure, and well-maintained._

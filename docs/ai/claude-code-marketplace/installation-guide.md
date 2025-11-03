@@ -26,6 +26,7 @@
 ### Common Installation Patterns
 
 #### Official Skills Installation
+
 ```bash
 # Add official marketplace
 /plugin marketplace add anthropics/skills
@@ -37,6 +38,7 @@
 ```
 
 #### Community Marketplace Installation
+
 ```bash
 # Install from GitHub repository
 /plugin marketplace add owner/repo-name
@@ -50,6 +52,7 @@
 ```
 
 #### Local Development Setup
+
 ```bash
 # Add local marketplace for development
 /plugin marketplace add ./my-marketplace
@@ -66,6 +69,7 @@
 ### Adding Marketplaces
 
 #### Official Sources
+
 ```bash
 # Anthropic official skills
 /plugin marketplace add anthropics/skills
@@ -76,6 +80,7 @@
 ```
 
 #### Community Sources
+
 ```bash
 # GitHub repositories
 /plugin marketplace add travisvn/awesome-claude-skills
@@ -86,6 +91,7 @@
 ```
 
 #### Local Development
+
 ```bash
 # Local directory containing marketplace.json
 /plugin marketplace add ./my-marketplace
@@ -171,16 +177,19 @@
 ### Understanding Skill Types
 
 #### Personal Skills (Global)
+
 - **Location**: `~/.claude/skills/`
 - **Scope**: Available across all projects
 - **Use Case**: Personal workflows and preferences
 
 #### Project Skills (Repository-specific)
+
 - **Location**: `.claude/skills/`
 - **Scope**: Shared with team via git
 - **Use Case**: Team-specific workflows
 
 #### Plugin Skills (Bundled)
+
 - **Location**: Bundled with installed plugins
 - **Scope**: Available when plugin is installed
 - **Use Case**: Distributable skill packages
@@ -188,6 +197,7 @@
 ### Manual Skill Installation
 
 #### Personal Skills
+
 ```bash
 # Create personal skills directory
 mkdir -p ~/.claude/skills
@@ -200,6 +210,7 @@ cp -r my-skill ~/.claude/skills/
 ```
 
 #### Project Skills
+
 ```bash
 # Create project skills directory
 mkdir -p .claude/skills
@@ -237,6 +248,7 @@ MCP (Model Context Protocol) servers enable Claude to connect to external tools 
 ### Installing MCP Servers
 
 #### Via Package Managers
+
 ```bash
 # Install via npm
 npm install -g @modelcontextprotocol/server-github
@@ -248,6 +260,7 @@ pip install mcp-server-postgres
 ```
 
 #### Manual Installation
+
 ```bash
 # Clone MCP server repository
 git clone https://github.com/modelcontextprotocol/servers.git
@@ -261,6 +274,7 @@ npm link
 ### Configuring MCP Servers
 
 #### Claude Code Configuration
+
 ```json
 // ~/.claude/settings.json
 {
@@ -341,11 +355,13 @@ claude --version
 ### Settings File Locations
 
 #### Global Settings
+
 - **Location**: `~/.claude/settings.json`
 - **Scope**: All Claude Code sessions
 - **Use Case**: Personal preferences and global configurations
 
 #### Project Settings
+
 - **Location**: `.claude/settings.json`
 - **Scope**: Current project/repository
 - **Use Case**: Project-specific configurations
@@ -403,6 +419,7 @@ claude --version
 ### Installation Issues
 
 #### Permission Denied
+
 ```bash
 # Check file permissions
 ls -la ~/.claude/
@@ -413,6 +430,7 @@ chmod 644 ~/.claude/settings.json
 ```
 
 #### Network Issues
+
 ```bash
 # Check network connectivity
 curl -I https://api.github.com
@@ -422,6 +440,7 @@ curl -I https://api.github.com
 ```
 
 #### Plugin Not Found
+
 ```bash
 # Update marketplace metadata
 /plugin marketplace update marketplace-name
@@ -433,6 +452,7 @@ curl -I https://api.github.com
 ### Skill Loading Issues
 
 #### Skill Not Appearing
+
 ```bash
 # Check skill file structure
 ls -la ~/.claude/skills/my-skill/
@@ -445,6 +465,7 @@ head ~/.claude/skills/my-skill/SKILL.md
 ```
 
 #### Skill Not Working
+
 ```bash
 # Check skill permissions
 /skill-info --verbose my-skill
@@ -459,11 +480,13 @@ head ~/.claude/skills/my-skill/SKILL.md
 ## Getting Help
 
 ### Official Resources
+
 - **Documentation**: https://docs.claude.com
 - **GitHub Issues**: https://github.com/anthropics/claude-code/issues
 - **Community Discord**: Official Anthropic Discord
 
 ### Community Resources
+
 - **Reddit**: r/ClaudeAI
 - **GitHub Discussions**: Community Q&A
 - **Awesome Lists**: Community-curated resources
@@ -489,6 +512,7 @@ claude --verbose
 ## Quick Reference Cheat Sheet
 
 ### Essential Commands
+
 ```bash
 /plugin marketplace add anthropics/skills          # Add official marketplace
 /plugin install document-skills@anthropic-agent-skills  # Install core skills
@@ -497,6 +521,7 @@ claude --verbose
 ```
 
 ### Management Commands
+
 ```bash
 /plugin marketplace list                          # List marketplaces
 /plugin list                                      # List installed plugins
@@ -505,6 +530,7 @@ claude --verbose
 ```
 
 ### Development Commands
+
 ```bash
 /plugin marketplace add ./my-marketplace          # Add local marketplace
 /plugin install my-plugin@local                   # Install local plugin
@@ -514,4 +540,4 @@ claude --verbose
 
 ---
 
-*This guide provides the essential commands and procedures for installing and managing Claude Code Market components. For detailed information, refer to the main documentation.*
+_This guide provides the essential commands and procedures for installing and managing Claude Code Market components. For detailed information, refer to the main documentation._

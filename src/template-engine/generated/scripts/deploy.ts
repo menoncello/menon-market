@@ -7,7 +7,6 @@
  */
 
 import Database from "bun:sqlite";
-import { serve } from "bun:unknown";
 import { TestPlugin } from "./test-plugin";
 
 interface TestPluginConfig {

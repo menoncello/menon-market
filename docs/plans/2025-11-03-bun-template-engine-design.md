@@ -14,6 +14,7 @@ Comprehensive template engine system to migrate all Node.js scripts to Bun-first
 ### Core Components
 
 #### 1. Template Manager (`src/templates/manager.ts`)
+
 ```typescript
 import Handlebars from 'handlebars';
 import { readdir, readFile, writeFile } from 'node:fs/promises';
@@ -34,14 +35,18 @@ export class TemplateManager {
 
     // {{bun-class "PluginName"}} → PascalCase formatting
     Handlebars.registerHelper('bun-class', (name: string) => {
-      return name.split('-').map(part =>
-        part.charAt(0).toUpperCase() + part.slice(1)
-      ).join('');
+      return name
+        .split('-')
+        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+        .join('');
     });
 
     // {{bun-filename "MyClass"}} → kebab-case
     Handlebars.registerHelper('bun-filename', (name: string) => {
-      return name.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '');
+      return name
+        .replace(/([A-Z])/g, '-$1')
+        .toLowerCase()
+        .replace(/^-/, '');
     });
 
     // {{#ifBunFeature}}...{{/ifBunFeature}}
@@ -54,6 +59,7 @@ export class TemplateManager {
 ```
 
 #### 2. Template Registry (`src/templates/registry.ts`)
+
 ```typescript
 interface TemplateDefinition {
   id: string;
@@ -77,8 +83,8 @@ export const TEMPLATES: TemplateDefinition[] = [
     requiredVars: ['PLUGIN_NAME', 'AUTHOR', 'VERSION'],
     optionalVars: {
       DATABASE_TYPE: 'sqlite',
-      LOG_LEVEL: 'info'
-    }
+      LOG_LEVEL: 'info',
+    },
   },
   {
     id: 'marketplace-validate',
@@ -90,13 +96,14 @@ export const TEMPLATES: TemplateDefinition[] = [
     requiredVars: ['PLUGIN_NAME', 'VALIDATION_RULES'],
     optionalVars: {
       STRICT_MODE: true,
-      AUTO_FIX: false
-    }
-  }
+      AUTO_FIX: false,
+    },
+  },
 ];
 ```
 
 #### 3. Template Generator CLI (`src/cli/generate.ts`)
+
 ```typescript
 import { Command } from 'commander';
 import { TemplateManager } from '../templates/manager';
@@ -133,6 +140,7 @@ program
 ### Template Examples
 
 #### Deploy Template (`templates/deploy.hbs`)
+
 ```handlebars
 #!/usr/bin/env bun
 
@@ -193,6 +201,7 @@ if (import.meta.main) {
 ```
 
 #### Validation Template (`templates/validate.hbs`)
+
 ```handlebars
 #!/usr/bin/env bun
 
@@ -280,6 +289,7 @@ if (import.meta.main) {
 ### Configuration System
 
 #### Template Configuration (`src/config/template-config.ts`)
+
 ```typescript
 import { z } from 'zod';
 
@@ -293,7 +303,7 @@ export const TemplateConfigSchema = z.object({
   STRICT_MODE: z.boolean().default(true),
   AUTO_FIX: z.boolean().default(false),
   OUTPUT_DIR: z.string().default('./generated'),
-  TEMPLATE_DIR: z.string().default('./templates')
+  TEMPLATE_DIR: z.string().default('./templates'),
 });
 
 export type TemplateConfig = z.infer<typeof TemplateConfigSchema>;
@@ -304,43 +314,49 @@ export const defaultConfig: Partial<TemplateConfig> = {
   STRICT_MODE: true,
   AUTO_FIX: false,
   OUTPUT_DIR: './generated',
-  TEMPLATE_DIR: './templates'
+  TEMPLATE_DIR: './templates',
 };
 ```
 
 ### Implementation Plan
 
 #### Phase 1: Infrastructure Setup
+
 1. Install dependencies: `handlebars`, `commander`, `zod`
 2. Create project structure under `src/template-engine/`
 3. Set up TypeScript configuration for template engine
 4. Create initial template manager class
 
 #### Phase 2: Template Migration
+
 1. Convert existing `deploy.js` to `deploy.hbs` template
 2. Convert existing `validate.js` to `validate.hbs` template
 3. Create template registry with all existing scripts
 4. Implement custom Handlebars helpers for Bun features
 
 #### Phase 3: CLI Development
+
 1. Build CLI interface using Commander.js
 2. Implement interactive template generation
 3. Add validation and error handling
 4. Create batch generation capabilities
 
 #### Phase 4: Integration & Testing
+
 1. Integrate with existing project structure
 2. Add comprehensive test coverage
 3. Create documentation and usage examples
 4. Performance optimization and caching
 
 #### Phase 5: Migration Execution
+
 1. Replace all Node.js scripts with Bun-first templates
 2. Update documentation and README files
 3. Create migration guide for plugin developers
 4. Deploy to marketplace
 
 ### File Structure
+
 ```
 src/template-engine/
 ├── templates/
@@ -370,6 +386,7 @@ src/template-engine/
 ## Next Steps
 
 Ready to proceed with implementation? I can:
+
 1. Set up a git worktree for isolated development
 2. Create detailed implementation plan with task breakdown
 3. Begin Phase 1: Infrastructure Setup

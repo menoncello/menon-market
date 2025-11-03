@@ -10,10 +10,10 @@ const crafter = new AdvancedPromptCrafter();
 async function teste1() {
   console.log('🚀 Teste 1: Otimizando prompt simples\n');
 
-  const prompt = "criar um website de delivery";
+  const prompt = 'criar um website de delivery';
   const resultado = await crafter.analyzeAndOptimize(prompt, {
     mode: 'business',
-    domain: 'technical'
+    domain: 'technical',
   });
 
   console.log('📝 Original:', prompt);
@@ -31,15 +31,15 @@ async function teste2() {
   console.log('📋 Teste 2: Criando prompt a partir de requisitos\n');
 
   const request = {
-    task: "Implementar sistema de autenticação",
-    domain: "technical",
-    mode: "business",
+    task: 'Implementar sistema de autenticação',
+    domain: 'technical',
+    mode: 'business',
     requirements: {
-      include: ["login", "senha segura", "recuperação de senha"],
-      exclude: ["armazenar senha em texto plano"],
-      constraints: ["OAuth 2.0", "JWT tokens"]
+      include: ['login', 'senha segura', 'recuperação de senha'],
+      exclude: ['armazenar senha em texto plano'],
+      constraints: ['OAuth 2.0', 'JWT tokens'],
     },
-    context: "Para aplicação web moderna"
+    context: 'Para aplicação web moderna',
   };
 
   const resultado = await crafter.createPrompt(request);
@@ -56,7 +56,8 @@ async function teste2() {
 async function teste3() {
   console.log('📊 Teste 3: Análise completa de métricas\n');
 
-  const prompt = "Como desenvolvedor sênior, crie um guia completo sobre arquitetura de microsserviços incluindo exemplos práticos, melhores práticas, estratégias de deploy e padrões de tratamento de erros para desenvolvedores intermediários.";
+  const prompt =
+    'Como desenvolvedor sênior, crie um guia completo sobre arquitetura de microsserviços incluindo exemplos práticos, melhores práticas, estratégias de deploy e padrões de tratamento de erros para desenvolvedores intermediários.';
 
   const metrics = await crafter.getQualityMetrics(prompt);
 
@@ -78,7 +79,7 @@ async function teste3() {
 async function teste4() {
   console.log('🔄 Teste 4: Variações para A/B Testing\n');
 
-  const prompt = "implementar API REST";
+  const prompt = 'implementar API REST';
   const variacoes = await crafter.createABTestVariations(prompt, 3);
 
   console.log('📝 Original:', prompt);
@@ -95,7 +96,7 @@ async function teste4() {
 // Executar todos os testes
 async function executarTestes() {
   console.log('🧪 INICIANDO TESTES DO ADVANCED PROMPT CRAFTER\n');
-  console.log('=' .repeat(50));
+  console.log('='.repeat(50));
 
   try {
     await teste1();
@@ -105,7 +106,6 @@ async function executarTestes() {
 
     console.log('✅ TODOS OS TESTES CONCLUÍDOS COM SUCESSO!');
     console.log('\n🎉 O skill está funcionando perfeitamente no Claude Code!');
-
   } catch (error) {
     console.error('❌ Erro nos testes:', error);
   }
@@ -117,7 +117,7 @@ export {
   teste2 as testPromptFromRequirements,
   teste3 as testQualityMetrics,
   teste4 as testABTesting,
-  executarTestes as runAllTests
+  executarTestes as runAllTests,
 };
 
 // Executar se chamado diretamente

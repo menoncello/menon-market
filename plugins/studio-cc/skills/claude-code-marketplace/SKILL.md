@@ -110,6 +110,7 @@ The Marketplace skill provides comprehensive capabilities for creating, managing
 ## When to Use This Skill
 
 Use this skill when you need to:
+
 - Create new Claude Code marketplaces from templates
 - Validate marketplace structure and configuration
 - Deploy and manage marketplace plugins
@@ -123,6 +124,7 @@ Use this skill when you need to:
 ## Capabilities
 
 ### Marketplace Creation
+
 - Initialize new marketplace projects from templates
 - Generate marketplace configuration files
 - Create directory structures for different marketplace types
@@ -130,6 +132,7 @@ Use this skill when you need to:
 - Configure plugin and skill management
 
 ### Plugin Management
+
 - Add, update, and remove plugins from marketplaces
 - Validate plugin compatibility and dependencies
 - Generate plugin metadata and manifests
@@ -137,6 +140,7 @@ Use this skill when you need to:
 - Handle plugin dependencies and conflicts
 
 ### Validation and Testing
+
 - Comprehensive marketplace structure validation
 - Plugin compatibility testing
 - Configuration file validation
@@ -144,6 +148,7 @@ Use this skill when you need to:
 - Security and permission validation
 
 ### Deployment and Distribution
+
 - Package marketplaces for distribution
 - Deploy to various environments
 - Manage marketplace versions and releases
@@ -151,6 +156,7 @@ Use this skill when you need to:
 - Configure marketplace access and permissions
 
 ### Health Monitoring
+
 - Analyze marketplace performance metrics
 - Monitor plugin usage and compatibility
 - Identify potential issues and recommendations
@@ -160,36 +166,43 @@ Use this skill when you need to:
 ## Usage Examples
 
 ### Basic Marketplace Creation
+
 ```bash
 "Create a new marketplace called my-awesome-marketplace"
 ```
 
 ### Advanced Marketplace Creation with Options
+
 ```bash
 "Create an enterprise marketplace at ./enterprise-marketplace with enterprise template and verbose output"
 ```
 
 ### Marketplace Validation
+
 ```bash
 "Validate the marketplace at ./my-marketplace with verbose output"
 ```
 
 ### Plugin Deployment
+
 ```bash
 "Deploy plugins from marketplace ./my-marketplace to production environment"
 ```
 
 ### Health Analysis
+
 ```bash
 "Analyze marketplace health for ./my-marketplace and generate recommendations"
 ```
 
 ### Template Generation
+
 ```bash
 "Generate a community marketplace template at ./community-template"
 ```
 
 ### Testing and Validation
+
 ```bash
 "Test all plugins in marketplace ./my-marketplace with comprehensive validation"
 ```
@@ -209,24 +222,28 @@ Use this skill when you need to:
 ### Template Types
 
 #### Standard Template
+
 - Basic marketplace structure
 - Essential configuration files
 - Standard validation rules
 - Community-friendly setup
 
 #### Enterprise Template
+
 - Advanced security configurations
 - Compliance frameworks (SOC2, ISO27001)
 - Multi-team support
 - Advanced monitoring and analytics
 
 #### Community Template
+
 - Open-source friendly configurations
 - Community contribution guidelines
 - Simplified validation rules
 - Public distribution setup
 
 #### Minimal Template
+
 - Core marketplace structure only
 - Essential configuration files
 - Basic validation
@@ -235,18 +252,21 @@ Use this skill when you need to:
 ### Validation Framework
 
 #### Structure Validation
+
 - Directory structure verification
 - Required file presence checks
 - Naming convention compliance
 - Permission validation
 
 #### Configuration Validation
+
 - JSON schema validation
 - Plugin metadata verification
 - Dependency analysis
 - Security permission checks
 
 #### Plugin Validation
+
 - Plugin structure validation
 - Command and skill verification
 - MCP server configuration checks
@@ -255,12 +275,14 @@ Use this skill when you need to:
 ### Deployment Strategies
 
 #### Local Deployment
+
 - File system operations
 - Local plugin installation
 - Configuration updates
 - Validation and testing
 
 #### Remote Deployment
+
 - Git repository management
 - Remote marketplace updates
 - Version control integration
@@ -269,6 +291,7 @@ Use this skill when you need to:
 ## Configuration
 
 ### Default Settings
+
 ```json
 {
   "template": "standard",
@@ -283,6 +306,7 @@ Use this skill when you need to:
 ### Template Configurations
 
 #### Standard Template Config
+
 ```json
 {
   "name": "standard-marketplace",
@@ -294,6 +318,7 @@ Use this skill when you need to:
 ```
 
 #### Enterprise Template Config
+
 ```json
 {
   "name": "enterprise-marketplace",
@@ -309,18 +334,21 @@ Use this skill when you need to:
 ## Integration
 
 ### Compatible File Formats
+
 - JSON configuration files
 - Markdown documentation
 - YAML metadata files
 - Shell scripts for automation
 
 ### Output Formats
+
 - Structured JSON reports
 - Markdown documentation
 - HTML health reports
 - CSV analytics data
 
 ### External Integrations
+
 - Git repositories for version control
 - GitHub for plugin distribution
 - CI/CD pipelines for automation
@@ -337,12 +365,15 @@ Use this skill when you need to:
 5. **Plugin Conflicts**: Resolve dependency issues and version conflicts
 
 ### Debug Information
+
 Enable verbose output to see detailed processing information:
+
 ```bash
 "Create marketplace with verbose output enabled"
 ```
 
 ### Error Recovery
+
 - Use dry-run mode to preview actions
 - Check validation logs for specific issues
 - Review configuration files for syntax errors
@@ -351,6 +382,7 @@ Enable verbose output to see detailed processing information:
 ## Contributing
 
 To contribute to this skill:
+
 1. Follow the code style guidelines in the documentation
 2. Add comprehensive tests for new features
 3. Update documentation and examples
@@ -360,6 +392,7 @@ To contribute to this skill:
 ## Best Practices
 
 ### Development Guidelines
+
 - Use appropriate templates for different use cases
 - Validate marketplaces before deployment
 - Monitor marketplace health regularly
@@ -367,6 +400,7 @@ To contribute to this skill:
 - Test thoroughly across different environments
 
 ### Security Considerations
+
 - Review permissions and access controls
 - Validate plugin sources and dependencies
 - Implement proper authentication and authorization
@@ -374,6 +408,7 @@ To contribute to this skill:
 - Follow enterprise security standards
 
 ### Performance Optimization
+
 - Use appropriate validation levels
 - Implement caching for repeated operations
 - Optimize file operations for large marketplaces
@@ -383,6 +418,7 @@ To contribute to this skill:
 ## Version History
 
 ### v1.0.0 (2025-11-02)
+
 - Initial release with comprehensive marketplace management
 - Support for multiple template types
 - Complete validation framework
@@ -392,18 +428,21 @@ To contribute to this skill:
 ## Support and Resources
 
 ### Documentation
+
 - Complete user guide and API reference
 - Template specifications and examples
 - Best practices and troubleshooting guides
 - Community contribution guidelines
 
 ### Community Resources
+
 - GitHub repository for issues and contributions
 - Community Discord server for discussions
 - Stack Overflow for technical questions
 - Blog posts and tutorials for learning
 
 ### Professional Support
+
 - Enterprise support for large-scale deployments
 - Consulting services for custom implementations
 - Training programs for teams and organizations
@@ -411,4 +450,4 @@ To contribute to this skill:
 
 ---
 
-*This marketplace skill provides a comprehensive solution for Claude Code Marketplace management, supporting the entire lifecycle from creation to maintenance and monitoring.*
+_This marketplace skill provides a comprehensive solution for Claude Code Marketplace management, supporting the entire lifecycle from creation to maintenance and monitoring._

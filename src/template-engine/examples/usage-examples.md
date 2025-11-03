@@ -16,8 +16,8 @@ This creates a file `scripts/deploy.ts` with:
 
 ```typescript
 #!/usr/bin/env bun
-import Database from "bun:sqlite";
-import { ResearchTools } from "./research-tools";
+import Database from 'bun:sqlite';
+import { ResearchTools } from './research-tools';
 
 export class ResearchTools {
   // ... implementation
@@ -38,30 +38,30 @@ bun run cli/generate.ts generate marketplace-validate \
 ### Advanced Template Generation
 
 ```typescript
-import { TemplateManager } from "./manager";
-import { mergeWithDefaults } from "./config/template-config";
+import { TemplateManager } from './manager';
+import { mergeWithDefaults } from './config/template-config';
 
 async function generateCustomTemplate() {
   const manager = new TemplateManager();
   await manager.initialize();
 
   const config = mergeWithDefaults({
-    PLUGIN_NAME: "custom-plugin",
-    AUTHOR: "Your Name",
-    VERSION: "2.1.0",
-    DATABASE_TYPE: "postgres",
+    PLUGIN_NAME: 'custom-plugin',
+    AUTHOR: 'Your Name',
+    VERSION: '2.1.0',
+    DATABASE_TYPE: 'postgres',
     STRICT_MODE: false,
   });
 
-  const result = await manager.generate("marketplace-deploy", {
+  const result = await manager.generate('marketplace-deploy', {
     ...config,
     currentDate: new Date().toISOString(),
-    className: "CustomPlugin",
-    description: "Custom plugin with PostgreSQL",
+    className: 'CustomPlugin',
+    description: 'Custom plugin with PostgreSQL',
   });
 
   // Write to custom location
-  await Bun.write("./custom-deploy.ts", result);
+  await Bun.write('./custom-deploy.ts', result);
 }
 ```
 
@@ -86,10 +86,10 @@ export class {{bun-class className}} {
 // Compile and use
 const template = Handlebars.compile(customTemplate);
 const result = template({
-  PLUGIN_NAME: "my-plugin",
-  VERSION: "1.0.0",
-  className: "MyPlugin",
-  description: "Custom plugin",
+  PLUGIN_NAME: 'my-plugin',
+  VERSION: '1.0.0',
+  className: 'MyPlugin',
+  description: 'Custom plugin',
   currentDate: new Date().toISOString(),
 });
 ```
@@ -102,12 +102,12 @@ const result = template({
 
    ```javascript
    // Old Node.js
-   const fs = require("fs");
-   const path = require("path");
+   const fs = require('fs');
+   const path = require('path');
 
    // New Bun
-   import { readFile, writeFile } from "node:fs";
-   import { join } from "node:path";
+   import { readFile, writeFile } from 'node:fs';
+   import { join } from 'node:path';
    ```
 
 2. **Update shebang:**
@@ -123,9 +123,9 @@ const result = template({
 3. **Use Bun APIs:**
    ```typescript
    // Instead of external packages
-   import Database from "bun:sqlite";
-   import { serve } from "bun:serve";
-   import { file } from "bun";
+   import Database from 'bun:sqlite';
+   import { serve } from 'bun:serve';
+   import { file } from 'bun';
    ```
 
 ### Batch Migration
@@ -136,29 +136,29 @@ async function migrateAllScripts() {
   await manager.initialize();
 
   const plugins = [
-    { name: "research-tools", author: "Eduardo", version: "1.0.0" },
-    { name: "studio-cc", author: "Eduardo", version: "1.0.0" },
+    { name: 'research-tools', author: 'Eduardo', version: '1.0.0' },
+    { name: 'studio-cc', author: 'Eduardo', version: '1.0.0' },
   ];
 
   for (const plugin of plugins) {
     // Generate deploy script
-    await manager.generate("marketplace-deploy", {
+    await manager.generate('marketplace-deploy', {
       PLUGIN_NAME: plugin.name,
       AUTHOR: plugin.author,
       VERSION: plugin.version,
       currentDate: new Date().toISOString(),
       className: plugin.name
-        .split("-")
-        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-        .join(""),
+        .split('-')
+        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(''),
     });
 
     // Generate validate script
-    await manager.generate("marketplace-validate", {
+    await manager.generate('marketplace-validate', {
       PLUGIN_NAME: plugin.name,
       AUTHOR: plugin.author,
       VERSION: plugin.version,
-      VALIDATION_RULES: "strict",
+      VALIDATION_RULES: 'strict',
     });
   }
 }

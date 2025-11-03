@@ -30,23 +30,23 @@ class MarketplaceManager {
     return new Promise((resolve, reject) => {
       const child = spawn(command, args, {
         cwd,
-        stdio: this.verbose ? 'inherit' : 'pipe'
+        stdio: this.verbose ? 'inherit' : 'pipe',
       });
 
       let stdout = '';
       let stderr = '';
 
       if (!this.verbose) {
-        child.stdout?.on('data', (data) => {
+        child.stdout?.on('data', data => {
           stdout += data.toString();
         });
 
-        child.stderr?.on('data', (data) => {
+        child.stderr?.on('data', data => {
           stderr += data.toString();
         });
       }
 
-      child.on('close', (code) => {
+      child.on('close', code => {
         if (code === 0) {
           resolve({ stdout, stderr, code });
         } else {
@@ -54,7 +54,7 @@ class MarketplaceManager {
         }
       });
 
-      child.on('error', (error) => {
+      child.on('error', error => {
         reject(error);
       });
     });
@@ -103,7 +103,7 @@ class MarketplaceManager {
       'docs',
       'tests',
       'scripts',
-      'examples'
+      'examples',
     ];
 
     directories.forEach(dir => {
@@ -127,18 +127,18 @@ class MarketplaceManager {
       description: `${name} - Claude Code Marketplace`,
       owner: {
         name: 'Marketplace Owner',
-        email: 'owner@example.com'
+        email: 'owner@example.com',
       },
       repository: {
         type: 'git',
-        url: `https://github.com/owner/${name}.git`
+        url: `https://github.com/owner/${name}.git`,
       },
       license: 'MIT',
       plugins: [],
       skills: [],
       template: template,
       created: new Date().toISOString(),
-      validation: this.getValidationConfig(template)
+      validation: this.getValidationConfig(template),
     };
 
     this.log(`Generating marketplace configuration: ${configPath}`);
@@ -155,23 +155,23 @@ class MarketplaceManager {
       standard: {
         level: 'standard',
         strict: false,
-        checks: ['structure', 'metadata', 'plugins']
+        checks: ['structure', 'metadata', 'plugins'],
       },
       enterprise: {
         level: 'enterprise',
         strict: true,
-        checks: ['structure', 'metadata', 'plugins', 'security', 'compliance']
+        checks: ['structure', 'metadata', 'plugins', 'security', 'compliance'],
       },
       community: {
         level: 'community',
         strict: false,
-        checks: ['structure', 'metadata', 'plugins', 'documentation']
+        checks: ['structure', 'metadata', 'plugins', 'documentation'],
       },
       minimal: {
         level: 'minimal',
         strict: false,
-        checks: ['structure', 'metadata']
-      }
+        checks: ['structure', 'metadata'],
+      },
     };
 
     return configs[template] || configs.standard;
@@ -218,7 +218,7 @@ class MarketplaceManager {
         '.claude-plugin/plugin.json',
         'docs/GUIDE.md',
         'scripts/validate.js',
-        'scripts/deploy.js'
+        'scripts/deploy.js',
       ],
       enterprise: [
         'README.md',
@@ -228,7 +228,7 @@ class MarketplaceManager {
         'scripts/validate.js',
         'scripts/deploy.js',
         'scripts/security-scan.js',
-        'tests/compliance.test.js'
+        'tests/compliance.test.js',
       ],
       community: [
         'README.md',
@@ -236,13 +236,9 @@ class MarketplaceManager {
         'docs/CONTRIBUTING.md',
         'docs/COMMUNITY.md',
         'scripts/validate.js',
-        'scripts/deploy.js'
+        'scripts/deploy.js',
       ],
-      minimal: [
-        'README.md',
-        '.claude-plugin/plugin.json',
-        'scripts/validate.js'
-      ]
+      minimal: ['README.md', '.claude-plugin/plugin.json', 'scripts/validate.js'],
     };
 
     return files[template] || files.standard;
@@ -258,7 +254,11 @@ class MarketplaceManager {
       try {
         await this.executeCommand('git', ['init'], basePath);
         await this.executeCommand('git', ['add', '.'], basePath);
-        await this.executeCommand('git', ['commit', '-m', 'Initial marketplace structure'], basePath);
+        await this.executeCommand(
+          'git',
+          ['commit', '-m', 'Initial marketplace structure'],
+          basePath
+        );
       } catch (error) {
         this.log(`Git initialization failed: ${error.message}`, 'warn');
       }
@@ -275,7 +275,7 @@ class MarketplaceManager {
       success: true,
       errors: [],
       warnings: [],
-      info: []
+      info: [],
     };
 
     // Check if marketplace exists
@@ -360,7 +360,6 @@ class MarketplaceManager {
       }
 
       results.info.push('Configuration file validated successfully');
-
     } catch (error) {
       results.errors.push(`Invalid JSON in configuration file: ${error.message}`);
     }
@@ -399,7 +398,6 @@ class MarketplaceManager {
           results.warnings.push(`Plugin directory not found: ${plugin.name}`);
         }
       }
-
     } catch (error) {
       results.errors.push(`Error validating plugins: ${error.message}`);
     }
@@ -428,7 +426,6 @@ class MarketplaceManager {
       });
 
       results.info.push(`Plugin validated: ${pluginConfig.name}`);
-
     } catch (error) {
       results.errors.push(`Plugin ${pluginConfig.name}: Invalid configuration - ${error.message}`);
     }
@@ -445,7 +442,8 @@ class MarketplaceManager {
       return;
     }
 
-    const skills = fs.readdirSync(skillsDir, { withFileTypes: true })
+    const skills = fs
+      .readdirSync(skillsDir, { withFileTypes: true })
       .filter(dirent => dirent.isDirectory())
       .map(dirent => dirent.name);
 
@@ -492,14 +490,12 @@ class MarketplaceManager {
           if (!frontmatter.description) {
             results.warnings.push(`Skill ${skillName}: Missing description in frontmatter`);
           }
-
         } catch (error) {
           results.errors.push(`Skill ${skillName}: Invalid frontmatter format`);
         }
       }
 
       results.info.push(`Skill validated: ${skillName}`);
-
     } catch (error) {
       results.errors.push(`Skill ${skillName}: Error reading file - ${error.message}`);
     }
@@ -523,7 +519,7 @@ class MarketplaceManager {
     const results = {
       deployed: [],
       failed: [],
-      skipped: []
+      skipped: [],
     };
 
     for (const plugin of config.plugins) {
@@ -572,7 +568,7 @@ class MarketplaceManager {
       plugin_score: 0,
       documentation_score: 0,
       recommendations: [],
-      metrics: {}
+      metrics: {},
     };
 
     // Structure analysis
@@ -589,8 +585,11 @@ class MarketplaceManager {
 
     // Calculate overall score
     analysis.overall_score = Math.round(
-      (analysis.structure_score + analysis.configuration_score +
-       analysis.plugin_score + analysis.documentation_score) / 4
+      (analysis.structure_score +
+        analysis.configuration_score +
+        analysis.plugin_score +
+        analysis.documentation_score) /
+        4
     );
 
     // Generate recommendations
@@ -656,7 +655,6 @@ class MarketplaceManager {
       if (config.plugins && Array.isArray(config.plugins) && config.plugins.length > 0) {
         score += 20;
       }
-
     } catch (error) {
       score = 0;
     }
@@ -689,7 +687,6 @@ class MarketplaceManager {
       }
 
       score = (validPlugins / config.plugins.length) * 100;
-
     } catch (error) {
       score = 0;
     }
@@ -738,7 +735,9 @@ class MarketplaceManager {
     }
 
     if (analysis.configuration_score < 80) {
-      recommendations.push('Enhance marketplace configuration with additional metadata and information');
+      recommendations.push(
+        'Enhance marketplace configuration with additional metadata and information'
+      );
     }
 
     if (analysis.plugin_score < 80) {
@@ -781,7 +780,6 @@ class MarketplaceManager {
       // Get last modified
       const stats = fs.statSync(marketplacePath);
       metrics.last_modified = stats.mtime.toISOString();
-
     } catch (error) {
       this.log(`Error generating metrics: ${error.message}`, 'warn');
     }
@@ -889,7 +887,7 @@ if (require.main === module) {
   const options = {
     verbose: args.includes('--verbose'),
     dryRun: args.includes('--dry-run'),
-    force: args.includes('--force')
+    force: args.includes('--force'),
   };
 
   const manager = new MarketplaceManager(options);

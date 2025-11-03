@@ -14,7 +14,7 @@ export class StudioCC {
 
   constructor(config: Partial<StudioConfig> = {}) {
     this.config = {
-      version: "1.0.0",
+      version: '1.0.0',
       developmentMode: false,
       debugLogging: false,
       ...config,
@@ -26,14 +26,14 @@ export class StudioCC {
    */
   async initialize(): Promise<void> {
     if (this.config.debugLogging) {
-      console.log("Studio CC plugin initializing...");
+      console.log('Studio CC plugin initializing...');
     }
 
     // Plugin initialization logic will go here
     // For now, we're setting up the basic structure
 
     if (this.config.debugLogging) {
-      console.log("Studio CC plugin initialized successfully");
+      console.log('Studio CC plugin initialized successfully');
     }
   }
 
@@ -63,13 +63,13 @@ export class StudioCC {
    */
   async cleanup(): Promise<void> {
     if (this.config.debugLogging) {
-      console.log("Studio CC plugin cleaning up...");
+      console.log('Studio CC plugin cleaning up...');
     }
 
     // Cleanup logic will go here
 
     if (this.config.debugLogging) {
-      console.log("Studio CC plugin cleanup complete");
+      console.log('Studio CC plugin cleanup complete');
     }
   }
 }
@@ -79,12 +79,13 @@ export default StudioCC;
 
 // Plugin metadata
 export const pluginInfo = {
-  name: "studio-cc",
-  displayName: "Studio CC",
-  description: "Claude Code Plugin Studio - A comprehensive plugin development and management toolkit",
-  version: "1.0.0",
-  author: "Eduardo Menoncello",
-  license: "MIT",
-  homepage: "https://github.com/menoncello/studio-cc#readme",
-  repository: "https://github.com/menoncello/studio-cc.git",
+  name: 'studio-cc',
+  displayName: 'Studio CC',
+  description:
+    'Claude Code Plugin Studio - A comprehensive plugin development and management toolkit',
+  version: '1.0.0',
+  author: 'Eduardo Menoncello',
+  license: 'MIT',
+  homepage: 'https://github.com/menoncello/studio-cc#readme',
+  repository: 'https://github.com/menoncello/studio-cc.git',
 };

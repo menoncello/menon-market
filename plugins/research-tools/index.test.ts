@@ -9,11 +9,10 @@ import {
   defaultConfig,
   pluginMetadata,
   ResearchToolsConfig,
-  ResearchResult,
   createConfidenceScore,
   createRelevanceScore,
   isValidConfidenceScore,
-  isValidRelevanceScore
+  isValidRelevanceScore,
 } from './index';
 
 describe('Research Tools Plugin', () => {
@@ -32,7 +31,7 @@ describe('Research Tools Plugin', () => {
     test('should merge custom config with defaults', () => {
       const customConfig = initialize({
         maxSources: 10,
-        outputFormat: 'json'
+        outputFormat: 'json',
       });
 
       expect(customConfig.maxSources).toBe(10);
@@ -143,7 +142,9 @@ describe('Research Tools Plugin', () => {
       expect(source.content).toBeTruthy();
       expect(source.relevanceScore).toBeGreaterThanOrEqual(0);
       expect(source.relevanceScore).toBeLessThanOrEqual(1);
-      expect(['academic', 'web', 'news', 'technical', 'social', 'government']).toContain(source.type);
+      expect(['academic', 'web', 'news', 'technical', 'social', 'government']).toContain(
+        source.type
+      );
       expect(source.lastAccessed).toBeInstanceOf(Date);
     });
 
@@ -203,9 +204,7 @@ describe('Research Tools Plugin', () => {
       const queries = ['query 1', 'query 2', 'query 3'];
       const startTime = Date.now();
 
-      const results = await Promise.all(
-        queries.map(query => performResearch(query, config))
-      );
+      const results = await Promise.all(queries.map(query => performResearch(query, config)));
 
       const endTime = Date.now();
       const processingTime = endTime - startTime;

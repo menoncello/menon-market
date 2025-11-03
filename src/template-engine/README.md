@@ -41,8 +41,8 @@ bun run cli/generate.ts list
 ### Programmatic Usage
 
 ```typescript
-import { TemplateManager } from "./manager";
-import { validateConfig } from "./config/template-config";
+import { TemplateManager } from './manager';
+import { validateConfig } from './config/template-config';
 
 // Initialize template manager
 const manager = new TemplateManager();
@@ -50,14 +50,14 @@ await manager.initialize();
 
 // Validate configuration
 const config = validateConfig({
-  PLUGIN_NAME: "my-plugin",
-  AUTHOR: "Your Name",
-  VERSION: "1.0.0",
+  PLUGIN_NAME: 'my-plugin',
+  AUTHOR: 'Your Name',
+  VERSION: '1.0.0',
 });
 
 if (config.success) {
   // Generate template
-  const result = await manager.generate("marketplace-deploy", config.data);
+  const result = await manager.generate('marketplace-deploy', config.data);
   console.log(result);
 }
 ```

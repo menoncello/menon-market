@@ -8,11 +8,11 @@ async function demonstrateAdvancedPromptCrafter() {
 
   // Example 1: Analyze and optimize a simple prompt
   console.log('1️⃣  Analyzing and optimizing a simple prompt...');
-  const simplePrompt = "Write about AI";
+  const simplePrompt = 'Write about AI';
   const result1 = await crafter.analyzeAndOptimize(simplePrompt, {
     mode: 'creative',
     targetModel: 'claude-3-sonnet',
-    outputFormat: 'markdown'
+    outputFormat: 'markdown',
   });
 
   console.log('Original Prompt:', simplePrompt);
@@ -29,9 +29,9 @@ async function demonstrateAdvancedPromptCrafter() {
     requirements: {
       include: ['types', 'validation', 'error-handling'],
       exclude: ['external-apis'],
-      constraints: ['async/await', 'try-catch blocks']
+      constraints: ['async/await', 'try-catch blocks'],
     },
-    context: 'E-commerce platform backend'
+    context: 'E-commerce platform backend',
   };
 
   const result2 = await crafter.createPrompt(technicalRequest);
@@ -42,7 +42,8 @@ async function demonstrateAdvancedPromptCrafter() {
 
   // Example 3: Get quality metrics for a complex prompt
   console.log('3️⃣  Analyzing quality metrics for a complex prompt...');
-  const complexPrompt = 'As a senior software architect with 10+ years of experience in microservices, create a comprehensive guide about implementing a distributed system architecture. Include specific examples of service discovery, load balancing, circuit breakers, and monitoring. Format the response in Markdown with code examples and architectural diagrams described in text.';
+  const complexPrompt =
+    'As a senior software architect with 10+ years of experience in microservices, create a comprehensive guide about implementing a distributed system architecture. Include specific examples of service discovery, load balancing, circuit breakers, and monitoring. Format the response in Markdown with code examples and architectural diagrams described in text.';
 
   const metrics = await crafter.getQualityMetrics(complexPrompt);
   console.log('Prompt:', complexPrompt.substring(0, 100) + '...');
@@ -77,7 +78,7 @@ async function demonstrateAdvancedPromptCrafter() {
       mode: 'business',
       domain: 'business',
       targetModel: 'claude-3-opus',
-      outputFormat: 'json'
+      outputFormat: 'json',
     }
   );
 
@@ -98,8 +99,8 @@ async function demonstrateAdvancedPromptCrafter() {
     requirements: {
       include: ['peer-reviewed sources', 'methodology', 'ethical frameworks', 'case studies'],
       constraints: ['publications from 2019-2024', 'APA citation format'],
-      exclude: ['blog posts', 'non-academic sources']
-    }
+      exclude: ['blog posts', 'non-academic sources'],
+    },
   });
 
   console.log('Research Prompt Result:');
@@ -113,13 +114,22 @@ async function demonstrateAdvancedPromptCrafter() {
   console.log('📊 Performance Summary');
   console.log('==================');
   console.log('All operations completed successfully!');
-  console.log('Average response time: ~', Math.round(
-    (result1.responseTime + result2.responseTime) / 2
-  ), 'ms');
-  console.log('Average quality score: ~', Math.round(
-    (result1.validation.qualityScore + result2.validation.qualityScore +
-     businessResult.validation.qualityScore + researchResult.validation.qualityScore) / 4
-  ), '/10');
+  console.log(
+    'Average response time: ~',
+    Math.round((result1.responseTime + result2.responseTime) / 2),
+    'ms'
+  );
+  console.log(
+    'Average quality score: ~',
+    Math.round(
+      (result1.validation.qualityScore +
+        result2.validation.qualityScore +
+        businessResult.validation.qualityScore +
+        researchResult.validation.qualityScore) /
+        4
+    ),
+    '/10'
+  );
 }
 
 // Run the demonstration

@@ -24,6 +24,7 @@ This guide provides solutions to common problems encountered when developing, in
 **Problem**: Plugin cannot be found in marketplace or installation fails with "plugin not found" error.
 
 **Causes**:
+
 - Incorrect plugin name or marketplace
 - Marketplace not configured properly
 - Network connectivity issues
@@ -60,6 +61,7 @@ claude marketplace install plugin-name@marketplace-name
 **Problem**: Installation fails with permission errors.
 
 **Causes**:
+
 - Insufficient file system permissions
 - Protected directories
 - Antivirus software blocking installation
@@ -86,6 +88,7 @@ claude marketplace install plugin-name
 **Problem**: Installation fails due to version conflicts with dependencies.
 
 **Causes**:
+
 - Incompatible dependency versions
 - Semantic versioning constraints
 - Circular dependencies
@@ -114,6 +117,7 @@ claude marketplace install plugin-name --force
 **Problem**: Plugin fails to load due to configuration errors.
 
 **Causes**:
+
 - Malformed JSON in configuration files
 - Missing required fields
 - Invalid parameter values
@@ -142,7 +146,9 @@ import Joi from 'joi';
 
 const pluginConfigSchema = Joi.object({
   name: Joi.string().required(),
-  version: Joi.string().pattern(/^\d+\.\d+\.\d+$/).required(),
+  version: Joi.string()
+    .pattern(/^\d+\.\d+\.\d+$/)
+    .required(),
   enabled: Joi.boolean().default(true),
   settings: Joi.object().pattern(Joi.string(), Joi.any()).optional(),
 });
@@ -182,6 +188,7 @@ claude marketplace add <url> --name <name>
 **Problem**: Plugin fails to load during startup.
 
 **Causes**:
+
 - Missing dependencies
 - Code syntax errors
 - Initialization failures
@@ -325,10 +332,7 @@ export CLAUDE_SKILL_DEBUG=true
 ```typescript
 // skill-debugger.ts
 class SkillDebugger {
-  async debugSkillInvocation(
-    input: string,
-    availableSkills: Skill[]
-  ): Promise<DebugResult> {
+  async debugSkillInvocation(input: string, availableSkills: Skill[]): Promise<DebugResult> {
     const debugInfo: DebugInfo = {
       input,
       availableSkills: availableSkills.map(s => s.name),
@@ -382,6 +386,7 @@ class SkillDebugger {
 **Optimization Strategies**:
 
 1. **Lazy Loading**:
+
 ```typescript
 class LazyPluginManager {
   private plugins = new Map<string, () => Promise<Plugin>>();
@@ -405,6 +410,7 @@ class LazyPluginManager {
 ```
 
 2. **Async Initialization**:
+
 ```typescript
 class AsyncPluginInitializer {
   async initializePlugins(plugins: Plugin[]): Promise<void> {
@@ -431,6 +437,7 @@ class AsyncPluginInitializer {
 ```
 
 3. **Performance Monitoring**:
+
 ```typescript
 class PerformanceMonitor {
   private metrics = new Map<string, PerformanceMetric[]>();
@@ -455,9 +462,8 @@ class PerformanceMonitor {
   getPerformanceReport(pluginName: string): PerformanceReport {
     const metrics = this.metrics.get(pluginName) || [];
     const totalOperations = metrics.length;
-    const averageTime = totalOperations > 0
-      ? metrics.reduce((sum, m) => sum + m.duration, 0) / totalOperations
-      : 0;
+    const averageTime =
+      totalOperations > 0 ? metrics.reduce((sum, m) => sum + m.duration, 0) / totalOperations : 0;
 
     return {
       pluginName,
@@ -514,7 +520,8 @@ class MemoryMonitor {
 
     const growth = (recentAvg - olderAvg) / olderAvg;
 
-    if (growth > 0.5) { // 50% growth
+    if (growth > 0.5) {
+      // 50% growth
       console.warn(`Memory growth detected: ${(growth * 100).toFixed(1)}%`);
     }
   }
@@ -542,9 +549,7 @@ class Plugin {
   async cleanup(): Promise<void> {
     // Clean up all resources
     const cleanupPromises = Array.from(this.resources).map(resource =>
-      resource.cleanup().catch(error =>
-        console.error('Resource cleanup failed:', error)
-      )
+      resource.cleanup().catch(error => console.error('Resource cleanup failed:', error))
     );
 
     await Promise.allSettled(cleanupPromises);
@@ -790,11 +795,7 @@ export class MockPluginContext implements PluginContext {
 
 export class MockPermissionManager extends PermissionManager {
   constructor() {
-    super([
-      Permission.FILE_READ,
-      Permission.FILE_WRITE,
-      Permission.NETWORK_REQUEST,
-    ]);
+    super([Permission.FILE_READ, Permission.FILE_WRITE, Permission.NETWORK_REQUEST]);
   }
 
   require(permission: Permission): void {
@@ -844,10 +845,7 @@ claude marketplace install plugin-name@compatible-version
 ```typescript
 // compatibility-checker.ts
 class CompatibilityChecker {
-  static checkPluginCompatibility(
-    plugin: Plugin,
-    claudeVersion: string
-  ): CompatibilityResult {
+  static checkPluginCompatibility(plugin: Plugin, claudeVersion: string): CompatibilityResult {
     const pluginMinVersion = plugin.claude?.minVersion;
     const pluginMaxVersion = plugin.claude?.maxVersion;
 
@@ -1228,6 +1226,7 @@ echo "🔄 Please restart Claude Code"
 ---
 
 For additional support and community help, visit:
+
 - [Claude Code Documentation](https://docs.claude.com)
 - [Community Forums](https://community.anthropic.com)
 - [GitHub Issues](https://github.com/anthropics/claude-code/issues)

@@ -14,30 +14,36 @@ export class ValidationEngine {
     // Special handling for empty prompts
     if (!prompt || prompt.trim().length === 0) {
       const emptyMetrics: Record<QualityMetric, number> = {
-        'clarity': 1,
-        'specificity': 1,
-        'completeness': 1,
-        'efficiency': 1,
-        'consistency': 1,
-        'error-rate': 1
+        clarity: 1,
+        specificity: 1,
+        completeness: 1,
+        efficiency: 1,
+        consistency: 1,
+        'error-rate': 1,
       };
 
       return {
         qualityScore: 1.0,
         metrics: emptyMetrics,
-        issues: [{
-          type: 'error',
-          message: 'Empty prompt provided',
-          severity: 'high',
-          suggestion: 'Please provide a specific prompt with clear requirements and context'
-        }],
-        recommendations: ['Add specific task description', 'Include context and requirements', 'Specify desired output format'],
+        issues: [
+          {
+            type: 'error',
+            message: 'Empty prompt provided',
+            severity: 'high',
+            suggestion: 'Please provide a specific prompt with clear requirements and context',
+          },
+        ],
+        recommendations: [
+          'Add specific task description',
+          'Include context and requirements',
+          'Specify desired output format',
+        ],
         benchmarkComparison: {
           industryAverage: 7.5,
           percentile: 5,
-          category: 'below-average'
+          category: 'below-average',
         },
-        approved: false
+        approved: false,
       };
     }
 
@@ -63,7 +69,7 @@ export class ValidationEngine {
       issues,
       recommendations,
       benchmarkComparison,
-      approved
+      approved,
     };
   }
 
@@ -81,7 +87,9 @@ export class ValidationEngine {
       efficiency: metrics.efficiency || 0,
       consistency: metrics.consistency || 0,
       errorRate: metrics['error-rate'] || 0,
-      overall: Object.values(metrics).reduce((sum: number, val: number) => sum + val, 0) / Object.keys(metrics).length
+      overall:
+        Object.values(metrics).reduce((sum: number, val: number) => sum + val, 0) /
+        Object.keys(metrics).length,
     };
   }
 
@@ -186,7 +194,7 @@ export class ValidationEngine {
       ['include', 'exclude'],
       ['require', 'optional'],
       ['always', 'never'],
-      ['all', 'none']
+      ['all', 'none'],
     ];
 
     for (const [word1, word2] of contradictoryPairs) {
@@ -240,14 +248,14 @@ export class ValidationEngine {
           type: value < 4 ? 'error' : 'warning',
           message: `Low ${metric} score: ${value}/10`,
           severity: value < 4 ? 'high' : 'medium',
-          suggestion: this.getSuggestionForMetric(metric as QualityMetric)
+          suggestion: this.getSuggestionForMetric(metric as QualityMetric),
         });
       } else if (value < 8) {
         issues.push({
           type: 'suggestion',
           message: `Could improve ${metric}: ${value}/10`,
           severity: 'low',
-          suggestion: this.getSuggestionForMetric(metric as QualityMetric)
+          suggestion: this.getSuggestionForMetric(metric as QualityMetric),
         });
       }
     }
@@ -258,7 +266,7 @@ export class ValidationEngine {
         type: 'warning',
         message: 'Prompt is very short',
         severity: 'medium',
-        suggestion: 'Add more context and specific requirements'
+        suggestion: 'Add more context and specific requirements',
       });
     }
 
@@ -267,7 +275,7 @@ export class ValidationEngine {
         type: 'suggestion',
         message: 'Prompt is quite long',
         severity: 'low',
-        suggestion: 'Consider breaking down into multiple focused prompts'
+        suggestion: 'Consider breaking down into multiple focused prompts',
       });
     }
 
@@ -281,7 +289,7 @@ export class ValidationEngine {
       completeness: 'Add context, background information, and requirements',
       efficiency: 'Make more concise while maintaining clarity',
       consistency: 'Ensure consistent terminology and avoid contradictions',
-      'error-rate': 'Fix grammar, spelling, and formatting issues'
+      'error-rate': 'Fix grammar, spelling, and formatting issues',
     };
 
     return suggestions[metric] || 'Review and improve this aspect of the prompt';
@@ -299,7 +307,9 @@ export class ValidationEngine {
 
     for (const [metric, value] of lowestMetrics) {
       if (value < 7) {
-        recommendations.push(`Improve ${metric}: ${this.getSuggestionForMetric(metric as QualityMetric)}`);
+        recommendations.push(
+          `Improve ${metric}: ${this.getSuggestionForMetric(metric as QualityMetric)}`
+        );
       }
     }
 
@@ -314,7 +324,9 @@ export class ValidationEngine {
     return recommendations;
   }
 
-  private async benchmarkComparison(metrics: Record<QualityMetric, number>): Promise<BenchmarkResult> {
+  private async benchmarkComparison(
+    metrics: Record<QualityMetric, number>
+  ): Promise<BenchmarkResult> {
     // Industry averages (simulated)
     const industryAverages: Record<QualityMetric, number> = {
       clarity: 7.2,
@@ -322,12 +334,14 @@ export class ValidationEngine {
       completeness: 7.0,
       efficiency: 7.5,
       consistency: 8.0,
-      'error-rate': 8.2
+      'error-rate': 8.2,
     };
 
     // Calculate average score
     const promptAverage = this.calculateOverallScore(metrics);
-    const industryAverage = Object.values(industryAverages).reduce((a, b) => a + b, 0) / Object.values(industryAverages).length;
+    const industryAverage =
+      Object.values(industryAverages).reduce((a, b) => a + b, 0) /
+      Object.values(industryAverages).length;
 
     // Calculate percentile (simulated)
     const percentile = Math.min(100, Math.max(0, ((promptAverage - 5) / 5) * 100));
@@ -342,7 +356,7 @@ export class ValidationEngine {
     return {
       industryAverage,
       percentile,
-      category
+      category,
     };
   }
 }

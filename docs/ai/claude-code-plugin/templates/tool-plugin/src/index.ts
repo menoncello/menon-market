@@ -17,7 +17,11 @@ export default class ToolPlugin extends BasePlugin {
   private logger: any;
 
   constructor() {
-    super('tool-plugin', '1.0.0', 'A comprehensive tool plugin for file, network, and system operations');
+    super(
+      'tool-plugin',
+      '1.0.0',
+      'A comprehensive tool plugin for file, network, and system operations'
+    );
   }
 
   async initialize(context: PluginContext): Promise<void> {
@@ -26,7 +30,7 @@ export default class ToolPlugin extends BasePlugin {
 
     this.logger.info('Tool Plugin initializing...', {
       version: this.version,
-      config: this.config
+      config: this.config,
     });
 
     // Validate configuration
@@ -49,67 +53,63 @@ export default class ToolPlugin extends BasePlugin {
     this.logger.info('Tool Plugin cleanup completed');
   }
 
-  getCommands() {
+  getCommands(): Command[] {
     return [
       new FileToolCommand(this.config, this.logger),
       new NetworkToolCommand(this.config, this.logger),
-      new SystemToolCommand(this.config, this.logger)
+      new SystemToolCommand(this.config, this.logger),
     ];
   }
 
-  getSkills() {
-    return [
-      new DataProcessingSkill(this.config, this.logger)
-    ];
+  getSkills(): Skill[] {
+    return [new DataProcessingSkill(this.config, this.logger)];
   }
 
-  getHooks() {
-    return [
-      new FileChangeHook(this.config, this.logger)
-    ];
+  getHooks(): Hook[] {
+    return [new FileChangeHook(this.config, this.logger)];
   }
 
-  getConfigSchema() {
+  getConfigSchema(): ConfigSchema {
     return {
       maxFileSize: {
         type: 'number',
         description: 'Maximum file size for operations (in bytes)',
         default: 10485760, // 10MB
         min: 1024, // 1KB
-        max: 104857600 // 100MB
+        max: 104857600, // 100MB
       },
       allowedDomains: {
         type: 'array',
         description: 'List of allowed domains for network operations',
         default: ['api.github.com', 'github.com'],
-        itemType: 'string'
+        itemType: 'string',
       },
       cacheEnabled: {
         type: 'boolean',
         description: 'Enable caching for operations',
-        default: true
+        default: true,
       },
       cacheTimeout: {
         type: 'number',
         description: 'Cache timeout in seconds',
         default: 300, // 5 minutes
         min: 60, // 1 minute
-        max: 3600 // 1 hour
+        max: 3600, // 1 hour
       },
       timeout: {
         type: 'number',
         description: 'Operation timeout in milliseconds',
         default: 30000, // 30 seconds
         min: 1000, // 1 second
-        max: 300000 // 5 minutes
+        max: 300000, // 5 minutes
       },
       retryAttempts: {
         type: 'number',
         description: 'Number of retry attempts for failed operations',
         default: 3,
         min: 0,
-        max: 10
-      }
+        max: 10,
+      },
     };
   }
 
@@ -130,10 +130,14 @@ export default class ToolPlugin extends BasePlugin {
   private async initializeCache(context: PluginContext): Promise<void> {
     try {
       // Initialize cache storage
-      await context.cache.set('plugin:initialized', {
-        timestamp: Date.now(),
-        version: this.version
-      }, this.config.cacheTimeout);
+      await context.cache.set(
+        'plugin:initialized',
+        {
+          timestamp: Date.now(),
+          version: this.version,
+        },
+        this.config.cacheTimeout
+      );
 
       this.logger.debug('Cache initialized successfully');
     } catch (error) {
@@ -152,10 +156,7 @@ export default class ToolPlugin extends BasePlugin {
   }
 
   // Utility methods for tool operations
-  protected async withRetry<T>(
-    operation: () => Promise<T>,
-    operationName: string
-  ): Promise<T> {
+  protected async withRetry<T>(operation: () => Promise<T>, operationName: string): Promise<T> {
     const maxAttempts = this.config.retryAttempts || 3;
     let lastError: Error;
 

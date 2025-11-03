@@ -12,8 +12,8 @@ describe('AnalysisEngine', () => {
       analysisDepth: 'comprehensive',
       userProfile: {
         expertise: 'intermediate',
-        preferences: ['concise', 'structured']
-      }
+        preferences: ['concise', 'structured'],
+      },
     };
     engine = new AnalysisEngine(config);
   });
@@ -43,7 +43,8 @@ describe('AnalysisEngine', () => {
     });
 
     it('should detect high complexity prompts', async () => {
-      const prompt = 'Design a comprehensive microservices architecture with complex integration patterns';
+      const prompt =
+        'Design a comprehensive microservices architecture with complex integration patterns';
       const result = await engine.analyzePrompt(prompt);
 
       expect(result.complexity).toBe('high');
@@ -85,21 +86,24 @@ describe('AnalysisEngine', () => {
 
   describe('quality metrics calculation', () => {
     it('should calculate clarity score correctly', async () => {
-      const clearPrompt = 'Write a comprehensive technical blog post about machine learning algorithms, including code examples and performance benchmarks.';
+      const clearPrompt =
+        'Write a comprehensive technical blog post about machine learning algorithms, including code examples and performance benchmarks.';
       const result = await engine.analyzePrompt(clearPrompt);
 
       expect(result.clarity).toBeGreaterThan(7);
     });
 
     it('should calculate specificity score correctly', async () => {
-      const specificPrompt = 'Create a 500-word blog post about React hooks, including useState and useEffect examples, in Markdown format.';
+      const specificPrompt =
+        'Create a 500-word blog post about React hooks, including useState and useEffect examples, in Markdown format.';
       const result = await engine.analyzePrompt(specificPrompt);
 
       expect(result.specificity).toBeGreaterThan(7);
     });
 
     it('should calculate completeness score correctly', async () => {
-      const completePrompt = 'As a senior developer, write a technical guide about microservices architecture. Include examples, best practices, and deployment strategies. The target audience is intermediate developers.';
+      const completePrompt =
+        'As a senior developer, write a technical guide about microservices architecture. Include examples, best practices, and deployment strategies. The target audience is intermediate developers.';
       const result = await engine.analyzePrompt(completePrompt);
 
       expect(result.completeness).toBeGreaterThan(7);

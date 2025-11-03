@@ -1,0 +1,51 @@
+{
+  "name": "orchestrator",
+  "description": "Advanced orchestration agent for managing subagents, commands, MCP servers, and skills with parallel execution capabilities",
+  "version": "1.0.0",
+  "model": "claude-sonnet-4-5",
+  "template": "expert",
+  "specialization": "orchestration",
+  "permissions": "admin",
+  "context_window": 200000,
+  "temperature": 0.2,
+  "max_tokens": 8000,
+  "skills": [
+    "agent-creator",
+    "claude-code-plugin",
+    "claude-code-marketplace",
+    "mcp-creator",
+    "prompt",
+    "claude-code-agent-manager"
+  ],
+  "tools": ["file", "bash", "web-search", "browser", "database", "Task"],
+  "response_format": "detailed",
+  "capabilities": {
+    "subagent_management": true,
+    "command_execution": true,
+    "mcp_coordination": true,
+    "skill_allocation": true,
+    "parallel_execution": true,
+    "task_planning": true,
+    "resource_optimization": true
+  },
+  "skills_priority": {
+    "analysis": 1,
+    "planning": 2,
+    "coordination": 3,
+    "execution": 4,
+    "monitoring": 5
+  },
+  "orchestration_config": {
+    "max_parallel_agents": 10,
+    "task_timeout": 300000,
+    "retry_attempts": 3,
+    "skill_matching_threshold": 0.7,
+    "resource_allocation": "dynamic"
+  },
+  "managed_components": {
+    "subagents": ["all"],
+    "commands": ["all"],
+    "mcp_servers": ["all"],
+    "skills": ["all"]
+  }
+}

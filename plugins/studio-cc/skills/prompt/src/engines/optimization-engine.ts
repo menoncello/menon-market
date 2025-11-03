@@ -1,4 +1,9 @@
-import { PromptAnalysis, PromptOptimization, PromptTechnique, OptimizationConfig } from '../types.js';
+import {
+  PromptAnalysis,
+  PromptOptimization,
+  PromptTechnique,
+  OptimizationConfig,
+} from '../types.js';
 
 export class OptimizationEngine {
   private config: OptimizationConfig;
@@ -43,11 +48,11 @@ export class OptimizationEngine {
       abTestVariations,
       performancePrediction,
       optimizations,
-      reasoning
+      reasoning,
     };
   }
 
-  private selectTechniques(analysis: PromptAnalysis, options: any): PromptTechnique[] {
+  private selectTechniques(analysis: PromptAnalysis, _options: any): PromptTechnique[] {
     const techniques: PromptTechnique[] = [];
 
     // Select techniques based on analysis
@@ -120,16 +125,13 @@ export class OptimizationEngine {
     return enhancements;
   }
 
-  private async createTemplate(
-    analysis: PromptAnalysis,
-    enhancements: string[]
-  ): Promise<any> {
+  private async createTemplate(analysis: PromptAnalysis, _enhancements: string[]): Promise<any> {
     const template = {
       structure: this.generateTemplateStructure(analysis),
       placeholders: this.extractPlaceholders(analysis),
       examples: this.generateExamples(analysis),
       framework: this.selectFramework(analysis),
-      reusable: true
+      reusable: true,
     };
 
     return template;
@@ -158,13 +160,14 @@ export class OptimizationEngine {
 
     // Add technique-specific structure
     if (analysis.complexity === 'high') {
-      structure += 'Approach:\n1. Analyze the problem systematically\n2. Consider multiple solution paths\n3. Evaluate and select the best approach\n4. Implement the solution\n\n';
+      structure +=
+        'Approach:\n1. Analyze the problem systematically\n2. Consider multiple solution paths\n3. Evaluate and select the best approach\n4. Implement the solution\n\n';
     }
 
     return structure;
   }
 
-  private extractPlaceholders(analysis: PromptAnalysis): string[] {
+  private extractPlaceholders(_analysis: PromptAnalysis): string[] {
     return [
       'role',
       'domain',
@@ -174,7 +177,7 @@ export class OptimizationEngine {
       'constraints',
       'outputFormat',
       'examples',
-      'expertiseLevel'
+      'expertiseLevel',
     ];
   }
 
@@ -184,16 +187,24 @@ export class OptimizationEngine {
     // Domain-specific examples
     switch (analysis.domain) {
       case 'technical':
-        examples.push('Example: For a REST API, include endpoint documentation, request/response examples, and error handling');
+        examples.push(
+          'Example: For a REST API, include endpoint documentation, request/response examples, and error handling'
+        );
         break;
       case 'business':
-        examples.push('Example: For a business strategy, include SWOT analysis, KPIs, and implementation timeline');
+        examples.push(
+          'Example: For a business strategy, include SWOT analysis, KPIs, and implementation timeline'
+        );
         break;
       case 'creative':
-        examples.push('Example: For creative writing, include tone, style, target audience, and desired emotional impact');
+        examples.push(
+          'Example: For creative writing, include tone, style, target audience, and desired emotional impact'
+        );
         break;
       case 'research':
-        examples.push('Example: For research analysis, include methodology, data sources, and statistical significance');
+        examples.push(
+          'Example: For research analysis, include methodology, data sources, and statistical significance'
+        );
         break;
     }
 
@@ -207,9 +218,9 @@ export class OptimizationEngine {
       return 'technical-specification';
     } else if (analysis.domain === 'business') {
       return 'business-framework';
-    } else {
+    } 
       return 'general-purpose';
-    }
+    
   }
 
   private async generateABTestVariations(
@@ -255,7 +266,7 @@ export class OptimizationEngine {
     analysis: PromptAnalysis,
     techniques: PromptTechnique[]
   ): Promise<number> {
-    let baseScore = (analysis.clarity + analysis.specificity + analysis.completeness) / 30;
+    const baseScore = (analysis.clarity + analysis.specificity + analysis.completeness) / 30;
 
     // Boost score for applied techniques
     const techniqueBonus = techniques.length * 0.05;
@@ -274,7 +285,10 @@ export class OptimizationEngine {
       complexityAdjustment = -0.05;
     }
 
-    const predictedScore = Math.min(1, baseScore + techniqueBonus + domainBonus + complexityAdjustment);
+    const predictedScore = Math.min(
+      1,
+      baseScore + techniqueBonus + domainBonus + complexityAdjustment
+    );
 
     return predictedScore;
   }
@@ -328,7 +342,9 @@ export class OptimizationEngine {
   ): Promise<string[]> {
     const reasoning: string[] = [];
 
-    reasoning.push(`Selected ${techniques.length} optimization techniques based on task complexity and domain requirements`);
+    reasoning.push(
+      `Selected ${techniques.length} optimization techniques based on task complexity and domain requirements`
+    );
     reasoning.push(`Applied ${techniques.join(', ')} to improve response quality and consistency`);
 
     if (analysis.clarity < 7) {
@@ -343,7 +359,9 @@ export class OptimizationEngine {
       reasoning.push('Increased completeness by adding context and success criteria');
     }
 
-    reasoning.push(`Estimated performance improvement: ${Math.round((await this.predictPerformance(analysis, techniques)) * 100)}%`);
+    reasoning.push(
+      `Estimated performance improvement: ${Math.round((await this.predictPerformance(analysis, techniques)) * 100)}%`
+    );
 
     return reasoning;
   }

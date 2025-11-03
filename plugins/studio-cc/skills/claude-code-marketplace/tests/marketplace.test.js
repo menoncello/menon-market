@@ -13,7 +13,7 @@ class MarketplaceTester {
       passed: 0,
       failed: 0,
       skipped: 0,
-      total: 0
+      total: 0,
     };
   }
 
@@ -88,16 +88,28 @@ class MarketplaceTester {
       const result = await manager.createMarketplace('test-marketplace', {
         template: 'standard',
         path: testMarketplacePath,
-        autoValidate: false
+        autoValidate: false,
       });
 
       // Test marketplace structure
       this.assertDirExists(testMarketplacePath, 'Marketplace directory should be created');
-      this.assertDirExists(path.join(testMarketplacePath, '.claude-plugin'), 'Claude plugin directory should exist');
-      this.assertDirExists(path.join(testMarketplacePath, 'plugins'), 'Plugins directory should exist');
-      this.assertDirExists(path.join(testMarketplacePath, 'skills'), 'Skills directory should exist');
+      this.assertDirExists(
+        path.join(testMarketplacePath, '.claude-plugin'),
+        'Claude plugin directory should exist'
+      );
+      this.assertDirExists(
+        path.join(testMarketplacePath, 'plugins'),
+        'Plugins directory should exist'
+      );
+      this.assertDirExists(
+        path.join(testMarketplacePath, 'skills'),
+        'Skills directory should exist'
+      );
       this.assertDirExists(path.join(testMarketplacePath, 'docs'), 'Docs directory should exist');
-      this.assertDirExists(path.join(testMarketplacePath, 'scripts'), 'Scripts directory should exist');
+      this.assertDirExists(
+        path.join(testMarketplacePath, 'scripts'),
+        'Scripts directory should exist'
+      );
 
       // Test configuration files
       this.assertFileExists(
@@ -135,7 +147,6 @@ class MarketplaceTester {
         path.join(testMarketplacePath, 'scripts', 'deploy.js'),
         'Deployment script should be created from template'
       );
-
     } finally {
       // Clean up test marketplace
       if (fs.existsSync(testMarketplacePath)) {
@@ -161,21 +172,36 @@ class MarketplaceTester {
       await manager.createMarketplace('test-validation-marketplace', {
         template: 'minimal',
         path: testMarketplacePath,
-        autoValidate: false
+        autoValidate: false,
       });
 
       // Test validation of valid marketplace
       const validationResult = await manager.validateMarketplace(testMarketplacePath);
       this.assert(validationResult, 'Validation should return a result object');
-      this.assert(typeof validationResult.success === 'boolean', 'Validation result should have success property');
-      this.assert(Array.isArray(validationResult.errors), 'Validation result should have errors array');
-      this.assert(Array.isArray(validationResult.warnings), 'Validation result should have warnings array');
+      this.assert(
+        typeof validationResult.success === 'boolean',
+        'Validation result should have success property'
+      );
+      this.assert(
+        Array.isArray(validationResult.errors),
+        'Validation result should have errors array'
+      );
+      this.assert(
+        Array.isArray(validationResult.warnings),
+        'Validation result should have warnings array'
+      );
       this.assert(Array.isArray(validationResult.info), 'Validation result should have info array');
 
       // Test validation of non-existent marketplace
       const nonExistentResult = await manager.validateMarketplace('./non-existent-marketplace');
-      this.assert(!nonExistentResult.success, 'Validation should fail for non-existent marketplace');
-      this.assert(nonExistentResult.errors.length > 0, 'Validation should have errors for non-existent marketplace');
+      this.assert(
+        !nonExistentResult.success,
+        'Validation should fail for non-existent marketplace'
+      );
+      this.assert(
+        nonExistentResult.errors.length > 0,
+        'Validation should have errors for non-existent marketplace'
+      );
 
       // Test validation with invalid configuration
       const configPath = path.join(testMarketplacePath, '.claude-plugin', 'marketplace.json');
@@ -192,7 +218,6 @@ class MarketplaceTester {
 
       // Restore valid configuration
       fs.writeFileSync(configPath, originalConfig);
-
     } finally {
       // Clean up test marketplace
       if (fs.existsSync(testMarketplacePath)) {
@@ -221,7 +246,7 @@ class MarketplaceTester {
         await manager.createMarketplace(`test-${template}`, {
           template: template,
           path: testMarketplacePath,
-          autoValidate: false
+          autoValidate: false,
         });
 
         // Test template-specific files
@@ -260,7 +285,6 @@ class MarketplaceTester {
             );
             break;
         }
-
       } finally {
         // Clean up test marketplace
         if (fs.existsSync(testMarketplacePath)) {
@@ -287,29 +311,58 @@ class MarketplaceTester {
       await manager.createMarketplace('test-health-marketplace', {
         template: 'standard',
         path: testMarketplacePath,
-        autoValidate: false
+        autoValidate: false,
       });
 
       // Test health analysis
       const healthAnalysis = await manager.analyzeMarketplaceHealth(testMarketplacePath);
 
       this.assert(healthAnalysis, 'Health analysis should return a result object');
-      this.assert(typeof healthAnalysis.overall_score === 'number', 'Overall score should be a number');
-      this.assert(healthAnalysis.overall_score >= 0 && healthAnalysis.overall_score <= 100, 'Overall score should be between 0 and 100');
+      this.assert(
+        typeof healthAnalysis.overall_score === 'number',
+        'Overall score should be a number'
+      );
+      this.assert(
+        healthAnalysis.overall_score >= 0 && healthAnalysis.overall_score <= 100,
+        'Overall score should be between 0 and 100'
+      );
 
-      this.assert(typeof healthAnalysis.structure_score === 'number', 'Structure score should be a number');
-      this.assert(typeof healthAnalysis.configuration_score === 'number', 'Configuration score should be a number');
-      this.assert(typeof healthAnalysis.plugin_score === 'number', 'Plugin score should be a number');
-      this.assert(typeof healthAnalysis.documentation_score === 'number', 'Documentation score should be a number');
+      this.assert(
+        typeof healthAnalysis.structure_score === 'number',
+        'Structure score should be a number'
+      );
+      this.assert(
+        typeof healthAnalysis.configuration_score === 'number',
+        'Configuration score should be a number'
+      );
+      this.assert(
+        typeof healthAnalysis.plugin_score === 'number',
+        'Plugin score should be a number'
+      );
+      this.assert(
+        typeof healthAnalysis.documentation_score === 'number',
+        'Documentation score should be a number'
+      );
 
-      this.assert(Array.isArray(healthAnalysis.recommendations), 'Recommendations should be an array');
+      this.assert(
+        Array.isArray(healthAnalysis.recommendations),
+        'Recommendations should be an array'
+      );
       this.assert(typeof healthAnalysis.metrics === 'object', 'Metrics should be an object');
 
       // Test metrics
-      this.assert(typeof healthAnalysis.metrics.plugin_count === 'number', 'Plugin count should be a number');
-      this.assert(typeof healthAnalysis.metrics.skill_count === 'number', 'Skill count should be a number');
-      this.assert(typeof healthAnalysis.metrics.total_size === 'number', 'Total size should be a number');
-
+      this.assert(
+        typeof healthAnalysis.metrics.plugin_count === 'number',
+        'Plugin count should be a number'
+      );
+      this.assert(
+        typeof healthAnalysis.metrics.skill_count === 'number',
+        'Skill count should be a number'
+      );
+      this.assert(
+        typeof healthAnalysis.metrics.total_size === 'number',
+        'Total size should be a number'
+      );
     } finally {
       // Clean up test marketplace
       if (fs.existsSync(testMarketplacePath)) {
@@ -347,7 +400,7 @@ class MarketplaceTester {
       await manager.createMarketplace('test-deploy', {
         template: 'minimal',
         path: testMarketplacePath,
-        autoValidate: false
+        autoValidate: false,
       });
 
       // Try to deploy (should work but with warnings)
@@ -356,7 +409,6 @@ class MarketplaceTester {
       this.assert(Array.isArray(deployResult.deployed), 'Should have deployed array');
       this.assert(Array.isArray(deployResult.failed), 'Should have failed array');
       this.assert(Array.isArray(deployResult.skipped), 'Should have skipped array');
-
     } finally {
       if (fs.existsSync(testMarketplacePath)) {
         fs.rmSync(testMarketplacePath, { recursive: true, force: true });
@@ -369,7 +421,7 @@ class MarketplaceTester {
    */
   async runAllTests() {
     console.log('🚀 Starting Marketplace Test Suite');
-    console.log('=' .repeat(50));
+    console.log('='.repeat(50));
 
     await this.runTest('Marketplace Creation', () => this.testMarketplaceCreation());
     await this.runTest('Marketplace Validation', () => this.testMarketplaceValidation());
@@ -378,7 +430,7 @@ class MarketplaceTester {
     await this.runTest('Error Handling', () => this.testErrorHandling());
 
     // Print summary
-    console.log('\n' + '=' .repeat(50));
+    console.log('\n' + '='.repeat(50));
     console.log('📊 Test Results Summary:');
     console.log(`Total tests: ${this.testResults.total}`);
     console.log(`Passed: ${this.testResults.passed} ✅`);
@@ -389,7 +441,9 @@ class MarketplaceTester {
       console.log('\n🎉 All tests passed! Marketplace functionality is working correctly.');
       process.exit(0);
     } else {
-      console.log(`\n💥 ${this.testResults.failed} test(s) failed. Please review the errors above.`);
+      console.log(
+        `\n💥 ${this.testResults.failed} test(s) failed. Please review the errors above.`
+      );
       process.exit(1);
     }
   }

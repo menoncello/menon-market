@@ -15,7 +15,7 @@ describe('AdvancedPromptCrafter Integration', () => {
       const result = await crafter.analyzeAndOptimize(prompt, {
         mode: 'creative',
         targetModel: 'claude-3-sonnet',
-        outputFormat: 'markdown'
+        outputFormat: 'markdown',
       });
 
       expect(result).toBeDefined();
@@ -33,7 +33,7 @@ describe('AdvancedPromptCrafter Integration', () => {
       const prompt = 'Create a REST API';
       const result = await crafter.analyzeAndOptimize(prompt, {
         mode: 'technical',
-        domain: 'technical'
+        domain: 'technical',
       });
 
       expect(result.optimizedPrompt).toContain('Technical');
@@ -42,10 +42,11 @@ describe('AdvancedPromptCrafter Integration', () => {
     });
 
     it('should handle complex prompts correctly', async () => {
-      const prompt = 'Design a comprehensive microservices architecture with API gateway, service discovery, load balancing, and monitoring';
+      const prompt =
+        'Design a comprehensive microservices architecture with API gateway, service discovery, load balancing, and monitoring';
       const result = await crafter.analyzeAndOptimize(prompt, {
         mode: 'technical',
-        targetModel: 'claude-3-opus'
+        targetModel: 'claude-3-opus',
       });
 
       expect(result.analysis.complexity).toBe('high');
@@ -62,9 +63,9 @@ describe('AdvancedPromptCrafter Integration', () => {
         mode: 'technical',
         requirements: {
           include: ['types', 'validation', 'error-handling'],
-          exclude: ['external-apis']
+          exclude: ['external-apis'],
         },
-        context: 'E-commerce platform backend'
+        context: 'E-commerce platform backend',
       };
 
       const result = await crafter.createPrompt(request);
@@ -82,18 +83,18 @@ describe('AdvancedPromptCrafter Integration', () => {
         {
           task: 'Write a business plan',
           domain: 'business',
-          mode: 'business' as const
+          mode: 'business' as const,
         },
         {
           task: 'Create a story',
           domain: 'creative',
-          mode: 'creative' as const
+          mode: 'creative' as const,
         },
         {
           task: 'Conduct research analysis',
           domain: 'research',
-          mode: 'research' as const
-        }
+          mode: 'research' as const,
+        },
       ];
 
       for (const request of requests) {
@@ -106,7 +107,8 @@ describe('AdvancedPromptCrafter Integration', () => {
 
   describe('getQualityMetrics', () => {
     it('should return quality metrics for a prompt', async () => {
-      const prompt = 'Write a comprehensive technical guide about React hooks with practical examples.';
+      const prompt =
+        'Write a comprehensive technical guide about React hooks with practical examples.';
       const metrics = await crafter.getQualityMetrics(prompt);
 
       expect(metrics).toBeDefined();
@@ -158,12 +160,12 @@ describe('AdvancedPromptCrafter Integration', () => {
     });
 
     it('should handle concurrent requests', async () => {
-      const prompts = Array(5).fill(null).map((_, i) => `Test prompt ${i + 1}`);
+      const prompts = Array(5)
+        .fill(null)
+        .map((_, i) => `Test prompt ${i + 1}`);
 
       const startTime = Date.now();
-      const results = await Promise.all(
-        prompts.map(prompt => crafter.analyzeAndOptimize(prompt))
-      );
+      const results = await Promise.all(prompts.map(prompt => crafter.analyzeAndOptimize(prompt)));
       const endTime = Date.now();
 
       expect(results).toHaveLength(5);
@@ -182,7 +184,7 @@ describe('AdvancedPromptCrafter Integration', () => {
     });
 
     it('should handle very long prompts', async () => {
-      const longPrompt = 'Write '.repeat(1000) + 'about technology';
+      const longPrompt = `${'Write '.repeat(1000)  }about technology`;
       const result = await crafter.analyzeAndOptimize(longPrompt);
 
       expect(result).toBeDefined();
@@ -206,19 +208,19 @@ describe('AdvancedPromptCrafter Integration', () => {
           analysisDepth: 'deep',
           userProfile: {
             expertise: 'expert',
-            preferences: ['detailed', 'comprehensive']
-          }
+            preferences: ['detailed', 'comprehensive'],
+          },
         },
         optimization: {
           techniques: ['cot', 'react'],
           enableABTesting: false,
-          performanceThreshold: 0.9
+          performanceThreshold: 0.9,
         },
         validation: {
           qualityThreshold: 9.0,
           enableBenchmarking: false,
-          metrics: ['clarity', 'specificity']
-        }
+          metrics: ['clarity', 'specificity'],
+        },
       });
 
       const result = await customCrafter.analyzeAndOptimize('Test prompt');
