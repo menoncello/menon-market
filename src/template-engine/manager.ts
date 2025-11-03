@@ -56,12 +56,14 @@ export class TemplateManager {
     const templatesDir = join(process.cwd(), "templates");
 
     const files = await readdir(templatesDir);
-    const templateFiles = files.filter((file) => file.endsWith(".hbs"));
+    const templateFiles = files.filter((file) =>
+      file.endsWith(".hbs.handlebars"),
+    );
 
     for (const file of templateFiles) {
       const templatePath = join(templatesDir, file);
       const templateContent = await readFile(templatePath, "utf-8");
-      const templateName = file.replace(".hbs", "");
+      const templateName = file.replace(".hbs.handlebars", "");
 
       // Check cache first
       let compiled = this.cache.get(templateName);

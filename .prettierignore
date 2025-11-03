@@ -1,0 +1,20 @@
+# Ignore Handlebars template files - they contain special syntax
+**/*.hbs
+**/*.hbs.handlebars
+
+# Ignore generated files
+**/generated/
+**/dist/
+**/node_modules/
+
+# Ignore agent templates with placeholders
+**/agent-templates/
+
+# Ignore cache and temporary files
+**/.cache/
+**/.temp/
+**/*.log
+
+# Ignore OS files
+**/.DS_Store
+**/Thumbs.db
