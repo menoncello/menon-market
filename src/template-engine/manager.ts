@@ -8,7 +8,7 @@ export class TemplateManager {
   private templates: Map<string, HandlebarsTemplateDelegate> = new Map();
   private cache: TemplateCache;
 
-  constructor(options = {}) {
+  constructor(options: { maxSize?: number; ttl?: number } = {}) {
     this.cache = new TemplateCache(options.maxSize, options.ttl);
   }
 
@@ -53,12 +53,7 @@ export class TemplateManager {
   }
 
   private async loadTemplates(): Promise<void> {
-    const templatesDir = join(
-      process.cwd(),
-      "src",
-      "template-engine",
-      "templates",
-    );
+    const templatesDir = join(process.cwd(), "templates");
 
     const files = await readdir(templatesDir);
     const templateFiles = files.filter((file) => file.endsWith(".hbs"));

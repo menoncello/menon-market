@@ -1,6 +1,16 @@
 import { test, expect } from "bun:test";
 import { TemplateManager } from "./manager";
 
+test("TemplateManager constructor accepts cache options", () => {
+  const manager = new TemplateManager({
+    maxSize: 50,
+    ttl: 600000,
+  });
+
+  // Test that the manager was created successfully
+  expect(manager).toBeDefined();
+});
+
 test("TemplateManager initializes with Bun helpers", async () => {
   const manager = new TemplateManager();
   await manager.initialize();

@@ -14,6 +14,14 @@
   "scripts": {
     "build": "bun build ./cli/generate.ts --outdir ./dist --target bun",
     "dev": "bun --watch ./cli/generate.ts",
-    "test": "bun test"
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "test:coverage": "bun test --coverage",
+    "lint": "bun lint",
+    "lint:fix": "bun lint --fix",
+    "typecheck": "bun tsc --noEmit",
+    "generate:deploy": "bun run cli/generate.ts generate marketplace-deploy",
+    "generate:validate": "bun run cli/generate.ts generate marketplace-validate",
+    "list": "bun run cli/generate.ts list"
   }
 }

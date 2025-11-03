@@ -2,7 +2,7 @@
 
 import { Command } from "commander";
 import { TemplateManager } from "../manager";
-import { getTemplate } from "../registry";
+import { getTemplate, TEMPLATES } from "../registry";
 import { validateConfig } from "../config/template-config";
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -28,7 +28,9 @@ program
       if (!template) {
         console.error(`❌ Template '${templateId}' not found`);
         console.log("Available templates:");
-        // List available templates
+        TEMPLATES.forEach((t) => {
+          console.log(`  ${t.id}: ${t.name}`);
+        });
         process.exit(1);
       }
 
@@ -41,7 +43,7 @@ program
         currentDate: new Date().toISOString(),
         className: options.name
           .split("-")
-          .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+          .map((part: string) => part.charAt(0).toUpperCase() + part.slice(1))
           .join(""),
         databaseType: "sqlite",
       };
@@ -78,7 +80,14 @@ program
   .description("List available templates")
   .action(() => {
     console.log("Available templates:");
-    // List templates from registry
+    TEMPLATES.forEach((template) => {
+      console.log(`  ${template.id}: ${template.name} (${template.category})`);
+      console.log(`    ${template.description}`);
+      console.log(
+        `    Required variables: ${template.requiredVars.join(", ")}`,
+      );
+      console.log("");
+    });
   });
 
 if (import.meta.main) {

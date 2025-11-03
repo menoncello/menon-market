@@ -1,5 +1,9 @@
 import { test, expect } from "bun:test";
-import { TemplateConfigSchema, validateConfig, mergeWithDefaults } from "./template-config";
+import {
+  TemplateConfigSchema,
+  validateConfig,
+  mergeWithDefaults,
+} from "./template-config";
 
 test("Validates correct configuration", () => {
   const config = {

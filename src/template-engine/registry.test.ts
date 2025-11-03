@@ -5,9 +5,9 @@ test("Template registry contains marketplace-deploy template", () => {
   const template = getTemplate("marketplace-deploy");
 
   expect(template).toBeDefined();
-  expect(template.id).toBe("marketplace-deploy");
-  expect(template.category).toBe("deploy");
-  expect(template.requiredVars).toContain("PLUGIN_NAME");
+  expect(template!.id).toBe("marketplace-deploy");
+  expect(template!.category).toBe("deploy");
+  expect(template!.requiredVars).toContain("PLUGIN_NAME");
 });
 
 test("Template registry filters by category", () => {
