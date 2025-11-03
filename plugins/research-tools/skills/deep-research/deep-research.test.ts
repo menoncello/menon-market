@@ -3,22 +3,18 @@
  */
 
 import { describe, test, expect } from 'bun:test';
-import performDeepResearch, { ResearchWorkflow, DeepResearchConfig } from './index';
+import { performDeepResearch, ResearchWorkflow, DeepResearchConfig } from './index';
 
 describe('Deep Research Skill', () => {
   const defaultConfig: DeepResearchConfig = {
     maxSources: 5,
     requireCrossValidation: true,
     qualityThreshold: 0.7,
-    includeSentiment: true
+    includeSentiment: true,
   };
 
   test('should perform company research workflow', async () => {
-    const result = await performDeepResearch(
-      'Test Company',
-      'company-research',
-      defaultConfig
-    );
+    const result = await performDeepResearch('Test Company', 'company-research', defaultConfig);
 
     expect(result.title).toContain('COMPANY RESEARCH: Test Company');
     expect(result.summary).toBeTruthy();
@@ -29,11 +25,7 @@ describe('Deep Research Skill', () => {
   });
 
   test('should perform market analysis workflow', async () => {
-    const result = await performDeepResearch(
-      'Software Market',
-      'market-analysis',
-      defaultConfig
-    );
+    const result = await performDeepResearch('Software Market', 'market-analysis', defaultConfig);
 
     expect(result.title).toContain('MARKET ANALYSIS: Software Market');
     expect(result.methodology).toContain('market-analysis methodology');
@@ -41,11 +33,7 @@ describe('Deep Research Skill', () => {
   });
 
   test('should include all required report sections', async () => {
-    const result = await performDeepResearch(
-      'Test Query',
-      'tool-comparison',
-      defaultConfig
-    );
+    const result = await performDeepResearch('Test Query', 'tool-comparison', defaultConfig);
 
     expect(result.title).toBeTruthy();
     expect(result.summary).toBeTruthy();
@@ -65,7 +53,7 @@ describe('Deep Research Skill', () => {
       'market-analysis',
       'trend-analysis',
       'tool-comparison',
-      'technical-analysis'
+      'technical-analysis',
     ];
 
     for (const workflow of workflows) {

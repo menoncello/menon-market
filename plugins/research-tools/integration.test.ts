@@ -3,8 +3,8 @@
  */
 
 import { describe, test, expect } from 'bun:test';
+import { performDeepResearch } from './skills/deep-research';
 import { initialize, performResearch, pluginMetadata } from './index';
-import performDeepResearch from './skills/deep-research';
 
 describe('Research Tools Plugin Integration', () => {
   describe('Plugin Installation', () => {
@@ -12,7 +12,7 @@ describe('Research Tools Plugin Integration', () => {
       const config = initialize({
         maxSources: 10,
         outputFormat: 'json',
-        enableDeepResearch: true
+        enableDeepResearch: true,
       });
 
       expect(config.maxSources).toBe(10);
@@ -41,7 +41,7 @@ describe('Research Tools Plugin Integration', () => {
     test('should complete full research workflow', async () => {
       const config = initialize({
         maxSources: 3,
-        outputFormat: 'markdown'
+        outputFormat: 'markdown',
       });
 
       const result = await performResearch('artificial intelligence trends', config);
@@ -56,7 +56,7 @@ describe('Research Tools Plugin Integration', () => {
       expect(result.confidence).toBeLessThanOrEqual(1);
 
       // Verify source structure
-      result.sources.forEach(source => {
+      for (const source of result.sources) {
         expect(source.id).toBeTruthy();
         expect(source.title).toContain('artificial intelligence trends');
         expect(source.url).toBeInstanceOf(URL);
@@ -64,7 +64,7 @@ describe('Research Tools Plugin Integration', () => {
         expect(source.relevanceScore).toBeGreaterThanOrEqual(0);
         expect(source.relevanceScore).toBeLessThanOrEqual(1);
         expect(source.lastAccessed).toBeInstanceOf(Date);
-      });
+      }
 
       // Verify metadata
       expect(result.metadata.totalSources).toBe(result.sources.length);
@@ -78,7 +78,7 @@ describe('Research Tools Plugin Integration', () => {
         maxSources: 5,
         requireCrossValidation: true,
         qualityThreshold: 0.7,
-        includeSentiment: true
+        includeSentiment: true,
       };
 
       const report = await performDeepResearch(
@@ -99,14 +99,23 @@ describe('Research Tools Plugin Integration', () => {
       expect(report.generatedAt).toBeInstanceOf(Date);
 
       // Verify findings structure
-      report.findings.forEach(finding => {
-        expect(['market', 'financial', 'technical', 'competitive', 'operational', 'strategic', 'regulatory', 'customer']).toContain(finding.category);
+      for (const finding of report.findings) {
+        expect([
+          'market',
+          'financial',
+          'technical',
+          'competitive',
+          'operational',
+          'strategic',
+          'regulatory',
+          'customer',
+        ]).toContain(finding.category);
         expect(finding.insight).toBeTruthy();
         expect(finding.evidence).toBeArray();
         expect(['low', 'medium', 'high', 'critical']).toContain(finding.impact);
         expect(finding.confidence).toBeGreaterThanOrEqual(0);
         expect(finding.confidence).toBeLessThanOrEqual(1);
-      });
+      }
     });
   });
 
@@ -116,7 +125,7 @@ describe('Research Tools Plugin Integration', () => {
         { maxSources: 1, outputFormat: 'json' as const },
         { maxSources: 10, outputFormat: 'markdown' as const },
         { maxSources: 50, outputFormat: 'html' as const },
-        { maxSources: 100, outputFormat: 'text' as const }
+        { maxSources: 100, outputFormat: 'text' as const },
       ];
 
       for (const configOptions of configs) {
@@ -161,18 +170,21 @@ describe('Research Tools Plugin Integration', () => {
       const results = await Promise.all(promises);
 
       expect(results.length).toBe(concurrentRequests);
-      results.forEach((result, index) => {
+      for (const [index, result] of results.entries()) {
         expect(result.query).toBe(`test query ${index}`);
         expect(result.sources.length).toBeLessThanOrEqual(2);
         expect(result.metadata.totalSources).toBe(result.sources.length);
-      });
+      }
     });
   });
 
   describe('Performance Benchmarks', () => {
     test('should meet performance requirements', async () => {
       const startTime = Date.now();
-      const result = await performResearch('performance test query', initialize({ maxSources: 10 }));
+      const result = await performResearch(
+        'performance test query',
+        initialize({ maxSources: 10 })
+      );
       const endTime = Date.now();
 
       const processingTime = endTime - startTime;
