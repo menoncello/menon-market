@@ -1,0 +1,56 @@
+#!/usr/bin/env bun
+
+/**
+ * {{description}}
+ * Generated on: {{currentDate}}
+ * Author: {{author}}
+ */
+
+import Database from "{{bun-import databaseType}}";
+import { serve } from "{{bun-import serve}}";
+import { {{bun-class className}} } from "./{{bun-filename className}}";
+
+interface {{bun-class className}}Config {
+  name: string;
+  version: string;
+  author: string;
+  {{#if databaseType}}
+  database: Database;
+  {{/if}}
+}
+
+export class {{bun-class className}} {
+  private config: {{bun-class className}}Config;
+
+  constructor(config: {{bun-class className}}Config) {
+    this.config = config;
+  }
+
+  async deploy(): Promise<void> {
+    console.log(`Deploying {{PLUGIN_NAME}} v{{VERSION}}...`);
+
+    {{#ifBunFeature sqlite}}
+    // Use Bun's built-in SQLite
+    const db = new Database();
+    {{/ifBunFeature}}
+
+    {{#ifBunFeature serve}}
+    // Use Bun's built-in server
+    const server = serve({
+      port: 3000,
+      fetch: (req) => new Response("Hello from {{PLUGIN_NAME}}!")
+    });
+    {{/ifBunFeature}}
+  }
+}
+
+// CLI interface
+if (import.meta.main) {
+  const deployer = new {{bun-class className}}({
+    name: "{{PLUGIN_NAME}}",
+    version: "{{VERSION}}",
+    author: "{{AUTHOR}}"
+  });
+
+  deployer.deploy().catch(console.error);
+}
