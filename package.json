@@ -1,6 +1,6 @@
 {
   "name": "menon-marketplace",
-  "module": "server.ts",
+  "module": "index.ts",
   "devDependencies": {
     "@types/bun": "latest"
   },
@@ -9,10 +9,8 @@
   },
   "private": true,
   "scripts": {
-    "start": "bun run server.ts",
-    "dev": "bun --hot server.ts",
-    "build": "bun build server.ts --outdir ./dist --target bun",
-    "test": "bun test"
+    "test": "bun test",
+    "build": "bun build plugins/research-tools/index.ts --outdir ./dist --target bun"
   },
   "type": "module"
 }
