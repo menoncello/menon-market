@@ -1,0 +1,27 @@
+{
+  "name": "bun-template-engine",
+  "version": "1.0.0",
+  "module": "index.ts",
+  "type": "module",
+  "dependencies": {
+    "handlebars": "^4.7.8",
+    "commander": "^11.1.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/handlebars": "^4.0.40"
+  },
+  "scripts": {
+    "build": "bun build ./cli/generate.ts --outdir ./dist --target bun",
+    "dev": "bun --watch ./cli/generate.ts",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "test:coverage": "bun test --coverage",
+    "lint": "bun lint",
+    "lint:fix": "bun lint --fix",
+    "typecheck": "bun tsc --noEmit",
+    "generate:deploy": "bun run cli/generate.ts generate marketplace-deploy",
+    "generate:validate": "bun run cli/generate.ts generate marketplace-validate",
+    "list": "bun run cli/generate.ts list"
+  }
+}
