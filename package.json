@@ -10,7 +10,13 @@
   "private": true,
   "scripts": {
     "test": "bun test",
-    "build": "bun build plugins/research-tools/index.ts --outdir ./dist --target bun"
+    "test:research-tools": "bun test plugins/research-tools/",
+    "test:studio-cc": "bun test plugins/studio-cc/",
+    "test:watch": "bun test --watch",
+    "build": "bun build plugins/research-tools/index.ts --outdir ./dist --target bun",
+    "build:research-tools": "bun build plugins/research-tools/index.ts --outdir ./dist --target bun",
+    "build:studio-cc": "bun build plugins/studio-cc/index.ts --outdir ./dist --target bun",
+    "dev": "bun --watch plugins/research-tools/index.ts"
   },
   "type": "module"
 }

@@ -1,29 +1,26 @@
 # Menon Marketplace
 
-> **A web marketplace for Claude Code plugins and skills by Eduardo Menoncello**
+> **A collection of Claude Code plugins and skills by Eduardo Menoncello**
 
 Built entirely with **Bun** and **TypeScript** for optimal performance and type safety.
 
 ## Overview
 
-Menon Marketplace is a web platform that showcases and distributes high-quality plugins and skills for Claude Code. It provides a beautiful, responsive interface for browsing, searching, and discovering marketplace items with a focus on user experience and performance.
+Menon Marketplace is a collection of high-quality plugins and skills for Claude Code. It provides comprehensive tools for plugin development, research automation, and workflow enhancement with a focus on developer productivity and code quality.
 
 ## Features
 
-### 🚀 Core Functionality
-- **Browse Plugins**: Discover powerful plugins to extend Claude Code functionality
-- **Explore Skills**: Find specialized skills to enhance Claude Code capabilities
-- **Search & Filter**: Advanced search with category filtering
-- **Detailed Views**: Comprehensive information about each plugin and skill
-- **Responsive Design**: Works perfectly on desktop and mobile devices
-- **Performance Optimized**: Fast loading and smooth interactions
+### 🚀 Core Plugins
+- **Studio CC**: A comprehensive plugin development and management toolkit
+- **Research Tools**: Advanced data analysis and deep research capabilities
+- **Marketplace Skills**: Skills for managing and distributing Claude Code plugins
 
 ### 🛠️ Technical Stack
 - **Runtime**: Bun (JavaScript all-in-one toolkit)
-- **Language**: TypeScript with strict configuration
-- **Frontend**: React with modern hooks and patterns
-- **Styling**: Custom CSS with modern design principles
-- **Build**: Bun bundler and hot module replacement
+- **Language**: TypeScript with strict configuration and type safety
+- **Architecture**: Modular plugin system with standardized interfaces
+- **Testing**: Comprehensive test coverage with Bun test runner
+- **Build**: Bun bundler with optimized production builds
 
 ## Quick Start
 
@@ -31,204 +28,225 @@ Menon Marketplace is a web platform that showcases and distributes high-quality 
 
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd market
+git clone https://github.com/menoncello/menon-marketplace.git
+cd claude-code
 
 # Install dependencies
 bun install
 ```
 
-### Running the Marketplace
+### Using the Plugins
 
 ```bash
-# Start the development server with hot reload
-bun run dev
+# Run tests for all plugins
+bun test
 
-# Start the production server
-bun run start
-
-# Build for production
+# Build the research-tools plugin
 bun run build
+
+# Run specific plugin tests
+bun test plugins/research-tools/
+bun test plugins/studio-cc/
 ```
 
-### Access
+## Available Plugins
 
-Open your browser and navigate to:
-- Development: `http://localhost:3000`
-- The marketplace will be available with all plugins and skills ready to browse
+### 🔧 Studio CC
+A comprehensive plugin development and management toolkit that includes:
+- **Plugin Development Tools**: Templates and utilities for creating new plugins
+- **Prompt Engineering**: Advanced prompt analysis and optimization engines
+- **Marketplace Management**: Tools for managing Claude Code marketplace distribution
 
-## Features
-
-### 🎯 User Experience
-- **Modern UI**: Clean, intuitive interface with smooth animations
-- **Search & Filter**: Find exactly what you need with powerful search
-- **Category Navigation**: Browse by category (Development, Productivity, Automation, etc.)
-- **Detailed Information**: Click any item to see comprehensive details
-- **Responsive Design**: Perfect experience on any device
-
-### 📊 Content
-- **High-Quality Plugins**: Curated selection of useful plugins
-- **Specialized Skills**: AI-powered skills for various tasks
-- **Ratings & Downloads**: See community feedback and popularity
-- **Version Information**: Always up-to-date with latest versions
-- **Documentation**: Links to detailed documentation and repositories
+### 🔍 Research Tools
+Advanced research automation with deep analysis capabilities:
+- **Multi-source Research**: Aggregate information from various sources
+- **Confidence Scoring**: Type-safe confidence and relevance metrics
+- **Report Generation**: Automated synthesis of research findings
+- **Quality Assessment**: Automated quality scoring for research sources
 
 ## Project Structure
 
 ```
-market/
-├── server.ts               # Bun web server
-├── index.html             # Main HTML page
-├── frontend.tsx           # React frontend application
-├── static/                # Static assets
-│   └── styles.css         # Application styles
-├── examples/              # Example data
-├── config/                # Configuration files
-├── docs/                  # Documentation
-├── scripts/               # Helper scripts
-├── package.json          # Project dependencies
-├── tsconfig.json         # TypeScript configuration
-└── README.md             # This file
+claude-code/
+├── plugins/                    # Plugin directory
+│   ├── research-tools/         # Research automation plugin
+│   │   ├── index.ts           # Main plugin entry point
+│   │   ├── types/             # TypeScript type definitions
+│   │   ├── skills/            # Research-specific skills
+│   │   └── docs/              # Plugin documentation
+│   └── studio-cc/             # Plugin development toolkit
+│       ├── index.ts           # Main plugin entry point
+│       ├── skills/            # Development skills
+│       │   ├── prompt/        # Prompt engineering tools
+│       │   ├── claude-code-plugin/     # Plugin development guides
+│       │   └── claude-code-marketplace/ # Marketplace management
+│       └── .claude-plugin/    # Plugin configuration
+├── docs/                      # Comprehensive documentation
+│   ├── ai/                    # AI-related documentation
+│   └── plans/                 # Development plans and notes
+├── package.json              # Project dependencies
+├── tsconfig.json             # TypeScript configuration
+└── README.md                 # This file
 ```
 
-## Plugin/Skill Format
+## Plugin Configuration
 
-### Plugin JSON Format
+### Plugin Structure
+
+Each plugin follows the standard Claude Code plugin structure:
 
 ```json
 {
-  "id": "my-plugin",
-  "name": "My Plugin",
+  "name": "plugin-name",
+  "description": "Plugin description",
   "version": "1.0.0",
-  "description": "A useful plugin for Claude Code",
-  "author": "Your Name",
-  "category": "development",
-  "tags": ["productivity", "automation"],
-  "dependencies": ["dependency-plugin"],
-  "main": "index.ts",
-  "types": "types.d.ts",
-  "enabled": true
+  "author": {
+    "name": "Author Name",
+    "email": "author@example.com"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/author/plugin.git",
+  "skills": [
+    "./skills/skill-name"
+  ]
 }
 ```
 
-### Skill JSON Format
+### Plugin Interface
 
-```json
-{
-  "id": "my-skill",
-  "name": "My Skill",
-  "version": "1.0.0",
-  "description": "A specialized skill for Claude Code",
-  "author": "Your Name",
-  "category": "automation",
-  "tags": ["ai", "productivity"],
-  "dependencies": ["dependency-skill"],
-  "main": "index.ts",
-  "types": "types.d.ts",
-  "enabled": true
+All plugins export a standard interface:
+
+```typescript
+export interface PluginConfig {
+  version: string;
+  developmentMode?: boolean;
+  debugLogging?: boolean;
+  // Plugin-specific configuration options
+}
+
+export class PluginClass {
+  constructor(config: Partial<PluginConfig> = {});
+  async initialize(): Promise<void>;
+  getVersion(): string;
+  getConfig(): PluginConfig;
+  updateConfig(newConfig: Partial<PluginConfig>): void;
+  async cleanup(): Promise<void>;
 }
 ```
 
-## Categories
+## Usage Examples
 
-### Plugin Categories
-- `development` - Development tools and utilities
-- `productivity` - Productivity enhancement tools
-- `communication` - Communication and collaboration tools
-- `data-processing` - Data processing and analysis tools
-- `integration` - Integration with external services
-- `utilities` - General utilities and helpers
-- `security` - Security and authentication tools
-- `testing` - Testing and quality assurance tools
+### Research Tools Plugin
 
-### Skill Categories
-- `automation` - Automation and workflow skills
-- `analysis` - Data analysis and insights
-- `generation` - Content generation skills
-- `integration` - System integration skills
-- `management` - Project and resource management
-- `monitoring` - Monitoring and alerting skills
-- `optimization` - Performance and optimization skills
-- `research` - Research and information gathering
+```typescript
+import { initialize, performResearch, defaultConfig } from './plugins/research-tools/index.ts';
+
+// Initialize with custom configuration
+const config = initialize({
+  enableDeepResearch: true,
+  maxSources: 25,
+  outputFormat: 'markdown',
+  timeout: 60000
+});
+
+// Perform research
+const result = await performResearch("TypeScript best practices", config);
+console.log(`Research completed with ${result.sources.length} sources`);
+console.log(`Confidence score: ${result.confidence}`);
+```
+
+### Studio CC Plugin
+
+```typescript
+import StudioCC from './plugins/studio-cc/index.ts';
+
+// Initialize plugin studio
+const studio = new StudioCC({
+  developmentMode: true,
+  debugLogging: true,
+  version: "1.0.0"
+});
+
+await studio.initialize();
+console.log(`Studio CC v${studio.getVersion()} initialized`);
+```
 
 ## Development
 
 ### Running Tests
 
 ```bash
+# Run all tests
 bun test
+
+# Run tests for specific plugin
+bun test plugins/research-tools/
+bun test plugins/studio-cc/
+
+# Run tests in watch mode
+bun test --watch
 ```
 
 ### Building
 
 ```bash
-bun build src/cli.ts --outdir ./dist --target bun
+# Build research-tools plugin
+bun run build
+
+# Build specific plugin
+bun build plugins/research-tools/index.ts --outdir ./dist --target bun
 ```
 
 ### Development Mode
 
 ```bash
-bun --watch src/cli.ts
+# Watch mode for development
+bun --watch plugins/research-tools/index.ts
+bun --watch plugins/studio-cc/index.ts
 ```
 
-## Configuration
+## Available Skills
 
-The marketplace can be configured through `config/marketplace.json`:
+### Research Tools Skills
+- **Deep Research**: Comprehensive multi-source research and analysis
+- **Company Analysis**: Business intelligence and competitive analysis
+- **Report Generation**: Automated synthesis and documentation
 
-```json
-{
-  "name": "Menon Marketplace",
-  "version": "1.0.0",
-  "description": "A curated marketplace for Claude Code plugins and skills",
-  "author": "Eduardo Menoncello",
-  "license": "MIT",
-  "settings": {
-    "autoValidate": true,
-    "enableTelemetry": false,
-    "logLevel": "info",
-    "maxConcurrentOperations": 5
-  }
-}
-```
+### Studio CC Skills
+- **Prompt Engineering**: Analysis and optimization of prompts
+- **Plugin Development**: Tools and templates for plugin creation
+- **Marketplace Management**: Distribution and version management
 
-## API Usage
+## Documentation
 
-You can also use the marketplace programmatically:
+### Plugin Documentation
+- [Research Tools Plugin](./plugins/research-tools/README.md) - Comprehensive research automation documentation
+- [Studio CC Plugin](./plugins/studio-cc/README.md) - Plugin development toolkit documentation
 
-```typescript
-import { MenonMarketplace } from "./src/marketplace.js";
-import { Plugin, PluginCategory } from "./types/marketplace.js";
-
-const marketplace = new MenonMarketplace();
-
-// Add a plugin
-const plugin: Plugin = {
-  id: "my-plugin",
-  name: "My Plugin",
-  version: "1.0.0",
-  description: "A useful plugin",
-  author: "Your Name",
-  category: PluginCategory.DEVELOPMENT,
-  tags: ["productivity"],
-  main: "index.ts",
-  enabled: true
-};
-
-marketplace.addPlugin(plugin);
-
-// Get marketplace statistics
-const stats = marketplace.getStats();
-console.log(`Plugins: ${stats.enabledPlugins}/${stats.totalPlugins}`);
-```
+### Additional Resources
+- [AI Development Guides](./docs/ai/) - In-depth guides for AI development with Claude Code
+- [Development Plans](./docs/plans/) - Project planning and development notes
+- [Research Tools Examples](./plugins/research-tools/docs/examples.md) - Usage examples and patterns
+- [API Documentation](./plugins/research-tools/docs/api.md) - Detailed API reference
 
 ## Contributing
 
 1. Fork the repository
-2. Create a feature branch
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
 4. Add tests for new functionality
 5. Run the test suite: `bun test`
-6. Submit a pull request
+6. Ensure all tests pass and code follows project standards
+7. Commit your changes (`git commit -m 'Add amazing feature'`)
+8. Push to the branch (`git push origin feature/amazing-feature`)
+9. Submit a Pull Request
+
+### Code Standards
+- **English Only**: All code, comments, documentation, and communication must be in English
+- **TypeScript**: Use strict TypeScript configuration with proper type definitions
+- **Testing**: Maintain high test coverage with Bun test runner
+- **ESLint**: Follow ESLint rules without using inline disables
+- **Code Quality**: Write clean, readable code without lazy workarounds
 
 ## License
 
@@ -238,6 +256,11 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 Created and maintained by Eduardo Menoncello. Built with ❤️ using Bun and TypeScript.
 
+### Repository Structure
+- **Main Repository**: https://github.com/menoncello/menon-marketplace
+- **Plugin Distribution**: Available through Claude Code marketplace
+- **Issue Tracking**: Use GitHub Issues for bug reports and feature requests
+
 ---
 
-**Note**: This marketplace is designed specifically for Claude Code and follows all best practices for Bun and TypeScript development.
+**Note**: This plugin collection is designed specifically for Claude Code and follows all best practices for Bun and TypeScript development.
