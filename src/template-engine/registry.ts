@@ -34,7 +34,8 @@ export const TEMPLATES: TemplateDefinition[] = [
     optionalVars: {
       STRICT_MODE: true,
       AUTO_FIX: false,
-    },
+      DESCRIPTION: "Plugin validation script"
+    }
   },
 ];
 
