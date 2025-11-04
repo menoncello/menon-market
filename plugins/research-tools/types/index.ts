@@ -113,25 +113,39 @@ export interface ResearchSession {
 
 /**
  * Type guards for enhanced types
+ * @param level
  */
 export function isValidImpactLevel(level: string): level is ImpactLevel {
   return ['low', 'medium', 'high', 'critical'].includes(level);
 }
 
+/**
+ *
+ * @param status
+ */
 export function isValidValidationStatus(status: string): status is ValidationStatus {
   return ['pending', 'validated', 'rejected', 'needs-review'].includes(status);
 }
 
+/**
+ *
+ * @param priority
+ */
 export function isValidResearchPriority(priority: string): priority is ResearchPriority {
   return ['low', 'medium', 'high', 'critical'].includes(priority);
 }
 
+/**
+ *
+ * @param level
+ */
 export function isValidTrustLevel(level: string): level is TrustLevel {
   return ['low', 'medium', 'high', 'verified'].includes(level);
 }
 
 /**
  * Enhanced validation utilities
+ * @param finding
  */
 export function validateResearchFinding(finding: unknown): finding is EnhancedResearchFinding {
   return (
@@ -146,6 +160,10 @@ export function validateResearchFinding(finding: unknown): finding is EnhancedRe
   );
 }
 
+/**
+ *
+ * @param source
+ */
 export function validateResearchSource(source: unknown): source is EnhancedResearchSource {
   return (
     typeof source === 'object' &&

@@ -8,12 +8,19 @@ export interface MenonCoreConfig {
   features: string[];
 }
 
+/**
+ *
+ */
 export class MenonCore {
   public readonly name = 'menon-core';
   public readonly version = '1.0.0';
 
   private config: MenonCoreConfig;
 
+  /**
+   *
+   * @param config
+   */
   constructor(config?: Partial<MenonCoreConfig>) {
     this.config = {
       version: '1.0.0',
@@ -38,6 +45,7 @@ export class MenonCore {
 
   /**
    * Add a feature to the core plugin
+   * @param feature
    */
   addFeature(feature: string): void {
     if (!this.config.features.includes(feature)) {
@@ -47,6 +55,7 @@ export class MenonCore {
 
   /**
    * Remove a feature from the core plugin
+   * @param feature
    */
   removeFeature(feature: string): void {
     const index = this.config.features.indexOf(feature);

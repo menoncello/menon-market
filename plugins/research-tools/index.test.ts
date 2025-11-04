@@ -160,10 +160,10 @@ describe('Research Tools Plugin', () => {
       const result = await performResearch('test query', config);
 
       expect(result.keyFindings.length).toBeGreaterThan(0);
-      result.keyFindings.forEach(finding => {
+      for (const finding of result.keyFindings) {
         expect(typeof finding).toBe('string');
         expect(finding.length).toBeGreaterThan(0);
-      });
+      }
     });
   });
 
@@ -212,9 +212,9 @@ describe('Research Tools Plugin', () => {
       expect(results.length).toBe(3);
       expect(processingTime).toBeLessThan(2000); // Should complete within 2 seconds
 
-      results.forEach((result, index) => {
+      for (const [index, result] of results.entries()) {
         expect(result.query).toBe(queries[index]);
-      });
+      }
     });
   });
 });

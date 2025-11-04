@@ -87,7 +87,7 @@ export interface PromptAnalysis {
   completeness: number; // 1-10
   ambiguities: string[];
   suggestions: string[];
-  extractedEntities: Record<string, any>;
+  extractedEntities: Record<string, unknown>;
   userIntent: string;
   contextualFactors: string[];
 }

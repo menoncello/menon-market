@@ -9,9 +9,16 @@ export interface StudioConfig {
   debugLogging: boolean;
 }
 
+/**
+ *
+ */
 export class StudioCC {
   private config: StudioConfig;
 
+  /**
+   *
+   * @param config
+   */
   constructor(config: Partial<StudioConfig> = {}) {
     this.config = {
       version: '1.0.0',
@@ -53,6 +60,7 @@ export class StudioCC {
 
   /**
    * Update plugin configuration
+   * @param newConfig
    */
   updateConfig(newConfig: Partial<StudioConfig>): void {
     this.config = { ...this.config, ...newConfig };

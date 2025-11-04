@@ -27,6 +27,19 @@ export default [
         sourceType: 'module',
       },
     },
+    settings: {
+      'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+          project: './tsconfig.json',
+          extensions: ['.ts', '.js'],
+        },
+        node: {
+          extensions: ['.ts', '.js'],
+        },
+      },
+      'import/core-modules': ['bun:test', 'bun', 'bun:sqlite'],
+    },
     plugins: {
       '@typescript-eslint': tseslint,
       sonarjs: sonarjs,
@@ -162,6 +175,7 @@ export default [
       'no-console': 'error',
       'no-magic-numbers': [
         'error',
+        { ignore: [0, 1, -1], ignoreArrayIndexes: true, ignoreDefaultValues: true },
       ],
       'no-duplicate-imports': 'error',
       'no-else-return': 'error',

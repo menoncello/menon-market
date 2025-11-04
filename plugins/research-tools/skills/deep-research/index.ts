@@ -44,25 +44,28 @@ export type ResearchWorkflow =
 
 /**
  * Main deep research function
+ * @param query
+ * @param workflow
+ * @param config
  */
 export async function performDeepResearch(
   query: string,
   workflow: ResearchWorkflow,
   config: DeepResearchConfig
 ): Promise<ResearchReport> {
-  console.log(`Starting deep research with workflow: ${workflow}`);
 
   // Execute research workflow
   const researchResult = await executeResearchWorkflow(query, workflow, config);
 
   // Generate structured report
-  const report = await generateResearchReport(query, workflow, researchResult, config);
-
-  return report;
+  return await generateResearchReport(query, workflow, researchResult, config);
 }
 
 /**
  * Execute specific research workflow
+ * @param query
+ * @param workflow
+ * @param config
  */
 async function executeResearchWorkflow(
   query: string,
@@ -95,6 +98,9 @@ async function executeResearchWorkflow(
 
 /**
  * Collect sources specific to research workflow
+ * @param query
+ * @param workflow
+ * @param maxSources
  */
 async function collectWorkflowSpecificSources(
   query: string,
@@ -133,6 +139,7 @@ async function collectWorkflowSpecificSources(
 
 /**
  * Cross-validate sources across multiple criteria
+ * @param sources
  */
 async function crossValidateSources(sources: ResearchSource[]): Promise<string[]> {
   // Mock cross-validation - in real implementation would compare across multiple sources
@@ -141,6 +148,9 @@ async function crossValidateSources(sources: ResearchSource[]): Promise<string[]
 
 /**
  * Synthesize research findings for specific workflow
+ * @param sources
+ * @param query
+ * @param workflow
  */
 async function synthesizeWorkflowResearch(
   sources: ResearchSource[],
@@ -165,6 +175,9 @@ async function synthesizeWorkflowResearch(
 
 /**
  * Extract workflow-specific findings
+ * @param sources
+ * @param query
+ * @param workflow
  */
 async function extractWorkflowFindings(
   sources: ResearchSource[],
@@ -209,6 +222,9 @@ async function extractWorkflowFindings(
 
 /**
  * Calculate workflow-specific confidence score
+ * @param sources
+ * @param query
+ * @param workflow
  */
 function calculateWorkflowConfidence(
   sources: ResearchSource[],
@@ -230,6 +246,7 @@ function calculateWorkflowConfidence(
 
 /**
  * Calculate base confidence from sources
+ * @param sources
  */
 function calculateBaseConfidence(sources: ResearchSource[]): number {
   if (sources.length === 0) return 0;
@@ -245,6 +262,10 @@ function calculateBaseConfidence(sources: ResearchSource[]): number {
 
 /**
  * Generate structured research report
+ * @param query
+ * @param workflow
+ * @param researchResult
+ * @param _config
  */
 async function generateResearchReport(
   query: string,
@@ -271,6 +292,8 @@ async function generateResearchReport(
 
 /**
  * Generate structured findings
+ * @param researchResult
+ * @param workflow
  */
 async function generateStructuredFindings(
   researchResult: ResearchResult,
@@ -287,6 +310,7 @@ async function generateStructuredFindings(
 
 /**
  * Map workflow to finding category
+ * @param workflow
  */
 function mapWorkflowToCategory(workflow: ResearchWorkflow): ResearchFinding['category'] {
   const mapping = {
@@ -303,6 +327,8 @@ function mapWorkflowToCategory(workflow: ResearchWorkflow): ResearchFinding['cat
 
 /**
  * Generate actionable recommendations
+ * @param findings
+ * @param _workflow
  */
 async function generateRecommendations(
   findings: ResearchFinding[],
@@ -324,6 +350,8 @@ async function generateRecommendations(
 
 /**
  * Identify research limitations
+ * @param researchResult
+ * @param _workflow
  */
 async function identifyLimitations(
   researchResult: ResearchResult,

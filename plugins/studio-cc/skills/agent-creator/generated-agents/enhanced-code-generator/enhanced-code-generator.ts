@@ -36,7 +36,13 @@ Always include appropriate tests and comprehensive documentation.
 Focus on security, performance, and maintainability.`,
 };
 
+/**
+ *
+ */
 class EnhancedCodeGenerator extends Agent {
+  /**
+   *
+   */
   constructor() {
     super(enhanced_code_generator_config);
   }
@@ -52,8 +58,9 @@ class EnhancedCodeGenerator extends Agent {
 
   /**
    * Custom task execution logic
+   * @param task
    */
-  async executeTask(task: string): Promise<any> {
+  async executeTask(task: string): Promise<unknown> {
     // Add custom task execution logic here
     return await super.executeTask(task);
   }

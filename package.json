@@ -2,7 +2,6 @@
   "name": "menon-marketplace",
   "version": "1.0.0",
   "description": "Menon ecosystem marketplace for plugins, agents, and tools",
-  "module": "index.ts",
   "type": "module",
   "private": true,
   "author": "Eduardo Menoncello",
@@ -25,24 +24,24 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.0",
+    "@stryker-mutator/core": "^9.2.0",
+    "@stryker-mutator/typescript-checker": "^9.2.0",
     "@types/bun": "latest",
     "@types/node": "^24.10.0",
     "@typescript-eslint/eslint-plugin": "^8.46.3",
     "@typescript-eslint/parser": "^8.46.3",
     "eslint": "^9.39.0",
+    "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsdoc": "^61.1.12",
     "eslint-plugin-sonarjs": "^3.0.5",
     "eslint-plugin-unicorn": "^62.0.0",
+    "globals": "^16.4.0",
     "husky": "^9.1.7",
+    "jiti": "^2.6.1",
     "prettier": "^3.6.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.3"
-  },
-  "peerDependencies": {
-    "typescript": "^5",
-    "bun": "^1.0.0",
-    "node": "18.20.8"
   },
   "scripts": {
     "test": "bun test",
@@ -56,14 +55,16 @@
     "build:research-tools": "bun build plugins/research-tools/index.ts --outdir ./dist --target bun",
     "build:studio-cc": "bun build plugins/studio-cc/index.ts --outdir ./dist --target bun",
     "build:menon-core": "bun build plugins/menon-core/index.ts --outdir ./dist --target bun",
-    "build:orchestrator": "bun build plugins/agents/orchestrator/index.ts --outdir ./dist --target bun",
+    "build:orchestrator": "bun build plugins/menon-core/agents/orchestrator/index.ts --outdir ./dist --target bun",
     "build:all": "bun run build:research-tools && bun run build:studio-cc && bun run build:menon-core && bun run build:orchestrator",
     "dev": "bun --watch plugins/research-tools/index.ts",
     "dev:studio-cc": "bun --watch plugins/studio-cc/index.ts",
     "dev:menon-core": "bun --watch plugins/menon-core/index.ts",
-    "dev:orchestrator": "bun --watch plugins/agents/orchestrator/index.ts",
+    "dev:orchestrator": "bun --watch plugins/menon-core/agents/orchestrator/index.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "lint:report": "bun scripts/lint-report-simple.ts",
+    "lint:list": "bun scripts/lint-report-minimal.ts",
     "lint:plugins": "eslint plugins/ --fix",
     "lint:agents": "eslint agents/ --fix",
     "format": "./node_modules/.bin/prettier --write .",
@@ -78,10 +79,10 @@
     "validate:marketplace": "node scripts/validate-marketplace.js",
     "package": "node scripts/package-marketplace.js",
     "clean": "rm -rf dist node_modules/.cache",
-    "start": "bun run build && bun run dev",
-    "prepare": "husky install"
+    "start": "bun run build && bun run dev"
   },
   "engines": {
+    "node": ">=18",
     "bun": ">=1.3.0"
   },
   "workspaces": [

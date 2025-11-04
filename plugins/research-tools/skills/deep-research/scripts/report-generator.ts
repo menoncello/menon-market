@@ -5,9 +5,9 @@
  * Generates professional research reports in various formats
  */
 
-import { Command } from 'commander';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { Command } from 'commander';
 
 interface ReportGenerationOptions {
   template: string;
@@ -43,9 +43,16 @@ interface ReportData {
   };
 }
 
+/**
+ *
+ */
 class ReportGenerator {
   private readonly templateDir = join(__dirname, '..', 'assets', 'report-templates');
 
+  /**
+   *
+   * @param options
+   */
   async generateReport(options: ReportGenerationOptions): Promise<string> {
     console.log(`📝 Generating report using template: ${options.template}`);
     console.log(`📊 Input data: ${options.input}`);
@@ -73,6 +80,10 @@ class ReportGenerator {
     }
   }
 
+  /**
+   *
+   * @param inputPath
+   */
   private loadResearchData(inputPath: string): ReportData {
     try {
       const data = readFileSync(inputPath, 'utf-8');
@@ -82,6 +93,10 @@ class ReportGenerator {
     }
   }
 
+  /**
+   *
+   * @param templateName
+   */
   private loadTemplate(templateName: string): string {
     const templatePath = join(this.templateDir, `${templateName}.md`);
 
@@ -93,6 +108,9 @@ class ReportGenerator {
     }
   }
 
+  /**
+   *
+   */
   private getDefaultTemplate(): string {
     return `
 # {{title}}
@@ -149,6 +167,12 @@ Detailed data and additional information can be found in the appendix.
 `;
   }
 
+  /**
+   *
+   * @param template
+   * @param data
+   * @param options
+   */
   private processTemplate(
     template: string,
     data: ReportData,
@@ -165,24 +189,34 @@ Detailed data and additional information can be found in the appendix.
     return report;
   }
 
+  /**
+   *
+   * @param template
+   * @param data
+   */
   private replaceSimpleVariables(template: string, data: ReportData): string {
     let report = template;
-    report = report.replace(/\{\{title\}\}/g, data.title);
-    report = report.replace(/\{\{author\}\}/g, data.author || 'Research Analyst');
-    report = report.replace(/\{\{date\}\}/g, data.date);
+    report = report.replace(/{{title}}/g, data.title);
+    report = report.replace(/{{author}}/g, data.author || 'Research Analyst');
+    report = report.replace(/{{date}}/g, data.date);
     return report;
   }
 
+  /**
+   *
+   * @param template
+   * @param metadata
+   */
   private replaceMetadata(template: string, metadata: ReportData['metadata']): string {
     let report = template;
 
     if (metadata) {
       report = report.replace(
-        /\{\{research_objectives\}\}/g,
+        /{{research_objectives}}/g,
         metadata.research_objectives || 'Not specified'
       );
       report = report.replace(
-        /\{\{methodology\}\}/g,
+        /{{methodology}}/g,
         metadata.methodology || 'Standard research methodology'
       );
 
@@ -193,9 +227,14 @@ Detailed data and additional information can be found in the appendix.
     return report;
   }
 
+  /**
+   *
+   * @param template
+   * @param sources
+   */
   private replaceSourcesSection(template: string, sources: ReportData['metadata']['sources']): string {
     if (!sources || sources.length === 0) {
-      return template.replace(/\{\{#each sources\}\}[\s\S]*?\{\{\/each\}\}/g, 'No sources specified');
+      return template.replace(/{{#each sources}}[\S\s]*?{{\/each}}/g, 'No sources specified');
     }
 
     const sourcesSection = sources
@@ -204,26 +243,40 @@ Detailed data and additional information can be found in the appendix.
       )
       .join('\n');
 
-    return template.replace(/\{\{#each sources\}\}[\s\S]*?\{\{\/each\}\}/g, sourcesSection);
+    return template.replace(/{{#each sources}}[\S\s]*?{{\/each}}/g, sourcesSection);
   }
 
+  /**
+   *
+   * @param template
+   * @param limitations
+   */
   private replaceLimitationsSection(template: string, limitations: ReportData['metadata']['limitations']): string {
     const limitationsSection = limitations?.map(limitation => `- ${limitation}`).join('\n') || 'No limitations specified';
-    return template.replace(/\{\{#each limitations\}\}[\s\S]*?\{\{\/each\}\}/g, limitationsSection);
+    return template.replace(/{{#each limitations}}[\S\s]*?{{\/each}}/g, limitationsSection);
   }
 
+  /**
+   *
+   * @param template
+   * @param sections
+   */
   private replaceSections(template: string, sections: ReportData['sections']): string {
     if (!sections || sections.length === 0) {
-      return template.replace(/\{\{#each sections\}\}[\s\S]*?\{\{\/each\}\}/g, 'No sections available');
+      return template.replace(/{{#each sections}}[\S\s]*?{{\/each}}/g, 'No sections available');
     }
 
     const sectionsSection = sections
       .map(section => this.formatSection(section))
       .join('\n');
 
-    return template.replace(/\{\{#each sections\}\}[\s\S]*?\{\{\/each\}\}/g, sectionsSection);
+    return template.replace(/{{#each sections}}[\S\s]*?{{\/each}}/g, sectionsSection);
   }
 
+  /**
+   *
+   * @param section
+   */
   private formatSection(section: ReportData['sections'][0]): string {
     let sectionText = `### ${section.title}\n\n${section.content}\n\n`;
 
@@ -237,17 +290,30 @@ Detailed data and additional information can be found in the appendix.
     return sectionText;
   }
 
+  /**
+   *
+   * @param template
+   * @param options
+   */
   private handleConditionalBlocks(template: string, options: ReportGenerationOptions): string {
     return template.replace(
-      /\{\{#if include_appendix\}\}([\s\S]*?)\{\{\/if\}\}/g,
+      /{{#if include_appendix}}([\S\s]*?){{\/if}}/g,
       options.includeAppendix ? '$1' : ''
     );
   }
 
+  /**
+   *
+   * @param template
+   */
   private cleanupRemainingTemplateSyntax(template: string): string {
-    return template.replace(/\{\{[^}]*\}\}/g, '');
+    return template.replace(/{{[^}]*}}/g, '');
   }
 
+  /**
+   *
+   * @param markdownContent
+   */
   async generateHTMLReport(markdownContent: string): Promise<string> {
     const htmlStructure = this.createHTMLStructure();
     const cssStyles = this.generateCSSStyles();
@@ -258,6 +324,9 @@ Detailed data and additional information can be found in the appendix.
       .replace('{{BODY_CONTENT}}', bodyContent);
   }
 
+  /**
+   *
+   */
   private createHTMLStructure(): string {
     return `<!DOCTYPE html>
 <html lang="en">
@@ -275,6 +344,9 @@ Detailed data and additional information can be found in the appendix.
 </html>`;
   }
 
+  /**
+   *
+   */
   private generateCSSStyles(): string {
     const cssSections = [
       this.generateBodyCSS(),
@@ -291,6 +363,9 @@ Detailed data and additional information can be found in the appendix.
     return cssSections.join('\n\n');
   }
 
+  /**
+   *
+   */
   private generateBodyCSS(): string {
     return `
         body {
@@ -303,6 +378,9 @@ Detailed data and additional information can be found in the appendix.
         }`;
   }
 
+  /**
+   *
+   */
   private generateHeadingCSS(): string {
     return `
         h1, h2, h3, h4 {
@@ -320,6 +398,9 @@ Detailed data and additional information can be found in the appendix.
         }`;
   }
 
+  /**
+   *
+   */
   private generateLinkCSS(): string {
     return `
         a {
@@ -331,6 +412,9 @@ Detailed data and additional information can be found in the appendix.
         }`;
   }
 
+  /**
+   *
+   */
   private generateListCSS(): string {
     return `
         ul, ol {
@@ -341,6 +425,9 @@ Detailed data and additional information can be found in the appendix.
         }`;
   }
 
+  /**
+   *
+   */
   private generateBlockquoteCSS(): string {
     return `
         blockquote {
@@ -352,6 +439,9 @@ Detailed data and additional information can be found in the appendix.
         }`;
   }
 
+  /**
+   *
+   */
   private generateCodeCSS(): string {
     return `
         code {
@@ -369,6 +459,9 @@ Detailed data and additional information can be found in the appendix.
         }`;
   }
 
+  /**
+   *
+   */
   private generateTableCSS(): string {
     return `
         table {
@@ -387,6 +480,9 @@ Detailed data and additional information can be found in the appendix.
         }`;
   }
 
+  /**
+   *
+   */
   private generateUtilityCSS(): string {
     return `
         .executive-summary {
@@ -403,6 +499,9 @@ Detailed data and additional information can be found in the appendix.
         }`;
   }
 
+  /**
+   *
+   */
   private generatePrintCSS(): string {
     return `
         @media print {
@@ -416,6 +515,10 @@ Detailed data and additional information can be found in the appendix.
         }`;
   }
 
+  /**
+   *
+   * @param markdown
+   */
   private markdownToHTML(markdown: string): string {
     // Basic markdown to HTML conversion
     let html = markdown;
@@ -430,7 +533,7 @@ Detailed data and additional information can be found in the appendix.
     html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
 
     // Links
-    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+    html = html.replace(/\[([^\]]+)]\(([^)]+)\)/g, '<a href="$2">$1</a>');
 
     // Lists
     html = html.replace(/^\* (.+)$/gim, '<li>$1</li>');
@@ -449,6 +552,11 @@ Detailed data and additional information can be found in the appendix.
     return html;
   }
 
+  /**
+   *
+   * @param htmlContent
+   * @param outputPath
+   */
   async generatePDFReport(htmlContent: string, outputPath: string): Promise<void> {
     // Note: PDF generation would require a headless browser or PDF library
     // For now, we'll save as HTML and suggest using a browser's print to PDF
@@ -458,6 +566,9 @@ Detailed data and additional information can be found in the appendix.
     console.log(`💡 To convert to PDF, open the HTML file in a browser and use "Print to PDF"`);
   }
 
+  /**
+   *
+   */
   listAvailableTemplates(): string[] {
     try {
       const templates = [
@@ -469,9 +580,9 @@ Detailed data and additional information can be found in the appendix.
       ];
 
       console.log('📋 Available Report Templates:');
-      templates.forEach(template => {
+      for (const template of templates) {
         console.log(`  - ${template}`);
-      });
+      }
 
       return templates;
     } catch (error) {

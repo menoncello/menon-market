@@ -38,7 +38,16 @@ test('feature management', () => {
 
 test('initialize method', async () => {
   const core = new MenonCore();
-  const consoleSpy = spyOn(console, 'log');
-  await core.initialize();
-  expect(consoleSpy).toHaveBeenCalledWith('Initializing menon-core v1.0.0');
+  const logs: string[] = [];
+  const originalLog = console.log;
+  console.log = (message: string) => {
+    logs.push(message);
+  };
+
+  try {
+    await core.initialize();
+    expect(logs).toContain('Initializing menon-core v1.0.0');
+  } finally {
+    console.log = originalLog;
+  }
 });

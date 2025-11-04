@@ -1,5 +1,8 @@
 import { PromptOptimization, CustomizationConfig } from '../types.js';
 
+/**
+ *
+ */
 export class CustomizationEngine {
   private config: CustomizationConfig;
 
@@ -128,12 +131,22 @@ export class CustomizationEngine {
     },
   };
 
+  /**
+   *
+   * @param config
+   */
   constructor(config: CustomizationConfig) {
     this.config = config;
   }
 
   /**
    * Customize a prompt for specific domains and models
+   * @param optimization
+   * @param options
+   * @param options.mode
+   * @param options.targetModel
+   * @param options.domain
+   * @param options.outputFormat
    */
   async customizePrompt(
     optimization: PromptOptimization,
@@ -190,6 +203,11 @@ export class CustomizationEngine {
     };
   }
 
+  /**
+   *
+   * @param domain
+   * @param prompt
+   */
   private async applyDomainCustomization(
     domain: string,
     prompt: string
@@ -209,6 +227,11 @@ export class CustomizationEngine {
     };
   }
 
+  /**
+   *
+   * @param model
+   * @param prompt
+   */
   private async applyModelCustomization(
     model: string,
     prompt: string
@@ -228,6 +251,11 @@ export class CustomizationEngine {
     };
   }
 
+  /**
+   *
+   * @param mode
+   * @param prompt
+   */
   private async applyModeCustomization(
     mode: string,
     prompt: string
@@ -247,6 +275,11 @@ export class CustomizationEngine {
     };
   }
 
+  /**
+   *
+   * @param format
+   * @param prompt
+   */
   private async applyFormatCustomization(
     format: string,
     prompt: string
@@ -274,7 +307,39 @@ export class CustomizationEngine {
     };
   }
 
-  private substitutePlaceholders(template: string, optimization: any, options: any): string {
+  /**
+   *
+   * @param template
+   * @param optimization
+   * @param optimization.task
+   * @param optimization.context
+   * @param optimization.domain
+   * @param optimization.mode
+   * @param optimization.requirements
+   * @param optimization.constraints
+   * @param options
+   * @param options.context
+   * @param options.domain
+   * @param options.mode
+   * @param options.outputFormat
+   */
+  private substitutePlaceholders(
+    template: string,
+    optimization: {
+      task?: string;
+      context?: string;
+      domain?: string;
+      mode?: string;
+      requirements?: string;
+      constraints?: string;
+    },
+    options: {
+      context?: string;
+      domain?: string;
+      mode?: string;
+      outputFormat?: string;
+    }
+  ): string {
     let substituted = template;
 
     // Try to extract content from optimization if available
@@ -307,6 +372,10 @@ export class CustomizationEngine {
     return substituted;
   }
 
+  /**
+   *
+   * @param format
+   */
   private getOutputFormatDescription(format?: string): string {
     const formatDescriptions: Record<string, string> = {
       json: 'JSON format with proper structure and data types',

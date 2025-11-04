@@ -1,14 +1,26 @@
 import { PromptAnalysis, AnalysisConfig } from '../types.js';
 
+/**
+ *
+ */
 export class AnalysisEngine {
   private config: AnalysisConfig;
 
+  /**
+   *
+   * @param config
+   */
   constructor(config: AnalysisConfig) {
     this.config = config;
   }
 
   /**
    * Analyze a prompt using NLP techniques
+   * @param prompt
+   * @param options
+   * @param options.mode
+   * @param options.domain
+   * @param options.targetModel
    */
   async analyzePrompt(
     prompt: string,
@@ -81,6 +93,10 @@ export class AnalysisEngine {
     };
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private async extractIntent(prompt: string): Promise<string> {
     const patterns = {
       generate: /generate|create|write|produce/i,
@@ -100,6 +116,10 @@ export class AnalysisEngine {
     return 'general';
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private async identifyDomain(prompt: string): Promise<string> {
     const domainKeywords = {
       technical: ['code', 'api', 'database', 'algorithm', 'programming', 'software'],
@@ -125,6 +145,10 @@ export class AnalysisEngine {
     return detectedDomain;
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private async assessComplexity(prompt: string): Promise<'low' | 'medium' | 'high'> {
     const complexityIndicators = {
       high: [
@@ -159,13 +183,17 @@ export class AnalysisEngine {
     return 'low';
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private async calculateClarity(prompt: string): Promise<number> {
     let score = 10;
 
     // Deduct points for clarity issues
     if (prompt.length < 10) score -= 5; // Too short - more severe penalty
     if (prompt.length > 500) score -= 2; // Too long
-    if (!/[.!?]$/.test(prompt.trim())) score -= 2; // No punctuation - increased penalty
+    if (!/[!.?]$/.test(prompt.trim())) score -= 2; // No punctuation - increased penalty
     if (/\b(vague|unclear|uncertain|maybe|perhaps)\b/i.test(prompt)) score -= 3;
     if (prompt.split(' ').length < 5) score -= 4; // Too few words - more severe penalty
 
@@ -184,6 +212,10 @@ export class AnalysisEngine {
     return Math.max(1, Math.min(10, score));
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private async calculateSpecificity(prompt: string): Promise<number> {
     let score = 5; // Base score
 
@@ -198,6 +230,10 @@ export class AnalysisEngine {
     return Math.max(1, Math.min(10, score));
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private async calculateCompleteness(prompt: string): Promise<number> {
     let score = 5; // Base score
 
@@ -222,6 +258,10 @@ export class AnalysisEngine {
     return Math.max(1, Math.min(10, score));
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private async identifyAmbiguities(prompt: string): Promise<string[]> {
     const ambiguities: string[] = [];
 
@@ -248,6 +288,13 @@ export class AnalysisEngine {
     return ambiguities;
   }
 
+  /**
+   *
+   * @param prompt
+   * @param clarity
+   * @param specificity
+   * @param completeness
+   */
   private async generateSuggestions(
     prompt: string,
     clarity: number,
@@ -282,13 +329,17 @@ export class AnalysisEngine {
     return suggestions;
   }
 
-  private async extractEntities(prompt: string): Promise<Record<string, any>> {
-    const entities: Record<string, any> = {};
+  /**
+   *
+   * @param prompt
+   */
+  private async extractEntities(prompt: string): Promise<Record<string, unknown>> {
+    const entities: Record<string, unknown> = {};
 
     // Extract numbers
     const numbers = prompt.match(/\d+/g);
     if (numbers) {
-      entities.numbers = numbers.map(n => parseInt(n));
+      entities.numbers = numbers.map(n => Number.parseInt(n));
     }
 
     // Extract file formats
@@ -316,6 +367,10 @@ export class AnalysisEngine {
     return entities;
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private async analyzeUserIntent(prompt: string): Promise<string> {
     const intentPatterns = {
       'create-something': /create|generate|write|produce|make|build/i,
@@ -335,7 +390,22 @@ export class AnalysisEngine {
     return 'general-request';
   }
 
-  private async identifyContextualFactors(prompt: string, options: any): Promise<string[]> {
+  /**
+   *
+   * @param prompt
+   * @param options
+   * @param options.mode
+   * @param options.domain
+   * @param options.targetModel
+   */
+  private async identifyContextualFactors(
+    prompt: string,
+    options: {
+      mode?: string;
+      domain?: string;
+      targetModel?: string;
+    }
+  ): Promise<string[]> {
     const factors: string[] = [];
 
     // Mode context

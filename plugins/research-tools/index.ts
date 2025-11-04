@@ -84,17 +84,23 @@ export type SourceType = 'academic' | 'web' | 'news' | 'technical' | 'social' | 
 
 /**
  * Type guards for score validation
+ * @param score
  */
 export function isValidConfidenceScore(score: number): score is ConfidenceScore {
   return score >= 0 && score <= 1;
 }
 
+/**
+ *
+ * @param score
+ */
 export function isValidRelevanceScore(score: number): score is RelevanceScore {
   return score >= 0 && score <= 1;
 }
 
 /**
  * Safe score creation functions
+ * @param score
  */
 export function createConfidenceScore(score: number): ConfidenceScore {
   if (!isValidConfidenceScore(score)) {
@@ -103,6 +109,10 @@ export function createConfidenceScore(score: number): ConfidenceScore {
   return score as ConfidenceScore;
 }
 
+/**
+ *
+ * @param score
+ */
 export function createRelevanceScore(score: number): RelevanceScore {
   if (!isValidRelevanceScore(score)) {
     throw new Error(`Invalid relevance score: ${score}. Must be between 0 and 1.`);
@@ -112,6 +122,7 @@ export function createRelevanceScore(score: number): RelevanceScore {
 
 /**
  * Main research tools plugin initialization
+ * @param config
  */
 export function initialize(config: Partial<ResearchToolsConfig> = {}): ResearchToolsConfig {
   return { ...defaultConfig, ...config };
@@ -119,12 +130,13 @@ export function initialize(config: Partial<ResearchToolsConfig> = {}): ResearchT
 
 /**
  * Perform research on a given topic
+ * @param query
+ * @param config
  */
 export async function performResearch(
   query: string,
   config: ResearchToolsConfig
 ): Promise<ResearchResult> {
-  console.log(`Starting research for query: "${query}"`);
   const startTime = Date.now();
 
   // Simulate research data collection
@@ -155,6 +167,8 @@ export async function performResearch(
 
 /**
  * Collect research sources for a query
+ * @param query
+ * @param maxSources
  */
 async function collectResearchSources(
   query: string,
@@ -191,6 +205,8 @@ async function collectResearchSources(
 
 /**
  * Synthesize research findings into a summary
+ * @param sources
+ * @param query
  */
 async function synthesizeResearch(sources: ResearchSource[], query: string): Promise<string> {
   // Simple synthesis - in real implementation, would use NLP/AI
@@ -199,6 +215,8 @@ async function synthesizeResearch(sources: ResearchSource[], query: string): Pro
 
 /**
  * Extract key findings from research sources
+ * @param sources
+ * @param query
  */
 async function extractKeyFindings(sources: ResearchSource[], query: string): Promise<string[]> {
   // Mock key findings extraction
@@ -212,6 +230,8 @@ async function extractKeyFindings(sources: ResearchSource[], query: string): Pro
 
 /**
  * Calculate confidence score for research results
+ * @param sources
+ * @param _query
  */
 function calculateConfidence(sources: readonly ResearchSource[], _query: string): ConfidenceScore {
   if (sources.length === 0) return createConfidenceScore(0);
@@ -227,6 +247,7 @@ function calculateConfidence(sources: readonly ResearchSource[], _query: string)
 
 /**
  * Calculate quality score for research sources
+ * @param sources
  */
 function calculateQualityScore(sources: readonly ResearchSource[]): number {
   if (sources.length === 0) return 0;

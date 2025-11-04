@@ -1,9 +1,61 @@
-import { BasePlugin, PluginContext, PluginConfig } from './types';
 import { FileToolCommand } from './commands/file-tool';
 import { NetworkToolCommand } from './commands/network-tool';
 import { SystemToolCommand } from './commands/system-tool';
-import { DataProcessingSkill } from './skills/data-processing';
 import { FileChangeHook } from './hooks/file-change';
+import { DataProcessingSkill } from './skills/data-processing';
+import { BasePlugin, PluginContext, PluginConfig } from './types';
+
+// Define missing types
+interface Command {
+  name: string;
+  description: string;
+  execute: (input: unknown) => Promise<unknown>;
+}
+
+interface Skill {
+  name: string;
+  description: string;
+  execute: (input: unknown) => Promise<unknown>;
+}
+
+interface Hook {
+  name: string;
+  description: string;
+  execute: (input: unknown) => Promise<unknown>;
+}
+
+interface ConfigSchema {
+  [key: string]: {
+    type: string;
+    description: string;
+    default: unknown;
+    min?: number;
+    max?: number;
+    itemType?: string;
+  };
+}
+
+interface Logger {
+  info: (message: string, ...args: unknown[]) => void;
+  warn: (message: string, ...args: unknown[]) => void;
+  debug: (message: string, ...args: unknown[]) => void;
+  error: (message: string, ...args: unknown[]) => void;
+}
+
+// Constants to avoid magic numbers
+const DEFAULT_MAX_FILE_SIZE = 10485760; // 10MB
+const MIN_FILE_SIZE = 1024; // 1KB
+const MAX_FILE_SIZE = 104857600; // 100MB
+const DEFAULT_CACHE_TIMEOUT = 300; // 5 minutes
+const MIN_CACHE_TIMEOUT = 60; // 1 minute
+const MAX_CACHE_TIMEOUT = 3600; // 1 hour
+const DEFAULT_OPERATION_TIMEOUT = 30000; // 30 seconds
+const MIN_OPERATION_TIMEOUT = 1000; // 1 second
+const MAX_OPERATION_TIMEOUT = 300000; // 5 minutes
+const DEFAULT_RETRY_ATTEMPTS = 3;
+const MAX_RETRY_ATTEMPTS = 10;
+const MAX_PATH_LENGTH = 4096;
+const BASE_RETRY_DELAY = 1000; // 1 second
 
 export interface ToolPluginConfig extends PluginConfig {
   maxFileSize: number;
@@ -12,10 +64,22 @@ export interface ToolPluginConfig extends PluginConfig {
   cacheTimeout: number;
 }
 
-export default class ToolPlugin extends BasePlugin {
+/**
+ * A comprehensive tool plugin for file, network, and system operations.
+ *
+ * This plugin provides commands for file manipulation, network requests,
+ * system operations, and data processing capabilities with built-in
+ * caching, retry logic, and security validation.
+ */
+export class ToolPlugin extends BasePlugin {
   private config: ToolPluginConfig;
-  private logger: any;
+  private logger: Logger;
 
+  /**
+   * Creates a new instance of the ToolPlugin.
+   *
+   * Initializes the plugin with name, version, and description.
+   */
   constructor() {
     super(
       'tool-plugin',
@@ -24,6 +88,14 @@ export default class ToolPlugin extends BasePlugin {
     );
   }
 
+  /**
+   * Initializes the plugin with the provided context.
+   *
+   * Sets up configuration, logger, validates settings, and initializes
+   * cache if enabled in the configuration.
+   *
+   * @param context - The plugin context containing configuration and logger
+   */
   async initialize(context: PluginContext): Promise<void> {
     this.config = context.config as ToolPluginConfig;
     this.logger = context.logger;
@@ -44,6 +116,11 @@ export default class ToolPlugin extends BasePlugin {
     this.logger.info('Tool Plugin initialized successfully');
   }
 
+  /**
+   * Cleans up plugin resources and gracefully shuts down operations.
+   *
+   * Performs cleanup of cache resources and any other allocated resources.
+   */
   async cleanup(): Promise<void> {
     this.logger.info('Tool Plugin cleaning up...');
 
@@ -53,6 +130,11 @@ export default class ToolPlugin extends BasePlugin {
     this.logger.info('Tool Plugin cleanup completed');
   }
 
+  /**
+   * Returns the list of commands provided by this plugin.
+   *
+   * @returns An array of command instances for file, network, and system operations
+   */
   getCommands(): Command[] {
     return [
       new FileToolCommand(this.config, this.logger),
@@ -61,29 +143,85 @@ export default class ToolPlugin extends BasePlugin {
     ];
   }
 
+  /**
+   * Returns the list of skills provided by this plugin.
+   *
+   * @returns An array of skill instances for data processing operations
+   */
   getSkills(): Skill[] {
     return [new DataProcessingSkill(this.config, this.logger)];
   }
 
+  /**
+   * Returns the list of hooks provided by this plugin.
+   *
+   * @returns An array of hook instances for file change monitoring
+   */
   getHooks(): Hook[] {
     return [new FileChangeHook(this.config, this.logger)];
   }
 
+  /**
+   * Returns the configuration schema for this plugin.
+   *
+   * @returns The configuration schema defining all available settings
+   */
   getConfigSchema(): ConfigSchema {
+    return {
+      ...this.getFileOperationSchema(),
+      ...this.getNetworkOperationSchema(),
+      ...this.getCacheOperationSchema(),
+      ...this.getRetryOperationSchema(),
+    };
+  }
+
+  /**
+   * Returns file operation configuration schema.
+   *
+   * @returns File operation schema settings
+   */
+  private getFileOperationSchema(): ConfigSchema {
     return {
       maxFileSize: {
         type: 'number',
         description: 'Maximum file size for operations (in bytes)',
-        default: 10485760, // 10MB
-        min: 1024, // 1KB
-        max: 104857600, // 100MB
+        default: DEFAULT_MAX_FILE_SIZE,
+        min: MIN_FILE_SIZE,
+        max: MAX_FILE_SIZE,
       },
+    };
+  }
+
+  /**
+   * Returns network operation configuration schema.
+   *
+   * @returns Network operation schema settings
+   */
+  private getNetworkOperationSchema(): ConfigSchema {
+    return {
       allowedDomains: {
         type: 'array',
         description: 'List of allowed domains for network operations',
         default: ['api.github.com', 'github.com'],
         itemType: 'string',
       },
+      timeout: {
+        type: 'number',
+        description: 'Operation timeout in milliseconds',
+        default: DEFAULT_OPERATION_TIMEOUT,
+        min: MIN_OPERATION_TIMEOUT,
+        max: MAX_OPERATION_TIMEOUT,
+      },
+    };
+  }
+
+  /**
+   * Returns cache operation configuration schema.
+   *
+   * @returns Cache operation schema settings
+   */
+  private getCacheOperationSchema(): ConfigSchema {
+    return {
       cacheEnabled: {
         type: 'boolean',
         description: 'Enable caching for operations',
@@ -92,27 +230,36 @@ export default class ToolPlugin extends BasePlugin {
       cacheTimeout: {
         type: 'number',
         description: 'Cache timeout in seconds',
-        default: 300, // 5 minutes
-        min: 60, // 1 minute
-        max: 3600, // 1 hour
-      },
-      timeout: {
-        type: 'number',
-        description: 'Operation timeout in milliseconds',
-        default: 30000, // 30 seconds
-        min: 1000, // 1 second
-        max: 300000, // 5 minutes
-      },
-      retryAttempts: {
-        type: 'number',
-        description: 'Number of retry attempts for failed operations',
-        default: 3,
-        min: 0,
-        max: 10,
+        default: DEFAULT_CACHE_TIMEOUT,
+        min: MIN_CACHE_TIMEOUT,
+        max: MAX_CACHE_TIMEOUT,
       },
     };
   }
 
+  /**
+   * Returns retry operation configuration schema.
+   *
+   * @returns Retry operation schema settings
+   */
+  private getRetryOperationSchema(): ConfigSchema {
+    return {
+      retryAttempts: {
+        type: 'number',
+        description: 'Number of retry attempts for failed operations',
+        default: DEFAULT_RETRY_ATTEMPTS,
+        min: 0,
+        max: MAX_RETRY_ATTEMPTS,
+      },
+    };
+  }
+
+  /**
+   * Validates the plugin configuration.
+   *
+   * Ensures all required configuration values are present and valid.
+   * @throws Error if configuration is invalid
+   */
   private validateConfig(): void {
     if (!this.config.maxFileSize || this.config.maxFileSize <= 0) {
       throw new Error('maxFileSize must be a positive number');
@@ -127,6 +274,13 @@ export default class ToolPlugin extends BasePlugin {
     }
   }
 
+  /**
+   * Initializes the plugin cache.
+   *
+   * Sets up cache storage with initial plugin information.
+   *
+   * @param context - The plugin context containing cache API
+   */
   private async initializeCache(context: PluginContext): Promise<void> {
     try {
       // Initialize cache storage
@@ -145,6 +299,11 @@ export default class ToolPlugin extends BasePlugin {
     }
   }
 
+  /**
+   * Cleans up plugin cache resources.
+   *
+   * Performs cleanup of any allocated cache storage and resources.
+   */
   private async cleanupCache(): Promise<void> {
     try {
       // Cleanup cache resources
@@ -156,8 +315,16 @@ export default class ToolPlugin extends BasePlugin {
   }
 
   // Utility methods for tool operations
+  /**
+   * Executes an operation with retry logic and exponential backoff.
+   *
+   * @param operation - The async operation to execute
+   * @param operationName - Name of the operation for logging purposes
+   * @returns The result of the operation
+   * @throws Error if operation fails after all retry attempts
+   */
   protected async withRetry<T>(operation: () => Promise<T>, operationName: string): Promise<T> {
-    const maxAttempts = this.config.retryAttempts || 3;
+    const maxAttempts = this.config.retryAttempts || DEFAULT_RETRY_ATTEMPTS;
     let lastError: Error;
 
     for (let attempt = 1; attempt <= maxAttempts; attempt++) {
@@ -174,7 +341,7 @@ export default class ToolPlugin extends BasePlugin {
 
         if (attempt < maxAttempts) {
           // Exponential backoff
-          const delay = Math.pow(2, attempt - 1) * 1000;
+          const delay = Math.pow(2, attempt - 1) * BASE_RETRY_DELAY;
           await new Promise(resolve => setTimeout(resolve, delay));
         }
       }
@@ -183,6 +350,12 @@ export default class ToolPlugin extends BasePlugin {
     throw new Error(`${operationName} failed after ${maxAttempts} attempts: ${lastError.message}`);
   }
 
+  /**
+   * Validates a file path for security and length constraints.
+   *
+   * @param filePath - The file path to validate
+   * @throws Error if the path is invalid or unsafe
+   */
   protected validateFilePath(filePath: string): void {
     // Security validation for file paths
     if (filePath.includes('..')) {
@@ -193,11 +366,17 @@ export default class ToolPlugin extends BasePlugin {
       throw new Error('Access to system directories is not allowed');
     }
 
-    if (filePath.length > 4096) {
+    if (filePath.length > MAX_PATH_LENGTH) {
       throw new Error('File path too long');
     }
   }
 
+  /**
+   * Validates a URL for protocol and domain constraints.
+   *
+   * @param url - The URL to validate
+   * @throws Error if the URL is invalid or not allowed
+   */
   protected validateUrl(url: string): void {
     try {
       const parsedUrl = new URL(url);

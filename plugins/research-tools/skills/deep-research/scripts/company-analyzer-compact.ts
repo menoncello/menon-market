@@ -1,6 +1,9 @@
 #!/usr/bin/env bun
 
-/* Company Analyzer - Comprehensive company research and analysis */
+/**
+ * Company Analyzer - Comprehensive company research and analysis
+ * Automated company intelligence gathering for business research
+ */
 
 import { Database } from 'bun:sqlite';
 import { Command } from 'commander';
@@ -39,6 +42,7 @@ interface CompanyAnalysisOptions {
   outputFile?: string;
 }
 
+
 interface CompanyData {
   基本信息: {
     company_name: string;
@@ -57,7 +61,9 @@ interface CompanyData {
   sources: Array<{ url: string; title: string; access_date: string; reliability: string }>;
 };
 
-/** Company Analyzer class */
+/**
+ * Company Analyzer class for comprehensive company research and analysis
+ */
 class CompanyAnalyzer {
   private webResearcher: WebResearcher;
   private db: Database;
@@ -69,7 +75,7 @@ class CompanyAnalyzer {
     this.initializeDatabase();
   }
 
-  /** Initialize database */
+  /** Initializes the SQLite database */
   private initializeDatabase(): void {
     this.db.run(`
       CREATE TABLE IF NOT EXISTS company_analyses (
@@ -109,7 +115,7 @@ class CompanyAnalyzer {
   }
 
   /**
-   * Initialize company data
+   * Initializes a new CompanyData structure with default values
    * @param {string} companyName - The name of the company to analyze
    * @returns {CompanyData} A new CompanyData structure with default values
    */
@@ -134,7 +140,7 @@ class CompanyAnalyzer {
   }
 
   /**
-   * Gather focus-specific information
+   * Gathers information specific to the analysis focus area
    * @param {string} focus - The analysis focus area (foundation, financial, market-position, comprehensive)
    * @param {CompanyData} companyData - The company data object to populate with gathered information
    * @returns {Promise<void>} Promise that resolves when focus-specific information gathering is complete
@@ -160,7 +166,7 @@ class CompanyAnalyzer {
   }
 
   /**
-   * Gather foundation data
+   * Gathers all foundation data for the company
    * @param {CompanyData} companyData - The company data object to populate with foundation information
    * @returns {Promise<void>} Promise that resolves when foundation data gathering is complete
    */
@@ -171,7 +177,7 @@ class CompanyAnalyzer {
   }
 
   /**
-   * Gather financial data
+   * Gathers financial data for the company
    * @param {CompanyData} companyData - The company data object to populate with financial information
    * @returns {Promise<void>} Promise that resolves when financial data gathering is complete
    */
@@ -272,6 +278,7 @@ class CompanyAnalyzer {
 
   /**
    * Closes the analyzer and cleans up resources
+   * @returns {void}
    */
   close(): void {
     this.webResearcher.close();
