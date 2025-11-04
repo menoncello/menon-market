@@ -47,13 +47,10 @@ const qualityConfig = initialize({
   maxSources: 50,
   outputFormat: 'json',
   timeout: 60000,
-  cacheEnabled: true
+  cacheEnabled: true,
 });
 
-const result = await performResearch(
-  'machine learning in healthcare',
-  qualityConfig
-);
+const result = await performResearch('machine learning in healthcare', qualityConfig);
 
 // Output as JSON
 console.log(JSON.stringify(result, null, 2));
@@ -69,7 +66,7 @@ import { performResearch, initialize } from 'research-tools';
 const academicConfig = initialize({
   maxSources: 30,
   outputFormat: 'markdown',
-  enableDeepResearch: true
+  enableDeepResearch: true,
 });
 
 async function conductLiteratureReview(topic: string) {
@@ -78,9 +75,7 @@ async function conductLiteratureReview(topic: string) {
   const result = await performResearch(topic, academicConfig);
 
   // Filter for academic sources
-  const academicSources = result.sources.filter(
-    source => source.type === 'academic'
-  );
+  const academicSources = result.sources.filter(source => source.type === 'academic');
 
   console.log('\n=== Academic Sources ===');
   academicSources.forEach(source => {
@@ -113,11 +108,12 @@ function assessResearchQuality(result) {
   const quality = {
     overall: result.confidence,
     sourceCount: result.sources.length,
-    avgRelevance: result.sources.reduce((sum, s) => sum + s.relevanceScore, 0) / result.sources.length,
+    avgRelevance:
+      result.sources.reduce((sum, s) => sum + s.relevanceScore, 0) / result.sources.length,
     sourceTypes: [...new Set(result.sources.map(s => s.type))],
-    recentSources: result.sources.filter(s =>
-      s.publishedAt && (Date.now() - s.publishedAt.getTime()) < 365 * 24 * 60 * 60 * 1000
-    ).length
+    recentSources: result.sources.filter(
+      s => s.publishedAt && Date.now() - s.publishedAt.getTime() < 365 * 24 * 60 * 60 * 1000
+    ).length,
   };
 
   console.log('=== Research Quality Assessment ===');
@@ -148,7 +144,7 @@ async function analyzeMarketSize(industry: string) {
     maxSources: 20,
     requireCrossValidation: true,
     qualityThreshold: 0.7,
-    includeSentiment: true
+    includeSentiment: true,
   };
 
   const report = await performDeepResearch(
@@ -193,7 +189,7 @@ async function analyzeTrends(topic: string, timeframe: string = '2024-2025') {
     maxSources: 25,
     requireCrossValidation: true,
     qualityThreshold: 0.75,
-    includeSentiment: true
+    includeSentiment: true,
   };
 
   const report = await performDeepResearch(
@@ -207,7 +203,7 @@ async function analyzeTrends(topic: string, timeframe: string = '2024-2025') {
     critical: report.findings.filter(f => f.impact === 'critical'),
     high: report.findings.filter(f => f.impact === 'high'),
     medium: report.findings.filter(f => f.impact === 'medium'),
-    low: report.findings.filter(f => f.impact === 'low')
+    low: report.findings.filter(f => f.impact === 'low'),
   };
 
   console.log(`=== Trend Analysis: ${topic} ===`);
@@ -240,7 +236,7 @@ async function analyzeCompetitors(company: string, industry: string) {
     maxSources: 15,
     requireCrossValidation: true,
     qualityThreshold: 0.8,
-    includeSentiment: true
+    includeSentiment: true,
   };
 
   const report = await performDeepResearch(
@@ -252,9 +248,7 @@ async function analyzeCompetitors(company: string, industry: string) {
   console.log(`=== Competitive Analysis: ${company} ===`);
 
   // Extract competitive insights
-  const competitiveFindings = report.findings.filter(
-    f => f.category === 'competitive'
-  );
+  const competitiveFindings = report.findings.filter(f => f.category === 'competitive');
 
   console.log('\n=== Competitive Positioning ===');
   competitiveFindings.forEach(finding => {
@@ -262,9 +256,8 @@ async function analyzeCompetitors(company: string, industry: string) {
   });
 
   console.log('\n=== Strategic Recommendations ===');
-  const strategicRecs = report.recommendations.filter(rec =>
-    rec.toLowerCase().includes('strategic') ||
-    rec.toLowerCase().includes('competitive')
+  const strategicRecs = report.recommendations.filter(
+    rec => rec.toLowerCase().includes('strategic') || rec.toLowerCase().includes('competitive')
   );
 
   strategicRecs.forEach(rec => {
@@ -288,7 +281,7 @@ async function analyzeMarketPosition(company: string) {
     maxSources: 20,
     requireCrossValidation: true,
     qualityThreshold: 0.75,
-    includeSentiment: true
+    includeSentiment: true,
   };
 
   const report = await performDeepResearch(
@@ -315,9 +308,8 @@ async function analyzeMarketPosition(company: string) {
   });
 
   console.log('\n=== Competitive Advantages ===');
-  const advantages = report.recommendations.filter(rec =>
-    rec.toLowerCase().includes('advantage') ||
-    rec.toLowerCase().includes('strength')
+  const advantages = report.recommendations.filter(
+    rec => rec.toLowerCase().includes('advantage') || rec.toLowerCase().includes('strength')
   );
 
   advantages.forEach(adv => {
@@ -343,7 +335,7 @@ async function researchCompanyForJobApplication(company: string, role: string) {
     maxSources: 15,
     requireCrossValidation: true,
     qualityThreshold: 0.7,
-    includeSentiment: true
+    includeSentiment: true,
   };
 
   const report = await performDeepResearch(
@@ -356,10 +348,11 @@ async function researchCompanyForJobApplication(company: string, role: string) {
   console.log(`Role: ${role}`);
 
   // Extract relevant findings for job application
-  const cultureFindings = report.findings.filter(f =>
-    f.insight.toLowerCase().includes('culture') ||
-    f.insight.toLowerCase().includes('values') ||
-    f.insight.toLowerCase().includes('work environment')
+  const cultureFindings = report.findings.filter(
+    f =>
+      f.insight.toLowerCase().includes('culture') ||
+      f.insight.toLowerCase().includes('values') ||
+      f.insight.toLowerCase().includes('work environment')
   );
 
   const financialFindings = report.findings.filter(f => f.category === 'financial');
@@ -375,10 +368,11 @@ async function researchCompanyForJobApplication(company: string, role: string) {
   });
 
   console.log('\n=== Interview Preparation Tips ===');
-  const interviewTips = report.recommendations.filter(rec =>
-    rec.toLowerCase().includes('interview') ||
-    rec.toLowerCase().includes('prepare') ||
-    rec.toLowerCase().includes('discuss')
+  const interviewTips = report.recommendations.filter(
+    rec =>
+      rec.toLowerCase().includes('interview') ||
+      rec.toLowerCase().includes('prepare') ||
+      rec.toLowerCase().includes('discuss')
   );
 
   interviewTips.forEach(tip => {
@@ -389,10 +383,7 @@ async function researchCompanyForJobApplication(company: string, role: string) {
 }
 
 // Example usage
-const companyResearch = await researchCompanyForJobApplication(
-  'Stripe',
-  'Software Engineer'
-);
+const companyResearch = await researchCompanyForJobApplication('Stripe', 'Software Engineer');
 ```
 
 ### Partnership Evaluation
@@ -405,7 +396,7 @@ async function evaluatePartnership(company1: string, company2: string) {
     maxSources: 20,
     requireCrossValidation: true,
     qualityThreshold: 0.8,
-    includeSentiment: true
+    includeSentiment: true,
   };
 
   const report = await performDeepResearch(
@@ -417,10 +408,11 @@ async function evaluatePartnership(company1: string, company2: string) {
   console.log(`=== Partnership Evaluation: ${company1} + ${company2} ===`);
 
   // Analyze strategic fit
-  const strategicFindings = report.findings.filter(f =>
-    f.category === 'strategic' ||
-    f.insight.toLowerCase().includes('synergy') ||
-    f.insight.toLowerCase().includes('partnership')
+  const strategicFindings = report.findings.filter(
+    f =>
+      f.category === 'strategic' ||
+      f.insight.toLowerCase().includes('synergy') ||
+      f.insight.toLowerCase().includes('partnership')
   );
 
   console.log('\n=== Strategic Alignment ===');
@@ -430,10 +422,11 @@ async function evaluatePartnership(company1: string, company2: string) {
   });
 
   console.log('\n=== Partnership Recommendations ===');
-  const partnershipRecs = report.recommendations.filter(rec =>
-    rec.toLowerCase().includes('partnership') ||
-    rec.toLowerCase().includes('collaboration') ||
-    rec.toLowerCase().includes('joint')
+  const partnershipRecs = report.recommendations.filter(
+    rec =>
+      rec.toLowerCase().includes('partnership') ||
+      rec.toLowerCase().includes('collaboration') ||
+      rec.toLowerCase().includes('joint')
   );
 
   partnershipRecs.forEach(rec => {
@@ -441,10 +434,11 @@ async function evaluatePartnership(company1: string, company2: string) {
   });
 
   console.log('\n=== Risk Factors ===');
-  const riskFactors = report.limitations.filter(limit =>
-    limit.toLowerCase().includes('risk') ||
-    limit.toLowerCase().includes('challenge') ||
-    limit.toLowerCase().includes('concern')
+  const riskFactors = report.limitations.filter(
+    limit =>
+      limit.toLowerCase().includes('risk') ||
+      limit.toLowerCase().includes('challenge') ||
+      limit.toLowerCase().includes('concern')
   );
 
   riskFactors.forEach(risk => {
@@ -470,12 +464,12 @@ async function evaluateTechnology(technology: string, useCase?: string) {
     maxSources: 25,
     requireCrossValidation: true,
     qualityThreshold: 0.8,
-    includeSentiment: true
+    includeSentiment: true,
   };
 
-  const query = useCase ?
-    `${technology} evaluation ${useCase}` :
-    `${technology} technical evaluation`;
+  const query = useCase
+    ? `${technology} evaluation ${useCase}`
+    : `${technology} technical evaluation`;
 
   const report = await performDeepResearch(query, 'technical-analysis', config);
 
@@ -494,10 +488,11 @@ async function evaluateTechnology(technology: string, useCase?: string) {
   });
 
   console.log('\n=== Implementation Considerations ===');
-  const implementationRecs = report.recommendations.filter(rec =>
-    rec.toLowerCase().includes('implement') ||
-    rec.toLowerCase().includes('deploy') ||
-    rec.toLowerCase().includes('integrate')
+  const implementationRecs = report.recommendations.filter(
+    rec =>
+      rec.toLowerCase().includes('implement') ||
+      rec.toLowerCase().includes('deploy') ||
+      rec.toLowerCase().includes('integrate')
   );
 
   implementationRecs.forEach(rec => {
@@ -505,10 +500,11 @@ async function evaluateTechnology(technology: string, useCase?: string) {
   });
 
   console.log('\n=== Performance & Scalability ===');
-  const performanceFindings = report.findings.filter(f =>
-    f.insight.toLowerCase().includes('performance') ||
-    f.insight.toLowerCase().includes('scalability') ||
-    f.insight.toLowerCase().includes('efficiency')
+  const performanceFindings = report.findings.filter(
+    f =>
+      f.insight.toLowerCase().includes('performance') ||
+      f.insight.toLowerCase().includes('scalability') ||
+      f.insight.toLowerCase().includes('efficiency')
   );
 
   performanceFindings.forEach(finding => {
@@ -532,7 +528,7 @@ async function compareTools(tools: string[], category: string) {
     maxSources: 20,
     requireCrossValidation: true,
     qualityThreshold: 0.75,
-    includeSentiment: true
+    includeSentiment: true,
   };
 
   const toolsQuery = tools.join(' vs ');
@@ -546,10 +542,11 @@ async function compareTools(tools: string[], category: string) {
   console.log(`Category: ${category}`);
 
   // Extract comparison insights
-  const comparisonFindings = report.findings.filter(f =>
-    f.insight.toLowerCase().includes('vs') ||
-    f.insight.toLowerCase().includes('compared') ||
-    f.insight.toLowerCase().includes('advantage')
+  const comparisonFindings = report.findings.filter(
+    f =>
+      f.insight.toLowerCase().includes('vs') ||
+      f.insight.toLowerCase().includes('compared') ||
+      f.insight.toLowerCase().includes('advantage')
   );
 
   console.log('\n=== Key Differences ===');
@@ -559,10 +556,11 @@ async function compareTools(tools: string[], category: string) {
   });
 
   console.log('\n=== Use Case Recommendations ===');
-  const useCaseRecs = report.recommendations.filter(rec =>
-    rec.toLowerCase().includes('use case') ||
-    rec.toLowerCase().includes('best for') ||
-    rec.toLowerCase().includes('choose')
+  const useCaseRecs = report.recommendations.filter(
+    rec =>
+      rec.toLowerCase().includes('use case') ||
+      rec.toLowerCase().includes('best for') ||
+      rec.toLowerCase().includes('choose')
   );
 
   useCaseRecs.forEach(rec => {
@@ -601,18 +599,17 @@ async function batchResearch(queries: string[], config) {
         query,
         success: true,
         result,
-        error: null
+        error: null,
       });
 
       console.log(`✅ Completed - Confidence: ${(result.confidence * 100).toFixed(1)}%`);
-
     } catch (error) {
       console.log(`❌ Failed - ${error.message}`);
       results.push({
         query,
         success: false,
         result: null,
-        error: error.message
+        error: error.message,
       });
     }
 
@@ -645,13 +642,13 @@ const queries = [
   'AI in healthcare applications',
   'Blockchain supply chain use cases',
   'Quantum computing commercial viability',
-  '5G network deployment challenges'
+  '5G network deployment challenges',
 ];
 
 const config = initialize({
   maxSources: 15,
   outputFormat: 'json',
-  timeout: 30000
+  timeout: 30000,
 });
 
 const batchResults = await batchResearch(queries, config);
@@ -682,7 +679,7 @@ class ResearchPipeline {
       maxSources: 20,
       requireCrossValidation: true,
       qualityThreshold: 0.8,
-      includeSentiment: true
+      includeSentiment: true,
     };
 
     const report = await performDeepResearch(query, workflow, config);
@@ -695,7 +692,7 @@ class ResearchPipeline {
 
     const analysis = {
       company: await this.deepResearch(company, 'company-research'),
-      competitors: []
+      competitors: [],
     };
 
     for (const competitor of competitors) {
@@ -705,7 +702,7 @@ class ResearchPipeline {
       );
       analysis.competitors.push({
         name: competitor,
-        report: competitorReport
+        report: competitorReport,
       });
     }
 
@@ -720,7 +717,7 @@ class ResearchPipeline {
       deepResearch: this.results.filter(r => r.type === 'deep').length,
       competitiveAnalysis: this.results.filter(r => r.type === 'competitive').length,
       averageConfidence: this.calculateAverageConfidence(),
-      keyInsights: this.extractKeyInsights()
+      keyInsights: this.extractKeyInsights(),
     };
 
     console.log('\n=== Research Pipeline Summary ===');
@@ -763,9 +760,10 @@ class ResearchPipeline {
         insights.push(...research.result.keyFindings);
       }
       if (research.report && research.report.findings) {
-        insights.push(...research.report.findings
-          .filter(f => f.impact === 'high' || f.impact === 'critical')
-          .map(f => f.insight)
+        insights.push(
+          ...research.report.findings
+            .filter(f => f.impact === 'high' || f.impact === 'critical')
+            .map(f => f.insight)
         );
       }
     });
@@ -779,7 +777,7 @@ class ResearchPipeline {
 const config = initialize({
   maxSources: 20,
   outputFormat: 'markdown',
-  enableDeepResearch: true
+  enableDeepResearch: true,
 });
 
 const pipeline = new ResearchPipeline(config);
@@ -809,7 +807,7 @@ class ResearchMonitor {
     this.completedResearch = [];
     this.config = initialize({
       logLevel: 'debug',
-      enableMetrics: true
+      enableMetrics: true,
     });
   }
 
@@ -823,7 +821,7 @@ class ResearchMonitor {
       query,
       startTime,
       status: 'running',
-      progress: 0
+      progress: 0,
     });
 
     try {
@@ -849,7 +847,7 @@ class ResearchMonitor {
         status: 'completed',
         progress: 100,
         endTime,
-        duration
+        duration,
       });
 
       console.log(`✅ Research completed [${researchId}] in ${duration}ms`);
@@ -860,13 +858,12 @@ class ResearchMonitor {
       const completedResearch = this.activeResearch.get(researchId);
       this.completedResearch.push({
         ...completedResearch,
-        result
+        result,
       });
 
       this.activeResearch.delete(researchId);
 
       return result;
-
     } catch (error) {
       console.log(`❌ Research failed [${researchId}]: ${error.message}`);
 
@@ -874,7 +871,7 @@ class ResearchMonitor {
         ...this.activeResearch.get(researchId),
         status: 'failed',
         error: error.message,
-        endTime: Date.now()
+        endTime: Date.now(),
       });
 
       throw error;
@@ -925,7 +922,7 @@ const monitor = new ResearchMonitor();
 const researchPromises = [
   monitor.monitoredResearch('artificial intelligence ethics'),
   monitor.monitoredResearch('quantum computing breakthroughs'),
-  monitor.monitoredResearch('renewable energy storage solutions')
+  monitor.monitoredResearch('renewable energy storage solutions'),
 ];
 
 // Monitor progress

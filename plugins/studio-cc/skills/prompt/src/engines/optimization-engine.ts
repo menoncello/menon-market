@@ -1,14 +1,58 @@
-import { PromptAnalysis, PromptOptimization, PromptTechnique, OptimizationConfig } from '../types.js';
+import {
+  PERFORMANCE_CONSTANTS,
+  TECHNICAL_DOMAINS,
+  REASONING_TEMPLATES,
+} from '../constants.js';
+import {
+  PromptAnalysis,
+  PromptOptimization,
+  PromptTechnique,
+  OptimizationConfig,
+} from '../types.js';
+import {
+  addQualityBasedEnhancements,
+  addTechniqueBasedEnhancements,
+  addBasicOptimizations,
+  addTechniqueOptimizations,
+  addQualityReasoning,
+} from '../utils/quality-utils.js';
+import {
+  addComplexityBasedTechniques,
+  addDomainBasedTechniques,
+  addIntentBasedTechniques,
+  addQualityBasedTechniques,
+} from '../utils/technique-utils.js';
+import {
+  generateTemplateStructure,
+  extractPlaceholders,
+  generateExamples,
+  selectFramework,
+  createClarityVariation,
+  createSpecificityVariation,
+  createTechniqueVariation,
+} from '../utils/template-utils.js';
 
+/**
+ * Optimization engine for improving prompts based on analysis
+ */
 export class OptimizationEngine {
   private config: OptimizationConfig;
 
+  /**
+   * Create a new optimization engine
+   * @param config - Configuration for optimization
+   */
   constructor(config: OptimizationConfig) {
     this.config = config;
   }
 
   /**
    * Optimize a prompt based on analysis
+   * @param analysis - The prompt analysis results
+   * @param options - Optimization options
+   * @param options.mode - Optimization mode
+   * @param options.targetModel - Target AI model
+   * @returns Optimized prompt configuration
    */
   async optimizePrompt(
     analysis: PromptAnalysis,
@@ -43,29 +87,25 @@ export class OptimizationEngine {
       abTestVariations,
       performancePrediction,
       optimizations,
-      reasoning
+      reasoning,
     };
   }
 
-  private selectTechniques(analysis: PromptAnalysis, options: any): PromptTechnique[] {
+  /**
+   * Select optimization techniques based on analysis
+   * @param analysis - The prompt analysis results
+   * @param _options - Optimization options (unused)
+   * @param _options.mode
+   * @param _options.targetModel
+   * @returns Array of selected techniques
+   */
+  private selectTechniques(analysis: PromptAnalysis, _options: { mode?: string; targetModel?: string }): PromptTechnique[] {
     const techniques: PromptTechnique[] = [];
 
-    // Select techniques based on analysis
-    if (analysis.complexity === 'high') {
-      techniques.push('tot', 'graph-of-thought');
-    }
-
-    if (analysis.domain === 'technical' || analysis.domain === 'research') {
-      techniques.push('cot');
-    }
-
-    if (analysis.intent.includes('solve') || analysis.intent.includes('create')) {
-      techniques.push('react');
-    }
-
-    if (analysis.clarity < 7 || analysis.specificity < 7) {
-      techniques.push('self-consistency');
-    }
+    addComplexityBasedTechniques(analysis, techniques);
+    addDomainBasedTechniques(analysis, techniques);
+    addIntentBasedTechniques(analysis, techniques);
+    addQualityBasedTechniques(analysis, techniques);
 
     // Add configured techniques
     techniques.push(...this.config.techniques);
@@ -74,144 +114,52 @@ export class OptimizationEngine {
     return [...new Set(techniques)];
   }
 
+  /**
+   * Generate enhancements based on analysis and techniques
+   * @param analysis - The prompt analysis results
+   * @param techniques - Selected optimization techniques
+   * @returns Array of enhancement suggestions
+   */
   private async generateEnhancements(
     analysis: PromptAnalysis,
     techniques: PromptTechnique[]
   ): Promise<string[]> {
     const enhancements: string[] = [];
 
-    // Generate enhancements based on analysis
-    if (analysis.clarity < 7) {
-      enhancements.push('Add specific details and clear action verbs');
-      enhancements.push('Define the desired output format explicitly');
-    }
-
-    if (analysis.specificity < 7) {
-      enhancements.push('Include concrete examples and constraints');
-      enhancements.push('Specify success criteria and requirements');
-    }
-
-    if (analysis.completeness < 7) {
-      enhancements.push('Add context and background information');
-      enhancements.push('Include relevant domain-specific terminology');
-    }
-
-    // Generate technique-specific enhancements
-    for (const technique of techniques) {
-      switch (technique) {
-        case 'cot':
-          enhancements.push('Add step-by-step reasoning instructions');
-          break;
-        case 'tot':
-          enhancements.push('Structure as branching thought process');
-          break;
-        case 'self-consistency':
-          enhancements.push('Request multiple approaches and consensus');
-          break;
-        case 'react':
-          enhancements.push('Add thought-action-observation cycle');
-          break;
-        case 'graph-of-thought':
-          enhancements.push('Structure as interconnected concept graph');
-          break;
-      }
-    }
+    addQualityBasedEnhancements(analysis, enhancements);
+    addTechniqueBasedEnhancements(techniques, enhancements);
 
     return enhancements;
   }
 
-  private async createTemplate(
-    analysis: PromptAnalysis,
-    enhancements: string[]
-  ): Promise<any> {
-    const template = {
-      structure: this.generateTemplateStructure(analysis),
-      placeholders: this.extractPlaceholders(analysis),
-      examples: this.generateExamples(analysis),
-      framework: this.selectFramework(analysis),
-      reusable: true
+  /**
+   * Create a template based on analysis and enhancements
+   * @param analysis - The prompt analysis results
+   * @param _enhancements - Enhancement suggestions (unused)
+   * @returns Template object
+   */
+  private async createTemplate(analysis: PromptAnalysis, _enhancements: string[]): Promise<{
+    structure: string;
+    placeholders: string[];
+    examples: string[];
+    framework: string;
+    reusable: boolean;
+  }> {
+    return {
+      structure: generateTemplateStructure(analysis),
+      placeholders: extractPlaceholders(analysis),
+      examples: generateExamples(analysis),
+      framework: selectFramework(analysis),
+      reusable: true,
     };
-
-    return template;
   }
 
-  private generateTemplateStructure(analysis: PromptAnalysis): string {
-    let structure = '';
-
-    // Add role definition
-    structure += 'You are an expert {role} with extensive experience in {domain}.\n\n';
-
-    // Add context
-    structure += 'Context: {context}\n\n';
-
-    // Add task
-    structure += 'Task: {task}\n\n';
-
-    // Add requirements
-    structure += 'Requirements:\n- {requirements}\n\n';
-
-    // Add constraints
-    structure += 'Constraints:\n- {constraints}\n\n';
-
-    // Add output format
-    structure += 'Output Format:\n{outputFormat}\n\n';
-
-    // Add technique-specific structure
-    if (analysis.complexity === 'high') {
-      structure += 'Approach:\n1. Analyze the problem systematically\n2. Consider multiple solution paths\n3. Evaluate and select the best approach\n4. Implement the solution\n\n';
-    }
-
-    return structure;
-  }
-
-  private extractPlaceholders(analysis: PromptAnalysis): string[] {
-    return [
-      'role',
-      'domain',
-      'context',
-      'task',
-      'requirements',
-      'constraints',
-      'outputFormat',
-      'examples',
-      'expertiseLevel'
-    ];
-  }
-
-  private generateExamples(analysis: PromptAnalysis): string[] {
-    const examples: string[] = [];
-
-    // Domain-specific examples
-    switch (analysis.domain) {
-      case 'technical':
-        examples.push('Example: For a REST API, include endpoint documentation, request/response examples, and error handling');
-        break;
-      case 'business':
-        examples.push('Example: For a business strategy, include SWOT analysis, KPIs, and implementation timeline');
-        break;
-      case 'creative':
-        examples.push('Example: For creative writing, include tone, style, target audience, and desired emotional impact');
-        break;
-      case 'research':
-        examples.push('Example: For research analysis, include methodology, data sources, and statistical significance');
-        break;
-    }
-
-    return examples;
-  }
-
-  private selectFramework(analysis: PromptAnalysis): string {
-    if (analysis.complexity === 'high') {
-      return 'comprehensive-analysis';
-    } else if (analysis.domain === 'technical') {
-      return 'technical-specification';
-    } else if (analysis.domain === 'business') {
-      return 'business-framework';
-    } else {
-      return 'general-purpose';
-    }
-  }
-
+  /**
+   * Generate A/B test variations
+   * @param analysis - The prompt analysis results
+   * @param techniques - Selected optimization techniques
+   * @returns Array of test variations
+   */
   private async generateABTestVariations(
     analysis: PromptAnalysis,
     techniques: PromptTechnique[]
@@ -219,131 +167,89 @@ export class OptimizationEngine {
     const variations: string[] = [];
 
     // Variation 1: Focus on clarity
-    variations.push(this.createClarityVariation(analysis));
+    variations.push(createClarityVariation(analysis));
 
     // Variation 2: Focus on specificity
-    variations.push(this.createSpecificityVariation(analysis));
+    variations.push(createSpecificityVariation(analysis));
 
     // Variation 3: Focus on technique application
-    variations.push(this.createTechniqueVariation(analysis, techniques[0] || 'cot'));
+    variations.push(createTechniqueVariation(analysis, techniques[0] || 'cot'));
 
     return variations;
   }
 
-  private createClarityVariation(analysis: PromptAnalysis): string {
-    return `As a clear and precise ${analysis.domain} expert, please provide a detailed response with step-by-step instructions, specific examples, and well-defined deliverables.`;
-  }
-
-  private createSpecificityVariation(analysis: PromptAnalysis): string {
-    return `As a specialized ${analysis.domain} professional, create a comprehensive solution with exact specifications, measurable outcomes, and concrete implementation details.`;
-  }
-
-  private createTechniqueVariation(analysis: PromptAnalysis, technique: PromptTechnique): string {
-    switch (technique) {
-      case 'cot':
-        return `Please think step-by-step to address this ${analysis.domain} task, explaining your reasoning at each stage before proceeding to the next.`;
-      case 'tot':
-        return `Consider multiple approaches for this ${analysis.domain} challenge, exploring different solution paths and selecting the optimal one through systematic evaluation.`;
-      case 'react':
-        return `Approach this ${analysis.domain} task using a thought-action-observation cycle: analyze the situation, propose actions, and evaluate results iteratively.`;
-      default:
-        return `Apply advanced reasoning techniques to this ${analysis.domain} task, ensuring comprehensive analysis and well-supported conclusions.`;
-    }
-  }
-
+  /**
+   * Predict performance score for optimized prompt
+   * @param analysis - The prompt analysis results
+   * @param techniques - Selected optimization techniques
+   * @returns Performance prediction score
+   */
   private async predictPerformance(
     analysis: PromptAnalysis,
     techniques: PromptTechnique[]
   ): Promise<number> {
-    let baseScore = (analysis.clarity + analysis.specificity + analysis.completeness) / 30;
+    const baseScore = (analysis.clarity + analysis.specificity + analysis.completeness) / PERFORMANCE_CONSTANTS.BASE_DIVISOR;
 
     // Boost score for applied techniques
-    const techniqueBonus = techniques.length * 0.05;
+    const techniqueBonus = techniques.length * PERFORMANCE_CONSTANTS.TECHNIQUE_BONUS;
 
     // Domain-specific adjustments
     let domainBonus = 0;
-    if (['technical', 'research'].includes(analysis.domain)) {
-      domainBonus = 0.1;
+    if (TECHNICAL_DOMAINS.includes(analysis.domain as keyof typeof TECHNICAL_DOMAINS)) {
+      domainBonus = PERFORMANCE_CONSTANTS.DOMAIN_BONUS;
     }
 
     // Complexity adjustments
     let complexityAdjustment = 0;
     if (analysis.complexity === 'high') {
-      complexityAdjustment = 0.1;
+      complexityAdjustment = PERFORMANCE_CONSTANTS.HIGH_COMPLEXITY_BONUS;
     } else if (analysis.complexity === 'low') {
-      complexityAdjustment = -0.05;
+      complexityAdjustment = PERFORMANCE_CONSTANTS.LOW_COMPLEXITY_PENALTY;
     }
 
-    const predictedScore = Math.min(1, baseScore + techniqueBonus + domainBonus + complexityAdjustment);
-
-    return predictedScore;
+    return Math.min(
+      PERFORMANCE_CONSTANTS.MAX_SCORE,
+      baseScore + techniqueBonus + domainBonus + complexityAdjustment
+    );
   }
 
+  /**
+   * Generate optimization suggestions
+   * @param analysis - The prompt analysis results
+   * @param techniques - Selected optimization techniques
+   * @returns Array of optimization suggestions
+   */
   private async generateOptimizations(
     analysis: PromptAnalysis,
     techniques: PromptTechnique[]
   ): Promise<string[]> {
     const optimizations: string[] = [];
 
-    // Basic optimizations
-    if (analysis.clarity < 8) {
-      optimizations.push('Add explicit action verbs and clear instructions');
-    }
-
-    if (analysis.specificity < 8) {
-      optimizations.push('Include specific examples and success criteria');
-    }
-
-    if (analysis.completeness < 8) {
-      optimizations.push('Add context, constraints, and expected outcomes');
-    }
-
-    // Technique-specific optimizations
-    for (const technique of techniques) {
-      switch (technique) {
-        case 'cot':
-          optimizations.push('Structure with step-by-step reasoning format');
-          break;
-        case 'tot':
-          optimizations.push('Add branching decision points and evaluation criteria');
-          break;
-        case 'self-consistency':
-          optimizations.push('Request multiple approaches and consensus building');
-          break;
-        case 'react':
-          optimizations.push('Include thought-action-observation cycle instructions');
-          break;
-        case 'graph-of-thought':
-          optimizations.push('Structure as interconnected concept relationships');
-          break;
-      }
-    }
+    addBasicOptimizations(analysis, optimizations);
+    addTechniqueOptimizations(techniques, optimizations);
 
     return optimizations;
   }
 
+  /**
+   * Generate reasoning for optimization choices
+   * @param analysis - The prompt analysis results
+   * @param techniques - Selected optimization techniques
+   * @returns Array of reasoning explanations
+   */
   private async generateReasoning(
     analysis: PromptAnalysis,
     techniques: PromptTechnique[]
   ): Promise<string[]> {
     const reasoning: string[] = [];
 
-    reasoning.push(`Selected ${techniques.length} optimization techniques based on task complexity and domain requirements`);
-    reasoning.push(`Applied ${techniques.join(', ')} to improve response quality and consistency`);
+    reasoning.push(REASONING_TEMPLATES.TECHNIQUE_SELECTION(techniques.length));
+    reasoning.push(REASONING_TEMPLATES.TECHNIQUE_APPLICATION(techniques));
 
-    if (analysis.clarity < 7) {
-      reasoning.push('Enhanced clarity by adding specific instructions and action verbs');
-    }
+    addQualityReasoning(analysis, reasoning);
 
-    if (analysis.specificity < 7) {
-      reasoning.push('Improved specificity through concrete examples and constraints');
-    }
-
-    if (analysis.completeness < 7) {
-      reasoning.push('Increased completeness by adding context and success criteria');
-    }
-
-    reasoning.push(`Estimated performance improvement: ${Math.round((await this.predictPerformance(analysis, techniques)) * 100)}%`);
+    const performanceScore = await this.predictPerformance(analysis, techniques);
+    reasoning.push(REASONING_TEMPLATES.PERFORMANCE_IMPROVEMENT(performanceScore));
 
     return reasoning;
   }

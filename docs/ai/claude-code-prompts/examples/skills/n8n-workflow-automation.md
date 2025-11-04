@@ -6,7 +6,7 @@ This comprehensive example demonstrates a specialized skill for automating n8n w
 
 ## Skill Definition
 
-```typescript
+````typescript
 // File: .claude/skills/n8n-workflow-automation.json
 {
   "name": "n8n-workflow-automation",
@@ -579,7 +579,7 @@ This comprehensive example demonstrates a specialized skill for automating n8n w
     }
   ]
 }
-```
+````
 
 ## Usage Examples
 
@@ -588,12 +588,13 @@ This comprehensive example demonstrates a specialized skill for automating n8n w
 ```typescript
 // Simple workflow automation request
 const basicUsage = {
-  skill: "n8n-workflow-automation",
+  skill: 'n8n-workflow-automation',
   inputs: {
-    requirements: "Create a workflow that receives a webhook, processes the data, and sends it to an external API",
-    securityLevel: "basic",
-    testCoverage: "basic"
-  }
+    requirements:
+      'Create a workflow that receives a webhook, processes the data, and sends it to an external API',
+    securityLevel: 'basic',
+    testCoverage: 'basic',
+  },
 };
 ```
 
@@ -602,7 +603,7 @@ const basicUsage = {
 ```typescript
 // Complex multi-integration workflow
 const advancedUsage = {
-  skill: "n8n-workflow-automation",
+  skill: 'n8n-workflow-automation',
   inputs: {
     requirements: `
       Create a comprehensive customer onboarding workflow:
@@ -617,10 +618,10 @@ const advancedUsage = {
       9. Log all activities for audit trail
       10. Handle errors at each step with retry logic
     `,
-    integrations: ["webhook", "main-api", "crm-api", "email-service", "help-desk-api", "slack-api"],
-    securityLevel: "high",
-    testCoverage: "exhaustive"
-  }
+    integrations: ['webhook', 'main-api', 'crm-api', 'email-service', 'help-desk-api', 'slack-api'],
+    securityLevel: 'high',
+    testCoverage: 'exhaustive',
+  },
 };
 ```
 

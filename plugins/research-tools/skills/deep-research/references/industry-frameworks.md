@@ -11,6 +11,7 @@ This guide provides comprehensive frameworks for analyzing industries, markets, 
 **Purpose:** Assess internal strengths and weaknesses alongside external opportunities and threats
 
 **Structure:**
+
 ```
               Positive Factors          Negative Factors
 Internal    |     Strengths         |     Weaknesses     |
@@ -20,30 +21,35 @@ External    |    Opportunities       |      Threats       |
 **Implementation Guidelines:**
 
 **Strengths (Internal, Positive):**
+
 - What advantages does the company have?
 - What unique resources or capabilities exist?
 - What do competitors see as strengths?
 - What factors drive sales and growth?
 
 **Weaknesses (Internal, Negative):**
+
 - What could be improved?
 - What should be avoided?
 - What factors cause losses or problems?
 - What resources are lacking?
 
 **Opportunities (External, Positive):**
+
 - What market trends could be exploited?
 - What technological changes create advantages?
 - What regulatory changes benefit the business?
 - What market gaps exist?
 
 **Threats (External, Negative):**
+
 - What obstacles does the business face?
 - What are competitors doing that impacts the business?
 - What technological changes threaten the business?
 - What negative market trends exist?
 
 **TOWS Matrix Integration:**
+
 - **SO Strategies:** How to use strengths to capitalize on opportunities
 - **WO Strategies:** How to address weaknesses to pursue opportunities
 - **ST Strategies:** How to use strengths to avoid threats
@@ -91,6 +97,7 @@ External    |    Opportunities       |      Threats       |
    - Brand loyalty and customer switching costs
 
 **Analysis Questions:**
+
 - How intense is the competition in this industry?
 - What are the key barriers to entry?
 - How much power do customers and suppliers have?
@@ -102,6 +109,7 @@ External    |    Opportunities       |      Threats       |
 **Purpose:** Analyze macro-environmental factors affecting business
 
 **Political Factors:**
+
 - Government stability and political climate
 - Tax policies and trade regulations
 - Labor laws and employment legislation
@@ -110,6 +118,7 @@ External    |    Opportunities       |      Threats       |
 - Government incentives and subsidies
 
 **Economic Factors:**
+
 - Economic growth and GDP trends
 - Interest rates and inflation
 - Exchange rates and currency stability
@@ -118,6 +127,7 @@ External    |    Opportunities       |      Threats       |
 - Business confidence indices
 
 **Social Factors:**
+
 - Demographic trends and population changes
 - Cultural attitudes and lifestyle changes
 - Education levels and social mobility
@@ -126,6 +136,7 @@ External    |    Opportunities       |      Threats       |
 - Social media influence and communication patterns
 
 **Technological Factors:**
+
 - Research and development activity
 - Automation and innovation levels
 - Technological infrastructure
@@ -134,6 +145,7 @@ External    |    Opportunities       |      Threats       |
 - New product development capabilities
 
 **Legal Factors:**
+
 - Consumer protection laws
 - Employment and labor laws
 - Health and safety regulations
@@ -142,6 +154,7 @@ External    |    Opportunities       |      Threats       |
 - Data protection and privacy laws
 
 **Environmental Factors:**
+
 - Climate change and weather patterns
 - Environmental regulations and policies
 - Sustainability expectations
@@ -241,6 +254,7 @@ External    |    Opportunities       |      Threats       |
 **Key Concepts:**
 
 **Value Innovation:**
+
 - Simultaneous pursuit of differentiation and low cost
 - Creating and capturing new demand
 - Breaking the value-cost trade-off
@@ -269,6 +283,7 @@ External    |    Opportunities       |      Threats       |
    - Reconstruct market boundaries
 
 **Strategy Canvas:**
+
 - Visual representation of current strategic landscape
 - Plot competitor factors and value curves
 - Identify opportunities for differentiation
@@ -363,6 +378,7 @@ External    |    Opportunities       |      Threats       |
    - May never adopt new technologies
 
 **Chasm Theory:**
+
 - Critical gap between early adopters and early majority
 - Different buying criteria and decision processes
 - Need for whole product solution and market development
@@ -373,6 +389,7 @@ External    |    Opportunities       |      Threats       |
 **Purpose:** Analyze customer profitability and relationship value
 
 **CLV Calculation:**
+
 ```
 CLV = (Average Purchase Value × Purchase Frequency × Customer Lifetime) - Customer Acquisition Cost
 ```
@@ -398,6 +415,7 @@ CLV = (Average Purchase Value × Purchase Frequency × Customer Lifetime) - Cust
    - Factors affecting customer longevity
 
 **Strategic Applications:**
+
 - Customer segmentation and targeting
 - Resource allocation and investment decisions
 - Pricing and value proposition optimization
@@ -433,6 +451,7 @@ CLV = (Average Purchase Value × Purchase Frequency × Customer Lifetime) - Cust
    - Social norms and expectations
 
 **Job Mapping:**
+
 - Define the job and desired outcomes
 - Identify constraints and obstacles
 - Map the job process and steps
@@ -443,18 +462,21 @@ CLV = (Average Purchase Value × Purchase Frequency × Customer Lifetime) - Cust
 ### Framework Selection Criteria
 
 **Research Objectives:**
+
 - What specific questions need to be answered?
 - What level of analysis is required?
 - What resources and time are available?
 - Who is the target audience?
 
 **Industry Characteristics:**
+
 - Industry structure and dynamics
 - Competitive intensity and market maturity
 - Regulatory environment and constraints
 - Technological complexity and change rate
 
 **Data Availability:**
+
 - Accessibility of relevant information
 - Quality and reliability of data sources
 - Time sensitivity of information
@@ -463,18 +485,21 @@ CLV = (Average Purchase Value × Purchase Frequency × Customer Lifetime) - Cust
 ### Combining Frameworks
 
 **Complementary Analysis:**
+
 - Use multiple frameworks for comprehensive understanding
 - Cross-validate insights across different approaches
 - Identify patterns and consistencies
 - Address different aspects of business analysis
 
 **Integration Strategies:**
+
 - Start with broad frameworks (PESTLE, Porter's Five Forces)
 - Apply specific frameworks based on research questions
 - Use specialized frameworks for detailed analysis
 - Synthesize findings into actionable insights
 
 **Best Practices:**
+
 - Document assumptions and limitations
 - Use consistent terminology and definitions
 - Validate findings with additional sources

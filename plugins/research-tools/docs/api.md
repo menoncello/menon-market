@@ -11,19 +11,22 @@ This document provides comprehensive API reference for the Research Tools Plugin
 Initializes the research tools plugin with configuration options.
 
 **Parameters:**
+
 - `config` (optional): Partial configuration object to override defaults
 
 **Returns:**
+
 - `ResearchToolsConfig`: Complete configuration object
 
 **Example:**
+
 ```typescript
 import { initialize } from 'research-tools';
 
 const config = initialize({
   maxSources: 25,
   outputFormat: 'json',
-  enableDeepResearch: true
+  enableDeepResearch: true,
 });
 ```
 
@@ -32,13 +35,16 @@ const config = initialize({
 Performs research on a given topic using the specified configuration.
 
 **Parameters:**
+
 - `query`: Research query string
 - `config`: Research configuration object
 
 **Returns:**
+
 - `Promise<ResearchResult>`: Research results with sources and analysis
 
 **Example:**
+
 ```typescript
 import { performResearch, initialize } from 'research-tools';
 
@@ -56,27 +62,26 @@ console.log(result.keyFindings);
 Performs comprehensive deep research using specific workflows.
 
 **Parameters:**
+
 - `query`: Research query string
 - `workflow`: Research workflow type
 - `config`: Deep research configuration
 
 **Returns:**
+
 - `Promise<ResearchReport>`: Comprehensive research report
 
 **Example:**
+
 ```typescript
 import performDeepResearch from 'research-tools/skills/deep-research';
 
-const report = await performDeepResearch(
-  'Competitor Analysis',
-  'competitor-analysis',
-  {
-    maxSources: 15,
-    requireCrossValidation: true,
-    qualityThreshold: 0.8,
-    includeSentiment: true
-  }
-);
+const report = await performDeepResearch('Competitor Analysis', 'competitor-analysis', {
+  maxSources: 15,
+  requireCrossValidation: true,
+  qualityThreshold: 0.8,
+  includeSentiment: true,
+});
 ```
 
 ## Configuration Types
@@ -212,7 +217,7 @@ type RelevanceScore = number & { readonly __brand: unique symbol };
 
 // Safe score creation
 const confidence = createConfidenceScore(0.85); // Throws if invalid
-const relevance = createRelevanceScore(0.9);   // Throws if invalid
+const relevance = createRelevanceScore(0.9); // Throws if invalid
 
 // Score validation
 if (isValidConfidenceScore(score)) {
@@ -226,11 +231,11 @@ Supported source types with type safety:
 
 ```typescript
 type SourceType =
-  | 'academic'    // Academic papers and research
-  | 'web'         // General web sources
-  | 'news'        // News articles and media
-  | 'technical'   // Technical documentation
-  | 'social'      // Social media and forums
+  | 'academic' // Academic papers and research
+  | 'web' // General web sources
+  | 'news' // News articles and media
+  | 'technical' // Technical documentation
+  | 'social' // Social media and forums
   | 'government'; // Government sources and reports
 ```
 
@@ -273,7 +278,7 @@ Different configuration values impact performance:
 const fastConfig = initialize({
   maxSources: 5,
   timeout: 5000,
-  cacheEnabled: true
+  cacheEnabled: true,
 });
 
 // High quality (slower, more thorough)
@@ -281,13 +286,14 @@ const qualityConfig = initialize({
   maxSources: 100,
   timeout: 60000,
   cacheEnabled: true,
-  enableDeepResearch: true
+  enableDeepResearch: true,
 });
 ```
 
 ### Memory Usage
 
 Memory usage scales with:
+
 - Number of sources (`maxSources`)
 - Content length of sources
 - Concurrent operations
@@ -306,7 +312,9 @@ Memory usage scales with:
 ```typescript
 import { validateResearchSource } from 'research-tools/types';
 
-const source = { /* source object */ };
+const source = {
+  /* source object */
+};
 if (validateResearchSource(source)) {
   // Source is valid, can be used safely
 }
@@ -386,7 +394,7 @@ Enable debug logging for troubleshooting:
 ```typescript
 const config = initialize({
   logLevel: 'debug',
-  enableMetrics: true
+  enableMetrics: true,
 });
 ```
 

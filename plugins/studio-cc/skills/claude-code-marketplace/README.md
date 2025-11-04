@@ -9,6 +9,7 @@ The Marketplace skill provides complete lifecycle management for Claude Code Mar
 ## Features
 
 ### 🏗️ Marketplace Creation
+
 - Create marketplaces from multiple templates (standard, enterprise, community, minimal)
 - Automatic directory structure generation
 - Configuration file creation with validation
@@ -16,6 +17,7 @@ The Marketplace skill provides complete lifecycle management for Claude Code Mar
 - Template-based file generation
 
 ### ✅ Validation and Testing
+
 - Comprehensive marketplace structure validation
 - Plugin and skill compatibility checking
 - Configuration file validation
@@ -23,6 +25,7 @@ The Marketplace skill provides complete lifecycle management for Claude Code Mar
 - Security and compliance validation
 
 ### 🚀 Deployment and Distribution
+
 - Automated deployment workflows
 - Version management and tagging
 - Release note generation
@@ -30,6 +33,7 @@ The Marketplace skill provides complete lifecycle management for Claude Code Mar
 - Multiple deployment targets support
 
 ### 📊 Health Monitoring
+
 - Marketplace health analysis
 - Performance metrics collection
 - Recommendation generation
@@ -37,6 +41,7 @@ The Marketplace skill provides complete lifecycle management for Claude Code Mar
 - Plugin and skill usage analytics
 
 ### 🛠️ Management Tools
+
 - Plugin addition and removal
 - Skill management and organization
 - Configuration updates
@@ -100,16 +105,19 @@ marketplace/
 ### Creating Marketplaces
 
 #### Standard Marketplace
+
 ```bash
 "Create a standard marketplace called dev-tools"
 ```
 
 #### Enterprise Marketplace
+
 ```bash
 "Create an enterprise marketplace at ./company-marketplace with enterprise template and auto-validation"
 ```
 
 #### Community Marketplace
+
 ```bash
 "Create a community marketplace called open-source-tools with community template"
 ```
@@ -117,16 +125,19 @@ marketplace/
 ### Managing Marketplaces
 
 #### Validation
+
 ```bash
 "Validate marketplace structure and configuration at ./my-marketplace"
 ```
 
 #### Health Analysis
+
 ```bash
 "Analyze marketplace health and generate improvement recommendations for ./my-marketplace"
 ```
 
 #### Plugin Management
+
 ```bash
 "Add new plugin to marketplace ./my-marketplace and validate compatibility"
 ```
@@ -134,16 +145,19 @@ marketplace/
 ### Deployment Operations
 
 #### Standard Deployment
+
 ```bash
 "Deploy marketplace ./my-marketplace with patch version update"
 ```
 
 #### Major Release
+
 ```bash
 "Deploy marketplace ./my-marketplace with major version update and skip validation"
 ```
 
 #### Dry Run Deployment
+
 ```bash
 "Deploy marketplace ./my-marketplace with dry-run mode to preview changes"
 ```
@@ -151,6 +165,7 @@ marketplace/
 ## Template Types
 
 ### Standard Template
+
 - Complete marketplace structure
 - Essential configuration files
 - Standard validation rules
@@ -159,6 +174,7 @@ marketplace/
 **Use Case**: General purpose marketplaces with standard features
 
 ### Enterprise Template
+
 - Advanced security configurations
 - Compliance frameworks (SOC2, ISO27001)
 - Multi-team support
@@ -167,6 +183,7 @@ marketplace/
 **Use Case**: Corporate environments with strict security and compliance requirements
 
 ### Community Template
+
 - Open-source friendly configurations
 - Community contribution guidelines
 - Simplified validation rules
@@ -175,6 +192,7 @@ marketplace/
 **Use Case**: Open-source projects and community-driven marketplaces
 
 ### Minimal Template
+
 - Core marketplace structure only
 - Essential configuration files
 - Basic validation
@@ -189,10 +207,12 @@ marketplace/
 The marketplace skill accepts the following parameters:
 
 #### Required Parameters
+
 - **action**: The action to perform (create, validate, deploy, update, analyze, init, template, test, list, status)
 - **target**: Target marketplace, plugin, or directory path (optional for some actions)
 
 #### Optional Parameters
+
 - **options**: Configuration object with the following properties:
   - **verbose** (boolean): Enable verbose output (default: false)
   - **dry_run** (boolean): Perform actions without making changes (default: false)
@@ -204,16 +224,19 @@ The marketplace skill accepts the following parameters:
 ### Example Configurations
 
 #### Basic Creation
+
 ```bash
 "Create marketplace my-tools with standard template"
 ```
 
 #### Advanced Configuration
+
 ```bash
 "Create enterprise marketplace ./company-tools with enterprise template, verbose output, and auto-validation enabled"
 ```
 
 #### Testing and Validation
+
 ```bash
 "Test marketplace ./my-marketplace with comprehensive validation and skip tests if needed"
 ```
@@ -230,6 +253,7 @@ node marketplace.test.js
 ### Test Coverage
 
 The test suite covers:
+
 - Marketplace creation and structure validation
 - Template functionality and configuration
 - Validation framework and error handling
@@ -239,6 +263,7 @@ The test suite covers:
 ### Development Scripts
 
 #### Marketplace Manager
+
 ```bash
 cd marketplace/scripts
 node marketplace-manager.js create test-marketplace
@@ -247,12 +272,14 @@ node marketplace-manager.js analyze ./test-marketplace
 ```
 
 #### Validation Script
+
 ```bash
 cd marketplace/templates/standard/scripts
 node validate.js --verbose
 ```
 
 #### Deployment Script
+
 ```bash
 cd marketplace/templates/standard/scripts
 node deploy.js --type=patch --verbose
@@ -263,52 +290,64 @@ node deploy.js --type=patch --verbose
 ### Main Actions
 
 #### Create
+
 Creates a new marketplace from a template.
 
 **Parameters**:
+
 - **name**: Marketplace name (required for create action)
 - **template**: Template type (default: standard)
 - **path**: Target directory (default: ./name)
 - **auto_validate**: Validate after creation (default: true)
 
 **Example**:
+
 ```bash
 "Create marketplace my-tools with standard template at ./my-tools"
 ```
 
 #### Validate
+
 Validates marketplace structure and configuration.
 
 **Parameters**:
+
 - **target**: Marketplace path (required)
 - **verbose**: Enable detailed output
 
 **Example**:
+
 ```bash
 "Validate marketplace at ./my-tools with verbose output"
 ```
 
 #### Deploy
+
 Deploys marketplace plugins and updates.
 
 **Parameters**:
+
 - **target**: Marketplace path (required)
 - **type**: Release type (patch, minor, major)
 - **skip_validation**: Skip pre-deployment validation
 - **force**: Force deployment despite validation failures
 
 **Example**:
+
 ```bash
 "Deploy marketplace ./my-tools with minor version update"
 ```
 
 #### Analyze
+
 Analyzes marketplace health and generates recommendations.
 
 **Parameters**:
+
 - **target**: Marketplace path (required)
 
 **Example**:
+
 ```bash
 "Analyze marketplace health for ./my-tools and generate recommendations"
 ```
@@ -316,15 +355,19 @@ Analyzes marketplace health and generates recommendations.
 ### Supporting Actions
 
 #### List
+
 Lists marketplace contents and status.
 
 #### Status
+
 Shows marketplace status and metrics.
 
 #### Test
+
 Runs marketplace test suite.
 
 #### Template
+
 Generates template files and configurations.
 
 ## Integration with Claude Code
@@ -332,6 +375,7 @@ Generates template files and configurations.
 ### Installation
 
 1. Copy the marketplace skill to your skills directory:
+
 ```bash
 cp -r marketplace ~/.claude/skills/
 ```
@@ -343,6 +387,7 @@ cp -r marketplace ~/.claude/skills/
 ### Usage Patterns
 
 The marketplace skill automatically triggers when you use phrases like:
+
 - "Create a marketplace"
 - "Validate marketplace"
 - "Deploy marketplace"
@@ -352,6 +397,7 @@ The marketplace skill automatically triggers when you use phrases like:
 ### Configuration
 
 Skill behavior can be configured through:
+
 - Direct parameters in your requests
 - Default options in the skill configuration
 - Environment variables for automated workflows
@@ -361,16 +407,19 @@ Skill behavior can be configured through:
 ### Common Issues
 
 #### Marketplace Creation Fails
+
 ```bash
 "Create marketplace with verbose output to see detailed error information"
 ```
 
 #### Validation Errors
+
 ```bash
 "Validate marketplace with comprehensive checks and review error messages"
 ```
 
 #### Deployment Issues
+
 ```bash
 "Deploy marketplace with dry-run mode to preview changes before deployment"
 ```
@@ -378,6 +427,7 @@ Skill behavior can be configured through:
 ### Debug Mode
 
 Enable verbose output for detailed troubleshooting:
+
 ```bash
 "Create marketplace with verbose output and detailed logging"
 ```
@@ -392,18 +442,21 @@ Enable verbose output for detailed troubleshooting:
 ## Best Practices
 
 ### Development
+
 - Use appropriate templates for different use cases
 - Validate marketplaces before deployment
 - Test thoroughly across different environments
 - Keep documentation up to date
 
 ### Security
+
 - Review permissions and access controls
 - Validate plugin sources and dependencies
 - Implement proper authentication and authorization
 - Follow enterprise security standards
 
 ### Performance
+
 - Use appropriate validation levels
 - Implement caching for repeated operations
 - Monitor resource usage and bottlenecks
@@ -440,4 +493,4 @@ This marketplace skill is licensed under the MIT License.
 
 ---
 
-*Generated with Claude Code Marketplace Management Skill*
+_Generated with Claude Code Marketplace Management Skill_

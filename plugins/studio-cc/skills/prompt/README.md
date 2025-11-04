@@ -7,18 +7,21 @@ A sophisticated multi-layered prompt engineering system that combines analysis, 
 ### Core Architecture
 
 #### Layer 1: Analysis Engine
+
 - **Prompt Analysis**: Deconstruct existing prompts using NLP techniques
 - **Context Parser**: Extract contextual information and user intent
 - **Goal Clarification**: Targeted questions to refine ambiguous requirements
 - **User Profiling**: Adapt to user's expertise level and preferences
 
 #### Layer 2: Optimization Engine
+
 - **Advanced Techniques**: Chain-of-Thought, Tree-of-Thought, Self-Consistency, ReAct, Graph-of-Thought
 - **Template Synthesis**: Generate reusable prompt frameworks
 - **A/B Testing**: Create systematic variations for testing
 - **Performance Prediction**: Estimate effectiveness before deployment
 
 #### Layer 3: Customization Engine
+
 - **Domain Adaptation**: Specialize for tech, business, creative, academic domains
 - **Model Optimization**: Tailor for Claude, GPT, Gemini, Llama models
 - **Format Standardization**: Ensure consistent output formats
@@ -26,6 +29,7 @@ A sophisticated multi-layered prompt engineering system that combines analysis, 
 - **Compliance Integration**: Incorporate regulatory constraints
 
 #### Layer 4: Validation Engine
+
 - **Quality Metrics**: Evaluate specificity, clarity, completeness, efficiency
 - **Iterative Refinement**: Continuous improvement based on feedback
 - **Benchmark Testing**: Compare against industry standards
@@ -51,14 +55,11 @@ import { AdvancedPromptCrafter } from 'advanced-prompt-crafter';
 const crafter = new AdvancedPromptCrafter();
 
 // Analyze and improve an existing prompt
-const result = await crafter.analyzeAndOptimize(
-  "Write a blog post about AI",
-  {
-    mode: 'creative',
-    targetModel: 'claude-3-sonnet',
-    outputFormat: 'markdown'
-  }
-);
+const result = await crafter.analyzeAndOptimize('Write a blog post about AI', {
+  mode: 'creative',
+  targetModel: 'claude-3-sonnet',
+  outputFormat: 'markdown',
+});
 
 console.log(result.optimizedPrompt);
 console.log('Quality Score:', result.validation.qualityScore);
@@ -71,6 +72,7 @@ console.log('Quality Score:', result.validation.qualityScore);
 Analyzes and optimizes an existing prompt using the four-layer architecture.
 
 **Parameters:**
+
 - `prompt` (string): The prompt to analyze and optimize
 - `options` (object, optional): Configuration options
   - `mode` (string): 'technical' | 'business' | 'creative' | 'research'
@@ -85,6 +87,7 @@ Analyzes and optimizes an existing prompt using the four-layer architecture.
 Creates a new prompt from requirements.
 
 **Parameters:**
+
 - `request` (PromptRequest): Prompt creation request
   - `task` (string): The main task description
   - `domain` (string): Domain area
@@ -97,6 +100,7 @@ Creates a new prompt from requirements.
 Calculates quality metrics for a prompt.
 
 **Parameters:**
+
 - `prompt` (string): The prompt to analyze
 
 **Returns:** `Promise<QualityMetrics>`
@@ -106,6 +110,7 @@ Calculates quality metrics for a prompt.
 Creates A/B test variations for a prompt.
 
 **Parameters:**
+
 - `prompt` (string): The base prompt
 - `count` (number, optional): Number of variations to create (default: 3)
 
@@ -122,34 +127,28 @@ const result = await crafter.createPrompt({
   mode: 'technical',
   requirements: {
     include: ['endpoints', 'examples', 'error-codes'],
-    outputFormat: 'markdown'
-  }
+    outputFormat: 'markdown',
+  },
 });
 ```
 
 ### Business Strategy Analysis
 
 ```typescript
-const result = await crafter.analyzeAndOptimize(
-  "Analyze market entry strategy",
-  {
-    mode: 'business',
-    domain: 'business'
-  }
-);
+const result = await crafter.analyzeAndOptimize('Analyze market entry strategy', {
+  mode: 'business',
+  domain: 'business',
+});
 ```
 
 ### Creative Writing Assistant
 
 ```typescript
-const result = await crafter.analyzeAndOptimize(
-  "Write a fantasy story about dragons",
-  {
-    mode: 'creative',
-    domain: 'creative-writing',
-    targetModel: 'claude-3-opus'
-  }
-);
+const result = await crafter.analyzeAndOptimize('Write a fantasy story about dragons', {
+  mode: 'creative',
+  domain: 'creative-writing',
+  targetModel: 'claude-3-opus',
+});
 ```
 
 ### Research Analysis
@@ -161,8 +160,8 @@ const result = await crafter.createPrompt({
   mode: 'research',
   requirements: {
     include: ['methodology', 'sources', 'analysis-framework'],
-    constraints: ['peer-reviewed-only', 'last-5-years']
-  }
+    constraints: ['peer-reviewed-only', 'last-5-years'],
+  },
 });
 ```
 
@@ -193,19 +192,19 @@ const crafter = new AdvancedPromptCrafter({
     analysisDepth: 'comprehensive',
     userProfile: {
       expertise: 'intermediate',
-      preferences: ['concise', 'structured']
-    }
+      preferences: ['concise', 'structured'],
+    },
   },
   optimization: {
     techniques: ['cot', 'tot', 'self-consistency'],
     enableABTesting: true,
-    performanceThreshold: 0.85
+    performanceThreshold: 0.85,
   },
   validation: {
     qualityThreshold: 8.5,
     enableBenchmarking: true,
-    metrics: ['clarity', 'specificity', 'completeness', 'efficiency']
-  }
+    metrics: ['clarity', 'specificity', 'completeness', 'efficiency'],
+  },
 });
 ```
 

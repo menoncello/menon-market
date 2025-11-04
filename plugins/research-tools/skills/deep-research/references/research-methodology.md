@@ -11,6 +11,7 @@ This guide outlines the structured research methodology used by the Deep Researc
 #### Phase 1: Planning and Scoping
 
 **Objectives:**
+
 - Define clear research objectives and success criteria
 - Identify primary and secondary search terms
 - Map potential information sources
@@ -18,6 +19,7 @@ This guide outlines the structured research methodology used by the Deep Researc
 - Create research timeline and deliverable specifications
 
 **Key Activities:**
+
 1. **Objective Definition**
    - What specific questions need to be answered?
    - What decisions will be made based on this research?
@@ -41,6 +43,7 @@ This guide outlines the structured research methodology used by the Deep Researc
 **Source Types and Priority:**
 
 **Primary Sources (Highest Reliability):**
+
 - Company annual reports and SEC filings
 - Official company websites and press releases
 - Government databases and official statistics
@@ -48,6 +51,7 @@ This guide outlines the structured research methodology used by the Deep Researc
 - Official API documentation and technical specifications
 
 **Secondary Sources (High Reliability):**
+
 - Established news organizations (Reuters, Bloomberg, WSJ)
 - Industry research reports (Gartner, Forrester, McKinsey)
 - Professional publications and trade journals
@@ -55,6 +59,7 @@ This guide outlines the structured research methodology used by the Deep Researc
 - Patent filings and legal documents
 
 **Tertiary Sources (Medium Reliability):**
+
 - Social media and company blogs
 - User reviews and community discussions
 - Forum posts and Q&A sites
@@ -62,6 +67,7 @@ This guide outlines the structured research methodology used by the Deep Researc
 - Industry blogs and newsletters
 
 **Data Collection Strategies:**
+
 1. **Systematic Search Approach**
    - Use consistent search terminology
    - Apply advanced search operators
@@ -147,30 +153,35 @@ This guide outlines the structured research methodology used by the Deep Researc
 ### Source Evaluation Criteria
 
 **Authority (Weight: 30%)**
+
 - Author credentials and expertise
 - Publishing organization reputation
 - Institutional backing and funding
 - Peer review and editorial oversight
 
 **Timeliness (Weight: 25%)**
+
 - Publication date relative to research needs
 - Frequency of updates and revisions
 - Relevance to current market conditions
 - Historical context and progression
 
 **Objectivity (Weight: 20%)**
+
 - Absence of apparent bias or agenda
 - Balanced presentation of multiple viewpoints
 - Disclosure of conflicts of interest
- -Funding source transparency
+  -Funding source transparency
 
 **Accuracy (Weight: 15%)**
+
 - Verifiability of claims and data
 - Consistency with established facts
 - Methodological soundness
 - Error correction processes
 
 **Depth (Weight: 10%)**
+
 - Comprehensiveness of coverage
 - Analytical depth and insight
 - Supporting evidence and examples
@@ -201,6 +212,7 @@ This guide outlines the structured research methodology used by the Deep Researc
 ### Company Research
 
 **Use Cases:**
+
 - Job application preparation
 - Partnership due diligence
 - Competitive analysis
@@ -208,6 +220,7 @@ This guide outlines the structured research methodology used by the Deep Researc
 - Market entry strategy
 
 **Key Research Areas:**
+
 - Financial performance and stability
 - Market position and competitive landscape
 - Leadership team and organizational structure
@@ -215,6 +228,7 @@ This guide outlines the structured research methodology used by the Deep Researc
 - Company culture and employee satisfaction
 
 **Data Sources:**
+
 - SEC filings (10-K, 10-Q, 8-K)
 - Annual reports and investor presentations
 - Company website and press releases
@@ -225,6 +239,7 @@ This guide outlines the structured research methodology used by the Deep Researc
 ### Market Research
 
 **Use Cases:**
+
 - Business expansion decisions
 - Product development planning
 - Investment opportunity assessment
@@ -232,6 +247,7 @@ This guide outlines the structured research methodology used by the Deep Researc
 - Competitive positioning
 
 **Key Research Areas:**
+
 - Market size and growth projections
 - Customer segmentation and needs
 - Competitive landscape analysis
@@ -239,6 +255,7 @@ This guide outlines the structured research methodology used by the Deep Researc
 - Technological trends and disruptions
 
 **Data Sources:**
+
 - Market research reports (Gartner, Forrester, IDC)
 - Government statistics and databases
 - Industry association publications
@@ -249,6 +266,7 @@ This guide outlines the structured research methodology used by the Deep Researc
 ### Technical Tool Research
 
 **Use Cases:**
+
 - Software selection and procurement
 - Technology stack decisions
 - Tool migration planning
@@ -256,6 +274,7 @@ This guide outlines the structured research methodology used by the Deep Researc
 - Integration planning
 
 **Key Research Areas:**
+
 - Feature comparison and functionality
 - Technical specifications and requirements
 - Pricing and licensing models
@@ -264,6 +283,7 @@ This guide outlines the structured research methodology used by the Deep Researc
 - Security and compliance
 
 **Data Sources:**
+
 - Official documentation and specifications
 - User reviews and ratings
 - Industry analyst reports
@@ -276,6 +296,7 @@ This guide outlines the structured research methodology used by the Deep Researc
 ### Search Strategy Optimization
 
 **Advanced Search Operators:**
+
 - `"exact phrase"` - Exact phrase matching
 - `term1 AND term2` - Boolean AND
 - `term1 OR term2` - Boolean OR
@@ -286,6 +307,7 @@ This guide outlines the structured research methodology used by the Deep Researc
 - `"keyword" NEAR/5 "related"` - Proximity search
 
 **Search Query Construction:**
+
 1. Start with broad terms, then refine
 2. Use industry-specific terminology
 3. Include temporal filters (year ranges)
@@ -295,18 +317,21 @@ This guide outlines the structured research methodology used by the Deep Researc
 ### Source Diversification Strategy
 
 **Geographic Diversity:**
+
 - Include sources from different regions
 - Consider local market perspectives
 - Account for cultural and regulatory differences
 - Validate across geographic boundaries
 
 **Temporal Diversity:**
+
 - Include historical perspective
 - Track evolution over time
 - Identify trends and patterns
 - Consider future projections
 
 **Perspective Diversity:**
+
 - Include multiple viewpoints
 - Consider stakeholder perspectives
 - Account for different methodologies
@@ -317,18 +342,21 @@ This guide outlines the structured research methodology used by the Deep Researc
 ### Legal Compliance
 
 **Copyright and Fair Use:**
+
 - Respect intellectual property rights
 - Use proper attribution and citation
 - Adhere to fair use principles
 - Obtain permissions when required
 
 **Terms of Service Compliance:**
+
 - Respect website terms of service
 - Avoid automated scraping violations
 - Comply with rate limiting requirements
 - Honor robots.txt restrictions
 
 **Data Privacy Regulations:**
+
 - Comply with GDPR, CCPA, and other regulations
 - Protect personal and sensitive information
 - Use data only for intended purposes
@@ -337,18 +365,21 @@ This guide outlines the structured research methodology used by the Deep Researc
 ### Professional Ethics
 
 **Intellectual Honesty:**
+
 - Present information accurately without distortion
 - Acknowledge limitations and uncertainties
 - Avoid cherry-picking data
 - Disclose potential conflicts of interest
 
 **Transparency:**
+
 - Document all sources and methodologies
 - Clearly indicate assumptions and estimates
 - Provide context for research findings
 - Enable verification and replication
 
 **Responsible Use:**
+
 - Use research findings ethically and responsibly
 - Consider potential impacts on stakeholders
 - Avoid malicious or harmful applications
@@ -359,6 +390,7 @@ This guide outlines the structured research methodology used by the Deep Researc
 ### Research Tools
 
 **Web Research Platforms:**
+
 - Advanced search engines (Google Scholar, Bing)
 - Academic databases (JSTOR, IEEE Xplore)
 - Market research platforms (Statista, IBISWorld)
@@ -366,6 +398,7 @@ This guide outlines the structured research methodology used by the Deep Researc
 - Patent databases (USPTO, Google Patents)
 
 **Data Analysis Tools:**
+
 - Statistical analysis software
 - Data visualization platforms
 - Spreadsheet applications
@@ -373,6 +406,7 @@ This guide outlines the structured research methodology used by the Deep Researc
 - Text analysis and NLP tools
 
 **Organization Tools:**
+
 - Reference management software
 - Note-taking and documentation tools
 - Project management platforms
@@ -382,18 +416,21 @@ This guide outlines the structured research methodology used by the Deep Researc
 ### Quality Resources
 
 **Reliable News Sources:**
+
 - Reuters, Bloomberg, Wall Street Journal
 - Associated Press, BBC, NPR
 - Financial Times, Economist
 - Industry-specific publications
 
 **Academic Sources:**
+
 - Google Scholar, Semantic Scholar
 - PubMed, IEEE Xplore, ACM Digital Library
 - University research repositories
 - Pre-print servers (arXiv, SSRN)
 
 **Government Sources:**
+
 - Census Bureau, Bureau of Labor Statistics
 - Securities and Exchange Commission
 - Federal Reserve Economic Data (FRED)
@@ -404,24 +441,28 @@ This guide outlines the structured research methodology used by the Deep Researc
 ### Research Quality Metrics
 
 **Completeness:**
+
 - Were all research questions answered?
 - Is the coverage comprehensive?
 - Are there gaps in information?
 - Is the context sufficiently detailed?
 
 **Accuracy:**
+
 - Is the information verified and correct?
 - Are sources reliable and authoritative?
 - Is the data current and relevant?
 - Are there factual errors or inconsistencies?
 
 **Usefulness:**
+
 - Are the findings actionable?
 - Do the insights support decision-making?
 - Is the presentation clear and accessible?
 - Are the recommendations practical?
 
 **Efficiency:**
+
 - Was the research completed on time?
 - Were resources used effectively?
 - Was the process well-organized?
@@ -430,18 +471,21 @@ This guide outlines the structured research methodology used by the Deep Researc
 ### Process Improvement
 
 **Feedback Collection:**
+
 - Gather user feedback on research quality
 - Assess satisfaction with deliverables
 - Identify areas for improvement
 - Collect suggestions for enhancement
 
 **Performance Analysis:**
+
 - Track research metrics over time
 - Identify patterns and trends
 - Assess effectiveness of methodologies
 - Compare against benchmarks
 
 **Methodology Updates:**
+
 - Incorporate new research techniques
 - Update source lists and criteria
 - Refine quality standards

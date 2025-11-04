@@ -1,43 +1,57 @@
 import { ValidationResult, ValidationConfig, QualityMetric, BenchmarkResult } from '../types.js';
 
+/**
+ *
+ */
 export class ValidationEngine {
   private config: ValidationConfig;
 
+  /**
+   *
+   * @param config
+   */
   constructor(config: ValidationConfig) {
     this.config = config;
   }
 
   /**
    * Validate a prompt against quality metrics
+   * @param prompt
    */
   async validatePrompt(prompt: string): Promise<ValidationResult> {
     // Special handling for empty prompts
     if (!prompt || prompt.trim().length === 0) {
       const emptyMetrics: Record<QualityMetric, number> = {
-        'clarity': 1,
-        'specificity': 1,
-        'completeness': 1,
-        'efficiency': 1,
-        'consistency': 1,
-        'error-rate': 1
+        clarity: 1,
+        specificity: 1,
+        completeness: 1,
+        efficiency: 1,
+        consistency: 1,
+        'error-rate': 1,
       };
 
       return {
         qualityScore: 1.0,
         metrics: emptyMetrics,
-        issues: [{
-          type: 'error',
-          message: 'Empty prompt provided',
-          severity: 'high',
-          suggestion: 'Please provide a specific prompt with clear requirements and context'
-        }],
-        recommendations: ['Add specific task description', 'Include context and requirements', 'Specify desired output format'],
+        issues: [
+          {
+            type: 'error',
+            message: 'Empty prompt provided',
+            severity: 'high',
+            suggestion: 'Please provide a specific prompt with clear requirements and context',
+          },
+        ],
+        recommendations: [
+          'Add specific task description',
+          'Include context and requirements',
+          'Specify desired output format',
+        ],
         benchmarkComparison: {
           industryAverage: 7.5,
           percentile: 5,
-          category: 'below-average'
+          category: 'below-average',
         },
-        approved: false
+        approved: false,
       };
     }
 
@@ -63,14 +77,23 @@ export class ValidationEngine {
       issues,
       recommendations,
       benchmarkComparison,
-      approved
+      approved,
     };
   }
 
   /**
    * Calculate quality metrics for a prompt
+   * @param prompt
    */
-  async calculateQualityMetrics(prompt: string): Promise<any> {
+  async calculateQualityMetrics(prompt: string): Promise<{
+    clarity: number;
+    specificity: number;
+    completeness: number;
+    efficiency: number;
+    consistency: number;
+    errorRate: number;
+    overall: number;
+  }> {
     const metrics = await this.calculateAllMetrics(prompt);
 
     // Convert to expected QualityMetrics format
@@ -81,10 +104,16 @@ export class ValidationEngine {
       efficiency: metrics.efficiency || 0,
       consistency: metrics.consistency || 0,
       errorRate: metrics['error-rate'] || 0,
-      overall: Object.values(metrics).reduce((sum: number, val: number) => sum + val, 0) / Object.keys(metrics).length
+      overall:
+        Object.values(metrics).reduce((sum: number, val: number) => sum + val, 0) /
+        Object.keys(metrics).length,
     };
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private async calculateAllMetrics(prompt: string): Promise<Record<QualityMetric, number>> {
     const metrics: Record<QualityMetric, number> = {} as Record<QualityMetric, number>;
 
@@ -95,6 +124,11 @@ export class ValidationEngine {
     return metrics;
   }
 
+  /**
+   *
+   * @param prompt
+   * @param metric
+   */
   private async calculateMetric(prompt: string, metric: QualityMetric): Promise<number> {
     switch (metric) {
       case 'clarity':
@@ -114,13 +148,17 @@ export class ValidationEngine {
     }
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private calculateClarity(prompt: string): number {
     let score = 10;
 
     // Check for clarity indicators
     if (prompt.length < 10) score -= 3;
     if (prompt.length > 500) score -= 2;
-    if (!/[.!?]$/.test(prompt.trim())) score -= 1;
+    if (!/[!.?]$/.test(prompt.trim())) score -= 1;
     if (/\b(vague|unclear|uncertain|maybe|perhaps|somehow)\b/i.test(prompt)) score -= 2;
     if (prompt.split(' ').length < 5) score -= 2;
 
@@ -131,6 +169,10 @@ export class ValidationEngine {
     return Math.max(1, Math.min(10, score));
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private calculateSpecificity(prompt: string): number {
     let score = 5;
 
@@ -149,6 +191,10 @@ export class ValidationEngine {
     return Math.max(1, Math.min(10, score));
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private calculateCompleteness(prompt: string): number {
     let score = 5;
 
@@ -163,6 +209,10 @@ export class ValidationEngine {
     return Math.max(1, Math.min(10, score));
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private calculateEfficiency(prompt: string): number {
     let score = 10;
 
@@ -178,6 +228,10 @@ export class ValidationEngine {
     return Math.max(1, Math.min(10, score));
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private calculateConsistency(prompt: string): number {
     let score = 10;
 
@@ -186,7 +240,7 @@ export class ValidationEngine {
       ['include', 'exclude'],
       ['require', 'optional'],
       ['always', 'never'],
-      ['all', 'none']
+      ['all', 'none'],
     ];
 
     for (const [word1, word2] of contradictoryPairs) {
@@ -205,33 +259,54 @@ export class ValidationEngine {
     return Math.max(1, Math.min(10, score));
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private calculateErrorRate(prompt: string): number {
     let errorCount = 0;
 
     // Check for common errors
-    if (!/[.!?]$/.test(prompt.trim())) errorCount++;
+    if (!/[!.?]$/.test(prompt.trim())) errorCount++;
     if (prompt.length === 0) errorCount += 3;
     if (prompt.split(' ').length < 3) errorCount++;
     if (/\b\s+\b/.test(prompt)) errorCount++; // Double spaces
-    if (/[^a-zA-Z0-9\s.,!?;:()[\]{}'"`\/\\@#$%^&*+=<>|-]/.test(prompt)) errorCount++; // Invalid characters
+    if (/[^\d\s!"#$%&'()*+,./:;<=>?@A-Z[\\\]^`a-z{|}-]/.test(prompt)) errorCount++; // Invalid characters
 
     // Calculate error rate (lower is better, so we invert)
-    const errorRate = Math.max(0, 10 - errorCount * 2);
-
-    return errorRate;
+    return Math.max(0, 10 - errorCount * 2);
   }
 
+  /**
+   *
+   * @param metrics
+   */
   private calculateOverallScore(metrics: Record<QualityMetric, number>): number {
     const values = Object.values(metrics);
     const sum = values.reduce((acc, val) => acc + val, 0);
     return sum / values.length;
   }
 
+  /**
+   *
+   * @param prompt
+   * @param metrics
+   */
   private async identifyIssues(
     prompt: string,
     metrics: Record<QualityMetric, number>
-  ): Promise<any[]> {
-    const issues: any[] = [];
+  ): Promise<Array<{
+    type: 'warning' | 'error' | 'suggestion';
+    message: string;
+    severity: 'low' | 'medium' | 'high';
+    suggestion?: string;
+  }>> {
+    const issues: Array<{
+      type: 'warning' | 'error' | 'suggestion';
+      message: string;
+      severity: 'low' | 'medium' | 'high';
+      suggestion?: string;
+    }> = [];
 
     // Identify issues based on metrics
     for (const [metric, value] of Object.entries(metrics)) {
@@ -240,14 +315,14 @@ export class ValidationEngine {
           type: value < 4 ? 'error' : 'warning',
           message: `Low ${metric} score: ${value}/10`,
           severity: value < 4 ? 'high' : 'medium',
-          suggestion: this.getSuggestionForMetric(metric as QualityMetric)
+          suggestion: this.getSuggestionForMetric(metric as QualityMetric),
         });
       } else if (value < 8) {
         issues.push({
           type: 'suggestion',
           message: `Could improve ${metric}: ${value}/10`,
           severity: 'low',
-          suggestion: this.getSuggestionForMetric(metric as QualityMetric)
+          suggestion: this.getSuggestionForMetric(metric as QualityMetric),
         });
       }
     }
@@ -258,7 +333,7 @@ export class ValidationEngine {
         type: 'warning',
         message: 'Prompt is very short',
         severity: 'medium',
-        suggestion: 'Add more context and specific requirements'
+        suggestion: 'Add more context and specific requirements',
       });
     }
 
@@ -267,13 +342,17 @@ export class ValidationEngine {
         type: 'suggestion',
         message: 'Prompt is quite long',
         severity: 'low',
-        suggestion: 'Consider breaking down into multiple focused prompts'
+        suggestion: 'Consider breaking down into multiple focused prompts',
       });
     }
 
     return issues;
   }
 
+  /**
+   *
+   * @param metric
+   */
   private getSuggestionForMetric(metric: QualityMetric): string {
     const suggestions: Record<QualityMetric, string> = {
       clarity: 'Add specific details and clear action verbs',
@@ -281,15 +360,25 @@ export class ValidationEngine {
       completeness: 'Add context, background information, and requirements',
       efficiency: 'Make more concise while maintaining clarity',
       consistency: 'Ensure consistent terminology and avoid contradictions',
-      'error-rate': 'Fix grammar, spelling, and formatting issues'
+      'error-rate': 'Fix grammar, spelling, and formatting issues',
     };
 
     return suggestions[metric] || 'Review and improve this aspect of the prompt';
   }
 
+  /**
+   *
+   * @param metrics
+   * @param issues
+   */
   private async generateRecommendations(
     metrics: Record<QualityMetric, number>,
-    issues: any[]
+    issues: Array<{
+      type: 'warning' | 'error' | 'suggestion';
+      message: string;
+      severity: 'low' | 'medium' | 'high';
+      suggestion?: string;
+    }>
   ): Promise<string[]> {
     const recommendations: string[] = [];
 
@@ -299,7 +388,9 @@ export class ValidationEngine {
 
     for (const [metric, value] of lowestMetrics) {
       if (value < 7) {
-        recommendations.push(`Improve ${metric}: ${this.getSuggestionForMetric(metric as QualityMetric)}`);
+        recommendations.push(
+          `Improve ${metric}: ${this.getSuggestionForMetric(metric as QualityMetric)}`
+        );
       }
     }
 
@@ -314,7 +405,13 @@ export class ValidationEngine {
     return recommendations;
   }
 
-  private async benchmarkComparison(metrics: Record<QualityMetric, number>): Promise<BenchmarkResult> {
+  /**
+   *
+   * @param metrics
+   */
+  private async benchmarkComparison(
+    metrics: Record<QualityMetric, number>
+  ): Promise<BenchmarkResult> {
     // Industry averages (simulated)
     const industryAverages: Record<QualityMetric, number> = {
       clarity: 7.2,
@@ -322,12 +419,14 @@ export class ValidationEngine {
       completeness: 7.0,
       efficiency: 7.5,
       consistency: 8.0,
-      'error-rate': 8.2
+      'error-rate': 8.2,
     };
 
     // Calculate average score
     const promptAverage = this.calculateOverallScore(metrics);
-    const industryAverage = Object.values(industryAverages).reduce((a, b) => a + b, 0) / Object.values(industryAverages).length;
+    const industryAverage =
+      Object.values(industryAverages).reduce((a, b) => a + b, 0) /
+      Object.values(industryAverages).length;
 
     // Calculate percentile (simulated)
     const percentile = Math.min(100, Math.max(0, ((promptAverage - 5) / 5) * 100));
@@ -342,7 +441,7 @@ export class ValidationEngine {
     return {
       industryAverage,
       percentile,
-      category
+      category,
     };
   }
 }

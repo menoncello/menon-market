@@ -118,7 +118,6 @@ class MarketplaceValidator {
       }
 
       this.log('Configuration file structure validated', 'info');
-
     } catch (error) {
       this.log(`Invalid JSON in configuration file: ${error.message}`, 'errors');
     }
@@ -155,7 +154,6 @@ class MarketplaceValidator {
       for (const plugin of config.plugins) {
         this.validatePlugin(plugin, pluginsDir);
       }
-
     } catch (error) {
       this.log(`Error validating plugins: ${error.message}`, 'errors');
     }
@@ -194,7 +192,6 @@ class MarketplaceValidator {
       });
 
       this.log(`Plugin validated: ${plugin.name}`, 'info');
-
     } catch (error) {
       this.log(`Plugin ${plugin.name}: Invalid configuration - ${error.message}`, 'errors');
     }
@@ -214,7 +211,8 @@ class MarketplaceValidator {
     }
 
     try {
-      const skills = fs.readdirSync(skillsDir, { withFileTypes: true })
+      const skills = fs
+        .readdirSync(skillsDir, { withFileTypes: true })
         .filter(dirent => dirent.isDirectory())
         .map(dirent => dirent.name);
 
@@ -226,7 +224,6 @@ class MarketplaceValidator {
       for (const skill of skills) {
         this.validateSkill(path.join(skillsDir, skill), skill);
       }
-
     } catch (error) {
       this.log(`Error validating skills: ${error.message}`, 'errors');
     }
@@ -265,14 +262,12 @@ class MarketplaceValidator {
           if (!frontmatter.description) {
             this.log(`Skill ${skillName}: Missing description in frontmatter`, 'warnings');
           }
-
         } catch (error) {
           this.log(`Skill ${skillName}: Invalid frontmatter format`, 'errors');
         }
       }
 
       this.log(`Skill validated: ${skillName}`, 'info');
-
     } catch (error) {
       this.log(`Skill ${skillName}: Error reading file - ${error.message}`, 'errors');
     }
@@ -327,7 +322,7 @@ class MarketplaceValidator {
    */
   async validate(marketplacePath = './') {
     console.log(`Starting marketplace validation for: ${marketplacePath}`);
-    console.log('=' .repeat(50));
+    console.log('='.repeat(50));
 
     // Check if marketplace exists
     if (!fs.existsSync(marketplacePath)) {
@@ -343,7 +338,7 @@ class MarketplaceValidator {
     this.validateDocumentation(marketplacePath);
 
     // Report results
-    console.log('=' .repeat(50));
+    console.log('='.repeat(50));
     console.log('Validation Results:');
     console.log(`Errors: ${this.errors.length}`);
     console.log(`Warnings: ${this.warnings.length}`);

@@ -1,0 +1,30 @@
+{
+  "name": "menon-core",
+  "description": "Core functionality plugin for menon ecosystem",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "type": "module",
+  "skills": [],
+  "tools": [],
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "eslint": "^9.39.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "build": "bun build --target esm",
+    "test": "bun test",
+    "lint": "eslint . --fix",
+    "format": "prettier --write .",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "plugin",
+    "menon",
+    "core"
+  ],
+  "author": "Eduardo Menoncello",
+  "license": "MIT"
+}

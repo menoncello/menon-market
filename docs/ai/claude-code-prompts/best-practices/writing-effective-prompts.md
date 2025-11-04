@@ -11,11 +11,13 @@ Writing effective prompts is both an art and a science. This guide provides comp
 **Principle**: Be explicit and unambiguous in your instructions.
 
 **Poor Example**:
+
 ```
 Make the code better.
 ```
 
 **Excellent Example**:
+
 ```
 Refactor the user authentication module to improve maintainability by:
 1. Extracting the password validation logic into a separate service class
@@ -32,11 +34,13 @@ Refactor the user authentication module to improve maintainability by:
 **Principle**: Provide all necessary context for the AI to make informed decisions.
 
 **Poor Example**:
+
 ```
 Add a new feature to handle user payments.
 ```
 
 **Excellent Example**:
+
 ```
 Add a payment processing feature to our e-commerce platform.
 
@@ -66,6 +70,7 @@ Please follow our existing code patterns and TypeScript conventions.
 **Principle**: Organize instructions logically with clear hierarchy.
 
 **Template Structure**:
+
 ```
 # [Task Title]
 
@@ -93,6 +98,7 @@ Please follow our existing code patterns and TypeScript conventions.
 **Principle**: Reveal complexity gradually to prevent overwhelming the AI.
 
 **Example for Complex Task**:
+
 ```
 Phase 1: Analysis and Planning
 1. Analyze the current codebase structure
@@ -119,6 +125,7 @@ Please complete each phase and wait for confirmation before starting the next.
 ### Slash Commands
 
 #### Keep Templates Focused
+
 ```typescript
 // ❌ Poor: Too many responsibilities
 const badCommand = {
@@ -126,7 +133,7 @@ const badCommand = {
     Review the code, fix bugs, add tests, update docs,
     and deploy to production. Make sure everything
     follows best practices and the code is perfect.
-  `
+  `,
 };
 
 // ✅ Excellent: Single responsibility
@@ -148,11 +155,12 @@ const goodCommand = {
     {{#if verbose}}
     Include a detailed body explaining the motivation and approach.
     {{/if}}
-  `
+  `,
 };
 ```
 
 #### Use Clear Parameter Validation
+
 ```typescript
 // ✅ Excellent: Comprehensive parameter handling
 const commitCommand = {
@@ -165,23 +173,24 @@ const commitCommand = {
       defaultValue: 'conventional',
       validation: {
         allowedValues: ['conventional', 'simple', 'detailed'],
-        errorMessage: 'Message type must be: conventional, simple, or detailed'
-      }
+        errorMessage: 'Message type must be: conventional, simple, or detailed',
+      },
     },
     {
       name: 'includeScope',
       type: 'boolean',
       required: false,
       description: 'Include scope in commit message',
-      defaultValue: true
-    }
-  ]
+      defaultValue: true,
+    },
+  ],
 };
 ```
 
 ### Skills
 
 #### Implement Robust Error Handling
+
 ```typescript
 // ✅ Excellent: Comprehensive error handling
 const codeReviewSkill = {
@@ -194,8 +203,8 @@ const codeReviewSkill = {
         configuration: {
           condition: 'hasValidInput()',
           onSuccess: 'analyze-code',
-          onError: 'handle-invalid-input'
-        }
+          onError: 'handle-invalid-input',
+        },
       },
       {
         id: 'handle-invalid-input',
@@ -215,27 +224,21 @@ const codeReviewSkill = {
             2. Verify you have read permissions
             3. Ensure file is a supported type
             4. Try again with corrected input
-          `
-        }
-      }
+          `,
+        },
+      },
     ],
     errorHandling: {
       strategy: 'graceful-degradation',
-      fallbackActions: [
-        'provide-error-analysis',
-        'suggest-alternatives',
-        'enable-partial-results'
-      ],
-      recoveryActions: [
-        'retry-with-altered-parameters',
-        'switch-to-simpler-approach'
-      ]
-    }
-  }
+      fallbackActions: ['provide-error-analysis', 'suggest-alternatives', 'enable-partial-results'],
+      recoveryActions: ['retry-with-altered-parameters', 'switch-to-simpler-approach'],
+    },
+  },
 };
 ```
 
 #### Design for Reusability
+
 ```typescript
 // ✅ Excellent: Modular and reusable skill design
 const documentationGenerator = {
@@ -268,49 +271,64 @@ const documentationGenerator = {
 
       Format: Markdown with code examples
       Style: Consistent with existing component docs
-    `
+    `,
   },
 
   contextProviders: [
     'existing-codebase-patterns',
     'project-documentation-standards',
-    'component-usage-examples'
-  ]
+    'component-usage-examples',
+  ],
 };
 ```
 
 ### CLAUDE.md Files
 
 #### Structure for Maintainability
+
 ```markdown
 # Project Configuration
 
 ## Development Standards
+
 ### Code Style
+
 ### Testing Requirements
+
 ### Documentation Standards
 
 ## Tool Preferences
+
 ### Build Tools
+
 ### Development Environment
+
 ### External Services
 
 ## AI Assistant Configuration
+
 ### Response Format Preferences
+
 ### Task Execution Guidelines
+
 ### Quality Standards
 
 ## Security and Performance
+
 ### Security Requirements
+
 ### Performance Standards
+
 ### Accessibility Guidelines
 ```
 
 #### Be Specific About Preferences
+
 ```markdown
 ## AI Assistant Preferences
 
 ### Code Style Requirements
+
 - ALWAYS use explicit TypeScript return types
 - NEVER disable ESLint rules with inline comments
 - Prefer functional components over class components
@@ -318,6 +336,7 @@ const documentationGenerator = {
 - Implement proper error boundaries
 
 ### Testing Requirements
+
 - ALWAYS include tests for new functionality
 - Target 90%+ code coverage for critical paths
 - Use AAA pattern (Arrange, Act, Assert)
@@ -325,6 +344,7 @@ const documentationGenerator = {
 - Include edge case testing
 
 ### Documentation Requirements
+
 - Update README.md for API changes
 - Add JSDoc comments for public functions
 - Include usage examples in component documentation
@@ -334,6 +354,7 @@ const documentationGenerator = {
 ### Agent Orchestration
 
 #### Define Clear Roles and Responsibilities
+
 ```typescript
 const featureImplementationOrchestration = {
   phases: [
@@ -347,13 +368,13 @@ const featureImplementationOrchestration = {
             'Analyze requirements and constraints',
             'Design overall system architecture',
             'Define component boundaries and interfaces',
-            'Create implementation roadmap'
+            'Create implementation roadmap',
           ],
           deliverables: [
             'architecture-documentation',
             'component-specifications',
-            'implementation-plan'
-          ]
+            'implementation-plan',
+          ],
         },
         {
           type: 'security-analyst',
@@ -362,40 +383,37 @@ const featureImplementationOrchestration = {
             'Identify security requirements',
             'Perform threat modeling',
             'Define security controls',
-            'Plan security testing'
+            'Plan security testing',
           ],
-          deliverables: [
-            'security-requirements',
-            'threat-model',
-            'security-implementation-plan'
-          ]
-        }
-      ]
-    }
-  ]
+          deliverables: ['security-requirements', 'threat-model', 'security-implementation-plan'],
+        },
+      ],
+    },
+  ],
 };
 ```
 
 #### Implement Effective Communication Protocols
+
 ```typescript
 const communicationProtocol = {
   messageFormats: {
     statusUpdate: {
       structure: 'status|agent|progress|blockers|next-steps',
       frequency: 'every-30-seconds',
-      detailLevel: 'concise'
+      detailLevel: 'concise',
     },
     handoff: {
       structure: 'handoff|from-agent|to-agent|context|deliverables|next-actions',
       conditions: 'phase-completion OR error-recovery',
-      validation: 'required-fields-present'
+      validation: 'required-fields-present',
     },
     conflict: {
       structure: 'conflict|agents|issue|proposed-resolutions|decision-needed',
       escalation: 'timeout-60-seconds OR priority-high',
-      resolution: 'consensus OR tie-breaker'
-    }
-  }
+      resolution: 'consensus OR tie-breaker',
+    },
+  },
 };
 ```
 
@@ -573,7 +591,7 @@ const roleBasedPrompts = {
     - Internationalization considerations
 
     Provide specific improvements with user benefits.
-  `
+  `,
 };
 ```
 
@@ -642,7 +660,7 @@ const qualityCheckpoints = {
     ✅ Documentation is clear and accurate
 
     If any checkpoint fails, revise the code before proceeding.
-  `
+  `,
 };
 ```
 
@@ -679,6 +697,7 @@ If you find any issues, correct them and explain your improvements.
 ## Common Anti-Patterns to Avoid
 
 ### 1. Vague Instructions
+
 ```typescript
 // ❌ Anti-pattern: Too vague
 "Make the code better and faster."
@@ -692,6 +711,7 @@ If you find any issues, correct them and explain your improvements.
 ```
 
 ### 2. Insufficient Context
+
 ```typescript
 // ❌ Anti-pattern: Missing context
 "Add user authentication to the app."
@@ -703,6 +723,7 @@ for API access. User model already exists in prisma/schema.prisma."
 ```
 
 ### 3. Overly Complex Single Prompts
+
 ```typescript
 // ❌ Anti-pattern: Trying to do everything at once
 "Analyze the entire codebase, fix all bugs, add tests,
@@ -717,6 +738,7 @@ Phase 4: Update documentation for the changes made."
 ```
 
 ### 4. Ignoring Error Scenarios
+
 ```typescript
 // ❌ Anti-pattern: No error handling
 "Create an API endpoint to process payments."
@@ -742,23 +764,27 @@ const promptTestSuite = {
       name: 'Simple Feature Request',
       input: 'Add a dark mode toggle',
       expectedElements: ['theme context', 'toggle component', 'CSS variables'],
-      validationCriteria: ['accessibility support', 'persistence', 'smooth transitions']
+      validationCriteria: ['accessibility support', 'persistence', 'smooth transitions'],
     },
     {
       name: 'Complex Refactoring',
       input: 'Refactor the authentication system to use OAuth',
       expectedElements: ['OAuth providers', 'token management', 'user session handling'],
-      validationCriteria: ['security considerations', 'backward compatibility', 'migration strategy']
-    }
+      validationCriteria: [
+        'security considerations',
+        'backward compatibility',
+        'migration strategy',
+      ],
+    },
   ],
 
   validationMetrics: [
-    'completion_rate',           // Did the AI complete all requested tasks?
-    'quality_score',           // How well does the solution meet quality standards?
-    'accuracy_rating',         // Are the technical details correct?
-    'user_satisfaction',       // Would a developer find this helpful?
-    'efficiency_score'         // Is the solution efficient and maintainable?
-  ]
+    'completion_rate', // Did the AI complete all requested tasks?
+    'quality_score', // How well does the solution meet quality standards?
+    'accuracy_rating', // Are the technical details correct?
+    'user_satisfaction', // Would a developer find this helpful?
+    'efficiency_score', // Is the solution efficient and maintainable?
+  ],
 };
 ```
 
@@ -768,7 +794,7 @@ const promptTestSuite = {
 const promptVariants = {
   variantA: {
     name: 'Direct Instructions',
-    template: 'Implement X using Y technology with Z requirements.'
+    template: 'Implement X using Y technology with Z requirements.',
   },
   variantB: {
     name: 'Contextual Instructions',
@@ -782,7 +808,7 @@ const promptVariants = {
       - Security best practices
       - Maintainability
       - Testing requirements
-    `
+    `,
   },
   variantC: {
     name: 'Step-by-Step Instructions',
@@ -797,8 +823,8 @@ const promptVariants = {
       Step 6: Add documentation
 
       Please complete each step and confirm before proceeding.
-    `
-  }
+    `,
+  },
 };
 ```
 
@@ -809,23 +835,23 @@ const promptVariants = {
 ```typescript
 interface PromptMetrics {
   // Effectiveness metrics
-  taskCompletionRate: number;        // % of tasks completed successfully
-  qualityScore: number;              // Average quality rating (1-10)
-  userSatisfactionScore: number;     // User satisfaction rating
+  taskCompletionRate: number; // % of tasks completed successfully
+  qualityScore: number; // Average quality rating (1-10)
+  userSatisfactionScore: number; // User satisfaction rating
 
   // Efficiency metrics
-  averageResponseTime: number;       // Average time to complete task
-  tokenUsageEfficiency: number;      // Results achieved per token
-  costPerTask: number;               // Financial cost per completed task
+  averageResponseTime: number; // Average time to complete task
+  tokenUsageEfficiency: number; // Results achieved per token
+  costPerTask: number; // Financial cost per completed task
 
   // Reliability metrics
-  errorRate: number;                 // % of tasks that failed
-  retryRate: number;                 // % of tasks needing retries
-  consistencyScore: number;          // Consistency of results across runs
+  errorRate: number; // % of tasks that failed
+  retryRate: number; // % of tasks needing retries
+  consistencyScore: number; // Consistency of results across runs
 
   // Learning metrics
-  improvementOverTime: number;       // Performance improvement trend
-  adaptationSpeed: number;           // How quickly prompt adapts to feedback
+  improvementOverTime: number; // Performance improvement trend
+  adaptationSpeed: number; // How quickly prompt adapts to feedback
 }
 ```
 
@@ -840,8 +866,8 @@ const promptImprovementCycle = {
         'Collect performance metrics',
         'Gather user feedback',
         'Identify failure patterns',
-        'Track success criteria'
-      ]
+        'Track success criteria',
+      ],
     },
     {
       name: 'Analyze',
@@ -849,8 +875,8 @@ const promptImprovementCycle = {
         'Analyze performance data',
         'Identify improvement opportunities',
         'Correlate prompt variations with outcomes',
-        'Document best practices'
-      ]
+        'Document best practices',
+      ],
     },
     {
       name: 'Optimize',
@@ -858,8 +884,8 @@ const promptImprovementCycle = {
         'Refine prompt templates',
         'Add new validation rules',
         'Improve error handling',
-        'Enhance context provision'
-      ]
+        'Enhance context provision',
+      ],
     },
     {
       name: 'Test',
@@ -867,17 +893,17 @@ const promptImprovementCycle = {
         'A/B test prompt variations',
         'Validate with edge cases',
         'Measure performance improvements',
-        'Document successful patterns'
-      ]
-    }
+        'Document successful patterns',
+      ],
+    },
   ],
 
   frequency: 'bi-weekly',
   successCriteria: {
     qualityImprovement: '> 10%',
     efficiencyGain: '> 15%',
-    errorReduction: '> 20%'
-  }
+    errorReduction: '> 20%',
+  },
 };
 ```
 
@@ -896,4 +922,4 @@ Remember that prompt engineering is iterative. Start with these principles, gath
 
 ---
 
-*This guide will be updated as new prompting techniques and best practices emerge. Check back regularly for the latest recommendations.*
+_This guide will be updated as new prompting techniques and best practices emerge. Check back regularly for the latest recommendations._

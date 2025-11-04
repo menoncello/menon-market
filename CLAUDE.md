@@ -1,5 +1,19 @@
-
 Default to using Bun instead of Node.js.
+
+## Code and Documentation Standards
+
+**CRITICAL RULE**: NEVER use comments to disable ESLint rules (eslint-disable, eslint-disable-next-line, etc.).
+
+- ❌ **NEVER USE** `// eslint-disable-next-line`
+- ❌ **NEVER USE** `/* eslint-disable */`
+- ✅ **ALWAYS FIX** the underlying code issue
+- ✅ **PROPERLY REFACTOR** to fix ESLint violations instead of disabling them
+
+**CRITICAL**: NEVER modify @eslint.config.js files or create separate lint override files to bypass lint rules.
+
+**Rationale**: Disabling rules or modifying config files creates inconsistencies and technical debt. Code must comply with all ESLint rules without exceptions.
+
+**No Shortcuts**: If ESLint flags an issue, refactor the code properly. Never use lazy workarounds to satisfy linting rules.
 
 - Use `bun <file>` instead of `node <file>` or `ts-node <file>`
 - Use `bun test` instead of `jest` or `vitest`

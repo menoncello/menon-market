@@ -1,41 +1,41 @@
 ---
 name: api-generator
-description: "Generate complete REST APIs with models, routes, controllers, and documentation"
+description: 'Generate complete REST APIs with models, routes, controllers, and documentation'
 parameters:
   - name: api-name
     type: string
     required: true
-    description: "Name of the API to generate"
+    description: 'Name of the API to generate'
   - name: framework
     type: string
     required: false
-    default: "express"
-    description: "Backend framework to use (express, fastify, koa)"
+    default: 'express'
+    description: 'Backend framework to use (express, fastify, koa)'
   - name: database
     type: string
     required: false
-    default: "mongodb"
-    description: "Database type (mongodb, postgresql, mysql)"
+    default: 'mongodb'
+    description: 'Database type (mongodb, postgresql, mysql)'
   - name: authentication
     type: boolean
     required: false
     default: true
-    description: "Include authentication and authorization"
+    description: 'Include authentication and authorization'
   - name: testing
     type: boolean
     required: false
     default: true
-    description: "Include test files and testing setup"
+    description: 'Include test files and testing setup'
   - name: documentation
     type: boolean
     required: false
     default: true
-    description: "Include API documentation with Swagger/OpenAPI"
+    description: 'Include API documentation with Swagger/OpenAPI'
 examples:
-  - command: "/api-generator UserAPI --framework=express --database=mongodb"
-    description: "Generate a complete user management API with Express and MongoDB"
-  - command: "/api-generator BlogAPI --framework=fastify --database=postgresql --authentication=false"
-    description: "Generate a blog API with Fastify and PostgreSQL without authentication"
+  - command: '/api-generator UserAPI --framework=express --database=mongodb'
+    description: 'Generate a complete user management API with Express and MongoDB'
+  - command: '/api-generator BlogAPI --framework=fastify --database=postgresql --authentication=false'
+    description: 'Generate a blog API with Fastify and PostgreSQL without authentication'
 ---
 
 # API Generator
@@ -127,6 +127,7 @@ The command will create the following project structure:
 
 {{#if (eq database "mongodb")}}
 **MongoDB Model (Mongoose)**
+
 ```javascript
 // src/models/{{camelCase api-name}}.model.js
 const mongoose = require('mongoose');
@@ -157,8 +158,10 @@ const {{pascalCase api-name}}Schema = new mongoose.Schema({
 
 module.exports = mongoose.model('{{pascalCase api-name}}', {{pascalCase api-name}}Schema);
 ```
+
 {{else}}
 **SQL Model (Sequelize)**
+
 ```javascript
 // src/models/{{camelCase api-name}}.model.js
 const { DataTypes } = require('sequelize');
@@ -194,6 +197,7 @@ module.exports = (sequelize) => {
   return {{pascalCase api-name}};
 };
 ```
+
 {{/if}}
 
 ### 2. Controllers
@@ -350,6 +354,7 @@ module.exports = new {{pascalCase api-name}}Controller();
 ### 3. Routes
 
 {{#if (eq framework "express")}}
+
 ```javascript
 // src/routes/{{camelCase api-name}}.routes.js
 const express = require('express');
@@ -380,6 +385,7 @@ router.delete('/:id', {{camelCase api-name}}Controller.delete{{pascalCase api-na
 
 module.exports = router;
 ```
+
 {{/if}}
 
 ### 4. Services
@@ -467,6 +473,7 @@ module.exports = new {{pascalCase api-name}}Service();
 ```
 
 {{#if authentication}}
+
 ### 5. Authentication System
 
 ```javascript
@@ -481,7 +488,7 @@ const authMiddleware = async (req, res, next) => {
     if (!token) {
       return res.status(401).json({
         success: false,
-        message: 'Access denied. No token provided.'
+        message: 'Access denied. No token provided.',
       });
     }
 
@@ -491,7 +498,7 @@ const authMiddleware = async (req, res, next) => {
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: 'Invalid token.'
+        message: 'Invalid token.',
       });
     }
 
@@ -500,18 +507,20 @@ const authMiddleware = async (req, res, next) => {
   } catch (error) {
     res.status(401).json({
       success: false,
-      message: 'Invalid token.'
+      message: 'Invalid token.',
     });
   }
 };
 
 module.exports = authMiddleware;
 ```
+
 {{/if}}
 
 ### 6. Testing Setup
 
 {{#if testing}}
+
 ```javascript
 // tests/integration/api/{{camelCase api-name}}.test.js
 const request = require('supertest');
@@ -595,11 +604,13 @@ describe('{{pascalCase api-name}} API', () => {
   });
 });
 ```
+
 {{/if}}
 
 ### 7. API Documentation
 
 {{#if documentation}}
+
 ```yaml
 # docs/api.yaml
 openapi: 3.0.0
@@ -748,11 +759,13 @@ components:
         itemsPerPage:
           type: integer
 ```
+
 {{/if}}
 
 ## Configuration Files
 
 ### Package.json
+
 ```json
 {
   "name": "{{kebabCase api-name}}-api",
@@ -786,6 +799,7 @@ components:
 ```
 
 ### Environment Configuration
+
 ```bash
 # .env.example
 PORT=3000
@@ -820,12 +834,14 @@ JWT_EXPIRE=7d
 After generating the API:
 
 1. **Install dependencies**:
+
    ```bash
    cd {{pascalCase api-name}}-API
    npm install
    ```
 
 2. **Configure environment**:
+
    ```bash
    cp .env.example .env
    # Edit .env with your configuration
@@ -833,25 +849,32 @@ After generating the API:
 
 3. **Set up database**:
    {{#if (eq database "mongodb")}}
+
    ```bash
    # Start MongoDB
    mongod
    ```
+
    {{/if}}
    {{#if (eq database "postgresql")}}
+
    ```bash
    # Create PostgreSQL database
    createdb {{kebabCase api-name}}_api
    ```
+
    {{/if}}
    {{#if (eq database "mysql")}}
+
    ```bash
    # Create MySQL database
    mysql -u root -p -e "CREATE DATABASE {{kebabCase api-name}}_api;"
    ```
+
    {{/if}}
 
 4. **Run the API**:
+
    ```bash
    # Development
    npm run dev
@@ -861,6 +884,7 @@ After generating the API:
    ```
 
 5. **Run tests**:
+
    ```bash
    npm test
    ```
@@ -875,6 +899,7 @@ After generating the API:
 The generated API includes the following endpoints:
 
 ### {{pascalCase api-name}} Management
+
 - `GET /api/{{kebabCase api-name}}` - Get all {{pluralize (camelCase api-name)}} (with pagination)
 - `POST /api/{{kebabCase api-name}}` - Create new {{camelCase api-name}}
 - `GET /api/{{kebabCase api-name}}/:id` - Get {{camelCase api-name}} by ID
@@ -882,17 +907,21 @@ The generated API includes the following endpoints:
 - `DELETE /api/{{kebabCase api-name}}/:id` - Delete {{camelCase api-name}}
 
 {{#if authentication}}
+
 ### Authentication
+
 - `POST /api/auth/register` - Register new user
 - `POST /api/auth/login` - User login
 - `POST /api/auth/logout` - User logout
 - `GET /api/auth/profile` - Get user profile
-{{/if}}
+  {{/if}}
 
 {{#if documentation}}
+
 ### Documentation
+
 - `GET /api-docs` - Swagger API documentation
-{{/if}}
+  {{/if}}
 
 ## Features Included
 
@@ -918,4 +947,4 @@ The generated API includes the following endpoints:
 
 ---
 
-*This API generator creates a production-ready foundation for your REST API development. Customize and extend it according to your specific requirements.*
+_This API generator creates a production-ready foundation for your REST API development. Customize and extend it according to your specific requirements._

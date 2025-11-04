@@ -52,24 +52,28 @@ Claude Code Prompts operate on a **meta-tool architecture** that transforms gene
 ### 2. Four Distinct Prompt Types
 
 #### Slash Commands (15,000 character budget)
+
 - Quick automation and repetitive tasks
 - Simple, single-purpose functionality
 - Fast execution with minimal overhead
 - Examples: `/commit`, `/review-pr`, `/test`
 
 #### Skills (Complex, domain-specific)
+
 - Multi-step workflows with state management
 - Specialized domain expertise
 - Progressive disclosure of complexity
 - Examples: `superpowers:brainstorming`, `n8n-code-javascript`
 
 #### CLAUDE.md Files (Project-level)
+
 - Persistent project conventions and standards
 - Team-wide configuration and preferences
 - Environment-specific adaptations
 - Examples: Code style guidelines, testing requirements
 
 #### Agent Prompts (Multi-agent orchestration)
+
 - Coordination between multiple specialized agents
 - Complex workflow management
 - Hierarchical task decomposition
@@ -78,18 +82,21 @@ Claude Code Prompts operate on a **meta-tool architecture** that transforms gene
 ### 3. Performance Optimization Patterns
 
 #### Context Engineering
+
 - **Hierarchical context management** with progressive disclosure
 - **Intelligent compression** reducing context usage by 60-80%
 - **Dynamic context allocation** based on task complexity
 - **Context caching** for repeated operations
 
 #### Model Selection Strategies
+
 - **Haiku** for quick, straightforward tasks (cost optimization)
 - **Sonnet** for general development work (balance of speed/capability)
 - **Opus** for complex architectural decisions (maximum capability)
 - **Specialized models** for domain-specific tasks
 
 #### Parallel Execution
+
 - **Concurrent agent dispatch** for independent tasks
 - **Pipeline processing** for dependent operations
 - **Resource pooling** for efficient utilization
@@ -98,23 +105,26 @@ Claude Code Prompts operate on a **meta-tool architecture** that transforms gene
 ### 4. Advanced Prompting Techniques
 
 #### Multi-Agent Orchestration
+
 ```typescript
 // Example: Parallel code review and testing
 const agents = [
   { type: 'code-reviewer', task: 'review implementation' },
   { type: 'test-analyzer', task: 'verify test coverage' },
-  { type: 'security-scanner', task: 'check vulnerabilities' }
+  { type: 'security-scanner', task: 'check vulnerabilities' },
 ];
 // Execute in parallel for maximum efficiency
 ```
 
 #### Dynamic Skill Composition
+
 - **Runtime skill selection** based on task requirements
 - **Skill chaining** for complex workflows
 - **Conditional skill activation** based on context
 - **Skill parameter injection** for customization
 
 #### Progressive Disclosure
+
 - **Layered information presentation** preventing overwhelm
 - **Contextual detail levels** based on user expertise
 - **Interactive exploration** of complex topics
@@ -123,12 +133,14 @@ const agents = [
 ### 5. Security and Permission Management
 
 #### Permission Scoping
+
 - **Tool-level permissions** for granular control
 - **Context-aware authorization** based on task requirements
 - **Dynamic permission adjustment** during execution
 - **Audit logging** for security compliance
 
 #### Security Best Practices
+
 - **Input validation** and sanitization
 - **Output filtering** and sensitive data protection
 - **Execution sandboxing** for untrusted prompts
@@ -138,20 +150,20 @@ const agents = [
 
 ### Development Workflow Improvements
 
-| Task Type | Traditional Approach | Claude Code Prompts | Improvement |
-|-----------|---------------------|---------------------|-------------|
-| Feature Implementation | 45 minutes | 10 minutes | 4.5x faster |
-| Code Review | 30 minutes | 8 minutes | 3.75x faster |
-| Documentation Generation | 60 minutes | 15 minutes | 4x faster |
-| Testing Setup | 90 minutes | 20 minutes | 4.5x faster |
+| Task Type                | Traditional Approach | Claude Code Prompts | Improvement  |
+| ------------------------ | -------------------- | ------------------- | ------------ |
+| Feature Implementation   | 45 minutes           | 10 minutes          | 4.5x faster  |
+| Code Review              | 30 minutes           | 8 minutes           | 3.75x faster |
+| Documentation Generation | 60 minutes           | 15 minutes          | 4x faster    |
+| Testing Setup            | 90 minutes           | 20 minutes          | 4.5x faster  |
 
 ### Cost Efficiency
 
-| Model Selection | Cost per Task | Task Quality | Recommendation |
-|-----------------|---------------|--------------|----------------|
-| Haiku (Quick tasks) | $0.00025 | Good | High-frequency operations |
-| Sonnet (General) | $0.003 | Excellent | Most development tasks |
-| Opus (Complex) | $0.015 | Superior | Architecture decisions |
+| Model Selection     | Cost per Task | Task Quality | Recommendation            |
+| ------------------- | ------------- | ------------ | ------------------------- |
+| Haiku (Quick tasks) | $0.00025      | Good         | High-frequency operations |
+| Sonnet (General)    | $0.003        | Excellent    | Most development tasks    |
+| Opus (Complex)      | $0.015        | Superior     | Architecture decisions    |
 
 ### Context Optimization
 
@@ -194,18 +206,21 @@ const agents = [
 Based on research trends and development patterns:
 
 ### Near-term (3-6 months)
+
 - **Enhanced skill capabilities** with multi-modal support
 - **Improved context management** with persistence layers
 - **Advanced debugging tools** for prompt development
 - **Performance monitoring** and optimization dashboards
 
 ### Medium-term (6-12 months)
+
 - **AI-enhanced prompt optimization** with adaptive learning
 - **Skill marketplace** for community-contributed prompts
 - **Advanced collaboration features** for team development
 - **Integration with popular IDEs** and development tools
 
 ### Long-term (12+ months)
+
 - **Autonomous prompt generation** from requirements
 - **Cross-platform compatibility** with different AI models
 - **Advanced reasoning capabilities** for complex problem-solving
@@ -239,6 +254,6 @@ This research documentation is provided under the MIT License. See LICENSE file 
 
 ---
 
-*Last updated: November 2025*
-*Research conducted by: Claude Code Research Team*
-*Version: 1.0.0*
+_Last updated: November 2025_
+_Research conducted by: Claude Code Research Team_
+_Version: 1.0.0_

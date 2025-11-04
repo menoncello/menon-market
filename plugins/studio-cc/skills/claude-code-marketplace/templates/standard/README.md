@@ -17,6 +17,7 @@ Add this marketplace to Claude Code:
 ## Available Plugins
 
 ### [Plugin Name]
+
 - **Description**: [Brief description]
 - **Version**: [version]
 - **Usage**: `/[command-name] [options]`
@@ -24,6 +25,7 @@ Add this marketplace to Claude Code:
 ## Available Skills
 
 ### [Skill Name]
+
 - **Description**: [Brief description]
 - **Category**: [category]
 - **Usage**: [trigger phrase or usage pattern]
@@ -31,11 +33,13 @@ Add this marketplace to Claude Code:
 ## Quick Start
 
 1. Install the marketplace:
+
    ```bash
    /plugin marketplace add [repository-url]
    ```
 
 2. Browse available plugins:
+
    ```bash
    /plugin
    ```
@@ -97,4 +101,4 @@ This marketplace is licensed under the [License Type] License.
 
 ---
 
-*Generated with Claude Code Marketplace Manager*
+_Generated with Claude Code Marketplace Manager_

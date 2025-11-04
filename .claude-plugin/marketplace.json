@@ -20,13 +20,7 @@
       "version": "1.0.0",
       "description": "Studio Control Center plugin for Claude Code with integrated skills for code analysis, optimization, and best practices.",
       "category": "development",
-      "tags": [
-        "studio",
-        "code-analysis",
-        "optimization",
-        "best-practices",
-        "ai"
-      ]
+      "tags": ["studio", "code-analysis", "optimization", "best-practices", "ai"]
     },
     {
       "name": "research-tools",
@@ -38,13 +32,42 @@
       "version": "1.0.0",
       "description": "Comprehensive research tools plugin with advanced data analysis and deep research capabilities for academic and professional research workflows.",
       "category": "research",
+      "tags": ["research", "data-analysis", "academic", "deep-research", "analysis"]
+    },
+    {
+      "name": "menon-core",
+      "author": {
+        "name": "Eduardo Menoncello",
+        "email": "eduardo@menoncello.com"
+      },
+      "source": "./plugins/menon-core",
+      "version": "1.0.0",
+      "description": "Core functionality plugin for the menon ecosystem with feature management and configuration capabilities.",
+      "category": "development",
+      "tags": ["core", "feature-management", "configuration", "ecosystem", "utilities"]
+    }
+  ],
+  "agents": [
+    {
+      "name": "orchestrator-agent",
+      "author": {
+        "name": "Eduardo Menoncello",
+        "email": "eduardo@menoncello.com"
+      },
+      "source": "./agents/orchestrator",
+      "version": "1.0.0",
+      "description": "Advanced orchestration agent for managing subagents, commands, MCP servers, and skills with parallel execution capabilities.",
+      "category": "automation",
+      "type": "agent",
       "tags": [
-        "research",
-        "data-analysis",
-        "academic",
-        "deep-research",
-        "analysis"
-      ]
+        "orchestration",
+        "agent-management",
+        "task-planning",
+        "parallel-execution",
+        "resource-optimization"
+      ],
+      "skills": ["orchestration-management", "resource-optimizer"],
+      "tools": ["task-planning", "agent-coordination", "resource-management"]
     }
   ],
   "categories": {
@@ -57,6 +80,14 @@
       "utilities",
       "security",
       "testing"
+    ],
+    "agents": [
+      "automation",
+      "orchestration",
+      "management",
+      "coordination",
+      "monitoring",
+      "optimization"
     ],
     "skills": [
       "automation",

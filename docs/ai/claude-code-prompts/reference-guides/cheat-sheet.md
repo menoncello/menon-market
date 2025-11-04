@@ -2,18 +2,19 @@
 
 ## Prompt Types Overview
 
-| Type | Use Case | Character Limit | Best Model | Execution Time |
-|------|----------|----------------|------------|----------------|
-| **Slash Commands** | Quick automation | 15,000 | Haiku | < 5 seconds |
-| **Skills** | Complex workflows | 50,000+ | Sonnet/Opus | 30-300 seconds |
-| **CLAUDE.md** | Project standards | Persistent | N/A | Cached |
-| **Agent Orchestration** | Multi-agent tasks | Variable | Mixed | 5-30 minutes |
+| Type                    | Use Case          | Character Limit | Best Model  | Execution Time |
+| ----------------------- | ----------------- | --------------- | ----------- | -------------- |
+| **Slash Commands**      | Quick automation  | 15,000          | Haiku       | < 5 seconds    |
+| **Skills**              | Complex workflows | 50,000+         | Sonnet/Opus | 30-300 seconds |
+| **CLAUDE.md**           | Project standards | Persistent      | N/A         | Cached         |
+| **Agent Orchestration** | Multi-agent tasks | Variable        | Mixed       | 5-30 minutes   |
 
 ## Quick Templates
 
 ### Slash Command Templates
 
 #### Basic Command
+
 ```typescript
 const command = {
   name: 'command-name',
@@ -35,13 +36,14 @@ const command = {
       name: 'param',
       type: 'string',
       required: false,
-      defaultValue: 'default'
-    }
-  ]
+      defaultValue: 'default',
+    },
+  ],
 };
 ```
 
 #### File Operations
+
 ```typescript
 const fileOps = {
   template: `
@@ -56,39 +58,41 @@ const fileOps = {
     - Backup original file
     - Validate syntax
     - Update imports if needed
-  `
+  `,
 };
 ```
 
 ### Skill Templates
 
 #### Code Generation
+
 ```typescript
 const codeGenSkill = {
   workflow: {
     steps: [
       {
         name: 'analyze-requirements',
-        template: 'Analyze: {{requirements}}'
+        template: 'Analyze: {{requirements}}',
       },
       {
         name: 'design-solution',
-        template: 'Design architecture for {{feature}}'
+        template: 'Design architecture for {{feature}}',
       },
       {
         name: 'implement-code',
-        template: 'Implement {{feature}} with {{techStack}}'
+        template: 'Implement {{feature}} with {{techStack}}',
       },
       {
         name: 'create-tests',
-        template: 'Create tests for {{feature}}'
-      }
-    ]
-  }
+        template: 'Create tests for {{feature}}',
+      },
+    ],
+  },
 };
 ```
 
 #### Review Process
+
 ```typescript
 const reviewSkill = {
   template: `
@@ -105,13 +109,14 @@ const reviewSkill = {
 
     ## Priority
     {{priority}} - {{reasoning}}
-  `
+  `,
 };
 ```
 
 ## Best Practices Checklist
 
 ### ✅ Do This
+
 - [ ] **Be Specific**: Use clear, unambiguous instructions
 - [ ] **Provide Context**: Include relevant background information
 - [ ] **Structure Information**: Use headings and bullet points
@@ -121,6 +126,7 @@ const reviewSkill = {
 - [ ] **Document Intent**: Explain why, not just what
 
 ### ❌ Don't Do This
+
 - [ ] **Be Vague**: Avoid "make it better" instructions
 - [ ] **Assume Knowledge**: Don't omit critical context
 - [ ] **Overload**: Don't try to do everything at once
@@ -132,6 +138,7 @@ const reviewSkill = {
 ## Common Patterns
 
 ### 1. Progressive Disclosure
+
 ```
 Phase 1: Analysis and Planning
 Phase 2: Core Implementation
@@ -139,6 +146,7 @@ Phase 3: Enhancement and Polish
 ```
 
 ### 2. Error Handling
+
 ```
 try {
   // Main operation
@@ -150,6 +158,7 @@ try {
 ```
 
 ### 3. Validation Pipeline
+
 ```
 1. Input validation
 2. Permission checking
@@ -159,6 +168,7 @@ try {
 ```
 
 ### 4. Testing Strategy
+
 ```
 - Unit tests for individual functions
 - Integration tests for component interactions
@@ -169,6 +179,7 @@ try {
 ## Quick Commands
 
 ### Git Operations
+
 ```bash
 # Smart commit
 /commit "feat: add user authentication"
@@ -181,6 +192,7 @@ try {
 ```
 
 ### Code Generation
+
 ```bash
 # Component generation
 /generate-component UserCard --props="user,onClick"
@@ -193,6 +205,7 @@ try {
 ```
 
 ### Documentation
+
 ```bash
 # API docs
 /generate-api-docs ./routes
@@ -206,34 +219,36 @@ try {
 
 ## Model Selection Guide
 
-| Task Complexity | Recommended Model | Cost Efficiency | When to Use |
-|-----------------|-------------------|-----------------|-------------|
-| **Simple** | Haiku | ★★★★★ | Quick commands, basic tasks |
-| **Moderate** | Sonnet | ★★★★☆ | Feature development, code review |
-| **Complex** | Opus | ★★★☆☆ | Architecture design, complex refactoring |
-| **Expert** | Opus + Specialists | ★★☆☆☆ | Multi-agent orchestration, research |
+| Task Complexity | Recommended Model  | Cost Efficiency | When to Use                              |
+| --------------- | ------------------ | --------------- | ---------------------------------------- |
+| **Simple**      | Haiku              | ★★★★★           | Quick commands, basic tasks              |
+| **Moderate**    | Sonnet             | ★★★★☆           | Feature development, code review         |
+| **Complex**     | Opus               | ★★★☆☆           | Architecture design, complex refactoring |
+| **Expert**      | Opus + Specialists | ★★☆☆☆           | Multi-agent orchestration, research      |
 
 ## Context Management
 
 ### Efficient Context Usage
+
 ```typescript
 // ✅ Good: Specific, relevant context
 const context = {
   project: 'e-commerce-platform',
   techStack: ['Next.js', 'TypeScript', 'Prisma'],
   currentTask: 'user-authentication',
-  constraints: ['PCI-compliance', 'mobile-responsive']
+  constraints: ['PCI-compliance', 'mobile-responsive'],
 };
 
 // ❌ Bad: Excessive, irrelevant context
 const context = {
   entireProjectHistory: '...1000 lines...',
   allDependencies: '...500 lines...',
-  irrelevantDetails: '...300 lines...'
+  irrelevantDetails: '...300 lines...',
 };
 ```
 
 ### Context Compression Techniques
+
 1. **Prioritize Recent Information**
 2. **Summarize Historical Context**
 3. **Filter by Relevance to Current Task**
@@ -242,6 +257,7 @@ const context = {
 ## Error Handling Patterns
 
 ### Input Validation
+
 ```typescript
 const validateInput = (input: any): ValidationResult => {
   if (!input) {
@@ -261,6 +277,7 @@ const validateInput = (input: any): ValidationResult => {
 ```
 
 ### Graceful Degradation
+
 ```typescript
 const robustOperation = async (input: any) => {
   try {
@@ -280,13 +297,14 @@ const robustOperation = async (input: any) => {
 ## Performance Optimization
 
 ### Response Time Optimization
+
 ```typescript
 // ✅ Optimize for fast responses
 const quickResponse = {
   model: 'haiku',
   context: 'minimal',
   template: 'focused-and-concise',
-  cache: 'enabled'
+  cache: 'enabled',
 };
 
 // ✅ Optimize for quality
@@ -294,11 +312,12 @@ const qualityResponse = {
   model: 'opus',
   context: 'comprehensive',
   template: 'detailed-and-thorough',
-  validation: 'strict'
+  validation: 'strict',
 };
 ```
 
 ### Cost Optimization Strategies
+
 1. **Use Haiku for Simple Tasks**: Save 80% on costs
 2. **Cache Repeated Operations**: Avoid redundant API calls
 3. **Batch Similar Requests**: Reduce API overhead
@@ -307,21 +326,22 @@ const qualityResponse = {
 ## Security Considerations
 
 ### Input Sanitization
+
 ```typescript
 const sanitizeInput = (input: string): string => {
   return input
     .trim()
     .replace(/[<>]/g, '') // Remove HTML tags
-    .substring(0, 1000);   // Limit length
+    .substring(0, 1000); // Limit length
 };
 ```
 
 ### Permission Checking
+
 ```typescript
 const checkPermissions = (user: User, resource: string, action: string): boolean => {
-  return user.permissions.some(permission =>
-    permission.resource === resource &&
-    permission.actions.includes(action)
+  return user.permissions.some(
+    permission => permission.resource === resource && permission.actions.includes(action)
   );
 };
 ```
@@ -329,6 +349,7 @@ const checkPermissions = (user: User, resource: string, action: string): boolean
 ## Testing Quick Reference
 
 ### Unit Test Template
+
 ```typescript
 describe('Component/Function Name', () => {
   it('should handle happy path', () => {
@@ -353,13 +374,14 @@ describe('Component/Function Name', () => {
 ```
 
 ### Integration Test Template
+
 ```typescript
 describe('API Integration', () => {
   it('should successfully call endpoint', async () => {
     const response = await api.request({
       method: 'POST',
       endpoint: '/api/resource',
-      data: validData
+      data: validData,
     });
 
     expect(response.status).toBe(200);
@@ -372,16 +394,17 @@ describe('API Integration', () => {
 
 ### Common Issues & Solutions
 
-| Issue | Cause | Solution |
-|-------|-------|----------|
-| **Vague Responses** | Unclear instructions | Be more specific with requirements |
-| **Context Overflow** | Too much background info | Summarize and prioritize context |
-| **Slow Responses** | Complex task + wrong model | Use Sonnet/Opus for complex tasks |
-| **Security Errors** | Insufficient permissions | Check tool permissions and scopes |
-| **Format Issues** | Missing output specifications | Define expected format clearly |
-| **Logic Errors** | Ambiguous requirements | Provide examples and edge cases |
+| Issue                | Cause                         | Solution                           |
+| -------------------- | ----------------------------- | ---------------------------------- |
+| **Vague Responses**  | Unclear instructions          | Be more specific with requirements |
+| **Context Overflow** | Too much background info      | Summarize and prioritize context   |
+| **Slow Responses**   | Complex task + wrong model    | Use Sonnet/Opus for complex tasks  |
+| **Security Errors**  | Insufficient permissions      | Check tool permissions and scopes  |
+| **Format Issues**    | Missing output specifications | Define expected format clearly     |
+| **Logic Errors**     | Ambiguous requirements        | Provide examples and edge cases    |
 
 ### Debugging Steps
+
 1. **Check Prompt Clarity**: Is instruction specific enough?
 2. **Verify Context**: Is relevant information provided?
 3. **Validate Permissions**: Are required tools available?
@@ -392,6 +415,7 @@ describe('API Integration', () => {
 ## Resource Optimization
 
 ### Memory Management
+
 ```typescript
 // ✅ Efficient memory usage
 const processData = (data: any[]) => {
@@ -410,6 +434,7 @@ const processData = (data: any[]) => {
 ```
 
 ### Network Optimization
+
 ```typescript
 // ✅ Batch API requests
 const batchRequests = async (items: any[]) => {
@@ -420,9 +445,7 @@ const batchRequests = async (items: any[]) => {
     batches.push(items.slice(i, i + batchSize));
   }
 
-  const results = await Promise.all(
-    batches.map(batch => api.batchRequest(batch))
-  );
+  const results = await Promise.all(batches.map(batch => api.batchRequest(batch)));
 
   return results.flat();
 };
@@ -431,6 +454,7 @@ const batchRequests = async (items: any[]) => {
 ## Quick Reference Commands
 
 ### File Operations
+
 ```bash
 # Read file
 /read ./src/components/Button.tsx
@@ -443,6 +467,7 @@ const batchRequests = async (items: any[]) => {
 ```
 
 ### Code Analysis
+
 ```bash
 # Analyze codebase
 /analyze ./src --focus="security,performance"
@@ -455,6 +480,7 @@ const batchRequests = async (items: any[]) => {
 ```
 
 ### Testing Commands
+
 ```bash
 # Run tests
 /test --coverage --watch
@@ -469,31 +495,34 @@ const batchRequests = async (items: any[]) => {
 ## Performance Benchmarks
 
 ### Expected Performance
-| Operation | Target Time | Acceptable Range |
-|-----------|-------------|------------------|
-| **Simple Command** | < 2s | 1-5s |
-| **Code Generation** | < 30s | 15-60s |
-| **Complex Analysis** | < 2m | 1-5m |
-| **Multi-agent Task** | < 10m | 5-20m |
+
+| Operation            | Target Time | Acceptable Range |
+| -------------------- | ----------- | ---------------- |
+| **Simple Command**   | < 2s        | 1-5s             |
+| **Code Generation**  | < 30s       | 15-60s           |
+| **Complex Analysis** | < 2m        | 1-5m             |
+| **Multi-agent Task** | < 10m       | 5-20m            |
 
 ### Optimization Indicators
+
 - ✅ **Green**: Within target range
 - ⚠️ **Yellow**: 1.5x target time
 - ❌ **Red**: 2x+ target time
 
 ## Model Comparison
 
-| Feature | Haiku | Sonnet | Opus |
-|---------|-------|--------|------|
-| **Speed** | ⚡⚡⚡⚡⚡ | ⚡⚡⚡⚡ | ⚡⚡⚡ |
-| **Quality** | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **Cost** | 💰 | 💰💰 | 💰💰💰💰 |
-| **Context** | 8K | 100K | 200K |
+| Feature      | Haiku       | Sonnet              | Opus             |
+| ------------ | ----------- | ------------------- | ---------------- |
+| **Speed**    | ⚡⚡⚡⚡⚡  | ⚡⚡⚡⚡            | ⚡⚡⚡           |
+| **Quality**  | ⭐⭐⭐      | ⭐⭐⭐⭐            | ⭐⭐⭐⭐⭐       |
+| **Cost**     | 💰          | 💰💰                | 💰💰💰💰         |
+| **Context**  | 8K          | 100K                | 200K             |
 | **Best For** | Quick tasks | General development | Complex problems |
 
 ## Keyboard Shortcuts
 
 ### Common Shortcuts
+
 - `Ctrl/Cmd + K`: Quick command palette
 - `Ctrl/Cmd + /`: Toggle command help
 - `Ctrl/Cmd + Enter`: Execute current prompt
@@ -503,6 +532,7 @@ const batchRequests = async (items: any[]) => {
 - `Esc`: Cancel current operation
 
 ### Navigation
+
 - `↑/↓`: Browse command history
 - `Ctrl/Cmd + P`: Command palette
 - `Ctrl/Cmd + Shift + P`: Advanced commands
@@ -511,6 +541,7 @@ const batchRequests = async (items: any[]) => {
 ## Environment Variables
 
 ### Common Configuration
+
 ```bash
 # Model preferences
 CLAUDE_DEFAULT_MODEL=sonnet
@@ -531,6 +562,7 @@ CLAUDE_RATE_LIMIT=100
 ## Quick Validation Checklist
 
 ### Before Execution
+
 - [ ] **Clear Objectives**: What should be accomplished?
 - [ ] **Sufficient Context**: All necessary information provided?
 - [ ] **Appropriate Model**: Right model for task complexity?
@@ -538,6 +570,7 @@ CLAUDE_RATE_LIMIT=100
 - [ ] **Success Criteria**: How do we know it's done right?
 
 ### After Execution
+
 - [ ] **Quality Check**: Does result meet expectations?
 - [ ] **Performance Review**: Was it efficient?
 - [ ] **Error Analysis**: Any issues encountered?
@@ -548,4 +581,4 @@ CLAUDE_RATE_LIMIT=100
 
 **Save this cheat sheet for quick reference during development sessions.**
 
-*Last updated: November 2025*
+_Last updated: November 2025_

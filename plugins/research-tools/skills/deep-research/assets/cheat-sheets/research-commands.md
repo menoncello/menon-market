@@ -7,6 +7,7 @@ This cheat sheet provides quick access to common research commands and workflows
 ## 🚀 Quick Start Commands
 
 ### Company Research
+
 ```bash
 # Basic company analysis
 bun scripts/company-analyzer.ts --company "Marriott International" --focus comprehensive
@@ -22,6 +23,7 @@ bun scripts/company-analyzer.ts --company "Amazon" --focus foundation
 ```
 
 ### Market Research
+
 ```bash
 # Comprehensive market analysis
 bun scripts/web-researcher.ts --query "hotel market trends 2024" --depth comprehensive
@@ -37,6 +39,7 @@ bun scripts/web-researcher.ts --query "enterprise software customer segments" --
 ```
 
 ### Tool/Software Research
+
 ```bash
 # Tool comparison research
 bun scripts/web-researcher.ts --query "project management tools comparison 2024" --depth comprehensive
@@ -51,6 +54,7 @@ bun scripts/web-researcher.ts --query "cloud storage pricing comparison AWS Azur
 ## 📊 Report Generation
 
 ### Generate Reports
+
 ```bash
 # Generate executive summary
 bun scripts/report-generator.ts --template executive-summary --input research-data.json --output exec-summary.md
@@ -66,6 +70,7 @@ bun scripts/report-generator.ts --template market-analysis --input data.json --o
 ```
 
 ### List Available Templates
+
 ```bash
 bun scripts/report-generator.ts templates
 ```
@@ -73,6 +78,7 @@ bun scripts/report-generator.ts templates
 ## 🔍 Advanced Search Techniques
 
 ### Search Query Construction
+
 ```bash
 # Exact phrase matching
 bun scripts/web-researcher.ts --query "\"artificial intelligence in healthcare\"" --depth comprehensive
@@ -91,6 +97,7 @@ bun scripts/web-researcher.ts --query "blockchain trends 2024" --depth recent
 ```
 
 ### Multi-query Research
+
 ```bash
 # Sequential research with different focus areas
 bun scripts/web-researcher.ts --query "company X market share" --depth comprehensive
@@ -102,6 +109,7 @@ bun scripts/web-researcher.ts --query "company X competitors" --depth comprehens
 ## 📋 Research Workflows
 
 ### Complete Company Research Workflow
+
 ```bash
 # Step 1: Foundation research
 bun scripts/company-analyzer.ts --company "Target Company" --focus foundation
@@ -120,6 +128,7 @@ bun scripts/report-generator.ts --template comprehensive-analysis --input compan
 ```
 
 ### Market Entry Research Workflow
+
 ```bash
 # Step 1: Market sizing
 bun scripts/web-researcher.ts --query "[Industry] market size growth 2024" --depth comprehensive
@@ -138,6 +147,7 @@ bun scripts/report-generator.ts --template market-analysis --input market-data.j
 ```
 
 ### Tool Evaluation Workflow
+
 ```bash
 # Step 1: Feature comparison
 bun scripts/web-researcher.ts --query "[Tool category] features comparison 2024" --depth comprehensive
@@ -158,16 +168,19 @@ bun scripts/report-generator.ts --template technical-evaluation --input tool-dat
 ## 🎯 Output Formats
 
 ### JSON Format (Default)
+
 ```bash
 bun scripts/web-researcher.ts --query "research topic" --output results.json
 ```
 
 ### Markdown Format
+
 ```bash
 bun scripts/web-researcher.ts --query "research topic" --format markdown --output results.md
 ```
 
 ### CSV Format
+
 ```bash
 bun scripts/web-researcher.ts --query "research topic" --format csv --output results.csv
 ```
@@ -175,16 +188,19 @@ bun scripts/web-researcher.ts --query "research topic" --format csv --output res
 ## ⚙️ Configuration Options
 
 ### Research Depth Levels
+
 - `quick`: Basic overview with limited sources
 - `comprehensive`: Deep analysis with multiple source types
 - `recent`: Focus on very recent developments
 
 ### Maximum Results
+
 ```bash
 bun scripts/web-researcher.ts --query "topic" --max-results 20
 ```
 
 ### Source Specification
+
 ```bash
 bun scripts/web-researcher.ts --query "topic" --sources "reuters.com,bloomberg.com,wsj.com"
 ```
@@ -192,6 +208,7 @@ bun scripts/web-researcher.ts --query "topic" --sources "reuters.com,bloomberg.c
 ## 🔧 Utility Commands
 
 ### Research History
+
 ```bash
 # View recent research sessions
 bun scripts/web-researcher.ts history
@@ -201,6 +218,7 @@ bun scripts/web-researcher.ts history --limit 5
 ```
 
 ### Database Management
+
 ```bash
 # The research data is stored in SQLite databases:
 # - research_data.db (web research results)
@@ -214,12 +232,14 @@ sqlite3 research_data.db "SELECT * FROM search_results ORDER BY timestamp DESC L
 ## 📊 Quality Assurance
 
 ### Source Verification
+
 ```bash
 # Run source verification on research results
 bun scripts/source-verifier.ts --sources sources.json --verification-level high
 ```
 
 ### Data Cleaning
+
 ```bash
 # Clean and standardize research data
 bun scripts/data-cleaner.ts --input raw-data.json --output clean-data.json
@@ -228,16 +248,19 @@ bun scripts/data-cleaner.ts --input raw-data.json --output clean-data.json
 ## 🚨 Common Issues and Solutions
 
 ### Search Engine Rate Limits
+
 - If you encounter rate limits, add delays between searches
 - Use multiple search engines for better coverage
 - Consider reducing max-results parameter
 
 ### Data Quality Issues
+
 - Always cross-reference important claims
 - Use multiple source types for verification
 - Prioritize recent and authoritative sources
 
 ### Large Result Sets
+
 - Use specific search queries to reduce noise
 - Filter by publication date when needed
 - Focus on high-quality source domains
@@ -245,30 +268,35 @@ bun scripts/data-cleaner.ts --input raw-data.json --output clean-data.json
 ## 📚 Template Usage Guide
 
 ### Executive Summary Template
+
 - Use for quick decision-maker overviews
 - Keep to 1-2 pages maximum
 - Focus on key findings and recommendations
 
 ### Comprehensive Analysis Template
+
 - Use for detailed research documentation
 - Include full methodology and source lists
 - Add appendices for supporting data
 
 ### Competitive Intelligence Template
+
 - Use for competitor analysis
 - Include market positioning and SWOT analysis
 - Focus on actionable competitive insights
 
 ### Technical Evaluation Template
+
 - Use for software/tools assessment
 - Include technical specifications and requirements
 - Add integration and migration considerations
 
 ### Market Analysis Template
+
 - Use for market research and sizing
 - Include segmentation and trend analysis
 - Add opportunity and risk assessment
 
 ---
 
-*For detailed methodology and framework information, refer to the reference documentation in the /references directory.*
+_For detailed methodology and framework information, refer to the reference documentation in the /references directory._

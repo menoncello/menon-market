@@ -9,6 +9,7 @@ This guide provides solutions to common problems encountered when developing, in
 **Symptoms**: Plugin cannot be found in marketplace or installation fails with "plugin not found" error.
 
 **Causes**:
+
 - Incorrect plugin name or marketplace
 - Marketplace not configured properly
 - Network connectivity issues
@@ -34,6 +35,7 @@ claude marketplace install plugin-name@marketplace-name
 ```
 
 **Debug Steps**:
+
 1. Verify marketplace configuration in `~/.claude/settings.json`
 2. Check network connectivity
 3. Validate plugin name spelling
@@ -44,6 +46,7 @@ claude marketplace install plugin-name@marketplace-name
 **Symptoms**: Installation fails with permission errors.
 
 **Causes**:
+
 - Insufficient file system permissions
 - Protected directories
 - Antivirus software blocking installation
@@ -70,6 +73,7 @@ claude marketplace install plugin-name
 **Symptoms**: Installation fails due to version conflicts with dependencies.
 
 **Causes**:
+
 - Incompatible dependency versions
 - Semantic versioning constraints
 - Circular dependencies
@@ -98,6 +102,7 @@ claude marketplace install plugin-name --force
 **Symptoms**: Plugin fails to load during startup.
 
 **Causes**:
+
 - Missing dependencies
 - Code syntax errors
 - Initialization failures
@@ -235,6 +240,7 @@ export CLAUDE_SKILL_DEBUG=true
 **Optimization Strategies**:
 
 1. **Lazy Loading**:
+
 ```typescript
 class LazyPluginManager {
   private plugins = new Map<string, () => Promise<Plugin>>();
@@ -258,6 +264,7 @@ class LazyPluginManager {
 ```
 
 2. **Async Initialization**:
+
 ```typescript
 class AsyncPluginInitializer {
   async initializePlugins(plugins: Plugin[]): Promise<void> {
@@ -310,7 +317,8 @@ class MemoryMonitor {
 
     const growth = (recentAvg - olderAvg) / olderAvg;
 
-    if (growth > 0.5) { // 50% growth
+    if (growth > 0.5) {
+      // 50% growth
       console.warn(`Memory growth detected: ${(growth * 100).toFixed(1)}%`);
     }
   }
@@ -548,6 +556,7 @@ echo "🔄 Please restart Claude Code"
 ### Reporting Issues
 
 When reporting issues, include:
+
 - Claude Code version
 - Plugin name and version
 - Operating system and Node.js version

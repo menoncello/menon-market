@@ -19,12 +19,14 @@
 ### Prerequisites
 
 #### System Requirements
+
 - **Claude Code**: Latest version installed
 - **Node.js**: Version 18+ (for MCP server development)
 - **Git**: For version control and marketplace management
 - **Text Editor**: VS Code recommended with Claude Code extension
 
 #### Essential Tools
+
 ```bash
 # Verify Claude Code installation
 claude --version
@@ -41,6 +43,7 @@ cd ~/claude-development
 ### Development Workspace
 
 #### Directory Structure
+
 ```bash
 claude-development/
 ├── marketplaces/          # Marketplace development
@@ -61,6 +64,7 @@ claude-development/
 ```
 
 #### Local Testing Setup
+
 ```bash
 # Create local test marketplace
 mkdir -p test-marketplace/.claude-plugin
@@ -88,6 +92,7 @@ cd ~/claude-development
 ### Plugin Architecture
 
 #### Core Components
+
 ```
 my-plugin/
 ├── .claude-plugin/
@@ -123,6 +128,7 @@ my-plugin/
 ### Plugin Manifest (plugin.json)
 
 #### Complete Manifest Structure
+
 ```json
 {
   "name": "my-awesome-plugin",
@@ -160,10 +166,7 @@ my-plugin/
       "name": "awesome-action",
       "description": "Performs an awesome action",
       "usage": "/awesome-action [options]",
-      "examples": [
-        "/awesome-action --help",
-        "/awesome-action input.txt output.txt"
-      ]
+      "examples": ["/awesome-action --help", "/awesome-action input.txt output.txt"]
     }
   ],
   "agents": [
@@ -201,18 +204,23 @@ my-plugin/
 ### Command Development
 
 #### Command Structure
-```markdown
+
+````markdown
 # Awesome Action
 
 ## Description
+
 Performs an awesome action on specified inputs with configurable options.
 
 ## Usage
+
 ```bash
 /awesome-action [options] [input-file] [output-file]
 ```
+````
 
 ## Parameters
+
 - `input-file` (optional): Path to input file for processing
 - `output-file` (optional): Path to output file for results
 - `--option, -o` (optional): Configuration option
@@ -220,6 +228,7 @@ Performs an awesome action on specified inputs with configurable options.
 - `--help, -h` (optional): Show help information
 
 ## Examples
+
 ```bash
 # Basic usage
 /awesome-action input.txt output.txt
@@ -232,16 +241,20 @@ Performs an awesome action on specified inputs with configurable options.
 ```
 
 ## Implementation Notes
+
 This command uses the following tools:
+
 - Read: For reading input files
 - Write: For writing output files
 - Bash: For executing processing commands
 
 ## Error Handling
+
 - Validates input file existence
 - Creates output directory if needed
 - Provides clear error messages for common issues
-```
+
+````
 
 #### Command Best Practices
 1. **Clear Description**: Explain what the command does and when to use it
@@ -270,12 +283,13 @@ my-skill/
 └── docs/                # Additional documentation
     ├── API.md
     └── EXAMPLES.md
-```
+````
 
 ### SKILL.md Format
 
 #### Complete Skill Definition
-```yaml
+
+````yaml
 ---
 name: awesome-skill
 description: Comprehensive skill for awesome tasks including analysis, processing, and optimization of awesome data
@@ -389,14 +403,16 @@ Use this skill when you need to:
 ### Basic Processing
 ```bash
 "Process this awesome file: data.awesome"
-```
+````
 
 ### Advanced Processing with Options
+
 ```bash
 "Analyze the awesome data in /path/to/file.awesome with advanced mode and verbose output"
 ```
 
 ### Batch Processing
+
 ```bash
 "Process all awesome files in the current directory with optimization enabled"
 ```
@@ -404,6 +420,7 @@ Use this skill when you need to:
 ## Implementation Details
 
 ### Processing Pipeline
+
 1. **Input Validation**: Verify input format and accessibility
 2. **Data Parsing**: Parse awesome data according to format specifications
 3. **Analysis**: Apply analytical algorithms and techniques
@@ -411,12 +428,14 @@ Use this skill when you need to:
 5. **Output Generation**: Create formatted results and reports
 
 ### Error Handling
+
 - Comprehensive input validation
 - Graceful degradation for unsupported formats
 - Clear error messages with actionable guidance
 - Automatic cleanup of temporary resources
 
 ### Performance Considerations
+
 - Streaming processing for large files
 - Memory-efficient algorithms
 - Parallel processing where applicable
@@ -425,6 +444,7 @@ Use this skill when you need to:
 ## Configuration
 
 ### Default Settings
+
 ```json
 {
   "mode": "standard",
@@ -436,7 +456,9 @@ Use this skill when you need to:
 ```
 
 ### Custom Configuration
+
 You can customize processing behavior by providing specific options:
+
 - `mode`: Choose between standard, advanced, or minimal processing
 - `optimize`: Enable or disable optimization features
 - `verbose`: Control output verbosity
@@ -446,12 +468,14 @@ You can customize processing behavior by providing specific options:
 ## Integration
 
 ### Compatible File Formats
+
 - `.awesome` (native format)
 - `.awesome-json` (JSON-based awesome data)
 - `.awesome-xml` (XML-based awesome data)
 - `.awesome-csv` (CSV-based awesome data)
 
 ### Output Formats
+
 - Processed awesome data
 - Analysis reports (JSON, Markdown)
 - Optimization summaries
@@ -460,13 +484,16 @@ You can customize processing behavior by providing specific options:
 ## Troubleshooting
 
 ### Common Issues
+
 1. **File not found**: Verify file path and permissions
 2. **Format not supported**: Check file extension and format
 3. **Processing timeout**: Reduce file size or simplify processing options
 4. **Memory errors**: Use minimal mode or process files individually
 
 ### Debug Information
+
 Enable verbose output to see detailed processing information:
+
 ```bash
 "Process awesome file with verbose output enabled"
 ```
@@ -474,6 +501,7 @@ Enable verbose output to see detailed processing information:
 ## Contributing
 
 To contribute to this skill:
+
 1. Follow the code style guidelines
 2. Add comprehensive tests
 3. Update documentation
@@ -482,20 +510,24 @@ To contribute to this skill:
 ## Changelog
 
 ### v1.2.3
+
 - Added advanced processing mode
 - Improved error handling
 - Enhanced performance for large files
 
 ### v1.2.0
+
 - Introduced optimization features
 - Added support for new file formats
 - Improved analysis algorithms
 
 ### v1.0.0
+
 - Initial release
 - Basic processing capabilities
 - Core analysis features
-```
+
+````
 
 ### Skill Development Best Practices
 
@@ -536,11 +568,13 @@ constants: UPPER_SNAKE_CASE
 structure: consistent with examples
 documentation: comprehensive and up-to-date
 examples: practical and tested
-```
+````
 
 #### Documentation Standards
+
 ```markdown
 # Required sections in SKILL.md
+
 1. Overview
 2. When to Use This Skill
 3. Capabilities
@@ -556,6 +590,7 @@ examples: practical and tested
 ### Validation Standards
 
 #### Input Validation
+
 ```yaml
 validation:
   required: true for all user inputs
@@ -566,6 +601,7 @@ validation:
 ```
 
 #### Error Handling
+
 ```yaml
 error_handling:
   strategy: graceful degradation
@@ -578,6 +614,7 @@ error_handling:
 ### Performance Standards
 
 #### Efficiency Requirements
+
 ```yaml
 performance:
   memory_usage: reasonable for task complexity
@@ -588,6 +625,7 @@ performance:
 ```
 
 #### Scalability Considerations
+
 ```yaml
 scalability:
   large_files: implement streaming for large datasets
@@ -601,6 +639,7 @@ scalability:
 ### Testing Framework
 
 #### Test Structure
+
 ```bash
 tests/
 ├── unit/                   # Unit tests
@@ -627,24 +666,28 @@ tests/
 #### Test Categories
 
 **Unit Tests**
+
 - Test individual functions and methods
 - Validate input parsing and validation
 - Test error handling conditions
 - Verify output formatting
 
 **Integration Tests**
+
 - Test complete skill workflows
 - Verify tool integration
 - Test file I/O operations
 - Validate end-to-end functionality
 
 **Performance Tests**
+
 - Test with large files and datasets
 - Monitor memory usage
 - Measure processing times
 - Verify resource cleanup
 
 **Compatibility Tests**
+
 - Test across different environments
 - Verify tool compatibility
 - Test with various file formats
@@ -653,34 +696,40 @@ tests/
 ### Validation Checklist
 
 #### Pre-Release Validation
+
 ```markdown
 ## Validation Checklist
 
 ### Functionality
+
 - [ ] All documented features work as expected
 - [ ] Error conditions handled gracefully
 - [ ] Performance meets requirements
 - [ ] Memory usage within limits
 
 ### Documentation
+
 - [ ] All examples tested and working
 - [ ] Installation instructions complete
 - [ ] Troubleshooting guide comprehensive
 - [ ] API documentation accurate
 
 ### Security
+
 - [ ] Input validation implemented
 - [ ] File access permissions appropriate
 - [ ] No hardcoded credentials
 - [ ] Dependencies secure and updated
 
 ### Compatibility
+
 - [ ] Works with specified Claude Code versions
 - [ ] Compatible with required tools
 - [ ] Handles different environments
 - [ ] Graceful degradation for missing tools
 
 ### Performance
+
 - [ ] Processes test files within time limits
 - [ ] Memory usage reasonable for task complexity
 - [ ] Handles large files appropriately
@@ -692,6 +741,7 @@ tests/
 ### Input Validation
 
 #### Security Validation Rules
+
 ```yaml
 security_validation:
   file_paths:
@@ -714,6 +764,7 @@ security_validation:
 ```
 
 #### Secure Coding Practices
+
 ```yaml
 secure_coding:
   principle_of_least_privilege:
@@ -735,6 +786,7 @@ secure_coding:
 ### Permission Management
 
 #### Tool Permissions
+
 ```yaml
 tool_permissions:
   principle:
@@ -756,6 +808,7 @@ tool_permissions:
 ### Dependency Security
 
 #### Dependency Management
+
 ```yaml
 dependency_security:
   selection:
@@ -779,6 +832,7 @@ dependency_security:
 ### Optimization Strategies
 
 #### Code Optimization
+
 ```yaml
 code_optimization:
   algorithms:
@@ -798,6 +852,7 @@ code_optimization:
 ```
 
 #### Caching Strategies
+
 ```yaml
 caching:
   implementation:
@@ -814,6 +869,7 @@ caching:
 ### Performance Monitoring
 
 #### Metrics to Track
+
 ```yaml
 performance_metrics:
   timing:
@@ -838,6 +894,7 @@ performance_metrics:
 ### Documentation Structure
 
 #### Required Documentation
+
 ```yaml
 documentation_requirements:
   README.md:
@@ -869,6 +926,7 @@ documentation_requirements:
 ### Writing Standards
 
 #### Style Guidelines
+
 ```yaml
 writing_style:
   clarity:
@@ -895,6 +953,7 @@ writing_style:
 ### Version Management
 
 #### Semantic Versioning
+
 ```yaml
 versioning:
   format: MAJOR.MINOR.PATCH
@@ -910,6 +969,7 @@ versioning:
 ```
 
 #### Changelog Requirements
+
 ```yaml
 changelog:
   format:
@@ -928,6 +988,7 @@ changelog:
 ### Distribution Channels
 
 #### Marketplace Distribution
+
 ```yaml
 marketplace_distribution:
   preparation:
@@ -944,6 +1005,7 @@ marketplace_distribution:
 ```
 
 #### Community Distribution
+
 ```yaml
 community_distribution:
   channels:
@@ -962,6 +1024,7 @@ community_distribution:
 ### Quality Assurance
 
 #### Pre-Release Checklist
+
 ```yaml
 pre_release_checklist:
   functionality:
@@ -988,36 +1051,42 @@ pre_release_checklist:
 ## Development Workflow Summary
 
 ### 1. Planning Phase
+
 - Define skill/plugin requirements
 - Design architecture and structure
 - Plan testing strategy
 - Document development approach
 
 ### 2. Development Phase
+
 - Set up development environment
 - Implement core functionality
 - Add comprehensive error handling
 - Write tests concurrently
 
 ### 3. Testing Phase
+
 - Execute unit tests
 - Perform integration testing
 - Validate performance characteristics
 - Test security aspects
 
 ### 4. Documentation Phase
+
 - Write comprehensive documentation
 - Create practical examples
 - Prepare troubleshooting guide
 - Review for clarity and completeness
 
 ### 5. Release Phase
+
 - Validate against checklist
 - Prepare release artifacts
 - Update version information
 - Distribute through appropriate channels
 
 ### 6. Maintenance Phase
+
 - Monitor for issues and feedback
 - Update dependencies
 - Fix bugs and add features
@@ -1025,4 +1094,4 @@ pre_release_checklist:
 
 ---
 
-*This development guide provides comprehensive best practices for creating high-quality Claude Code plugins and skills. Following these guidelines will ensure your contributions are reliable, secure, and well-received by the community.*
+_This development guide provides comprehensive best practices for creating high-quality Claude Code plugins and skills. Following these guidelines will ensure your contributions are reliable, secure, and well-received by the community._

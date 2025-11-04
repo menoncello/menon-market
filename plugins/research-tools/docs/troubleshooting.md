@@ -19,18 +19,22 @@ This guide helps you diagnose and resolve common issues with the Research Tools 
 **Problem**: Claude Code cannot find the research-tools plugin.
 
 **Solutions**:
+
 1. Verify installation path:
+
    ```bash
    ls -la ~/.claude/plugins/research-tools
    ```
 
 2. Check plugin structure:
+
    ```bash
    # Should contain: index.ts, package.json, tsconfig.json
    ls ~/.claude/plugins/research-tools/
    ```
 
 3. Reinstall the plugin:
+
    ```bash
    # Remove existing installation
    rm -rf ~/.claude/plugins/research-tools
@@ -44,13 +48,16 @@ This guide helps you diagnose and resolve common issues with the Research Tools 
 **Problem**: TypeScript errors during plugin build.
 
 **Solutions**:
+
 1. Check TypeScript version:
+
    ```bash
    bun --version
    tsc --version
    ```
 
 2. Update dependencies:
+
    ```bash
    bun install
    bun update
@@ -72,7 +79,9 @@ This guide helps you diagnose and resolve common issues with the Research Tools 
 **Problem**: Import errors or missing modules.
 
 **Solutions**:
+
 1. Install dependencies:
+
    ```bash
    cd plugins/research-tools
    bun install
@@ -95,14 +104,16 @@ This guide helps you diagnose and resolve common issues with the Research Tools 
 **Problem**: Configuration validation errors.
 
 **Solutions**:
+
 1. Use proper initialization:
+
    ```typescript
    import { initialize } from 'research-tools';
 
    // Correct
    const config = initialize({
      maxSources: 50,
-     outputFormat: 'markdown'
+     outputFormat: 'markdown',
    });
 
    // Incorrect
@@ -112,9 +123,9 @@ This guide helps you diagnose and resolve common issues with the Research Tools 
 2. Validate configuration values:
    ```typescript
    const config = initialize({
-     maxSources: 10,        // Must be positive number
-     outputFormat: 'json',  // Must be valid format
-     timeout: 30000        // Must be positive number
+     maxSources: 10, // Must be positive number
+     outputFormat: 'json', // Must be valid format
+     timeout: 30000, // Must be positive number
    });
    ```
 
@@ -123,18 +134,21 @@ This guide helps you diagnose and resolve common issues with the Research Tools 
 **Problem**: Research operations timing out.
 
 **Solutions**:
+
 1. Increase timeout:
+
    ```typescript
    const config = initialize({
-     timeout: 60000  // 60 seconds
+     timeout: 60000, // 60 seconds
    });
    ```
 
 2. Reduce max sources:
+
    ```typescript
    const config = initialize({
      maxSources: 10,
-     timeout: 30000
+     timeout: 30000,
    });
    ```
 
@@ -151,16 +165,19 @@ This guide helps you diagnose and resolve common issues with the Research Tools 
 **Problem**: Research taking too long to complete.
 
 **Solutions**:
+
 1. Optimize configuration:
+
    ```typescript
    const config = initialize({
-     maxSources: 10,        // Reduce sources
-     cacheEnabled: true,    // Enable caching
-     timeout: 15000         // Reduce timeout
+     maxSources: 10, // Reduce sources
+     cacheEnabled: true, // Enable caching
+     timeout: 15000, // Reduce timeout
    });
    ```
 
 2. Monitor performance:
+
    ```typescript
    const result = await performResearch('query', config);
    console.log('Processing time:', result.metadata.processingTime);
@@ -170,7 +187,7 @@ This guide helps you diagnose and resolve common issues with the Research Tools 
 3. Enable debug mode:
    ```typescript
    const config = initialize({
-     logLevel: 'debug'
+     logLevel: 'debug',
    });
    ```
 
@@ -179,7 +196,9 @@ This guide helps you diagnose and resolve common issues with the Research Tools 
 **Problem**: Plugin using excessive memory.
 
 **Solutions**:
+
 1. Reduce concurrent operations:
+
    ```typescript
    // Process sequentially instead of parallel
    for (const query of queries) {
@@ -188,16 +207,17 @@ This guide helps you diagnose and resolve common issues with the Research Tools 
    ```
 
 2. Limit source count:
+
    ```typescript
    const config = initialize({
-     maxSources: 5
+     maxSources: 5,
    });
    ```
 
 3. Clear cache periodically:
    ```typescript
    const config = initialize({
-     cacheEnabled: false  // Disable caching temporarily
+     cacheEnabled: false, // Disable caching temporarily
    });
    ```
 
@@ -208,18 +228,21 @@ This guide helps you diagnose and resolve common issues with the Research Tools 
 **Problem**: Research results have low confidence scores.
 
 **Solutions**:
+
 1. Increase source diversity:
+
    ```typescript
    const config = initialize({
-     maxSources: 50  // More sources for better confidence
+     maxSources: 50, // More sources for better confidence
    });
    ```
 
 2. Enable cross-validation:
+
    ```typescript
    const deepConfig = {
      requireCrossValidation: true,
-     qualityThreshold: 0.8
+     qualityThreshold: 0.8,
    };
    ```
 
@@ -235,24 +258,27 @@ This guide helps you diagnose and resolve common issues with the Research Tools 
 **Problem**: Research returns empty or low-quality results.
 
 **Solutions**:
+
 1. Verify query quality:
+
    ```typescript
    // Good queries
    const goodQueries = [
      'artificial intelligence market trends 2024',
      'machine learning algorithms comparison',
-     'best practices for cloud security'
+     'best practices for cloud security',
    ];
 
    // Poor queries
    const poorQueries = [
-     'a',           // Too short
-     'asdfghjkl',   // Gibberish
-     ''             // Empty
+     'a', // Too short
+     'asdfghjkl', // Gibberish
+     '', // Empty
    ];
    ```
 
 2. Check network connectivity:
+
    ```bash
    # Test internet connection
    curl -s https://example.com > /dev/null && echo "Connected" || echo "No connection"
@@ -275,6 +301,7 @@ This guide helps you diagnose and resolve common issues with the Research Tools 
 **Cause**: Score value outside 0-1 range.
 
 **Solution**:
+
 ```typescript
 import { createConfidenceScore, isValidConfidenceScore } from 'research-tools';
 
@@ -293,9 +320,10 @@ if (isValidConfidenceScore(score)) {
 **Cause**: Operation took longer than configured timeout.
 
 **Solution**:
+
 ```typescript
 const config = initialize({
-  timeout: 60000  // Increase timeout to 60 seconds
+  timeout: 60000, // Increase timeout to 60 seconds
 });
 ```
 
@@ -304,6 +332,7 @@ const config = initialize({
 **Cause**: Network connectivity issues.
 
 **Solution**:
+
 1. Check internet connection
 2. Verify firewall settings
 3. Try again with exponential backoff:
@@ -325,7 +354,9 @@ const config = initialize({
 **Cause**: TypeScript type validation errors.
 
 **Solution**:
+
 1. Check type definitions:
+
    ```typescript
    import type { ResearchSource, SourceType } from 'research-tools';
 
@@ -336,11 +367,12 @@ const config = initialize({
      content: 'Valid content',
      relevanceScore: 0.8,
      type: 'academic' as SourceType,
-     lastAccessed: new Date()
+     lastAccessed: new Date(),
    };
    ```
 
 2. Use type guards:
+
    ```typescript
    import { validateResearchSource } from 'research-tools/types';
 
@@ -357,7 +389,7 @@ const config = initialize({
 const config = initialize({
   logLevel: 'debug',
   enableMetrics: true,
-  cacheEnabled: false  // Disable caching for debugging
+  cacheEnabled: false, // Disable caching for debugging
 });
 ```
 
@@ -383,7 +415,7 @@ const afterMemory = process.memoryUsage();
 
 console.log('Memory delta:', {
   heapUsed: afterMemory.heapUsed - beforeMemory.heapUsed,
-  heapTotal: afterMemory.heapTotal - beforeMemory.heapTotal
+  heapTotal: afterMemory.heapTotal - beforeMemory.heapTotal,
 });
 ```
 
@@ -404,6 +436,7 @@ console.log('Memory delta:', {
 ### Q: How is confidence calculated?
 
 **A**: Confidence is calculated based on:
+
 - Source relevance scores (70% weight)
 - Source quality/type (30% weight)
 - Source recency and diversity
@@ -419,6 +452,7 @@ console.log('Memory delta:', {
 ### Q: How do I report bugs?
 
 **A**: Please report bugs on the [GitHub Issues](https://github.com/menoncello/menon-marketplace/issues) page with:
+
 - Plugin version
 - Claude Code version
 - Error messages
@@ -428,6 +462,7 @@ console.log('Memory delta:', {
 ### Q: Where can I get help?
 
 **A**:
+
 - [GitHub Discussions](https://github.com/menoncello/menon-marketplace/discussions)
 - [API Documentation](./api.md)
 - [Examples](./examples.md)
@@ -447,29 +482,36 @@ Include the following information:
 
 ```markdown
 ## Environment
+
 - Plugin Version:
 - Claude Code Version:
 - Operating System:
 - Node.js/Bun Version:
 
 ## Problem
+
 [Description of the issue]
 
 ## Steps to Reproduce
+
 1.
 2.
 3.
 
 ## Expected Behavior
+
 [What should happen]
 
 ## Actual Behavior
+
 [What actually happens]
 
 ## Error Messages
+
 [Any error messages or stack traces]
 
 ## Configuration
+
 [Your configuration object]
 ```
 

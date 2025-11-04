@@ -4,9 +4,9 @@ import { AdvancedPromptCrafter } from './dist/index.js';
 const crafter = new AdvancedPromptCrafter();
 
 // Teste rápido com um prompt
-const resultado = await crafter.analyzeAndOptimize("criar chatbot com IA", {
+const resultado = await crafter.analyzeAndOptimize('criar chatbot com IA', {
   mode: 'technical',
-  domain: 'technical'
+  domain: 'technical',
 });
 
 console.log('🎯 Teste Rápido');

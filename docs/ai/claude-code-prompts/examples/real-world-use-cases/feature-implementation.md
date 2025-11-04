@@ -9,6 +9,7 @@ This example demonstrates the complete implementation of a "Team Collaboration" 
 **User Story**: As a team lead, I want to create and manage project teams so that I can collaborate effectively with my team members on specific projects.
 
 **Functional Requirements**:
+
 1. Create teams with unique names and descriptions
 2. Invite team members via email
 3. Assign roles (Admin, Member, Viewer) to team members
@@ -17,6 +18,7 @@ This example demonstrates the complete implementation of a "Team Collaboration" 
 6. Archive/delete teams when no longer needed
 
 **Non-Functional Requirements**:
+
 - Real-time collaboration updates
 - Email notifications for team invitations
 - Role-based access control (RBAC)
@@ -29,7 +31,7 @@ This example demonstrates the complete implementation of a "Team Collaboration" 
 
 ```typescript
 interface TeamCollaborationImplementation {
-  featureName: "team-collaboration";
+  featureName: 'team-collaboration';
   estimatedDuration: 45; // minutes
   requiredAgents: 8;
   estimatedCost: 0.75; // credits
@@ -37,30 +39,30 @@ interface TeamCollaborationImplementation {
   orchestration: {
     phases: [
       {
-        name: "analysis-and-architecture",
-        duration: 10,
-        agents: ["code-architect", "security-analyst", "ux-designer"],
-        executionMode: "parallel"
+        name: 'analysis-and-architecture';
+        duration: 10;
+        agents: ['code-architect', 'security-analyst', 'ux-designer'];
+        executionMode: 'parallel';
       },
       {
-        name: "backend-implementation",
-        duration: 15,
-        agents: ["backend-developer", "database-designer", "test-generator"],
-        executionMode: "pipeline"
+        name: 'backend-implementation';
+        duration: 15;
+        agents: ['backend-developer', 'database-designer', 'test-generator'];
+        executionMode: 'pipeline';
       },
       {
-        name: "frontend-implementation",
-        duration: 15,
-        agents: ["frontend-developer", "ui-component-designer", "accessibility-specialist"],
-        executionMode: "parallel"
+        name: 'frontend-implementation';
+        duration: 15;
+        agents: ['frontend-developer', 'ui-component-designer', 'accessibility-specialist'];
+        executionMode: 'parallel';
       },
       {
-        name: "quality-assurance",
-        duration: 5,
-        agents: ["code-reviewer", "security-reviewer", "performance-analyzer"],
-        executionMode: "parallel"
-      }
-    ]
+        name: 'quality-assurance';
+        duration: 5;
+        agents: ['code-reviewer', 'security-reviewer', 'performance-analyzer'];
+        executionMode: 'parallel';
+      },
+    ];
   };
 }
 ```
@@ -70,6 +72,7 @@ interface TeamCollaborationImplementation {
 ### Code Architect Agent
 
 **Prompt**:
+
 ```
 You are a senior software architect tasked with designing the team collaboration feature for our project management platform.
 
@@ -119,7 +122,8 @@ Follow our existing architectural patterns and provide specific, actionable reco
 ```
 
 **Expected Output**:
-```markdown
+
+````markdown
 # Team Collaboration Feature Architecture
 
 ## Database Schema Design
@@ -176,8 +180,10 @@ CREATE TYPE activity_type AS ENUM (
   'MEMBER_REMOVED', 'ROLE_CHANGED', 'SETTINGS_UPDATED'
 );
 ```
+````
 
 ### Indexes Strategy
+
 ```sql
 -- Performance indexes
 CREATE INDEX idx_team_members_team_id ON team_members(team_id);
@@ -212,12 +218,14 @@ POST   /api/invitations/:token/decline # Decline invitation
 ```
 
 ### Authentication & Authorization
+
 - JWT tokens for API authentication
 - Role-based access control (RBAC)
 - Permission middleware for each endpoint
 - Team membership validation
 
 ### Real-time Communication
+
 - WebSocket connections for live updates
 - Server-Sent Events (SSE) for activity feeds
 - Push notifications for important events
@@ -225,6 +233,7 @@ POST   /api/invitations/:token/decline # Decline invitation
 ## Component Architecture
 
 ### Frontend Component Structure
+
 ```
 teams/
 ├── pages/
@@ -249,6 +258,7 @@ teams/
 ```
 
 ### State Management Strategy
+
 - React Query for server state
 - Context API for team-specific state
 - Local state for UI interactions
@@ -257,29 +267,31 @@ teams/
 ## Security Considerations
 
 ### Permission Model
+
 ```typescript
 interface TeamPermissions {
   // Admin permissions
   ADMIN: [
-    'team:read', 'team:update', 'team:delete',
-    'member:invite', 'member:remove', 'member:role-update',
-    'activity:read', 'settings:update'
+    'team:read',
+    'team:update',
+    'team:delete',
+    'member:invite',
+    'member:remove',
+    'member:role-update',
+    'activity:read',
+    'settings:update',
   ];
 
   // Member permissions
-  MEMBER: [
-    'team:read', 'member:read', 'activity:read',
-    'content:create', 'content:update'
-  ];
+  MEMBER: ['team:read', 'member:read', 'activity:read', 'content:create', 'content:update'];
 
   // Viewer permissions
-  VIEWER: [
-    'team:read', 'member:read', 'activity:read'
-  ];
+  VIEWER: ['team:read', 'member:read', 'activity:read'];
 }
 ```
 
 ### Security Measures
+
 - Input validation on all API endpoints
 - SQL injection prevention with parameterized queries
 - XSS protection with content sanitization
@@ -290,40 +302,47 @@ interface TeamPermissions {
 ## Implementation Roadmap
 
 ### Phase 1: Backend Foundation (Days 1-3)
+
 1. Database schema migration
 2. Core API endpoints implementation
 3. Authentication middleware setup
 4. Basic permission system
 
 ### Phase 2: Core Features (Days 4-6)
+
 1. Team creation and management
 2. Member invitation system
 3. Role-based access control
 4. Activity logging
 
 ### Phase 3: Frontend Implementation (Days 7-9)
+
 1. Team management interface
 2. Member management components
 3. Activity feed implementation
 4. Mobile responsiveness
 
 ### Phase 4: Advanced Features (Days 10-12)
+
 1. Real-time collaboration
 2. Email notifications
 3. Advanced permissions
 4. Performance optimization
 
 ### Phase 5: Testing & QA (Days 13-15)
+
 1. Unit and integration tests
 2. End-to-end testing
 3. Security testing
 4. Performance testing
+
 ```
 
 ### Security Analyst Agent
 
 **Prompt**:
 ```
+
 You are a cybersecurity specialist reviewing the team collaboration feature architecture.
 
 Please analyze the provided architecture for security vulnerabilities and provide:
@@ -354,12 +373,14 @@ Please analyze the provided architecture for security vulnerabilities and provid
    - Audit trail requirements
 
 Provide specific security recommendations with implementation examples.
+
 ```
 
 ### UX Designer Agent
 
 **Prompt**:
 ```
+
 You are a UX/UI designer specializing in collaborative software interfaces.
 
 Based on the team collaboration feature requirements, provide:
@@ -389,6 +410,7 @@ Based on the team collaboration feature requirements, provide:
    - Brand consistency
 
 Provide detailed wireframes and interaction specifications.
+
 ```
 
 ## Phase 2: Backend Implementation
@@ -397,6 +419,7 @@ Provide detailed wireframes and interaction specifications.
 
 **Prompt**:
 ```
+
 You are a backend developer implementing the team collaboration feature API.
 
 Based on the architecture specification, implement:
@@ -424,7 +447,8 @@ Based on the architecture specification, implement:
 
 Follow our existing code patterns and TypeScript conventions.
 Include comprehensive error handling and logging.
-```
+
+````
 
 **Expected Implementation**:
 
@@ -519,7 +543,7 @@ model User {
   sentInvitations TeamMember[] @relation("SentInvitations")
   teamActivities  TeamActivity[]
 }
-```
+````
 
 ```typescript
 // lib/api/teams.ts
@@ -533,12 +557,12 @@ import { teamPermissionMiddleware } from '@/lib/middleware/permissions';
 const createTeamSchema = z.object({
   name: z.string().min(1).max(255),
   description: z.string().optional(),
-  settings: z.record(z.any()).optional().default({})
+  settings: z.record(z.any()).optional().default({}),
 });
 
 const inviteMemberSchema = z.object({
   email: z.string().email(),
-  role: z.enum(['ADMIN', 'MEMBER', 'VIEWER']).default('MEMBER')
+  role: z.enum(['ADMIN', 'MEMBER', 'VIEWER']).default('MEMBER'),
 });
 
 // POST /api/teams - Create new team
@@ -565,19 +589,19 @@ export async function POST(request: NextRequest) {
             email: user.email!,
             role: 'ADMIN',
             status: 'ACTIVE',
-            joinedAt: new Date()
-          }
-        }
+            joinedAt: new Date(),
+          },
+        },
       },
       include: {
         members: {
           include: {
             user: {
-              select: { id: true, name: true, email: true, avatar: true }
-            }
-          }
-        }
-      }
+              select: { id: true, name: true, email: true, avatar: true },
+            },
+          },
+        },
+      },
     });
 
     // Log activity
@@ -588,8 +612,8 @@ export async function POST(request: NextRequest) {
         activityType: 'TEAM_CREATED',
         entityType: 'TEAM',
         entityId: team.id,
-        details: { teamName: team.name }
-      }
+        details: { teamName: team.name },
+      },
     });
 
     return NextResponse.json(team, { status: 201 });
@@ -602,10 +626,7 @@ export async function POST(request: NextRequest) {
     }
 
     console.error('Failed to create team:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -627,32 +648,32 @@ export async function GET(request: NextRequest) {
         members: {
           some: {
             userId: user.id,
-            status: 'ACTIVE'
-          }
+            status: 'ACTIVE',
+          },
         },
         ...(search && {
           OR: [
             { name: { contains: search, mode: 'insensitive' } },
-            { description: { contains: search, mode: 'insensitive' } }
-          ]
-        })
+            { description: { contains: search, mode: 'insensitive' } },
+          ],
+        }),
       },
       include: {
         members: {
           where: { status: 'ACTIVE' },
           include: {
             user: {
-              select: { id: true, name: true, email: true, avatar: true }
-            }
-          }
+              select: { id: true, name: true, email: true, avatar: true },
+            },
+          },
         },
         _count: {
-          select: { members: true }
-        }
+          select: { members: true },
+        },
       },
       orderBy: { updatedAt: 'desc' },
       skip: (page - 1) * limit,
-      take: limit
+      take: limit,
     });
 
     const total = await prisma.team.count({
@@ -660,10 +681,10 @@ export async function GET(request: NextRequest) {
         members: {
           some: {
             userId: user.id,
-            status: 'ACTIVE'
-          }
-        }
-      }
+            status: 'ACTIVE',
+          },
+        },
+      },
     });
 
     return NextResponse.json({
@@ -672,24 +693,18 @@ export async function GET(request: NextRequest) {
         page,
         limit,
         total,
-        totalPages: Math.ceil(total / limit)
-      }
+        totalPages: Math.ceil(total / limit),
+      },
     });
   } catch (error) {
     console.error('Failed to fetch teams:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
 // lib/api/teams/[id]/members.ts
 // POST /api/teams/[id]/members - Invite team member
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const user = await getCurrentUser();
     if (!user) {
@@ -699,17 +714,10 @@ export async function POST(
     const teamId = params.id;
 
     // Check permissions
-    const hasPermission = await teamPermissionMiddleware(
-      user.id,
-      teamId,
-      'member:invite'
-    );
+    const hasPermission = await teamPermissionMiddleware(user.id, teamId, 'member:invite');
 
     if (!hasPermission) {
-      return NextResponse.json(
-        { error: 'Insufficient permissions' },
-        { status: 403 }
-      );
+      return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
     }
 
     const body = await request.json();
@@ -719,15 +727,12 @@ export async function POST(
     const existingMember = await prisma.teamMember.findFirst({
       where: {
         teamId,
-        email: validatedData.email
-      }
+        email: validatedData.email,
+      },
     });
 
     if (existingMember) {
-      return NextResponse.json(
-        { error: 'User is already a team member' },
-        { status: 409 }
-      );
+      return NextResponse.json({ error: 'User is already a team member' }, { status: 409 });
     }
 
     // Create invitation
@@ -737,16 +742,16 @@ export async function POST(
         email: validatedData.email,
         role: validatedData.role,
         status: 'PENDING',
-        invitedBy: user.id
+        invitedBy: user.id,
       },
       include: {
         team: {
-          select: { id: true, name: true }
+          select: { id: true, name: true },
         },
         inviter: {
-          select: { id: true, name: true, email: true }
-        }
-      }
+          select: { id: true, name: true, email: true },
+        },
+      },
     });
 
     // Log activity
@@ -759,9 +764,9 @@ export async function POST(
         entityId: invitation.id,
         details: {
           invitedEmail: validatedData.email,
-          role: validatedData.role
-        }
-      }
+          role: validatedData.role,
+        },
+      },
     });
 
     // TODO: Send invitation email
@@ -777,10 +782,7 @@ export async function POST(
     }
 
     console.error('Failed to invite member:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 ```
@@ -788,6 +790,7 @@ export async function POST(
 ### Database Designer Agent
 
 **Prompt**:
+
 ```
 You are a database optimization specialist reviewing the team collaboration schema.
 
@@ -819,6 +822,7 @@ Provide specific SQL optimizations and migration scripts.
 ### Test Generator Agent
 
 **Prompt**:
+
 ```
 You are a test automation specialist creating comprehensive tests for the team collaboration API.
 
@@ -852,6 +856,7 @@ Use Jest and Supertest for testing. Include proper mocking and setup.
 ### Frontend Developer Agent
 
 **Prompt**:
+
 ```
 You are a frontend developer implementing the team collaboration user interface.
 
@@ -1055,11 +1060,11 @@ export const useCreateTeam = () => {
 
   return useMutation({
     mutationFn: (data: CreateTeamData) => teamsService.createTeam(data),
-    onSuccess: (team) => {
+    onSuccess: team => {
       queryClient.invalidateQueries({ queryKey: ['teams'] });
       toast.success(`Team "${team.name}" created successfully`);
     },
-    onError: (error) => {
+    onError: error => {
       toast.error('Failed to create team');
       console.error('Create team error:', error);
     },
@@ -1072,12 +1077,12 @@ export const useUpdateTeam = () => {
   return useMutation({
     mutationFn: ({ id, data }: { id: string; data: UpdateTeamData }) =>
       teamsService.updateTeam(id, data),
-    onSuccess: (team) => {
+    onSuccess: team => {
       queryClient.invalidateQueries({ queryKey: ['teams'] });
       queryClient.invalidateQueries({ queryKey: ['team', team.id] });
       toast.success(`Team "${team.name}" updated successfully`);
     },
-    onError: (error) => {
+    onError: error => {
       toast.error('Failed to update team');
       console.error('Update team error:', error);
     },
@@ -1094,7 +1099,7 @@ export const useDeleteTeam = () => {
       queryClient.removeQueries({ queryKey: ['team', teamId] });
       toast.success('Team deleted successfully');
     },
-    onError: (error) => {
+    onError: error => {
       toast.error('Failed to delete team');
       console.error('Delete team error:', error);
     },
@@ -1108,18 +1113,18 @@ export const useInviteMember = () => {
     mutationFn: ({
       teamId,
       email,
-      role
+      role,
     }: {
       teamId: string;
       email: string;
-      role: 'ADMIN' | 'MEMBER' | 'VIEWER'
+      role: 'ADMIN' | 'MEMBER' | 'VIEWER';
     }) => teamsService.inviteMember(teamId, { email, role }),
     onSuccess: (_, { teamId, email }) => {
       queryClient.invalidateQueries({ queryKey: ['team-members', teamId] });
       queryClient.invalidateQueries({ queryKey: ['team', teamId] });
       toast.success(`Invitation sent to ${email}`);
     },
-    onError: (error) => {
+    onError: error => {
       toast.error('Failed to send invitation');
       console.error('Invite member error:', error);
     },
@@ -1130,6 +1135,7 @@ export const useInviteMember = () => {
 ### UI Component Designer Agent
 
 **Prompt**:
+
 ```
 You are a UI/UX component designer specializing in design systems.
 
@@ -1162,6 +1168,7 @@ Provide Storybook stories and design documentation.
 ### Accessibility Specialist Agent
 
 **Prompt**:
+
 ```
 You are an accessibility specialist ensuring WCAG 2.1 AA compliance.
 
@@ -1195,6 +1202,7 @@ Provide specific accessibility improvements and testing procedures.
 ### Code Reviewer Agent
 
 **Prompt**:
+
 ```
 You are a senior code reviewer conducting a comprehensive review of the team collaboration feature.
 
@@ -1229,6 +1237,7 @@ Provide specific feedback with code examples and improvement suggestions.
 ### Security Reviewer Agent
 
 **Prompt**:
+
 ```
 You are a security expert conducting a thorough security review of the team collaboration feature.
 
@@ -1264,6 +1273,7 @@ Provide security findings with risk assessment and remediation steps.
 ### Performance Analyzer Agent
 
 **Prompt**:
+
 ```
 You are a performance optimization specialist analyzing the team collaboration feature.
 
@@ -1331,14 +1341,14 @@ Provide performance metrics, bottlenecks, and optimization recommendations.
 
 ### Performance Metrics
 
-| Metric | Target | Achieved | Status |
-|--------|--------|----------|---------|
-| API Response Time | < 200ms | 165ms | ✅ |
-| Page Load Time | < 3s | 2.1s | ✅ |
-| Database Query Time | < 100ms | 78ms | ✅ |
-| Test Coverage | > 90% | 95% | ✅ |
-| Accessibility Score | > 95 | 98 | ✅ |
-| Security Score | A+ | A+ | ✅ |
+| Metric              | Target  | Achieved | Status |
+| ------------------- | ------- | -------- | ------ |
+| API Response Time   | < 200ms | 165ms    | ✅     |
+| Page Load Time      | < 3s    | 2.1s     | ✅     |
+| Database Query Time | < 100ms | 78ms     | ✅     |
+| Test Coverage       | > 90%   | 95%      | ✅     |
+| Accessibility Score | > 95    | 98       | ✅     |
+| Security Score      | A+      | A+       | ✅     |
 
 ### Key Success Factors
 

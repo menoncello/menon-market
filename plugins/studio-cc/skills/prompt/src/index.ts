@@ -1,14 +1,17 @@
 import { AnalysisEngine } from './engines/analysis-engine.js';
-import { OptimizationEngine } from './engines/optimization-engine.js';
 import { CustomizationEngine } from './engines/customization-engine.js';
+import { OptimizationEngine } from './engines/optimization-engine.js';
 import { ValidationEngine } from './engines/validation-engine.js';
 import {
   PromptRequest,
   PromptResponse,
   AdvancedPromptCrafterConfig,
-  QualityMetrics
+  QualityMetrics,
 } from './types.js';
 
+/**
+ *
+ */
 export class AdvancedPromptCrafter {
   private analysisEngine: AnalysisEngine;
   private optimizationEngine: OptimizationEngine;
@@ -16,6 +19,10 @@ export class AdvancedPromptCrafter {
   private validationEngine: ValidationEngine;
   private config: AdvancedPromptCrafterConfig;
 
+  /**
+   *
+   * @param config
+   */
   constructor(config: Partial<AdvancedPromptCrafterConfig> = {}) {
     this.config = this.mergeConfig(config);
     this.analysisEngine = new AnalysisEngine(this.config.analysis);
@@ -26,6 +33,12 @@ export class AdvancedPromptCrafter {
 
   /**
    * Analyze and optimize an existing prompt
+   * @param prompt
+   * @param options
+   * @param options.mode
+   * @param options.targetModel
+   * @param options.outputFormat
+   * @param options.domain
    */
   async analyzeAndOptimize(
     prompt: string,
@@ -43,16 +56,10 @@ export class AdvancedPromptCrafter {
       const analysis = await this.analysisEngine.analyzePrompt(prompt, options);
 
       // Layer 2: Optimization
-      const optimization = await this.optimizationEngine.optimizePrompt(
-        analysis,
-        options
-      );
+      const optimization = await this.optimizationEngine.optimizePrompt(analysis, options);
 
       // Layer 3: Customization
-      const customized = await this.customizationEngine.customizePrompt(
-        optimization,
-        options
-      );
+      const customized = await this.customizationEngine.customizePrompt(optimization, options);
 
       // Layer 4: Validation
       const validation = await this.validationEngine.validatePrompt(
@@ -72,19 +79,20 @@ export class AdvancedPromptCrafter {
           model: options.targetModel || 'claude-3-sonnet',
           mode: options.mode || 'general',
           domain: options.domain || 'general',
-          outputFormat: options.outputFormat || 'text'
-        }
+          outputFormat: options.outputFormat || 'text',
+        },
       };
-    } catch (error: any) {
-      throw new Error(`Prompt optimization failed: ${error.message}`);
+    } catch (error: unknown) {
+      throw new Error(`Prompt optimization failed: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
 
   /**
    * Create a new prompt from requirements
+   * @param request
    */
   async createPrompt(request: PromptRequest): Promise<PromptResponse> {
-    const startTime = Date.now();
+    const _startTime = Date.now();
 
     try {
       // Generate initial prompt from requirements
@@ -95,20 +103,21 @@ export class AdvancedPromptCrafter {
         mode: request.mode,
         targetModel: request.targetModel,
         outputFormat: request.outputFormat,
-        domain: request.domain
+        domain: request.domain,
       });
 
       // Preserve the original task content in the optimized prompt
       result.optimizedPrompt = initialPrompt;
 
       return result;
-    } catch (error: any) {
-      throw new Error(`Prompt creation failed: ${error.message}`);
+    } catch (error: unknown) {
+      throw new Error(`Prompt creation failed: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
 
   /**
    * Get quality metrics for a prompt
+   * @param prompt
    */
   async getQualityMetrics(prompt: string): Promise<QualityMetrics> {
     return await this.validationEngine.calculateQualityMetrics(prompt);
@@ -116,17 +125,16 @@ export class AdvancedPromptCrafter {
 
   /**
    * Create A/B test variations
+   * @param prompt
+   * @param variations
    */
-  async createABTestVariations(
-    prompt: string,
-    variations: number = 3
-  ): Promise<PromptResponse[]> {
+  async createABTestVariations(prompt: string, variations = 3): Promise<PromptResponse[]> {
     const results: PromptResponse[] = [];
 
     for (let i = 0; i < variations; i++) {
       const variation = await this.analyzeAndOptimize(prompt, {
         // Apply different optimization strategies for each variation
-        mode: ['technical', 'business', 'creative'][i % 3] as 'technical' | 'business' | 'creative'
+        mode: ['technical', 'business', 'creative'][i % 3] as 'technical' | 'business' | 'creative',
       });
       results.push(variation);
     }
@@ -134,6 +142,10 @@ export class AdvancedPromptCrafter {
     return results;
   }
 
+  /**
+   *
+   * @param config
+   */
   private mergeConfig(config: Partial<AdvancedPromptCrafterConfig>): AdvancedPromptCrafterConfig {
     return {
       analysis: {
@@ -141,31 +153,42 @@ export class AdvancedPromptCrafter {
         analysisDepth: 'comprehensive',
         userProfile: {
           expertise: 'intermediate',
-          preferences: ['concise', 'structured']
+          preferences: ['concise', 'structured'],
         },
-        ...config.analysis
+        ...config.analysis,
       },
       optimization: {
         techniques: ['cot', 'tot', 'self-consistency'],
         enableABTesting: true,
         performanceThreshold: 0.85,
-        ...config.optimization
+        ...config.optimization,
       },
       customization: {
         domains: ['technical', 'business', 'creative', 'research'],
         models: ['claude', 'gpt', 'gemini', 'llama'],
         outputFormats: ['json', 'markdown', 'text'],
-        ...config.customization
+        ...config.customization,
       },
       validation: {
         qualityThreshold: 8.5,
         enableBenchmarking: true,
-        metrics: ['clarity', 'specificity', 'completeness', 'efficiency', 'consistency', 'error-rate'],
-        ...config.validation
-      }
+        metrics: [
+          'clarity',
+          'specificity',
+          'completeness',
+          'efficiency',
+          'consistency',
+          'error-rate',
+        ],
+        ...config.validation,
+      },
     };
   }
 
+  /**
+   *
+   * @param request
+   */
   private async generatePromptFromRequirements(request: PromptRequest): Promise<string> {
     const { task, domain, mode, requirements, context } = request;
 

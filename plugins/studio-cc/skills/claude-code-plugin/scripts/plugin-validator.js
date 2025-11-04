@@ -99,8 +99,12 @@ class PluginValidator {
       // Validate permissions
       if (manifest.permissions && Array.isArray(manifest.permissions)) {
         const validPermissions = [
-          'file:read', 'file:write', 'network:request',
-          'system:exec', 'env:read', 'env:write'
+          'file:read',
+          'file:write',
+          'network:request',
+          'system:exec',
+          'env:read',
+          'env:write',
         ];
 
         for (const permission of manifest.permissions) {
@@ -110,7 +114,6 @@ class PluginValidator {
         }
         console.log(`✅ Permissions: ${manifest.permissions.join(', ')}`);
       }
-
     } catch (error) {
       this.errors.push(`Invalid JSON in plugin.json: ${error.message}`);
     }
@@ -159,9 +162,10 @@ class PluginValidator {
 
         // Validate name format
         if (frontmatter.name && !/^[a-z0-9-]+$/.test(frontmatter.name)) {
-          this.warnings.push(`Command name should only contain lowercase letters, numbers, and hyphens: ${frontmatter.name}`);
+          this.warnings.push(
+            `Command name should only contain lowercase letters, numbers, and hyphens: ${frontmatter.name}`
+          );
         }
-
       } catch (error) {
         this.errors.push(`Error parsing command ${file}: ${error.message}`);
       }
@@ -178,9 +182,9 @@ class PluginValidator {
       return;
     }
 
-    const skillDirs = fs.readdirSync(skillsDir).filter(file =>
-      fs.statSync(path.join(skillsDir, file)).isDirectory()
-    );
+    const skillDirs = fs
+      .readdirSync(skillsDir)
+      .filter(file => fs.statSync(path.join(skillsDir, file)).isDirectory());
 
     if (skillDirs.length === 0) {
       console.log('ℹ️  No skill directories found');
@@ -231,7 +235,6 @@ class PluginValidator {
             }
           }
         }
-
       } catch (error) {
         this.errors.push(`Error parsing skill ${skillDir}: ${error.message}`);
       }
@@ -268,20 +271,25 @@ class PluginValidator {
 
           for (const file of commandFiles) {
             const content = fs.readFileSync(path.join(commandsDir, file), 'utf8');
-            if (content.includes('http') || content.includes('fetch') || content.includes('request')) {
+            if (
+              content.includes('http') ||
+              content.includes('fetch') ||
+              content.includes('request')
+            ) {
               networkUsageFound = true;
               break;
             }
           }
 
           if (!networkUsageFound) {
-            this.warnings.push('Plugin requests network permission but no obvious network usage found in commands');
+            this.warnings.push(
+              'Plugin requests network permission but no obvious network usage found in commands'
+            );
           }
         }
       }
 
       console.log('✅ Permissions validated');
-
     } catch (error) {
       // Manifest validation errors already caught in validateManifest
     }
@@ -304,14 +312,19 @@ class PluginValidator {
         let value = line.substring(colonIndex + 1).trim();
 
         // Handle quoted strings
-        if ((value.startsWith('"') && value.endsWith('"')) ||
-            (value.startsWith("'") && value.endsWith("'"))) {
+        if (
+          (value.startsWith('"') && value.endsWith('"')) ||
+          (value.startsWith("'") && value.endsWith("'"))
+        ) {
           value = value.slice(1, -1);
         }
 
         // Handle arrays
         if (value.startsWith('[') && value.endsWith(']')) {
-          value = value.slice(1, -1).split(',').map(item => item.trim().replace(/['"]/g, ''));
+          value = value
+            .slice(1, -1)
+            .split(',')
+            .map(item => item.trim().replace(/['"]/g, ''));
         }
 
         frontmatter[key] = value;
@@ -353,12 +366,15 @@ if (require.main === module) {
   }
 
   const validator = new PluginValidator(pluginPath);
-  validator.validate().then(success => {
-    process.exit(success ? 0 : 1);
-  }).catch(error => {
-    console.error('❌ Validation failed:', error.message);
-    process.exit(1);
-  });
+  validator
+    .validate()
+    .then(success => {
+      process.exit(success ? 0 : 1);
+    })
+    .catch(error => {
+      console.error('❌ Validation failed:', error.message);
+      process.exit(1);
+    });
 }
 
 module.exports = PluginValidator;

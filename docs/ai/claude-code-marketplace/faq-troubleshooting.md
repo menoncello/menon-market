@@ -18,33 +18,43 @@
 ## General Questions
 
 ### Q: What is Claude Code Market?
+
 **A**: Claude Code Market refers to the ecosystem of plugins, skills, and marketplaces that extend Claude Code's functionality. It includes:
+
 - **Marketplaces**: Catalogs of available plugins and skills
 - **Plugins**: Bundles of commands, agents, MCP servers, and hooks
 - **Skills**: Modular capabilities for specific tasks
 - **MCP Servers**: External tool integrations via Model Context Protocol
 
 ### Q: Do I need a paid subscription to use Claude Code Market?
+
 **A**: Yes, Claude Code Market features require a Claude Pro subscription ($20/month). This includes:
+
 - Access to plugins and skills
 - Marketplace browsing and installation
 - Advanced features and capabilities
 
 ### Q: What's the difference between plugins, skills, and MCP servers?
+
 **A**:
+
 - **Plugins**: Complete packages containing multiple components (commands, skills, agents, hooks)
 - **Skills**: Individual capabilities focused on specific tasks
 - **MCP Servers**: External services that extend Claude's tool access
 
 ### Q: Can I create my own plugins and skills?
+
 **A**: Yes! Claude Code Market is designed to be extensible. You can create:
+
 - Personal skills for your own use
 - Project-specific skills for team collaboration
 - Public plugins to share with the community
 - Enterprise marketplaces for internal use
 
 ### Q: How do I know if a plugin or skill is safe to install?
+
 **A**: Follow these security guidelines:
+
 - Install only from trusted sources (official marketplaces, reputable developers)
 - Review permissions requested by the plugin/skill
 - Check the plugin's documentation and source code
@@ -54,6 +64,7 @@
 ## Installation Issues
 
 ### Q: Plugin installation fails with "permission denied"
+
 **A**: This usually indicates file permission issues. Try these solutions:
 
 ```bash
@@ -73,6 +84,7 @@ mkdir -p ~/.claude/skills/
 ```
 
 ### Q: Marketplace not found or connection failed
+
 **A**: Network and repository issues:
 
 ```bash
@@ -91,6 +103,7 @@ rm -rf ~/.claude/cache/
 ```
 
 ### Q: Plugin installation takes too long or times out
+
 **A**: Performance and timeout issues:
 
 ```bash
@@ -109,6 +122,7 @@ claude config set timeout 60000
 ```
 
 ### Q: Command not found after plugin installation
+
 **A**: Command registration issues:
 
 ```bash
@@ -128,6 +142,7 @@ claude config set timeout 60000
 ## Plugin Problems
 
 ### Q: Plugin installs but commands don't appear in /help
+
 **A**: Command registration and visibility issues:
 
 ```bash
@@ -149,6 +164,7 @@ claude-validator plugin --path ~/.claude/plugins/plugin-name/
 ```
 
 ### Q: Plugin causes Claude Code to crash or become unresponsive
+
 **A**: Plugin conflicts and performance issues:
 
 ```bash
@@ -169,6 +185,7 @@ claude --safe-mode
 ```
 
 ### Q: Plugin permissions seem incorrect or too restrictive
+
 **A**: Permission configuration issues:
 
 ```bash
@@ -187,6 +204,7 @@ claude --safe-mode
 ```
 
 ### Q: Multiple plugins conflict with each other
+
 **A**: Plugin conflicts and compatibility issues:
 
 ```bash
@@ -210,6 +228,7 @@ claude --safe-mode
 ## Skill Issues
 
 ### Q: Skills not appearing in skill list or not loading
+
 **A**: Skill loading and registration issues:
 
 ```bash
@@ -231,6 +250,7 @@ ls -la ~/.claude/skills/skill-name/SKILL.md
 ```
 
 ### Q: Skill loads but doesn't work correctly
+
 **A**: Skill functionality issues:
 
 ```bash
@@ -251,6 +271,7 @@ tail -f ~/.claude/logs/skills.log
 ```
 
 ### Q: Skill doesn't trigger automatically
+
 **A**: Skill trigger configuration issues:
 
 ```bash
@@ -268,6 +289,7 @@ tail -f ~/.claude/logs/skills.log
 ```
 
 ### Q: Skill performance is slow or uses too much memory
+
 **A**: Performance optimization issues:
 
 ```bash
@@ -287,6 +309,7 @@ tail -f ~/.claude/logs/skills.log
 ## MCP Server Problems
 
 ### Q: MCP server fails to connect or start
+
 **A**: MCP server connection issues:
 
 ```bash
@@ -308,6 +331,7 @@ tail -f ~/.claude/logs/mcp-servers.log
 ```
 
 ### Q: MCP server tools not available in Claude Code
+
 **A**: Tool registration and discovery issues:
 
 ```bash
@@ -328,6 +352,7 @@ tail -f ~/.claude/logs/mcp-servers.log
 ```
 
 ### Q: MCP server authentication or authorization fails
+
 **A**: Authentication and API key issues:
 
 ```bash
@@ -345,6 +370,7 @@ tail -f ~/.claude/logs/auth.log
 ```
 
 ### Q: MCP server performance issues or timeouts
+
 **A**: Performance and timeout configuration:
 
 ```bash
@@ -364,6 +390,7 @@ tail -f ~/.claude/logs/auth.log
 ## Performance Issues
 
 ### Q: Claude Code runs slowly after installing many plugins
+
 **A**: Plugin loading and performance optimization:
 
 ```bash
@@ -384,6 +411,7 @@ claude --diagnostic
 ```
 
 ### Q: Memory usage increases continuously
+
 **A**: Memory leak and resource management:
 
 ```bash
@@ -404,6 +432,7 @@ claude --monitor memory
 ```
 
 ### Q: File operations are slow or timeout
+
 **A**: I/O performance issues:
 
 ```bash
@@ -423,6 +452,7 @@ claude --cleanup
 ```
 
 ### Q: Network operations are slow or fail
+
 **A**: Network connectivity and performance:
 
 ```bash
@@ -444,6 +474,7 @@ nslookup docs.claude.com
 ## Security and Permission Issues
 
 ### Q: Plugin requests too many permissions
+
 **A**: Permission review and restriction:
 
 ```bash
@@ -462,6 +493,7 @@ nslookup docs.claude.com
 ```
 
 ### Q: File access denied errors
+
 **A**: File system permission issues:
 
 ```bash
@@ -480,6 +512,7 @@ chmod 755 /path/to/directory
 ```
 
 ### Q: Network access blocked or denied
+
 **A**: Network permission and firewall issues:
 
 ```bash
@@ -497,6 +530,7 @@ sudo ufw status
 ```
 
 ### Q: Security warnings or scan failures
+
 **A**: Security validation issues:
 
 ```bash
@@ -519,6 +553,7 @@ tail -f ~/.claude/logs/security.log
 ## Development Troubleshooting
 
 ### Q: Plugin validation fails
+
 **A**: Plugin structure and format validation:
 
 ```bash
@@ -538,6 +573,7 @@ claude-validator plugin --path ./my-plugin --all
 ```
 
 ### Q: Skill testing fails
+
 **A**: Skill testing and validation issues:
 
 ```bash
@@ -556,6 +592,7 @@ claude-skill test ./my-skill --debug
 ```
 
 ### Q: Plugin builds fail during development
+
 **A**: Build and compilation issues:
 
 ```bash
@@ -577,6 +614,7 @@ npm run build --verbose
 ```
 
 ### Q: Local testing doesn't work
+
 **A**: Local development and testing setup:
 
 ```bash
@@ -599,6 +637,7 @@ tail -f ~/.claude/logs/local-plugins.log
 ## Enterprise Issues
 
 ### Q: SSO authentication fails
+
 **A**: Enterprise authentication and SSO issues:
 
 ```bash
@@ -619,6 +658,7 @@ tail -f ~/.claude/logs/auth.log
 ```
 
 ### Q: Proxy or firewall blocks Claude Code
+
 **A**: Network restrictions and proxy configuration:
 
 ```bash
@@ -637,6 +677,7 @@ curl -I --proxy http://proxy.company.com:8080 https://api.github.com
 ```
 
 ### Q: Compliance or policy violations
+
 **A**: Enterprise compliance and policy issues:
 
 ```bash
@@ -657,6 +698,7 @@ curl -I --proxy http://proxy.company.com:8080 https://api.github.com
 ```
 
 ### Q: Multi-user setup conflicts
+
 **A**: Multi-user and team collaboration issues:
 
 ```bash
@@ -680,6 +722,7 @@ curl -I --proxy http://proxy.company.com:8080 https://api.github.com
 ## Advanced Troubleshooting
 
 ### Q: Plugin registry corruption
+
 **A**: Registry and database corruption issues:
 
 ```bash
@@ -700,6 +743,7 @@ curl -I --proxy http://proxy.company.com:8080 https://api.github.com
 ```
 
 ### Q: Cache corruption or issues
+
 **A**: Cache and temporary file issues:
 
 ```bash
@@ -722,6 +766,7 @@ claude --rebuild-cache
 ```
 
 ### Q: Database or storage issues
+
 **A**: Data storage and persistence issues:
 
 ```bash
@@ -745,6 +790,7 @@ claude --rebuild-cache
 ```
 
 ### Q: Memory corruption or crashes
+
 **A**: System stability and memory issues:
 
 ```bash
@@ -770,18 +816,21 @@ claude --factory-reset
 ## Getting Help
 
 ### Self-Service Resources
+
 1. **Official Documentation**: https://docs.claude.com
 2. **Community Forums**: https://community.anthropic.com
 3. **GitHub Issues**: https://github.com/anthropics/claude-code/issues
 4. **FAQ and Knowledge Base**: Available in Claude Code help
 
 ### Community Support
+
 - **Discord**: Official Anthropic Discord server
 - **Reddit**: r/ClaudeAI community
 - **Stack Overflow**: Claude Code tagged questions
 - **GitHub Discussions**: Community Q&A
 
 ### Professional Support
+
 - **Enterprise Support**: Available for enterprise customers
 - **Priority Support**: Claude Pro subscribers
 - **Consulting Services**: Available through partners
@@ -791,12 +840,14 @@ claude --factory-reset
 When reporting issues, include:
 
 1. **System Information**:
+
    ```bash
    claude --version
    claude --system-info
    ```
 
 2. **Configuration Details**:
+
    ```bash
    /config show --sanitize
    ```
@@ -834,6 +885,7 @@ claude --monitor --log-level debug
 ## Quick Troubleshooting Checklist
 
 ### Installation Issues
+
 - [ ] Check internet connectivity
 - [ ] Verify repository URLs
 - [ ] Check file permissions
@@ -841,6 +893,7 @@ claude --monitor --log-level debug
 - [ ] Try alternative marketplace
 
 ### Plugin Issues
+
 - [ ] Verify plugin installation
 - [ ] Check plugin structure
 - [ ] Validate plugin format
@@ -848,6 +901,7 @@ claude --monitor --log-level debug
 - [ ] Test individually
 
 ### Performance Issues
+
 - [ ] Monitor resource usage
 - [ ] Disable unused plugins
 - [ ] Clear caches
@@ -855,6 +909,7 @@ claude --monitor --log-level debug
 - [ ] Optimize configuration
 
 ### Security Issues
+
 - [ ] Review permissions
 - [ ] Check source authenticity
 - [ ] Run security scans
@@ -866,6 +921,7 @@ claude --monitor --log-level debug
 ## Emergency Procedures
 
 ### Complete Reset
+
 ```bash
 # Backup current configuration
 cp -r ~/.claude ~/.claude.backup
@@ -878,6 +934,7 @@ claude --setup
 ```
 
 ### Safe Mode
+
 ```bash
 # Start in safe mode
 claude --safe-mode
@@ -890,6 +947,7 @@ claude --debug --safe-mode
 ```
 
 ### Emergency Recovery
+
 ```bash
 # Restore from backup
 cp -r ~/.claude.backup ~/.claude
@@ -903,4 +961,4 @@ claude --repair
 
 ---
 
-*This FAQ and troubleshooting guide covers common issues and solutions for Claude Code Market. For the most up-to-date information and community support, refer to the official documentation and community channels.*
+_This FAQ and troubleshooting guide covers common issues and solutions for Claude Code Market. For the most up-to-date information and community support, refer to the official documentation and community channels._

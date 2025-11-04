@@ -7,6 +7,7 @@ This collection demonstrates practical slash commands for Git workflow automatio
 ## Basic Commands
 
 ### Smart Commit
+
 ```typescript
 // File: .claude/commands/commit.json
 {
@@ -101,6 +102,7 @@ This collection demonstrates practical slash commands for Git workflow automatio
 ```
 
 ### Branch Cleanup
+
 ```typescript
 // File: .claude/commands/clean-branches.json
 {
@@ -193,6 +195,7 @@ This collection demonstrates practical slash commands for Git workflow automatio
 ## Advanced Commands
 
 ### Smart Merge
+
 ```typescript
 // File: .claude/commands/merge.json
 {
@@ -320,6 +323,7 @@ This collection demonstrates practical slash commands for Git workflow automatio
 ```
 
 ### Release Automation
+
 ```typescript
 // File: .claude/commands/release.json
 {
@@ -484,6 +488,7 @@ This collection demonstrates practical slash commands for Git workflow automatio
 ## Integration Commands
 
 ### GitHub PR Creation
+
 ```typescript
 // File: .claude/commands/pr.json
 {
@@ -664,6 +669,7 @@ This collection demonstrates practical slash commands for Git workflow automatio
 ## Utility Commands
 
 ### Git Health Check
+
 ```typescript
 // File: .claude/commands/health.json
 {
@@ -812,6 +818,7 @@ This collection demonstrates practical slash commands for Git workflow automatio
 ## Usage Examples
 
 ### Basic Workflow
+
 ```bash
 # Create intelligent commit
 /commit
@@ -827,6 +834,7 @@ This collection demonstrates practical slash commands for Git workflow automatio
 ```
 
 ### Advanced Workflow
+
 ```bash
 # Comprehensive merge with conflict resolution
 /merge feature/user-auth --strategy recursive --conflictResolution interactive

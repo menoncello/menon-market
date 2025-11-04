@@ -15,11 +15,13 @@
 ### Example 1: Creating Your First Marketplace
 
 **Prompt**:
+
 ```bash
 "Create a new marketplace called dev-tools"
 ```
 
 **Expected Output**:
+
 ```
 Creating marketplace 'dev-tools' at ./dev-tools using standard template
 Creating directory: ./dev-tools
@@ -42,11 +44,13 @@ Marketplace 'dev-tools' created successfully
 ### Example 2: Validating a Marketplace
 
 **Prompt**:
+
 ```bash
 "Validate the marketplace at ./dev-tools"
 ```
 
 **Expected Output**:
+
 ```
 Validating marketplace at: ./dev-tools
 Validation completed: SUCCESS
@@ -64,11 +68,13 @@ Info messages:
 ### Example 3: Analyzing Marketplace Health
 
 **Prompt**:
+
 ```bash
 "Analyze marketplace health for ./dev-tools"
 ```
 
 **Expected Output**:
+
 ```
 Analyzing marketplace health: ./dev-tools
 Marketplace Health Analysis
@@ -92,11 +98,13 @@ Metrics:
 ### Example 4: Creating Enterprise Marketplace
 
 **Prompt**:
+
 ```bash
 "Create an enterprise marketplace at ./company-marketplace with enterprise template, verbose output, and auto-validation"
 ```
 
 **Expected Output**:
+
 ```
 Creating marketplace 'company-marketplace' at ./company-marketplace using enterprise template
 Creating directory: ./company-marketplace
@@ -125,11 +133,13 @@ Marketplace 'company-marketplace' created successfully
 ### Example 5: Deployment with Version Update
 
 **Prompt**:
+
 ```bash
 "Deploy marketplace ./dev-tools with minor version update and skip validation"
 ```
 
 **Expected Output**:
+
 ```
 Deploying marketplace from: ./dev-tools
 Current version: 1.0.0
@@ -149,11 +159,13 @@ Git tag created and pushed
 ### Example 6: Community Marketplace Creation
 
 **Prompt**:
+
 ```bash
 "Create a community marketplace called open-source-tools with community template"
 ```
 
 **Expected Output**:
+
 ```
 Creating marketplace 'open-source-tools' at ./open-source-tools using community template
 Creating directory: ./open-source-tools
@@ -182,11 +194,13 @@ Marketplace 'open-source-tools' created successfully
 ### Example 7: Enterprise Security Validation
 
 **Prompt**:
+
 ```bash
 "Validate enterprise marketplace at ./company-marketplace with comprehensive security checks"
 ```
 
 **Expected Output**:
+
 ```
 Validating marketplace at: ./company-marketplace
 Validation completed: SUCCESS
@@ -207,11 +221,13 @@ Info messages:
 ### Example 8: Batch Plugin Addition
 
 **Prompt**:
+
 ```bash
 "Add multiple plugins to enterprise marketplace ./company-marketplace: code-quality, security-scanner, deployment-tools"
 ```
 
 **Expected Output**:
+
 ```
 Adding plugins to marketplace: ./company-marketplace
 Adding plugin: code-quality
@@ -242,11 +258,13 @@ Validation completed: SUCCESS
 ### Example 9: Debug Creation Issues
 
 **Prompt**:
+
 ```bash
 "Create marketplace debug-test with verbose output to troubleshoot creation issues"
 ```
 
 **Expected Output**:
+
 ```
 Creating marketplace 'debug-test' at ./debug-test using standard template
 Creating directory: ./debug-test
@@ -272,11 +290,13 @@ Marketplace 'debug-test' created successfully
 ### Example 10: Force Deployment Despite Validation Errors
 
 **Prompt**:
+
 ```bash
 "Deploy marketplace ./problematic-marketplace with force option to override validation failures"
 ```
 
 **Expected Output**:
+
 ```
 Deploying marketplace from: ./problematic-marketplace
 Validating marketplace before deployment...
@@ -306,11 +326,13 @@ Git tag created and pushed
 ### Example 11: CI/CD Pipeline Integration
 
 **Prompt**:
+
 ```bash
 "Create marketplace ./ci-cd-marketplace with minimal template for automated CI/CD pipeline deployment"
 ```
 
 **Expected Output**:
+
 ```
 Creating marketplace 'ci-cd-marketplace' at ./ci-cd-marketplace using minimal template
 Creating directory: ./ci-cd-marketplace
@@ -334,11 +356,13 @@ Marketplace 'ci-cd-marketplace' created successfully
 ### Example 12: Multi-Environment Deployment
 
 **Prompt**:
+
 ```bash
 "Deploy marketplace ./production-marketplace to production environment with major version update and comprehensive validation"
 ```
 
 **Expected Output**:
+
 ```
 Deploying marketplace from: ./production-marketplace
 Validating marketplace before deployment...
@@ -362,26 +386,31 @@ Git tag created and pushed
 ### Example 13: Complete Marketplace Lifecycle
 
 **Step 1: Creation**
+
 ```bash
 "Create marketplace full-lifecycle-demo with enterprise template"
 ```
 
 **Step 2: Adding Content**
+
 ```bash
 "Add plugins code-formatter and test-runner to marketplace ./full-lifecycle-demo"
 ```
 
 **Step 3: Validation**
+
 ```bash
 "Validate marketplace ./full-lifecycle-demo with comprehensive checks"
 ```
 
 **Step 4: Health Analysis**
+
 ```bash
 "Analyze marketplace health for ./full-lifecycle-demo and generate improvement recommendations"
 ```
 
 **Step 5: Deployment**
+
 ```bash
 "Deploy marketplace ./full-lifecycle-demo with minor version update"
 ```
@@ -389,11 +418,13 @@ Git tag created and pushed
 ### Example 14: Template Customization
 
 **Prompt**:
+
 ```bash
 "Create marketplace custom-template-demo with standard template and then customize validation rules to be more strict"
 ```
 
 **Expected Output**:
+
 ```
 Creating marketplace 'custom-template-demo' at ./custom-template-demo using standard template
 [... directory creation and file copying ...]
@@ -415,11 +446,13 @@ Validation with custom rules completed: SUCCESS
 ### Example 15: Invalid Marketplace Name
 
 **Prompt**:
+
 ```bash
 "Create marketplace with invalid name containing special characters!@#$"
 ```
 
 **Expected Output**:
+
 ```
 Error: Invalid marketplace name. Names should only contain letters, numbers, hyphens, and underscores.
 Please use a valid name like: my-marketplace or my_marketplace
@@ -428,11 +461,13 @@ Please use a valid name like: my-marketplace or my_marketplace
 ### Example 16: Non-Existent Marketplace Validation
 
 **Prompt**:
+
 ```bash
 "Validate marketplace at ./non-existent-marketplace with verbose output"
 ```
 
 **Expected Output**:
+
 ```
 Validating marketplace at: ./non-existent-marketplace
 Validation completed: FAILED
@@ -443,11 +478,13 @@ Errors found: 1
 ### Example 17: Permission Issues
 
 **Prompt**:
+
 ```bash
 "Create marketplace in restricted directory /root/protected-marketplace"
 ```
 
 **Expected Output**:
+
 ```
 Error: Permission denied when creating directory /root/protected-marketplace
 Please choose a different directory or check permissions.
@@ -458,11 +495,13 @@ Please choose a different directory or check permissions.
 ### Example 18: Large Marketplace Analysis
 
 **Prompt**:
+
 ```bash
 "Analyze performance of large marketplace ./large-enterprise-marketplace with 50+ plugins"
 ```
 
 **Expected Output**:
+
 ```
 Analyzing marketplace health: ./large-enterprise-marketplace
 Scanning 52 plugins...
@@ -489,4 +528,4 @@ Metrics:
 
 ---
 
-*These examples demonstrate practical usage patterns for the Marketplace Management Skill. Adapt them to your specific needs and requirements.*
+_These examples demonstrate practical usage patterns for the Marketplace Management Skill. Adapt them to your specific needs and requirements._

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
+
 - Additional research workflows (customer-research, financial-analysis)
 - Real-time research monitoring
 - Custom report templates
@@ -17,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2024-11-02
 
 ### Added
+
 - Core research functionality with multi-source data collection
 - Type-safe confidence and relevance scoring system
 - Deep research skill with 6 specialized workflows:
@@ -34,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Memory-conscious processing with caching options
 
 ### Enhanced
+
 - Strict TypeScript configuration with readonly interfaces
 - Comprehensive error handling and validation
 - Performance monitoring and metrics
@@ -41,6 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Intelligent synthesis algorithms
 
 ### Documentation
+
 - Complete README with installation and usage guides
 - Comprehensive API reference documentation
 - Troubleshooting guide with common issues
@@ -48,6 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Development setup and contribution guidelines
 
 ### Testing
+
 - 99.76% line coverage with 36 passing tests
 - Unit tests for all core functionality
 - Integration tests for end-to-end workflows
@@ -55,18 +60,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Error handling and edge case validation
 
 ### Security
+
 - Input validation and sanitization
 - Type-safe score validation
 - Local-only processing (no external data transmission)
 - Secure source validation
 
 ### Configuration
+
 - Flexible configuration system with sensible defaults
 - Support for multiple output formats (markdown, JSON, HTML, text)
 - Configurable timeouts and source limits
 - Optional caching for performance optimization
 
 ### Breaking Changes (from prototype)
+
 - Configuration is now required for `performResearch` function
 - Score types now require explicit validation
 - Some type definitions enhanced with stricter typing
@@ -75,12 +83,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.9.0] - 2024-11-01 (Prototype)
 
 ### Added
+
 - Initial prototype with basic research functionality
 - Web-based marketplace interface (removed in 1.0.0)
 - Server components (removed in 1.0.0)
 - Basic plugin structure
 
 ### Known Issues
+
 - Limited type safety
 - No comprehensive testing
 - Server dependency complexity
@@ -91,6 +101,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version History
 
 ### Version 1.0.0 (Current)
+
 - **Status**: Production Ready
 - **Stability**: Stable
 - **Compatibility**: Claude Code latest
@@ -98,6 +109,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **TypeScript**: Strict mode enabled
 
 ### Version 0.9.0 (Prototype)
+
 - **Status**: Deprecated
 - **Stability**: Experimental
 - **Issues**: See known issues above
@@ -160,11 +172,13 @@ For questions about upgrading or migration:
 ## Release Process
 
 ### Version Planning
+
 1. Features planned for next release are marked in "Unreleased" section
 2. Breaking changes are clearly documented
 3. Migration guides are provided for major version changes
 
 ### Release Criteria
+
 - All tests must pass (100% success rate)
 - Minimum 95% test coverage required
 - Documentation must be updated
@@ -172,6 +186,7 @@ For questions about upgrading or migration:
 - Security review completed
 
 ### Release Checklist
+
 - [ ] Update version numbers in package.json and plugin metadata
 - [ ] Update CHANGELOG with detailed changes
 - [ ] Run full test suite and verify coverage

@@ -134,12 +134,11 @@ export class MyCommand extends BaseCommand {
     parameters: Record<string, unknown>,
     context: CommandContext
   ): Promise<CommandResult> {
-    const param = parameters.param as string || 'default';
+    const param = (parameters.param as string) || 'default';
 
-    return this.createSuccessResult(
-      `Hello from my command! Parameter: ${param}`,
-      { received: param }
-    );
+    return this.createSuccessResult(`Hello from my command! Parameter: ${param}`, {
+      received: param,
+    });
   }
 }
 ```
@@ -182,17 +181,14 @@ export class MySkill extends BaseSkill {
       type: 'keyword',
       pattern: 'help me',
       priority: 1,
-    }
+    },
   ];
 
-  async handler(
-    input: string,
-    context: SkillContext
-  ): Promise<SkillResult> {
-    return this.createSuccessResult(
-      "I can help you with various tasks!",
-      ["What would you like to know?", "How can I assist you?"]
-    );
+  async handler(input: string, context: SkillContext): Promise<SkillResult> {
+    return this.createSuccessResult('I can help you with various tasks!', [
+      'What would you like to know?',
+      'How can I assist you?',
+    ]);
   }
 }
 ```

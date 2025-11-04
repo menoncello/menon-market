@@ -21,6 +21,7 @@
 ### Adding the Marketplace
 
 1. Add the marketplace to Claude Code:
+
    ```bash
    /plugin marketplace add [repository-url]
    ```
@@ -33,11 +34,13 @@
 ### Installing Plugins
 
 Browse available plugins:
+
 ```bash
 /plugin
 ```
 
 Install specific plugin:
+
 ```bash
 /plugin install [plugin-name]@[marketplace-name]
 ```
@@ -74,10 +77,12 @@ Install specific plugin:
 **Description**: [Detailed description]
 
 **Commands**:
+
 - `[command-1]`: [Description]
 - `[command-2]`: [Description]
 
 **Examples**:
+
 ```bash
 /[command-1] --option value
 /[command-2] input.txt
@@ -88,10 +93,12 @@ Install specific plugin:
 **Description**: [Detailed description]
 
 **Commands**:
+
 - `[command-1]`: [Description]
 - `[command-2]`: [Description]
 
 **Examples**:
+
 ```bash
 /[command-1] --option value
 /[command-2] input.txt
@@ -108,6 +115,7 @@ Install specific plugin:
 **When to Use**: [Usage scenarios]
 
 **Examples**:
+
 ```bash
 "Use [skill-name] to [perform task]"
 "Process this file using [skill-name]"
@@ -122,6 +130,7 @@ Install specific plugin:
 **When to Use**: [Usage scenarios]
 
 **Examples**:
+
 ```bash
 "Use [skill-name] to [perform task]"
 "Process this file using [skill-name]"
@@ -194,6 +203,7 @@ Skills can be configured through their SKILL.md files or at runtime.
 **Problem**: Plugin won't install or shows errors
 
 **Solution**:
+
 ```bash
 # Check marketplace connection
 /plugin marketplace list
@@ -210,6 +220,7 @@ Skills can be configured through their SKILL.md files or at runtime.
 **Problem**: Installed plugin commands don't appear in `/help`
 
 **Solution**:
+
 ```bash
 # Check plugin status
 /plugin info [plugin-name]
@@ -226,6 +237,7 @@ Skills can be configured through their SKILL.md files or at runtime.
 **Problem**: Skills don't trigger or work correctly
 
 **Solution**:
+
 ```bash
 # Check skill availability
 /skill-list
@@ -328,4 +340,4 @@ Some plugins support API integration for external services:
 
 ---
 
-*Last updated: [Date]*
+_Last updated: [Date]_

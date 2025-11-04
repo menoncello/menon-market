@@ -30,23 +30,23 @@ class MarketplaceDeployer {
     return new Promise((resolve, reject) => {
       const child = spawn(command, args, {
         cwd,
-        stdio: this.verbose ? 'inherit' : 'pipe'
+        stdio: this.verbose ? 'inherit' : 'pipe',
       });
 
       let stdout = '';
       let stderr = '';
 
       if (!this.verbose) {
-        child.stdout?.on('data', (data) => {
+        child.stdout?.on('data', data => {
           stdout += data.toString();
         });
 
-        child.stderr?.on('data', (data) => {
+        child.stderr?.on('data', data => {
           stderr += data.toString();
         });
       }
 
-      child.on('close', (code) => {
+      child.on('close', code => {
         if (code === 0) {
           resolve({ stdout, stderr, code });
         } else {
@@ -54,7 +54,7 @@ class MarketplaceDeployer {
         }
       });
 
-      child.on('error', (error) => {
+      child.on('error', error => {
         reject(error);
       });
     });
@@ -146,7 +146,11 @@ class MarketplaceDeployer {
       try {
         await this.executeCommand('git', ['add', '.'], marketplacePath);
         await this.executeCommand('git', ['commit', '-m', `Release v${version}`], marketplacePath);
-        await this.executeCommand('git', ['tag', `-a`, `v${version}`, '-m', `Release v${version}`], marketplacePath);
+        await this.executeCommand(
+          'git',
+          ['tag', `-a`, `v${version}`, '-m', `Release v${version}`],
+          marketplacePath
+        );
         this.log(`Git tag v${version} created successfully`);
       } catch (error) {
         this.log(`Failed to create git tag: ${error.message}`, 'error');
@@ -201,17 +205,17 @@ class MarketplaceDeployer {
       '',
       `## Installation`,
       '```bash',
-      `/plugin marketplace add [repository-url]',
+      `/plugin marketplace add [repository-url]`,
       '```',
       '',
       `## Verification`,
       '```bash',
-      `/plugin marketplace list',
-      '/plugin install [plugin-name]@[marketplace-name]',
+      `/plugin marketplace list`,
+      `/plugin install [plugin-name]@[marketplace-name]`,
       '```',
       '',
       `---`,
-      `*Released on ${new Date().toISOString().split('T')[0]}*`
+      `*Released on ${new Date().toISOString().split('T')[0]}*`,
     ];
 
     const notesPath = path.join(marketplacePath, 'RELEASE_NOTES.md');
@@ -231,7 +235,7 @@ class MarketplaceDeployer {
 
     console.log(`Starting marketplace deployment for: ${marketplacePath}`);
     console.log(`Release type: ${releaseType}`);
-    console.log('=' .repeat(50));
+    console.log('='.repeat(50));
 
     try {
       // Validate marketplace unless skipped
@@ -259,7 +263,7 @@ class MarketplaceDeployer {
         await this.pushToRemote(marketplacePath, newVersion);
       }
 
-      console.log('=' .repeat(50));
+      console.log('='.repeat(50));
       console.log('✅ Deployment completed successfully');
       console.log(`Version: ${newVersion}`);
       console.log(`Release notes: ${notesPath}`);
@@ -272,9 +276,8 @@ class MarketplaceDeployer {
         success: true,
         version: newVersion,
         notesPath,
-        skipped: { validation: skipValidation, git: skipGit }
+        skipped: { validation: skipValidation, git: skipGit },
       };
-
     } catch (error) {
       console.error('❌ Deployment failed:', error.message);
       throw error;
@@ -323,7 +326,7 @@ if (require.main === module) {
     force: args.includes('--force'),
     type: 'patch',
     skipValidation: args.includes('--skip-validation'),
-    skipGit: args.includes('--skip-git')
+    skipGit: args.includes('--skip-git'),
   };
 
   // Parse release type
@@ -335,7 +338,8 @@ if (require.main === module) {
   const marketplacePath = args.find(arg => !arg.startsWith('--')) || './';
   const deployer = new MarketplaceDeployer(options);
 
-  deployer.deploy(marketplacePath, options)
+  deployer
+    .deploy(marketplacePath, options)
     .then(result => {
       console.log('\nDeployment summary:', result);
     })

@@ -26,6 +26,7 @@ claude
 ```
 
 This will open the plugin management interface where you can:
+
 - Browse available plugins
 - Search by name or category
 - View plugin details and documentation
@@ -295,6 +296,7 @@ project-directory/
 ### Semantic Versioning
 
 Plugins follow semantic versioning (SemVer):
+
 - **MAJOR**: Breaking changes
 - **MINOR**: New features (backward compatible)
 - **PATCH**: Bug fixes (backward compatible)
@@ -306,22 +308,22 @@ Plugins follow semantic versioning (SemVer):
   "plugins": [
     {
       "name": "code-formatter",
-      "version": "^2.1.0",    // >=2.1.0, <3.0.0
+      "version": "^2.1.0", // >=2.1.0, <3.0.0
       "source": "official"
     },
     {
       "name": "database-tools",
-      "version": "~1.5.2",    // >=1.5.2, <1.6.0
+      "version": "~1.5.2", // >=1.5.2, <1.6.0
       "source": "community"
     },
     {
       "name": "security-scanner",
-      "version": ">=3.0.0",   // 3.0.0 or higher
+      "version": ">=3.0.0", // 3.0.0 or higher
       "source": "enterprise"
     },
     {
       "name": "legacy-plugin",
-      "version": "1.2.3",     // Exact version
+      "version": "1.2.3", // Exact version
       "source": "local"
     }
   ]
@@ -669,6 +671,7 @@ services:
 ### Common Installation Issues
 
 #### Plugin Not Found
+
 ```bash
 # Check if plugin is available
 claude marketplace search plugin-name
@@ -681,6 +684,7 @@ claude marketplace add https://github.com/user/marketplace
 ```
 
 #### Permission Denied
+
 ```bash
 # Check file permissions
 ls -la ~/.claude/plugins/
@@ -691,6 +695,7 @@ chmod 600 ~/.claude/settings.json
 ```
 
 #### Version Conflicts
+
 ```bash
 # Check dependency tree
 claude plugin deps plugin-name
@@ -703,6 +708,7 @@ claude marketplace reinstall plugin-name
 ```
 
 #### Network Issues
+
 ```bash
 # Check connectivity
 curl -I https://github.com
@@ -748,6 +754,7 @@ tail -f ~/.claude/logs/plugin-activity.log
 ## Best Practices
 
 ### Security
+
 - Only install plugins from trusted sources
 - Regularly update plugins to latest versions
 - Review plugin permissions before installation
@@ -755,6 +762,7 @@ tail -f ~/.claude/logs/plugin-activity.log
 - Implement proper access controls
 
 ### Performance
+
 - Limit the number of installed plugins
 - Regularly clean up unused plugins
 - Monitor plugin performance impact
@@ -762,6 +770,7 @@ tail -f ~/.claude/logs/plugin-activity.log
 - Optimize plugin loading order
 
 ### Maintenance
+
 - Regularly backup configuration
 - Document custom configurations
 - Test plugin updates in staging
@@ -769,6 +778,7 @@ tail -f ~/.claude/logs/plugin-activity.log
 - Keep documentation up to date
 
 ### Compliance
+
 - Track plugin licenses
 - Document plugin usage
 - Implement audit logging

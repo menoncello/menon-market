@@ -7,16 +7,19 @@ This guide provides everything you need to know about developing plugins and ski
 ## Table of Contents
 
 ### Getting Started
+
 - [Overview](#overview)
 - [Plugin vs Skills](#plugin-vs-skills)
 - [Prerequisites](#prerequisites)
 
 ### Development Guides
+
 - [Creation Guide](creation-guide.md) - How to create plugins step by step
 - [Installation Guide](installation-guide.md) - Installation methods and procedures
 - [Best Practices](best-practices.md) - Development standards and optimization
 
 ### Resources
+
 - [API Reference](api-reference.md) - Complete API documentation
 - [Templates](templates/) - Starter templates for different plugin types
 - [Examples](examples/) - Complete plugin examples
@@ -43,7 +46,9 @@ Claude Code plugins extend the functionality of Claude Code through a structured
 ## Plugin vs Skills
 
 ### Plugins
+
 Plugins are comprehensive packages that can contain multiple components:
+
 - Custom slash commands
 - Agent skills
 - MCP servers
@@ -51,7 +56,9 @@ Plugins are comprehensive packages that can contain multiple components:
 - Configuration files
 
 ### Skills
+
 Skills are focused capabilities that:
+
 - Contain a single SKILL.md file with instructions
 - Are model-invoked based on context and user needs
 - Can be bundled with plugins or standalone
@@ -60,12 +67,14 @@ Skills are focused capabilities that:
 ## Prerequisites
 
 ### System Requirements
+
 - **Claude Code**: Latest version with plugin support
 - **Node.js/Bun**: For plugin development and build processes
 - **Git**: For version control and distribution
 - **Text Editor**: VS Code recommended with Claude Code extension
 
 ### Development Environment
+
 ```bash
 # Verify Claude Code installation
 claude --version
@@ -77,6 +86,7 @@ npm init -y  # or bun init
 ```
 
 ### Required Knowledge
+
 - **JavaScript/TypeScript**: Core plugin development
 - **Markdown**: For command and skill documentation
 - **JSON**: For manifest and configuration files
@@ -86,6 +96,7 @@ npm init -y  # or bun init
 ## Quick Start
 
 ### 1. Create Plugin Structure
+
 ```bash
 mkdir my-first-plugin
 cd my-first-plugin
@@ -93,6 +104,7 @@ mkdir -p .claude-plugin commands skills agents hooks
 ```
 
 ### 2. Create Plugin Manifest
+
 ```json
 {
   "name": "my-first-plugin",
@@ -105,22 +117,26 @@ mkdir -p .claude-plugin commands skills agents hooks
 ```
 
 ### 3. Add a Custom Command
+
 Create `commands/hello.md`:
+
 ```markdown
 ---
 name: hello
-description: "Say hello with a custom message"
+description: 'Say hello with a custom message'
 ---
 
 Hello! This is a custom command from my first plugin.
 ```
 
 ### 4. Install Plugin
+
 ```bash
 claude marketplace install ./my-first-plugin
 ```
 
 ### 5. Test Your Plugin
+
 ```bash
 claude
 /hello
@@ -168,6 +184,7 @@ my-plugin/
 ## Contributing
 
 Contributions to this guide are welcome! Please:
+
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
@@ -176,4 +193,4 @@ Contributions to this guide are welcome! Please:
 
 ---
 
-*This guide is maintained by the Claude Code community and updated regularly with the latest features and best practices.*
+_This guide is maintained by the Claude Code community and updated regularly with the latest features and best practices._

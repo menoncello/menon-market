@@ -1,14 +1,26 @@
-import { PromptAnalysis, AnalysisConfig, UserProfile } from '../types.js';
+import { PromptAnalysis, AnalysisConfig } from '../types.js';
 
+/**
+ *
+ */
 export class AnalysisEngine {
   private config: AnalysisConfig;
 
+  /**
+   *
+   * @param config
+   */
   constructor(config: AnalysisConfig) {
     this.config = config;
   }
 
   /**
    * Analyze a prompt using NLP techniques
+   * @param prompt
+   * @param options
+   * @param options.mode
+   * @param options.domain
+   * @param options.targetModel
    */
   async analyzePrompt(
     prompt: string,
@@ -19,7 +31,6 @@ export class AnalysisEngine {
     } = {}
   ): Promise<PromptAnalysis> {
     // Use config to access configuration if needed
-    void this.config;
 
     // Handle empty prompts
     if (!prompt || prompt.trim().length === 0) {
@@ -34,7 +45,7 @@ export class AnalysisEngine {
         suggestions: ['Please provide a specific task or request'],
         extractedEntities: {},
         userIntent: 'empty-request',
-        contextualFactors: ['empty-input']
+        contextualFactors: ['empty-input'],
       };
     }
 
@@ -42,7 +53,7 @@ export class AnalysisEngine {
     const intent = await this.extractIntent(prompt);
 
     // Identify domain
-    const domain = options.domain || await this.identifyDomain(prompt);
+    const domain = options.domain || (await this.identifyDomain(prompt));
 
     // Assess complexity
     const complexity = await this.assessComplexity(prompt);
@@ -78,10 +89,14 @@ export class AnalysisEngine {
       suggestions,
       extractedEntities,
       userIntent,
-      contextualFactors
+      contextualFactors,
     };
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private async extractIntent(prompt: string): Promise<string> {
     const patterns = {
       generate: /generate|create|write|produce/i,
@@ -89,7 +104,7 @@ export class AnalysisEngine {
       transform: /convert|transform|change|modify/i,
       explain: /explain|describe|clarify/i,
       compare: /compare|contrast|difference/i,
-      solve: /solve|fix|resolve/i
+      solve: /solve|fix|resolve/i,
     };
 
     for (const [intent, pattern] of Object.entries(patterns)) {
@@ -101,6 +116,10 @@ export class AnalysisEngine {
     return 'general';
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private async identifyDomain(prompt: string): Promise<string> {
     const domainKeywords = {
       technical: ['code', 'api', 'database', 'algorithm', 'programming', 'software'],
@@ -108,7 +127,7 @@ export class AnalysisEngine {
       creative: ['write', 'story', 'design', 'creative', 'art', 'content'],
       research: ['research', 'study', 'analysis', 'data', 'scientific', 'academic'],
       medical: ['medical', 'health', 'clinical', 'patient', 'diagnosis'],
-      legal: ['legal', 'law', 'contract', 'regulation', 'compliance']
+      legal: ['legal', 'law', 'contract', 'regulation', 'compliance'],
     };
 
     const promptLower = prompt.toLowerCase();
@@ -126,24 +145,29 @@ export class AnalysisEngine {
     return detectedDomain;
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private async assessComplexity(prompt: string): Promise<'low' | 'medium' | 'high'> {
     const complexityIndicators = {
       high: [
-        'multiple steps', 'complex', 'detailed analysis', 'comprehensive',
-        'system design', 'architecture', 'integration', 'optimization'
+        'multiple steps',
+        'complex',
+        'detailed analysis',
+        'comprehensive',
+        'system design',
+        'architecture',
+        'integration',
+        'optimization',
       ],
-      medium: [
-        'analyze', 'explain', 'create', 'design', 'implement'
-      ],
-      low: [
-        'simple', 'basic', 'quick', 'summary', 'brief'
-      ]
+      medium: ['analyze', 'explain', 'create', 'design', 'implement'],
+      low: ['simple', 'basic', 'quick', 'summary', 'brief'],
     };
 
     const promptLower = prompt.toLowerCase();
     let highScore = 0;
     let mediumScore = 0;
-    let lowScore = 0;
 
     for (const indicator of complexityIndicators.high) {
       if (promptLower.includes(indicator)) highScore++;
@@ -151,22 +175,25 @@ export class AnalysisEngine {
     for (const indicator of complexityIndicators.medium) {
       if (promptLower.includes(indicator)) mediumScore++;
     }
-    for (const indicator of complexityIndicators.low) {
-      if (promptLower.includes(indicator)) lowScore++;
-    }
+    // Low complexity indicators don't affect the scoring
+    void complexityIndicators.low.every(indicator => promptLower.includes(indicator));
 
     if (highScore > 0) return 'high';
     if (mediumScore > 0) return 'medium';
     return 'low';
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private async calculateClarity(prompt: string): Promise<number> {
     let score = 10;
 
     // Deduct points for clarity issues
     if (prompt.length < 10) score -= 5; // Too short - more severe penalty
     if (prompt.length > 500) score -= 2; // Too long
-    if (!/[.!?]$/.test(prompt.trim())) score -= 2; // No punctuation - increased penalty
+    if (!/[!.?]$/.test(prompt.trim())) score -= 2; // No punctuation - increased penalty
     if (/\b(vague|unclear|uncertain|maybe|perhaps)\b/i.test(prompt)) score -= 3;
     if (prompt.split(' ').length < 5) score -= 4; // Too few words - more severe penalty
 
@@ -174,13 +201,21 @@ export class AnalysisEngine {
     if (/\b(good|bad|nice|stuff|things|something)\b/i.test(prompt)) score -= 3;
 
     // Penalty for lack of specific action verbs
-    if (!/\b(create|write|generate|analyze|explain|design|implement|build|develop|solve|fix)\b/i.test(prompt)) {
+    if (
+      !/\b(create|write|generate|analyze|explain|design|implement|build|develop|solve|fix)\b/i.test(
+        prompt
+      )
+    ) {
       score -= 2;
     }
 
     return Math.max(1, Math.min(10, score));
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private async calculateSpecificity(prompt: string): Promise<number> {
     let score = 5; // Base score
 
@@ -195,6 +230,10 @@ export class AnalysisEngine {
     return Math.max(1, Math.min(10, score));
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private async calculateCompleteness(prompt: string): Promise<number> {
     let score = 5; // Base score
 
@@ -219,6 +258,10 @@ export class AnalysisEngine {
     return Math.max(1, Math.min(10, score));
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private async identifyAmbiguities(prompt: string): Promise<string[]> {
     const ambiguities: string[] = [];
 
@@ -232,7 +275,9 @@ export class AnalysisEngine {
 
     // Check for ambiguous references
     if (/\b(it|this|that|they|them)\b/i.test(prompt)) {
-      ambiguities.push('Pronouns without clear antecedents - could you specify what "it/this/that" refers to?');
+      ambiguities.push(
+        'Pronouns without clear antecedents - could you specify what "it/this/that" refers to?'
+      );
     }
 
     // Check for missing context
@@ -243,6 +288,13 @@ export class AnalysisEngine {
     return ambiguities;
   }
 
+  /**
+   *
+   * @param prompt
+   * @param clarity
+   * @param specificity
+   * @param completeness
+   */
   private async generateSuggestions(
     prompt: string,
     clarity: number,
@@ -277,13 +329,17 @@ export class AnalysisEngine {
     return suggestions;
   }
 
-  private async extractEntities(prompt: string): Promise<Record<string, any>> {
-    const entities: Record<string, any> = {};
+  /**
+   *
+   * @param prompt
+   */
+  private async extractEntities(prompt: string): Promise<Record<string, unknown>> {
+    const entities: Record<string, unknown> = {};
 
     // Extract numbers
     const numbers = prompt.match(/\d+/g);
     if (numbers) {
-      entities.numbers = numbers.map(n => parseInt(n));
+      entities.numbers = numbers.map(n => Number.parseInt(n));
     }
 
     // Extract file formats
@@ -293,13 +349,17 @@ export class AnalysisEngine {
     }
 
     // Extract programming languages
-    const languages = prompt.match(/\b(javascript|typescript|python|java|c\+\+|go|rust|php|ruby|node\.js|nodejs)\b/gi);
+    const languages = prompt.match(
+      /\b(javascript|typescript|python|java|c\+\+|go|rust|php|ruby|node\.js|nodejs)\b/gi
+    );
     if (languages) {
       entities.languages = languages.map(l => l.toLowerCase().replace('nodejs', 'node.js'));
     }
 
     // Extract technologies
-    const techStack = prompt.match(/\b(react|vue|angular|node|docker|kubernetes|aws|azure|gcp)\b/gi);
+    const techStack = prompt.match(
+      /\b(react|vue|angular|node|docker|kubernetes|aws|azure|gcp)\b/gi
+    );
     if (techStack) {
       entities.technologies = techStack.map(t => t.toLowerCase());
     }
@@ -307,6 +367,10 @@ export class AnalysisEngine {
     return entities;
   }
 
+  /**
+   *
+   * @param prompt
+   */
   private async analyzeUserIntent(prompt: string): Promise<string> {
     const intentPatterns = {
       'create-something': /create|generate|write|produce|make|build/i,
@@ -314,7 +378,7 @@ export class AnalysisEngine {
       'improve-something': /improve|optimize|enhance|refactor|fix/i,
       'learn-something': /explain|teach|show|demonstrate|describe/i,
       'compare-things': /compare|contrast|versus|vs|difference/i,
-      'solve-problem': /solve|fix|resolve|address|handle/i
+      'solve-problem': /solve|fix|resolve|address|handle/i,
     };
 
     for (const [intent, pattern] of Object.entries(intentPatterns)) {
@@ -326,9 +390,21 @@ export class AnalysisEngine {
     return 'general-request';
   }
 
+  /**
+   *
+   * @param prompt
+   * @param options
+   * @param options.mode
+   * @param options.domain
+   * @param options.targetModel
+   */
   private async identifyContextualFactors(
     prompt: string,
-    options: any
+    options: {
+      mode?: string;
+      domain?: string;
+      targetModel?: string;
+    }
   ): Promise<string[]> {
     const factors: string[] = [];
 

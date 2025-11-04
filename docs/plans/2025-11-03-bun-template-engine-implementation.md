@@ -13,6 +13,7 @@
 ## Task 1: Setup Project Infrastructure
 
 **Files:**
+
 - Create: `src/template-engine/package.json`
 - Create: `src/template-engine/tsconfig.json`
 - Create: `src/template-engine/.gitignore`
@@ -92,6 +93,7 @@ git commit -m "feat: setup template engine infrastructure with Bun, TypeScript, 
 ## Task 2: Create Template Manager Core
 
 **Files:**
+
 - Create: `src/template-engine/manager.ts`
 - Create: `src/template-engine/manager.test.ts`
 - Test: `src/template-engine/manager.test.ts`
@@ -99,17 +101,17 @@ git commit -m "feat: setup template engine infrastructure with Bun, TypeScript, 
 **Step 1: Write failing test for template manager initialization**
 
 ```typescript
-import { test, expect } from "bun:test";
-import { TemplateManager } from "./manager";
+import { test, expect } from 'bun:test';
+import { TemplateManager } from './manager';
 
-test("TemplateManager initializes with Bun helpers", async () => {
+test('TemplateManager initializes with Bun helpers', async () => {
   const manager = new TemplateManager();
   await manager.initialize();
 
   const template = manager.compile("{{bun-import 'sqlite'}}");
   const result = template({});
 
-  expect(result).toBe("bun:sqlite");
+  expect(result).toBe('bun:sqlite');
 });
 ```
 
@@ -121,9 +123,9 @@ Expected: FAIL with "TemplateManager not defined"
 **Step 3: Write minimal TemplateManager implementation**
 
 ```typescript
-import Handlebars from "handlebars";
-import { readdir, readFile } from "node:fs/promises";
-import { join } from "node:path";
+import Handlebars from 'handlebars';
+import { readdir, readFile } from 'node:fs/promises';
+import { join } from 'node:path';
 
 export class TemplateManager {
   private templates: Map<string, HandlebarsTemplateDelegate> = new Map();
@@ -161,24 +163,24 @@ Expected: PASS
 **Step 5: Add more Bun helper tests and implementation**
 
 ```typescript
-test("TemplateManager handles bun-class helper", async () => {
+test('TemplateManager handles bun-class helper', async () => {
   const manager = new TemplateManager();
   await manager.initialize();
 
   const template = manager.compile("{{bun-class 'my-plugin'}}");
   const result = template({});
 
-  expect(result).toBe("MyPlugin");
+  expect(result).toBe('MyPlugin');
 });
 
-test("TemplateManager handles bun-filename helper", async () => {
+test('TemplateManager handles bun-filename helper', async () => {
   const manager = new TemplateManager();
   await manager.initialize();
 
   const template = manager.compile("{{bun-filename 'MyClass'}}");
   const result = template({});
 
-  expect(result).toBe("my-class");
+  expect(result).toBe('my-class');
 });
 ```
 
@@ -187,13 +189,17 @@ test("TemplateManager handles bun-filename helper", async () => {
 ```typescript
 // Add to registerBunHelpers method
 Handlebars.registerHelper('bun-class', (name: string) => {
-  return name.split('-').map(part =>
-    part.charAt(0).toUpperCase() + part.slice(1)
-  ).join('');
+  return name
+    .split('-')
+    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('');
 });
 
 Handlebars.registerHelper('bun-filename', (name: string) => {
-  return name.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '');
+  return name
+    .replace(/([A-Z])/g, '-$1')
+    .toLowerCase()
+    .replace(/^-/, '');
 });
 
 Handlebars.registerHelper('ifBunFeature', (feature: string, options: any) => {
@@ -219,6 +225,7 @@ git commit -m "feat: implement TemplateManager core with Bun-specific Handlebars
 ## Task 3: Create Template Registry
 
 **Files:**
+
 - Create: `src/template-engine/registry.ts`
 - Create: `src/template-engine/registry.test.ts`
 - Test: `src/template-engine/registry.test.ts`
@@ -226,10 +233,10 @@ git commit -m "feat: implement TemplateManager core with Bun-specific Handlebars
 **Step 1: Write failing test for template registry**
 
 ```typescript
-import { test, expect } from "bun:test";
-import { TEMPLATES, getTemplate } from "./registry";
+import { test, expect } from 'bun:test';
+import { TEMPLATES, getTemplate } from './registry';
 
-test("Template registry contains marketplace-deploy template", () => {
+test('Template registry contains marketplace-deploy template', () => {
   const template = getTemplate('marketplace-deploy');
 
   expect(template).toBeDefined();
@@ -269,8 +276,8 @@ export const TEMPLATES: TemplateDefinition[] = [
     requiredVars: ['PLUGIN_NAME', 'AUTHOR', 'VERSION'],
     optionalVars: {
       DATABASE_TYPE: 'sqlite',
-      LOG_LEVEL: 'info'
-    }
+      LOG_LEVEL: 'info',
+    },
   },
   {
     id: 'marketplace-validate',
@@ -282,16 +289,18 @@ export const TEMPLATES: TemplateDefinition[] = [
     requiredVars: ['PLUGIN_NAME', 'VALIDATION_RULES'],
     optionalVars: {
       STRICT_MODE: true,
-      AUTO_FIX: false
-    }
-  }
+      AUTO_FIX: false,
+    },
+  },
 ];
 
 export function getTemplate(id: string): TemplateDefinition | undefined {
   return TEMPLATES.find(t => t.id === id);
 }
 
-export function getTemplatesByCategory(category: TemplateDefinition['category']): TemplateDefinition[] {
+export function getTemplatesByCategory(
+  category: TemplateDefinition['category']
+): TemplateDefinition[] {
   return TEMPLATES.filter(t => t.category === category);
 }
 ```
@@ -304,7 +313,7 @@ Expected: PASS
 **Step 5: Add more comprehensive registry tests**
 
 ```typescript
-test("Template registry filters by category", () => {
+test('Template registry filters by category', () => {
   const deployTemplates = getTemplatesByCategory('deploy');
   const validateTemplates = getTemplatesByCategory('validate');
 
@@ -313,7 +322,7 @@ test("Template registry filters by category", () => {
   expect(deployTemplates[0].id).toBe('marketplace-deploy');
 });
 
-test("Template registry handles missing template", () => {
+test('Template registry handles missing template', () => {
   const template = getTemplate('non-existent');
   expect(template).toBeUndefined();
 });
@@ -336,6 +345,7 @@ git commit -m "feat: implement template registry with definitions for deploy and
 ## Task 4: Create Configuration System
 
 **Files:**
+
 - Create: `src/template-engine/config/template-config.ts`
 - Create: `src/template-engine/config/template-config.test.ts`
 - Test: `src/template-engine/config/template-config.test.ts`
@@ -343,26 +353,26 @@ git commit -m "feat: implement template registry with definitions for deploy and
 **Step 1: Write failing test for configuration validation**
 
 ```typescript
-import { test, expect } from "bun:test";
-import { TemplateConfigSchema, validateConfig } from "./template-config";
+import { test, expect } from 'bun:test';
+import { TemplateConfigSchema, validateConfig } from './template-config';
 
-test("Validates correct configuration", () => {
+test('Validates correct configuration', () => {
   const config = {
     PLUGIN_NAME: 'test-plugin',
     AUTHOR: 'Test Author',
     VERSION: '1.0.0',
-    DATABASE_TYPE: 'sqlite'
+    DATABASE_TYPE: 'sqlite',
   };
 
   const result = validateConfig(config);
   expect(result.success).toBe(true);
 });
 
-test("Rejects invalid version format", () => {
+test('Rejects invalid version format', () => {
   const config = {
     PLUGIN_NAME: 'test-plugin',
     AUTHOR: 'Test Author',
-    VERSION: '1.0' // Invalid format
+    VERSION: '1.0', // Invalid format
   };
 
   const result = validateConfig(config);
@@ -379,7 +389,7 @@ Expected: FAIL with "config module not found"
 **Step 3: Write configuration system implementation**
 
 ```typescript
-import { z } from "zod";
+import { z } from 'zod';
 
 export const TemplateConfigSchema = z.object({
   PLUGIN_NAME: z.string().min(1).max(50),
@@ -391,7 +401,7 @@ export const TemplateConfigSchema = z.object({
   STRICT_MODE: z.boolean().default(true),
   AUTO_FIX: z.boolean().default(false),
   OUTPUT_DIR: z.string().default('./generated'),
-  TEMPLATE_DIR: z.string().default('./templates')
+  TEMPLATE_DIR: z.string().default('./templates'),
 });
 
 export type TemplateConfig = z.infer<typeof TemplateConfigSchema>;
@@ -402,13 +412,13 @@ export const defaultConfig: Partial<TemplateConfig> = {
   STRICT_MODE: true,
   AUTO_FIX: false,
   OUTPUT_DIR: './generated',
-  TEMPLATE_DIR: './templates'
+  TEMPLATE_DIR: './templates',
 };
 
 export function validateConfig(config: unknown): {
   success: boolean;
   data?: TemplateConfig;
-  errors?: string[]
+  errors?: string[];
 } {
   try {
     const data = TemplateConfigSchema.parse(config);
@@ -417,7 +427,7 @@ export function validateConfig(config: unknown): {
     if (error instanceof z.ZodError) {
       return {
         success: false,
-        errors: error.errors.map(e => `${e.path.join('.')}: ${e.message}`)
+        errors: error.errors.map(e => `${e.path.join('.')}: ${e.message}`),
       };
     }
     return { success: false, errors: ['Unknown validation error'] };
@@ -437,11 +447,11 @@ Expected: PASS
 **Step 5: Add more configuration tests**
 
 ```typescript
-test("Merges configuration with defaults", () => {
+test('Merges configuration with defaults', () => {
   const partialConfig = {
     PLUGIN_NAME: 'test-plugin',
     AUTHOR: 'Test Author',
-    VERSION: '1.0.0'
+    VERSION: '1.0.0',
   };
 
   const result = mergeWithDefaults(partialConfig);
@@ -469,6 +479,7 @@ git commit -m "feat: implement configuration system with Zod validation and defa
 ## Task 5: Create Deploy Template
 
 **Files:**
+
 - Create: `src/template-engine/templates/deploy.hbs`
 - Test: N/A (Template file)
 
@@ -545,6 +556,7 @@ git commit -m "feat: add Bun-first deploy template with Handlebars placeholders"
 ## Task 6: Integrate Template Loading in Manager
 
 **Files:**
+
 - Modify: `src/template-engine/manager.ts`
 - Modify: `src/template-engine/manager.test.ts`
 - Test: `src/template-engine/manager.test.ts`
@@ -552,7 +564,7 @@ git commit -m "feat: add Bun-first deploy template with Handlebars placeholders"
 **Step 1: Write failing test for template loading**
 
 ```typescript
-test("TemplateManager loads and generates deploy template", async () => {
+test('TemplateManager loads and generates deploy template', async () => {
   const manager = new TemplateManager();
   await manager.initialize();
 
@@ -563,7 +575,7 @@ test("TemplateManager loads and generates deploy template", async () => {
     description: 'Test deployment script',
     currentDate: new Date().toISOString(),
     className: 'TestPlugin',
-    databaseType: 'sqlite'
+    databaseType: 'sqlite',
   };
 
   const result = await manager.generate('marketplace-deploy', variables);
@@ -635,6 +647,7 @@ git commit -m "feat: integrate template loading and generation in TemplateManage
 ## Task 7: Create CLI Interface
 
 **Files:**
+
 - Create: `src/template-engine/cli/generate.ts`
 - Create: `src/template-engine/cli/generate.test.ts`
 - Test: `src/template-engine/cli/generate.test.ts`
@@ -642,10 +655,10 @@ git commit -m "feat: integrate template loading and generation in TemplateManage
 **Step 1: Write failing test for CLI command**
 
 ```typescript
-import { test, expect } from "bun:test";
-import { program } from "./generate";
+import { test, expect } from 'bun:test';
+import { program } from './generate';
 
-test("CLI program has generate command", () => {
+test('CLI program has generate command', () => {
   const commands = program.commands.map(cmd => cmd.name());
   expect(commands).toContain('generate');
 });
@@ -661,10 +674,10 @@ Expected: FAIL with "CLI module not found"
 ```typescript
 #!/usr/bin/env bun
 
-import { Command } from "commander";
-import { TemplateManager } from "../manager";
-import { getTemplate, validateConfig } from "../config/template-config";
-import { writeFileSync } from "node:fs";
+import { Command } from 'commander';
+import { TemplateManager } from '../manager';
+import { getTemplate, validateConfig } from '../config/template-config';
+import { writeFileSync } from 'node:fs';
 
 const program = new Command();
 
@@ -698,10 +711,11 @@ program
         VERSION: options.version,
         description: options.description || `${options.name} deployment script`,
         currentDate: new Date().toISOString(),
-        className: options.name.split('-').map(part =>
-          part.charAt(0).toUpperCase() + part.slice(1)
-        ).join(''),
-        databaseType: 'sqlite'
+        className: options.name
+          .split('-')
+          .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+          .join(''),
+        databaseType: 'sqlite',
       };
 
       // Validate required variables
@@ -724,7 +738,6 @@ program
       writeFileSync(outputPath, result);
 
       console.log(`✅ Generated ${templateId} template at ${outputPath}`);
-
     } catch (error) {
       console.error('❌ Generation failed:', error.message);
       process.exit(1);
@@ -755,7 +768,7 @@ Expected: PASS
 **Step 5: Add more CLI tests**
 
 ```typescript
-test("CLI program has list command", () => {
+test('CLI program has list command', () => {
   const commands = program.commands.map(cmd => cmd.name());
   expect(commands).toContain('list');
 });
@@ -778,6 +791,7 @@ git commit -m "feat: implement CLI interface with generate and list commands"
 ## Task 8: Create Validation Template
 
 **Files:**
+
 - Create: `src/template-engine/templates/validate.hbs`
 - Modify: `src/template-engine/manager.ts` (update loadTemplates)
 - Test: N/A (Template file)
@@ -900,17 +914,18 @@ git commit -m "feat: add validation template with configurable strict mode and a
 ## Task 9: Integration Testing
 
 **Files:**
+
 - Create: `src/template-engine/integration.test.ts`
 - Test: `src/template-engine/integration.test.ts`
 
 **Step 1: Write comprehensive integration test**
 
 ```typescript
-import { test, expect, beforeEach, afterEach } from "bun:test";
-import { mkdir, rm, writeFile } from "node:fs/promises";
-import { join } from "node:path";
-import { TemplateManager } from "./manager";
-import { validateConfig } from "./config/template-config";
+import { test, expect, beforeEach, afterEach } from 'bun:test';
+import { mkdir, rm, writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
+import { TemplateManager } from './manager';
+import { validateConfig } from './config/template-config';
 
 let tempDir: string;
 let manager: TemplateManager;
@@ -926,7 +941,7 @@ afterEach(async () => {
   await rm(tempDir, { recursive: true, force: true });
 });
 
-test("Full template generation workflow", async () => {
+test('Full template generation workflow', async () => {
   // Test configuration validation
   const config = {
     PLUGIN_NAME: 'integration-test-plugin',
@@ -934,7 +949,7 @@ test("Full template generation workflow", async () => {
     VERSION: '1.0.0',
     DATABASE_TYPE: 'sqlite',
     STRICT_MODE: true,
-    AUTO_FIX: false
+    AUTO_FIX: false,
   };
 
   const validation = validateConfig(config);
@@ -945,7 +960,7 @@ test("Full template generation workflow", async () => {
     ...config,
     description: 'Integration test plugin',
     currentDate: new Date().toISOString(),
-    className: 'IntegrationTestPlugin'
+    className: 'IntegrationTestPlugin',
   };
 
   // Test deploy template generation
@@ -959,7 +974,7 @@ test("Full template generation workflow", async () => {
   // Test validate template generation
   const validateResult = await manager.generate('marketplace-validate', {
     ...templateVariables,
-    VALIDATION_RULES: 'strict'
+    VALIDATION_RULES: 'strict',
   });
 
   expect(validateResult).toContain('#!/usr/bin/env bun');
@@ -967,7 +982,7 @@ test("Full template generation workflow", async () => {
   expect(validateResult).toContain('strictMode: true');
 });
 
-test("Template generation with missing required variables", async () => {
+test('Template generation with missing required variables', async () => {
   const incompleteConfig = {
     PLUGIN_NAME: 'test-plugin',
     // Missing required AUTHOR and VERSION
@@ -978,11 +993,11 @@ test("Template generation with missing required variables", async () => {
   expect(validation.errors).toBeDefined();
 });
 
-test("Template generation with invalid data", async () => {
+test('Template generation with invalid data', async () => {
   const invalidConfig = {
     PLUGIN_NAME: 'test-plugin',
     AUTHOR: 'Test Author',
-    VERSION: '1.0.0.0' // Invalid version format
+    VERSION: '1.0.0.0', // Invalid version format
   };
 
   const validation = validateConfig(invalidConfig);
@@ -1007,13 +1022,14 @@ git commit -m "feat: add comprehensive integration tests for template engine"
 ## Task 10: Documentation and Usage Examples
 
 **Files:**
+
 - Create: `src/template-engine/README.md`
 - Create: `src/template-engine/examples/usage-examples.md`
 - Test: N/A (Documentation)
 
 **Step 1: Create main README**
 
-```markdown
+````markdown
 # Bun Template Engine
 
 Bun-first template engine for Claude Code plugin development with Handlebars.js.
@@ -1033,6 +1049,7 @@ Bun-first template engine for Claude Code plugin development with Handlebars.js.
 ```bash
 bun install
 ```
+````
 
 ### Generate a Template
 
@@ -1068,7 +1085,7 @@ await manager.initialize();
 const config = validateConfig({
   PLUGIN_NAME: 'my-plugin',
   AUTHOR: 'Your Name',
-  VERSION: '1.0.0'
+  VERSION: '1.0.0',
 });
 
 if (config.success) {
@@ -1081,20 +1098,28 @@ if (config.success) {
 ## Custom Helpers
 
 ### `{{bun-import "sqlite"}}`
+
 Converts package names to Bun import format.
+
 - Input: `"sqlite"` → Output: `"bun:sqlite"`
 - Input: `"bun:serve"` → Output: `"bun:serve"`
 
 ### `{{bun-class "my-plugin"}}`
+
 Converts kebab-case to PascalCase for class names.
+
 - Input: `"my-plugin"` → Output: `"MyPlugin"`
 
 ### `{{bun-filename "MyClass"}}`
+
 Converts PascalCase to kebab-case for filenames.
+
 - Input: `"MyClass"` → Output: `"my-class"`
 
 ### `{{#ifBunFeature "sqlite"}}...{{/ifBunFeature}}`
+
 Conditional blocks for Bun-specific features.
+
 - Supported features: `"sqlite"`, `"serve"`, `"file"`, `"test"`
 
 ## Configuration
@@ -1102,11 +1127,13 @@ Conditional blocks for Bun-specific features.
 All templates accept these configuration variables:
 
 ### Required
+
 - `PLUGIN_NAME`: Plugin name (kebab-case)
 - `AUTHOR`: Plugin author name
 - `VERSION`: Semantic version (x.y.z)
 
 ### Optional
+
 - `DATABASE_TYPE`: `"sqlite"` | `"postgres"` | `"mysql"` (default: `"sqlite"`)
 - `LOG_LEVEL`: `"debug"` | `"info"` | `"warn"` | `"error"` (default: `"info"`)
 - `STRICT_MODE`: boolean (default: `true`)
@@ -1127,7 +1154,8 @@ bun run dev
 # Build for production
 bun run build
 ```
-```
+
+````
 
 **Step 2: Create usage examples**
 
@@ -1144,14 +1172,14 @@ bun run cli/generate.ts generate marketplace-deploy \
   --author "Eduardo Menoncello" \
   --version "1.0.0" \
   --description "Research automation plugin"
-```
+````
 
 This creates a file `scripts/deploy.ts` with:
 
 ```typescript
 #!/usr/bin/env bun
-import Database from "bun:sqlite";
-import { ResearchTools } from "./research-tools";
+import Database from 'bun:sqlite';
+import { ResearchTools } from './research-tools';
 
 export class ResearchTools {
   // ... implementation
@@ -1184,14 +1212,14 @@ async function generateCustomTemplate() {
     AUTHOR: 'Your Name',
     VERSION: '2.1.0',
     DATABASE_TYPE: 'postgres',
-    STRICT_MODE: false
+    STRICT_MODE: false,
   });
 
   const result = await manager.generate('marketplace-deploy', {
     ...config,
     currentDate: new Date().toISOString(),
     className: 'CustomPlugin',
-    description: 'Custom plugin with PostgreSQL'
+    description: 'Custom plugin with PostgreSQL',
   });
 
   // Write to custom location
@@ -1224,7 +1252,7 @@ const result = template({
   VERSION: '1.0.0',
   className: 'MyPlugin',
   description: 'Custom plugin',
-  currentDate: new Date().toISOString()
+  currentDate: new Date().toISOString(),
 });
 ```
 
@@ -1233,17 +1261,19 @@ const result = template({
 ### Converting Existing Scripts
 
 1. **Replace require statements:**
+
    ```javascript
    // Old Node.js
-   const fs = require("fs");
-   const path = require("path");
+   const fs = require('fs');
+   const path = require('path');
 
    // New Bun
-   import { readFile, writeFile } from "node:fs";
-   import { join } from "node:path";
+   import { readFile, writeFile } from 'node:fs';
+   import { join } from 'node:path';
    ```
 
 2. **Update shebang:**
+
    ```bash
    # Old
    #!/usr/bin/env node
@@ -1255,9 +1285,9 @@ const result = template({
 3. **Use Bun APIs:**
    ```typescript
    // Instead of external packages
-   import Database from "bun:sqlite";
-   import { serve } from "bun:serve";
-   import { file } from "bun";
+   import Database from 'bun:sqlite';
+   import { serve } from 'bun:serve';
+   import { file } from 'bun';
    ```
 
 ### Batch Migration
@@ -1269,7 +1299,7 @@ async function migrateAllScripts() {
 
   const plugins = [
     { name: 'research-tools', author: 'Eduardo', version: '1.0.0' },
-    { name: 'studio-cc', author: 'Eduardo', version: '1.0.0' }
+    { name: 'studio-cc', author: 'Eduardo', version: '1.0.0' },
   ];
 
   for (const plugin of plugins) {
@@ -1279,9 +1309,10 @@ async function migrateAllScripts() {
       AUTHOR: plugin.author,
       VERSION: plugin.version,
       currentDate: new Date().toISOString(),
-      className: plugin.name.split('-').map(part =>
-        part.charAt(0).toUpperCase() + part.slice(1)
-      ).join('')
+      className: plugin.name
+        .split('-')
+        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(''),
     });
 
     // Generate validate script
@@ -1289,25 +1320,27 @@ async function migrateAllScripts() {
       PLUGIN_NAME: plugin.name,
       AUTHOR: plugin.author,
       VERSION: plugin.version,
-      VALIDATION_RULES: 'strict'
+      VALIDATION_RULES: 'strict',
     });
   }
 }
 ```
-```
+
+````
 
 **Step 3: Commit documentation**
 
 ```bash
 git add src/template-engine/README.md src/template-engine/examples/
 git commit -m "docs: add comprehensive documentation and usage examples"
-```
+````
 
 ---
 
 ## Task 11: Performance Optimization and Caching
 
 **Files:**
+
 - Modify: `src/template-engine/manager.ts`
 - Create: `src/template-engine/utils/cache.ts`
 - Test: `src/template-engine/utils/cache.test.ts`
@@ -1315,12 +1348,12 @@ git commit -m "docs: add comprehensive documentation and usage examples"
 **Step 1: Write failing test for caching**
 
 ```typescript
-import { test, expect } from "bun:test";
-import { TemplateCache } from "./cache";
+import { test, expect } from 'bun:test';
+import { TemplateCache } from './cache';
 
-test("Template cache stores and retrieves compiled templates", () => {
+test('Template cache stores and retrieves compiled templates', () => {
   const cache = new TemplateCache();
-  const templateString = "Hello {{name}}!";
+  const templateString = 'Hello {{name}}!';
   const compiled = (input: any) => `Hello ${input.name}!`;
 
   cache.set('test-template', compiled);
@@ -1329,7 +1362,7 @@ test("Template cache stores and retrieves compiled templates", () => {
   expect(retrieved).toBe(compiled);
 });
 
-test("Template cache returns undefined for missing keys", () => {
+test('Template cache returns undefined for missing keys', () => {
   const cache = new TemplateCache();
   const result = cache.get('non-existent');
   expect(result).toBeUndefined();
@@ -1349,7 +1382,8 @@ export class TemplateCache {
   private maxSize: number;
   private ttl: number;
 
-  constructor(maxSize = 100, ttlMs = 300000) { // 5 minutes default TTL
+  constructor(maxSize = 100, ttlMs = 300000) {
+    // 5 minutes default TTL
     this.maxSize = maxSize;
     this.ttl = ttlMs;
   }
@@ -1438,6 +1472,7 @@ git commit -m "feat: add template caching system for improved performance"
 ## Task 12: Final Integration and Validation
 
 **Files:**
+
 - Modify: `src/template-engine/package.json` (add scripts)
 - Create: `src/template-engine/.env.example`
 - Test: All tests
@@ -1530,12 +1565,14 @@ Ready for migration of existing Node.js scripts to Bun"
 ### Migrate Existing Node.js Scripts
 
 **Files to migrate:**
+
 - `plugins/studio-cc/skills/claude-code-marketplace/templates/standard/scripts/deploy.js` → Use template
 - `plugins/studio-cc/skills/claude-code-marketplace/templates/standard/scripts/validate.js` → Use template
 - `plugins/studio-cc/skills/claude-code-marketplace/scripts/marketplace-manager.js` → Create template
 - `plugins/studio-cc/skills/claude-code-plugin/scripts/plugin-validator.js` → Create template
 
 **Migration Steps:**
+
 1. Generate templates for each existing script
 2. Compare output with original functionality
 3. Update references to use generated scripts
