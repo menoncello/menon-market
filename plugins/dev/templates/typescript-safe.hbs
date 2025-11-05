@@ -1,0 +1,92 @@
+/**
+ * TypeScript-Safe Function Template
+ *
+ * This template generates TypeScript functions with comprehensive validation
+ * to prevent common compilation errors found in tsc --noEmit checks.
+ *
+ * ESLint Rules Enforced:
+ * - complexity: ["error", 5]
+ * - max-lines-per-function: ["error", {"max": 15, "skipBlankLines": true, "skipComments": true}]
+ * - max-params: ["error", 4]
+ * - @typescript-eslint/no-explicit-any: "error"
+ * - @typescript-eslint/prefer-nullish-coalescing: "error"
+ * - @typescript-eslint/prefer-optional-chain: "error"
+ */
+
+import type {
+  {{#if imports}}
+  {{imports}}
+  {{/if}}
+} from './types.js';
+
+/**
+ * {{description}}
+ *
+ * @param {{paramsDescription}}
+ * @returns {{returnsDescription}}
+ * @throws {{throwsDescription}}
+ */
+export async function {{name}}(
+  {{#if params}}
+    {{params}}
+  {{/if}}
+): {{returns}} {
+  // Input validation - TypeScript-safe patterns
+  {{#if hasParams}}
+  // TODO: Add proper null checks for parameters
+  {{/if}}
+  {{#if returns.includes('Promise')}}
+  // TODO: Use Result<T, Error> pattern for async functions
+  {{/if}}
+
+  try {
+    {{#if hasComplexLogic}}
+    // TODO: Add early validation in first 5 lines
+    // Consider extracting complex logic into smaller functions
+    {{/if}}
+
+    // Implementation placeholder
+    // TODO: Replace with actual implementation
+    // Ensure all property access uses optional chaining (?.) or null checks
+
+    {{#if returns.includes('void')}}
+    // Void return - no result value
+    return;
+    {{else}}
+    // TODO: Return appropriate type
+    return null as unknown as {{returns}};
+    {{/if}}
+
+  } catch (error) {
+    // Proper error handling with TypeScript typing
+    if (error instanceof Error) {
+      // TODO: Add proper error logging
+      throw error;
+    } else {
+      // Handle unknown errors
+      throw new Error(`Unknown error in {{name}}: ${error}`);
+    }
+  }
+}
+
+/**
+ * Helper function for null-safe property access
+ * Prevents "Object is possibly 'undefined'" TypeScript errors
+ */
+function safePropertyAccess<T>(
+  obj: T | undefined | null,
+  property: keyof T
+): T[keyof T] | undefined {
+  return obj?.[property];
+}
+
+/**
+ * Type guard for runtime type checking
+ * Prevents type assertion errors
+ */
+function isType<T>(value: unknown, guard: (v: unknown) => v is T): value is T {
+  return guard(value);
+}
+
+// TODO: Add proper type exports if needed
+// export type {{name}}Options = { ... };

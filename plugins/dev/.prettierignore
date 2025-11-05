@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+dist/
+coverage/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Generated files
+*.generated.*
+*.min.*
+
+# Build artifacts
+build/
+out/
+
+# Cache
+.cache/
+.parcel-cache/
+
+# Environment files
+.env
+.env.*
+!.env.example

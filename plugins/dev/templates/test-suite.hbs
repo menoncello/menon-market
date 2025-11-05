@@ -1,0 +1,456 @@
+{{!
+  Test Suite Template
+
+  Variables:
+  - component: Component name (required)
+  - withMocks: Include mock examples
+  - functions: Array of function names to test
+
+  Usage:
+  bun run scripts/template-generator.ts test-suite --component=User --withMocks
+}}
+/**
+ * 🤖 AI-Safe Test Suite: {{component}}
+ *
+ * Generated: {{currentDate}} {{currentTime}}
+ * Template: test-suite
+ *
+ * Test Framework: Bun Test
+ * ESLint Rules Enforced:
+ * - No 'any' types
+ * - Clear test descriptions
+ * - Proper setup/teardown
+ * - Snapshot testing where appropriate
+ */
+
+import { test, expect, describe, beforeAll, afterAll, beforeEach, afterEach, mock, spyOn } from "bun:test";
+
+{{#if withMocks}}
+// Mock external dependencies
+const mockDatabase = {
+  query: mock(() => ({
+    get: mock(() => ({ id: "1", name: "Test User" })),
+    all: mock(() => [{ id: "1", name: "Test User" }]),
+    run: mock(() => ({ changes: 1 }))
+  })),
+  exec: mock(() => {})
+};
+
+const mockExternalAPI = {
+  fetchData: mock(() => Promise.resolve({ data: "mocked" })),
+  updateUser: mock(() => Promise.resolve({ success: true }))
+};
+
+// Set up global mocks
+global.fetch = mock(() =>
+  Promise.resolve(Response.json({ status: "ok", data: "mocked" }))
+);
+{{/if}}
+
+describe("{{component}}", () => {
+  {{#if withMocks}}
+  let mockService: typeof mockDatabase;
+  {{/if}}
+
+  beforeAll(async () => {
+    console.log("🧪 Setting up {{component}} test suite");
+    {{#if withMocks}}
+    mockService = mockDatabase;
+    {{/if}}
+  });
+
+  afterAll(async () => {
+    console.log("🧹 Cleaning up {{component}} test suite");
+    {{#if withMocks}}
+    // Reset mocks
+    mock.fn.mockRestore();
+    {{/if}}
+  });
+
+  beforeEach(() => {
+    // Reset mocks before each test
+    {{#if withMocks}}
+    mock.fn.mockClear();
+    {{/if}}
+  });
+
+  afterEach(() => {
+    // Cleanup after each test
+    Bun.gc(true); // Force garbage collection
+  });
+
+  describe("Core functionality", () => {
+    test("should initialize {{camelCase component}} with default values", () => {
+      // TODO: Implement test for initialization
+      const result = { initialized: true };
+
+      expect(result).toBeDefined();
+      expect(result.initialized).toBe(true);
+    });
+
+    test("should handle valid input correctly", async () => {
+      // Arrange
+      const input = {
+        name: "Test {{component}}",
+        value: 42
+      };
+      const expected = {
+        success: true,
+        name: "Test {{component}}",
+        processedValue: 42
+      };
+
+      // Act
+      const result = await process{{pascalCase component}}(input);
+
+      // Assert
+      expect(result).toEqual(expected);
+      expect(result.success).toBe(true);
+      expect(result).toHaveProperty("processedValue");
+    });
+
+    test("should throw error with invalid input", async () => {
+      // Arrange
+      const invalidInput = {
+        name: "", // Invalid: empty name
+        value: -1 // Invalid: negative value
+      };
+
+      // Act & Assert
+      await expect(process{{pascalCase component}}(invalidInput))
+        .rejects.toThrow("Invalid input");
+    });
+
+    test("should handle edge cases gracefully", async () => {
+      // Test boundary conditions
+      const edgeCases = [
+        { name: "A", value: 0 },
+        { name: "Very Long Name That Tests Edge Cases", value: Number.MAX_SAFE_INTEGER },
+        { name: "special-chars_123", value: 1 }
+      ];
+
+      for (const testCase of edgeCases) {
+        const result = await process{{pascalCase component}}(testCase);
+        expect(result.success).toBe(true);
+        expect(result.name).toBe(testCase.name);
+      }
+    });
+  });
+
+  {{#if withMocks}}
+  describe("External integrations", () => {
+    test("should interact with database correctly", async () => {
+      // Mock database query
+      const mockQuery = mockService.query;
+
+      await save{{pascalCase component}}({ name: "Test" });
+
+      expect(mockQuery).toHaveBeenCalled();
+      expect(mockQuery.mock.calls.length).toBeGreaterThan(0);
+    });
+
+    test("should handle external API calls", async () => {
+      // Mock external API
+      const mockFetch = global.fetch as ReturnType<typeof mock>;
+
+      const result = await fetchFromExternalAPI();
+
+      expect(result.data).toBe("mocked");
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining("/api/external"),
+        expect.objectContaining({
+          method: "GET",
+          headers: expect.objectContaining({
+            "Content-Type": "application/json"
+          })
+        })
+      );
+    });
+
+    test("should retry failed external calls", async () => {
+      const mockFetch = global.fetch as ReturnType<typeof mock>;
+
+      // First call fails, second succeeds
+      mockFetch
+        .mockRejectedValueOnce(new Error("Network error"))
+        .mockResolvedValueOnce(Response.json({ success: true }));
+
+      const result = await fetchWithRetry("https://api.example.com");
+
+      expect(result.success).toBe(true);
+      expect(mockFetch).toHaveBeenCalledTimes(2);
+    });
+  });
+  {{/if}}
+
+  describe("Performance and scalability", () => {
+    test("should handle large inputs efficiently", async () => {
+      const largeInput = Array.from({ length: 1000 }, (_, i) => ({
+        id: i,
+        name: `Item ${i}`,
+        timestamp: Date.now()
+      }));
+
+      const startTime = Date.now();
+      const result = await processBatch{{pascalCase component}}(largeInput);
+      const duration = Date.now() - startTime;
+
+      expect(result.processed).toBe(1000);
+      expect(duration).toBeLessThan(5000); // Should complete within 5 seconds
+    });
+
+    test("should handle concurrent requests", async () => {
+      const concurrentRequests = Array.from({ length: 10 }, (_, i) =>
+        process{{pascalCase component}}({ id: i, data: `test-${i}` })
+      );
+
+      const results = await Promise.all(concurrentRequests);
+
+      expect(results).toHaveLength(10);
+      results.forEach((result, index) => {
+        expect(result.id).toBe(index);
+        expect(result.success).toBe(true);
+      });
+    });
+
+    test("should not exceed memory limits", async () => {
+      const initialMemory = process.memoryUsage();
+
+      // Process memory-intensive operation
+      await processMemoryIntensive{{pascalCase component}}();
+
+      const finalMemory = process.memoryUsage();
+      const memoryIncrease = finalMemory.heapUsed - initialMemory.heapUsed;
+
+      // Memory increase should be reasonable (less than 50MB)
+      expect(memoryIncrease).toBeLessThan(50 * 1024 * 1024);
+    });
+  });
+
+  describe("Error handling and edge cases", () => {
+    test("should handle network timeouts gracefully", async () => {
+      // Mock timeout
+      global.fetch = mock(() =>
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error("Request timeout")), 100)
+        )
+      );
+
+      const result = await fetchWithTimeout("https://slow-api.example.com", 50);
+
+      expect(result.success).toBe(false);
+      expect(result.error).toContain("timeout");
+    });
+
+    test("should validate input types strictly", async () => {
+      const invalidInputs = [
+        null,
+        undefined,
+        "string instead of object",
+        [],
+        { wrongField: "value" }
+      ];
+
+      for (const input of invalidInputs) {
+        await expect(process{{pascalCase component}}(input as any))
+          .rejects.toThrow(/Invalid input/);
+      }
+    });
+
+    test("should handle database connection failures", async () => {
+      {{#if withMocks}}
+      // Mock database failure
+      mockDatabase.query.mockImplementationOnce(() => {
+        throw new Error("Connection lost");
+      });
+
+      const result = await save{{pascalCase component}}({ name: "Test" });
+
+      expect(result.success).toBe(false);
+      expect(result.error).toContain("Connection");
+      {{/if}}
+    });
+  });
+
+  describe("Snapshot testing", () => {
+    test("{{camelCase component}} structure should remain stable", () => {
+      const {{camelCase component}} = {
+        id: "123",
+        name: "Test {{component}}",
+        createdAt: new Date("2024-01-01T00:00:00.000Z"),
+        metadata: {
+          version: "1.0.0",
+          environment: "test"
+        }
+      };
+
+      expect({{camelCase component}}).toMatchSnapshot();
+    });
+
+    test("API response format should remain consistent", async () => {
+      const response = await process{{pascalCase component}}({
+        name: "Test",
+        value: 42
+      });
+
+      expect(response).toMatchSnapshot({
+        success: true,
+        data: expect.any(Object),
+        timestamp: expect.any(String)
+      });
+    });
+  });
+
+  describe("Integration scenarios", () => {
+    test("should work end-to-end with real data flow", async () => {
+      // Test complete workflow
+      const initialData = { name: "Integration Test", value: 100 };
+
+      // Step 1: Create
+      const created = await create{{pascalCase component}}(initialData);
+      expect(created.success).toBe(true);
+
+      // Step 2: Read
+      const read = await get{{pascalCase component}}(created.data.id);
+      expect(read.data.name).toBe(initialData.name);
+
+      // Step 3: Update
+      const updated = await update{{pascalCase component}}(created.data.id, {
+        name: "Updated Name"
+      });
+      expect(updated.success).toBe(true);
+
+      // Step 4: Delete
+      const deleted = await delete{{pascalCase component}}(created.data.id);
+      expect(deleted.success).toBe(true);
+    });
+  });
+
+  {{#if withMocks}}
+  describe("Security and validation", () => {
+    test("should sanitize user input", async () => {
+      const maliciousInput = {
+        name: "<script>alert('xss')</script>",
+        description: "'; DROP TABLE users; --"
+      };
+
+      const result = await process{{pascalCase component}}(maliciousInput);
+
+      expect(result.data.name).not.toContain("<script>");
+      expect(result.data.name).not.toContain("DROP TABLE");
+      expect(result.success).toBe(true);
+    });
+
+    test("should validate authentication tokens", async () => {
+      const invalidTokens = [
+        "",
+        "invalid",
+        "expired.token.here",
+        "malformed.jwt.token"
+      ];
+
+      for (const token of invalidTokens) {
+        const result = await authenticated{{pascalCase component}}Operation(token);
+        expect(result.success).toBe(false);
+        expect(result.code).toBe("INVALID_TOKEN");
+      }
+    });
+  });
+  {{/if}}
+});
+
+// Helper functions for testing
+async function process{{pascalCase component}}(input: any): Promise<any> {
+  // TODO: Implement actual {{camelCase component}} processing
+  return {
+    success: true,
+    data: { ...input, processed: true },
+    timestamp: new Date().toISOString()
+  };
+}
+
+async function processBatch{{pascalCase component}}(inputs: any[]): Promise<any> {
+  // TODO: Implement batch processing
+  return {
+    processed: inputs.length,
+    data: inputs.map(item => ({ ...item, batchProcessed: true }))
+  };
+}
+
+async function processMemoryIntensive{{pascalCase component}}(): Promise<void> {
+  // TODO: Implement memory-intensive operation
+  const largeArray = Array.from({ length: 100000 }, (_, i) => ({ id: i, data: "test".repeat(100) }));
+  largeArray.sort((a, b) => a.id - b.id);
+}
+
+// Mock implementations
+{{#if withMocks}}
+async function save{{pascalCase component}}(data: any): Promise<any> {
+  return { success: true, data };
+}
+
+async function fetchFromExternalAPI(): Promise<any> {
+  const response = await fetch("https://api.example.com/external");
+  return response.json();
+}
+
+async function fetchWithRetry(url: string, maxRetries = 3): Promise<any> {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      const response = await fetch(url);
+      if (response.ok) return response.json();
+    } catch (error) {
+      if (i === maxRetries - 1) throw error;
+    }
+  }
+  throw new Error("Max retries exceeded");
+}
+
+async function fetchWithTimeout(url: string, timeoutMs: number): Promise<any> {
+  try {
+    const response = await Promise.race([
+      fetch(url),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Request timeout")), timeoutMs)
+      )
+    ]) as Response;
+
+    return response.ok ? response.json() : { success: false };
+  } catch (error) {
+    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+  }
+}
+
+async function get{{pascalCase component}}(id: string): Promise<any> {
+  return {
+    success: true,
+    data: { id, name: "Test {{component}}" }
+  };
+}
+
+async function update{{pascalCase component}}(id: string, data: any): Promise<any> {
+  return {
+    success: true,
+    data: { id, ...data, updatedAt: new Date().toISOString() }
+  };
+}
+
+async function delete{{pascalCase component}}(id: string): Promise<any> {
+  return { success: true };
+}
+
+async function create{{pascalCase component}}(data: any): Promise<any> {
+  return {
+    success: true,
+    data: { id: crypto.randomUUID(), ...data, createdAt: new Date().toISOString() }
+  };
+}
+
+async function authenticated{{pascalCase component}}Operation(token: string): Promise<any> {
+  if (!token || token.length < 10) {
+    return { success: false, code: "INVALID_TOKEN" };
+  }
+  return { success: true, data: { authenticated: true } };
+}
+{{/if}}

@@ -1,0 +1,135 @@
+{{!
+  AI-Safe Function Template
+
+  Variables:
+  - name: Function name (required)
+  - params: Array of {name, type, docs} objects
+  - returnType: Return type (optional)
+  - async: Whether function should be async (default: true)
+
+  Usage:
+  bun run scripts/template-generator.ts ai-function --name=createUser --params="userId:string,userData:object"
+}}
+/**
+ * 🤖 AI-Safe Function: {{name}}
+ *
+ * Generated: {{currentDate}} {{currentTime}}
+ * Template: ai-function
+ *
+ * ESLint Rules Enforced:
+ * - @typescript-eslint/no-explicit-any: error
+ * - complexity: ["error", 5]
+ * - max-lines-per-function: ["error", {"max": 15, "skipBlankLines": true, "skipComments": true}]
+ * - max-params: ["error", 4]
+ * - sonarjs/cognitive-complexity: ["error", 15]
+ *
+{{#if params}}
+{{paramDocs params}}
+ * @returns {Promise<{{returnType 'object'}}>} Operation result
+{{else}}
+ * @returns {Promise<{{returnType 'object'}}>} Operation result
+{{/if}}
+ */
+export async function {{name}}(
+{{#if params}}
+{{#each params}}
+  {{name}}: {{type}}{{#unless @last}},{{/unless}}
+{{/each}}
+{{/if}}
+): Promise<{
+  success: boolean;
+{{#if returnType}}
+  data?: {{returnType}};
+{{else}}
+  data?: unknown;
+{{/if}}
+  error?: string;
+  code?: string;
+}> {
+  // 🚨 Early validation (lines 1-5) - REQUIRED
+  {{#each params}}
+  {{#if (eq type 'string')}}
+  if (!{{name}} || {{name}}.trim().length === 0) {
+    return {
+      success: false,
+      error: '{{titleCase name}} is required and cannot be empty',
+      code: 'MISSING_{{pascalCase (upperCase name)}}'
+    };
+  }
+  {{/if}}
+  {{#if (eq type 'number')}}
+  if (typeof {{name}} !== 'number' || isNaN({{name}})) {
+    return {
+      success: false,
+      error: '{{titleCase name}} must be a valid number',
+      code: 'INVALID_{{pascalCase (upperCase name)}}'
+    };
+  }
+  {{/if}}
+  {{#if (eq type 'array')}}
+  if (!Array.isArray({{name}})) {
+    return {
+      success: false,
+      error: '{{titleCase name}} must be an array',
+      code: 'INVALID_{{pascalCase (upperCase name)}}'
+    };
+  }
+  {{/if}}
+  {{/each}}
+
+  // 🚨 Input validation complete - main logic (max 10 more lines)
+  try {
+    {{#if (eq params.length 0)}}
+    // No parameters - implement your logic here
+    const result = await perform{{pascalCase name}}();
+    {{else}}
+    // Parameters validated - implement your logic here
+    const result = await perform{{pascalCase name}}({{paramNames params}});
+    {{/if}}
+
+    return {
+      success: true,
+      data: result,
+    };
+  } catch (error) {
+    // 🚨 Proper error handling with specific error codes
+    const errorCode = error instanceof Error ? getErrorCode(error) : 'UNKNOWN_ERROR';
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error occurred',
+      code: errorCode
+    };
+  }
+}
+
+// 🚨 Helper function - keep it simple and focused
+{{#if (eq params.length 0)}}
+async function perform{{pascalCase name}}(): Promise<unknown> {
+  // TODO: Implement the actual logic for {{name}}
+  console.log('Executing {{name}}...');
+  return { timestamp: new Date().toISOString() };
+}
+{{else}}
+async function perform{{pascalCase name}}({{#if params}}{{paramList params}}{{/if}}): Promise<unknown> {
+  // TODO: Implement the actual logic for {{name}}
+  console.log('Executing {{name}} with:', {{#if params}}{{paramNames params}}{{/if}});
+  return {
+    processed: true,
+    {{#if params}}
+    inputs: { {{#each params}}{{name}}{{#unless @last}}, {{/unless}}{{/each}} }
+    {{/if}}
+  };
+}
+{{/if}}
+
+// 🚨 Error code mapper - small, focused function
+function getErrorCode(error: Error): string {
+  if (error.message.includes('not found')) return 'NOT_FOUND';
+  if (error.message.includes('duplicate')) return 'DUPLICATE_ENTRY';
+  if (error.message.includes('permission')) return 'PERMISSION_DENIED';
+  if (error.message.includes('validation')) return 'VALIDATION_ERROR';
+  if (error.message.includes('timeout')) return 'TIMEOUT';
+  if (error.message.includes('network')) return 'NETWORK_ERROR';
+  if (error.message.includes('database')) return 'DATABASE_ERROR';
+  return 'UNKNOWN_ERROR';
+}
