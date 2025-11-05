@@ -34,7 +34,7 @@ export class ResourceOptimizerSkill {
       available: 100,
       allocated: 0,
       unit: 'percent',
-      priority: 1
+      priority: 1,
     });
 
     // Memory Resource Pool
@@ -46,7 +46,7 @@ export class ResourceOptimizerSkill {
       available: 100,
       allocated: 0,
       unit: 'percent',
-      priority: 1
+      priority: 1,
     });
 
     // Network Resource Pool
@@ -58,7 +58,7 @@ export class ResourceOptimizerSkill {
       available: 1000,
       allocated: 0,
       unit: 'connections',
-      priority: 2
+      priority: 2,
     });
 
     // Storage Resource Pool
@@ -70,7 +70,7 @@ export class ResourceOptimizerSkill {
       available: 10000,
       unit: 'megabytes',
       priority: 2,
-      allocated: 0
+      allocated: 0,
     });
 
     // API Rate Limit Pool
@@ -82,7 +82,7 @@ export class ResourceOptimizerSkill {
       available: 1000,
       allocated: 0,
       unit: 'requests_per_hour',
-      priority: 3
+      priority: 3,
     });
   }
 
@@ -90,7 +90,9 @@ export class ResourceOptimizerSkill {
    * Optimize resource allocation across the system
    * @param options Optimization options
    */
-  async optimizeResources(options: OptimizationOptions = {}): Promise<OptimizationResult> {
+  async optimizeResources(
+    options: OptimizationOptions = {}
+  ): Promise<OptimizationResult> {
     const startTime = Date.now();
     const optimizations: ResourceOptimization[] = [];
 
@@ -102,7 +104,10 @@ export class ResourceOptimizerSkill {
       const currentUtilization = this.getResourceUtilization();
 
       // Identify optimization opportunities
-      const opportunities = this.identifyOptimizationOpportunities(currentUtilization, systemStatus);
+      const opportunities = this.identifyOptimizationOpportunities(
+        currentUtilization,
+        systemStatus
+      );
 
       // Apply optimizations
       for (const opportunity of opportunities) {
@@ -123,7 +128,10 @@ export class ResourceOptimizerSkill {
         rebalancing,
         beforeMetrics: currentUtilization,
         afterMetrics: this.getResourceUtilization(),
-        impact: this.calculateOptimizationImpact(currentUtilization, optimizations)
+        impact: this.calculateOptimizationImpact(
+          currentUtilization,
+          optimizations
+        ),
       };
 
       this.optimizationHistory.push(result);
@@ -141,16 +149,16 @@ export class ResourceOptimizerSkill {
         rebalancing: {
           success: false,
           reason: error.message,
-          changes: []
+          changes: [],
         },
         beforeMetrics: this.getResourceUtilization(),
         afterMetrics: this.getResourceUtilization(),
         impact: {
           efficiencyGain: 0,
           resourceSavings: {},
-          performanceImprovement: 0
+          performanceImprovement: 0,
         },
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -162,7 +170,8 @@ export class ResourceOptimizerSkill {
     const pools: ResourcePoolStatus[] = [];
 
     for (const [id, pool] of this.resourcePools) {
-      const utilizationRate = pool.total > 0 ? (pool.allocated / pool.total) * 100 : 0;
+      const utilizationRate =
+        pool.total > 0 ? (pool.allocated / pool.total) * 100 : 0;
 
       pools.push({
         id: pool.id,
@@ -173,11 +182,12 @@ export class ResourceOptimizerSkill {
         available: pool.available,
         utilizationRate,
         status: this.getPoolStatus(utilizationRate),
-        priority: pool.priority
+        priority: pool.priority,
       });
     }
 
-    const overallUtilization = pools.reduce((sum, pool) => sum + pool.utilizationRate, 0) / pools.length;
+    const overallUtilization =
+      pools.reduce((sum, pool) => sum + pool.utilizationRate, 0) / pools.length;
 
     return {
       timestamp: new Date().toISOString(),
@@ -185,7 +195,7 @@ export class ResourceOptimizerSkill {
       overallStatus: this.getOverallStatus(pools),
       overallUtilization,
       totalAllocations: this.allocations.size,
-      efficiency: this.calculateEfficiency(pools)
+      efficiency: this.calculateEfficiency(pools),
     };
   }
 
@@ -222,7 +232,7 @@ export class ResourceOptimizerSkill {
         allocationId: '',
         allocations: [],
         failedRequests,
-        reason: 'Insufficient resources available'
+        reason: 'Insufficient resources available',
       };
     }
 
@@ -238,8 +248,9 @@ export class ResourceOptimizerSkill {
         type: request.type,
         amount: request.amount,
         priority: request.priority || 1,
-        expiresAt: request.expiresAt || new Date(Date.now() + 3600000).toISOString(), // 1 hour default
-        metadata: request.metadata || {}
+        expiresAt:
+          request.expiresAt || new Date(Date.now() + 3600000).toISOString(), // 1 hour default
+        metadata: request.metadata || {},
       });
     }
 
@@ -248,7 +259,7 @@ export class ResourceOptimizerSkill {
       recipient,
       allocations,
       createdAt: new Date().toISOString(),
-      status: 'active'
+      status: 'active',
     };
 
     this.allocations.set(allocationId, allocation);
@@ -257,7 +268,7 @@ export class ResourceOptimizerSkill {
       success: true,
       allocationId,
       allocations,
-      failedRequests: []
+      failedRequests: [],
     };
   }
 
@@ -306,7 +317,7 @@ export class ResourceOptimizerSkill {
           description: `Resource pool ${pool.name} is underutilized at ${pool.utilizationRate.toFixed(1)}%`,
           potentialSavings: pool.allocated * 0.5,
           priority: 'medium',
-          effort: 'low'
+          effort: 'low',
         });
       }
 
@@ -318,7 +329,7 @@ export class ResourceOptimizerSkill {
           description: `Resource pool ${pool.name} is overutilized at ${pool.utilizationRate.toFixed(1)}%`,
           potentialSavings: 0,
           priority: 'high',
-          effort: 'medium'
+          effort: 'medium',
         });
       }
     }
@@ -336,7 +347,7 @@ export class ResourceOptimizerSkill {
               potentialSavings: detail.amount,
               priority: 'medium',
               effort: 'low',
-              allocationId: id
+              allocationId: id,
             });
           }
         }
@@ -345,7 +356,9 @@ export class ResourceOptimizerSkill {
 
     return opportunities.sort((a, b) => {
       const priorityOrder = { high: 3, medium: 2, low: 1 };
-      return (priorityOrder[b.priority] || 0) - (priorityOrder[a.priority] || 0);
+      return (
+        (priorityOrder[b.priority] || 0) - (priorityOrder[a.priority] || 0)
+      );
     });
   }
 
@@ -353,7 +366,9 @@ export class ResourceOptimizerSkill {
    * Apply optimization
    * @param opportunity Optimization opportunity
    */
-  private async applyOptimization(opportunity: OptimizationOpportunity): Promise<ResourceOptimization> {
+  private async applyOptimization(
+    opportunity: OptimizationOpportunity
+  ): Promise<ResourceOptimization> {
     const startTime = Date.now();
 
     try {
@@ -376,7 +391,7 @@ export class ResourceOptimizerSkill {
         duration: endTime - startTime,
         message: error.message,
         beforeState: {},
-        afterState: {}
+        afterState: {},
       };
     }
   }
@@ -385,7 +400,9 @@ export class ResourceOptimizerSkill {
    * Optimize underutilized resource pool
    * @param opportunity Underutilization opportunity
    */
-  private async optimizeUnderutilizedPool(opportunity: OptimizationOpportunity): Promise<ResourceOptimization> {
+  private async optimizeUnderutilizedPool(
+    opportunity: OptimizationOpportunity
+  ): Promise<ResourceOptimization> {
     const pool = this.resourcePools.get(opportunity.poolId);
     const startTime = Date.now();
 
@@ -396,16 +413,18 @@ export class ResourceOptimizerSkill {
     const beforeState = {
       allocated: pool.allocated,
       available: pool.available,
-      utilizationRate: (pool.allocated / pool.total) * 100
+      utilizationRate: (pool.allocated / pool.total) * 100,
     };
 
     // Consolidate allocations or reduce limits
-    const consolidations = await this.consolidateAllocations(opportunity.poolId);
+    const consolidations = await this.consolidateAllocations(
+      opportunity.poolId
+    );
 
     const afterState = {
       allocated: pool.allocated,
       available: pool.available,
-      utilizationRate: (pool.allocated / pool.total) * 100
+      utilizationRate: (pool.allocated / pool.total) * 100,
     };
 
     const endTime = Date.now();
@@ -418,7 +437,7 @@ export class ResourceOptimizerSkill {
       message: `Consolidated ${consolidations.length} allocations in ${pool.name}`,
       beforeState,
       afterState,
-      details: { consolidations }
+      details: { consolidations },
     };
   }
 
@@ -426,7 +445,9 @@ export class ResourceOptimizerSkill {
    * Optimize overutilized resource pool
    * @param opportunity Overutilization opportunity
    */
-  private async optimizeOverutilizedPool(opportunity: OptimizationOpportunity): Promise<ResourceOptimization> {
+  private async optimizeOverutilizedPool(
+    opportunity: OptimizationOpportunity
+  ): Promise<ResourceOptimization> {
     const pool = this.resourcePools.get(opportunity.poolId);
     const startTime = Date.now();
 
@@ -437,16 +458,18 @@ export class ResourceOptimizerSkill {
     const beforeState = {
       allocated: pool.allocated,
       available: pool.available,
-      utilizationRate: (pool.allocated / pool.total) * 100
+      utilizationRate: (pool.allocated / pool.total) * 100,
     };
 
     // Prioritize and potentially limit lower priority allocations
-    const prioritizations = await this.prioritizeAllocations(opportunity.poolId);
+    const prioritizations = await this.prioritizeAllocations(
+      opportunity.poolId
+    );
 
     const afterState = {
       allocated: pool.allocated,
       available: pool.available,
-      utilizationRate: (pool.allocated / pool.total) * 100
+      utilizationRate: (pool.allocated / pool.total) * 100,
     };
 
     const endTime = Date.now();
@@ -459,7 +482,7 @@ export class ResourceOptimizerSkill {
       message: `Reprioritized ${prioritizations.length} allocations in ${pool.name}`,
       beforeState,
       afterState,
-      details: { prioritizations }
+      details: { prioritizations },
     };
   }
 
@@ -467,11 +490,15 @@ export class ResourceOptimizerSkill {
    * Release expired allocation
    * @param opportunity Expired allocation opportunity
    */
-  private async releaseExpiredAllocation(opportunity: OptimizationOpportunity): Promise<ResourceOptimization> {
+  private async releaseExpiredAllocation(
+    opportunity: OptimizationOpportunity
+  ): Promise<ResourceOptimization> {
     const startTime = Date.now();
 
     if (!opportunity.allocationId) {
-      throw new Error('Allocation ID is required for expired allocation optimization');
+      throw new Error(
+        'Allocation ID is required for expired allocation optimization'
+      );
     }
 
     const success = await this.releaseResources(opportunity.allocationId);
@@ -483,10 +510,12 @@ export class ResourceOptimizerSkill {
       poolId: opportunity.poolId,
       success,
       duration: endTime - startTime,
-      message: success ? `Released expired allocation ${opportunity.allocationId}` : `Failed to release allocation ${opportunity.allocationId}`,
+      message: success
+        ? `Released expired allocation ${opportunity.allocationId}`
+        : `Failed to release allocation ${opportunity.allocationId}`,
       beforeState: {},
       afterState: {},
-      details: { allocationId: opportunity.allocationId }
+      details: { allocationId: opportunity.allocationId },
     };
   }
 
@@ -498,23 +527,32 @@ export class ResourceOptimizerSkill {
 
     try {
       // Check for pools that can share resources
-      const computePools = Array.from(this.resourcePools.values()).filter(p => p.type === 'compute');
-      const memoryPools = Array.from(this.resourcePools.values()).filter(p => p.type === 'memory');
+      const computePools = Array.from(this.resourcePools.values()).filter(
+        (p) => p.type === 'compute'
+      );
+      const memoryPools = Array.from(this.resourcePools.values()).filter(
+        (p) => p.type === 'memory'
+      );
 
       // Simple rebalancing logic
       for (const computePool of computePools) {
         if (computePool.utilizationRate > 80) {
           // Try to move some workload to other compute pools
-          const underutilizedCompute = computePools.find(p => p.id !== computePool.id && p.utilizationRate < 50);
+          const underutilizedCompute = computePools.find(
+            (p) => p.id !== computePool.id && p.utilizationRate < 50
+          );
           if (underutilizedCompute) {
-            const transferAmount = Math.min(computePool.allocated * 0.2, underutilizedCompute.available);
+            const transferAmount = Math.min(
+              computePool.allocated * 0.2,
+              underutilizedCompute.available
+            );
             if (transferAmount > 0) {
               changes.push({
                 from: computePool.id,
                 to: underutilizedCompute.id,
                 amount: transferAmount,
                 type: 'compute',
-                reason: 'Load balancing'
+                reason: 'Load balancing',
               });
             }
           }
@@ -524,14 +562,14 @@ export class ResourceOptimizerSkill {
       return {
         success: true,
         changes,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
     } catch (error) {
       return {
         success: false,
         reason: error.message,
         changes: [],
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
     }
   }
@@ -544,13 +582,18 @@ export class ResourceOptimizerSkill {
     const consolidations: string[] = [];
 
     // Find allocations that can be consolidated
-    const poolAllocations = Array.from(this.allocations.values())
-      .filter(a => a.status === 'active' && a.allocations.some(al => al.type === poolId));
+    const poolAllocations = Array.from(this.allocations.values()).filter(
+      (a) =>
+        a.status === 'active' && a.allocations.some((al) => al.type === poolId)
+    );
 
     // This is a simplified consolidation logic
     // In a real implementation, you would analyze allocation patterns
     for (const allocation of poolAllocations) {
-      if (allocation.allocations.length === 1 && allocation.allocations[0].amount < 10) {
+      if (
+        allocation.allocations.length === 1 &&
+        allocation.allocations[0].amount < 10
+      ) {
         consolidations.push(allocation.id);
         // In a real implementation, you would consolidate this allocation
       }
@@ -568,13 +611,18 @@ export class ResourceOptimizerSkill {
 
     // Find allocations for this pool
     const poolAllococations = Array.from(this.allocations.entries())
-      .filter(([_, allocation]) =>
-        allocation.status === 'active' &&
-        allocation.allocations.some(al => al.type === poolId)
+      .filter(
+        ([_, allocation]) =>
+          allocation.status === 'active' &&
+          allocation.allocations.some((al) => al.type === poolId)
       )
       .sort(([_, a], [__, b]) => {
-        const aMaxPriority = Math.max(...a.allocations.map(al => al.priority));
-        const bMaxPriority = Math.max(...b.allocations.map(al => al.priority));
+        const aMaxPriority = Math.max(
+          ...a.allocations.map((al) => al.priority)
+        );
+        const bMaxPriority = Math.max(
+          ...b.allocations.map((al) => al.priority)
+        );
         return bMaxPriority - aMaxPriority; // Higher priority first
       });
 
@@ -592,7 +640,9 @@ export class ResourceOptimizerSkill {
    * Get pool status based on utilization rate
    * @param utilizationRate Utilization percentage
    */
-  private getPoolStatus(utilizationRate: number): 'optimal' | 'warning' | 'critical' {
+  private getPoolStatus(
+    utilizationRate: number
+  ): 'optimal' | 'warning' | 'critical' {
     if (utilizationRate < 30) return 'warning'; // Underutilized
     if (utilizationRate > 80) return 'critical'; // Overutilized
     return 'optimal';
@@ -602,9 +652,11 @@ export class ResourceOptimizerSkill {
    * Get overall system status
    * @param pools Resource pools
    */
-  private getOverallStatus(pools: ResourcePoolStatus[]): 'optimal' | 'warning' | 'critical' {
-    const criticalCount = pools.filter(p => p.status === 'critical').length;
-    const warningCount = pools.filter(p => p.status === 'warning').length;
+  private getOverallStatus(
+    pools: ResourcePoolStatus[]
+  ): 'optimal' | 'warning' | 'critical' {
+    const criticalCount = pools.filter((p) => p.status === 'critical').length;
+    const warningCount = pools.filter((p) => p.status === 'warning').length;
 
     if (criticalCount > 0) return 'critical';
     if (warningCount > pools.length / 2) return 'warning';
@@ -616,7 +668,7 @@ export class ResourceOptimizerSkill {
    * @param pools Resource pools
    */
   private calculateEfficiency(pools: ResourcePoolStatus[]): number {
-    const optimalPools = pools.filter(p => p.status === 'optimal').length;
+    const optimalPools = pools.filter((p) => p.status === 'optimal').length;
     return (optimalPools / pools.length) * 100;
   }
 
@@ -636,8 +688,10 @@ export class ResourceOptimizerSkill {
     const resourceSavings: Record<string, number> = {};
     for (const opt of optimizations) {
       if (opt.success && opt.type === 'underutilization') {
-        resourceSavings[opt.poolId] = (resourceSavings[opt.poolId] || 0) +
-          ((opt.beforeState.utilizationRate || 0) - (opt.afterState.utilizationRate || 0));
+        resourceSavings[opt.poolId] =
+          (resourceSavings[opt.poolId] || 0) +
+          ((opt.beforeState.utilizationRate || 0) -
+            (opt.afterState.utilizationRate || 0));
       }
     }
 
@@ -646,7 +700,7 @@ export class ResourceOptimizerSkill {
     return {
       efficiencyGain,
       resourceSavings,
-      performanceImprovement
+      performanceImprovement,
     };
   }
 
@@ -660,7 +714,7 @@ export class ResourceOptimizerSkill {
       efficiency: result.afterMetrics.efficiency,
       utilization: result.afterMetrics.overallUtilization,
       optimizations: result.optimizations.length,
-      allocations: result.afterMetrics.totalAllocations
+      allocations: result.afterMetrics.totalAllocations,
     };
 
     this.metrics.push(metric);

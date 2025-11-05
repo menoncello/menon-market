@@ -63,10 +63,6 @@
   "validation": {
     "level": "standard",
     "strict": false,
-    "checks": [
-      "structure",
-      "metadata",
-      "plugins"
-    ]
+    "checks": ["structure", "metadata", "plugins"]
   }
 }

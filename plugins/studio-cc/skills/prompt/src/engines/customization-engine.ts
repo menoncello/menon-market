@@ -6,7 +6,10 @@ import { PromptOptimization, CustomizationConfig } from '../types.js';
 export class CustomizationEngine {
   private config: CustomizationConfig;
 
-  private readonly DOMAIN_CUSTOMIZATIONS: Record<string, { modifications: string[]; additions: string[] }> = {
+  private readonly DOMAIN_CUSTOMIZATIONS: Record<
+    string,
+    { modifications: string[]; additions: string[] }
+  > = {
     technical: {
       modifications: [
         'Add technical specifications and requirements',
@@ -49,7 +52,10 @@ export class CustomizationEngine {
     },
   };
 
-  private readonly MODEL_CUSTOMIZATIONS: Record<string, { modifications: string[]; prefix: string }> = {
+  private readonly MODEL_CUSTOMIZATIONS: Record<
+    string,
+    { modifications: string[]; prefix: string }
+  > = {
     claude: {
       modifications: [
         "Optimize for Claude's analytical capabilities",
@@ -88,7 +94,10 @@ export class CustomizationEngine {
     },
   };
 
-  private readonly MODE_CUSTOMIZATIONS: Record<string, { additions: string[]; modifications: string[] }> = {
+  private readonly MODE_CUSTOMIZATIONS: Record<
+    string,
+    { additions: string[]; modifications: string[] }
+  > = {
     technical: {
       additions: [
         '## Technical Approach\n- System architecture\n- Implementation steps\n- Testing strategy\n- Deployment considerations',
@@ -218,7 +227,7 @@ export class CustomizationEngine {
     if (this.DOMAIN_CUSTOMIZATIONS[domain]) {
       const domainConfig = this.DOMAIN_CUSTOMIZATIONS[domain];
       customizations.push(...domainConfig.modifications);
-      customizedPrompt += `\n\n${  domainConfig.additions.join('\n\n')}`;
+      customizedPrompt += `\n\n${domainConfig.additions.join('\n\n')}`;
     }
 
     return {
@@ -242,7 +251,7 @@ export class CustomizationEngine {
     if (this.MODEL_CUSTOMIZATIONS[model]) {
       const modelConfig = this.MODEL_CUSTOMIZATIONS[model];
       customizations.push(...modelConfig.modifications);
-      customizedPrompt = `${modelConfig.prefix  }\n\n${  customizedPrompt}`;
+      customizedPrompt = `${modelConfig.prefix}\n\n${customizedPrompt}`;
     }
 
     return {
@@ -266,7 +275,7 @@ export class CustomizationEngine {
     if (this.MODE_CUSTOMIZATIONS[mode]) {
       const modeConfig = this.MODE_CUSTOMIZATIONS[mode];
       customizations.push(...modeConfig.modifications);
-      customizedPrompt += `\n\n${  modeConfig.additions.join('\n\n')}`;
+      customizedPrompt += `\n\n${modeConfig.additions.join('\n\n')}`;
     }
 
     return {
@@ -298,7 +307,7 @@ export class CustomizationEngine {
 
     if (formatInstructions[format]) {
       customizations.push(`Formatted output for ${format.toUpperCase()}`);
-      customizedPrompt += `\n\n${  formatInstructions[format]}`;
+      customizedPrompt += `\n\n${formatInstructions[format]}`;
     }
 
     return {

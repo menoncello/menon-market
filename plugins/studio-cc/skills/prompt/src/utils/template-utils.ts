@@ -1,5 +1,5 @@
 import { TEMPLATE_SECTIONS, FRAMEWORK_TYPES } from '../constants.js';
-import { PromptAnalysis , PromptTechnique } from '../types.js';
+import { PromptAnalysis, PromptTechnique } from '../types.js';
 
 /**
  * Utility functions for template generation
@@ -122,7 +122,10 @@ export function createSpecificityVariation(analysis: PromptAnalysis): string {
  * @param {PromptTechnique} technique - The specific reasoning technique to apply
  * @returns {string} A technique-specific prompt variation
  */
-export function createTechniqueVariation(analysis: PromptAnalysis, technique: PromptTechnique): string {
+export function createTechniqueVariation(
+  analysis: PromptAnalysis,
+  technique: PromptTechnique
+): string {
   switch (technique) {
     case 'cot':
       return `Please think step-by-step to address this ${analysis.domain} task, explaining your reasoning at each stage before proceeding to the next.`;

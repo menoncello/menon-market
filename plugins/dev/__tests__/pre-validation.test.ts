@@ -21,134 +21,137 @@ describe("Pre-validation and Auto-fix", () => {
   describe("Enhanced Pre-validation for Frequent Lint Problems", () => {
     test("should reject 'any' types in parameters", async () => {
       await expect(
-        plugin.generateTemplate('ai-function', {
-          name: 'badFunction',
-          params: 'data:any' // This should be rejected
+        plugin.generateTemplate("ai-function", {
+          name: "badFunction",
+          params: "data:any", // This should be rejected
         })
       ).rejects.toThrow("Parameter 'data' uses 'any' type");
     });
 
     test("should reject 'any[]' types in parameters", async () => {
       await expect(
-        plugin.generateTemplate('ai-function', {
-          name: 'badFunction',
-          params: 'items:any[]' // This should be rejected
+        plugin.generateTemplate("ai-function", {
+          name: "badFunction",
+          params: "items:any[]", // This should be rejected
         })
       ).rejects.toThrow("Parameter 'items' uses 'any' type");
     });
 
     test("should reject too many parameters (>4)", async () => {
       await expect(
-        plugin.generateTemplate('ai-function', {
-          name: 'tooManyParamsFunction',
-          params: 'param1:string,param2:number,param3:boolean,param4:object,param5:unknown,param6:date' // 6 parameters
+        plugin.generateTemplate("ai-function", {
+          name: "tooManyParamsFunction",
+          params:
+            "param1:string,param2:number,param3:boolean,param4:object,param5:unknown,param6:date", // 6 parameters
         })
       ).rejects.toThrow("Too many parameters (6). Maximum allowed is 4 parameters");
     });
 
     test("should reject very short parameter names (except i/j/k)", async () => {
       await expect(
-        plugin.generateTemplate('ai-function', {
-          name: 'badFunction',
-          params: 'x:string,y:number' // Too short
+        plugin.generateTemplate("ai-function", {
+          name: "badFunction",
+          params: "x:string,y:number", // Too short
         })
       ).rejects.toThrow("Parameter name 'x' is too short");
     });
 
     test("should accept loop counter names (i/j/k)", async () => {
-      const result = await plugin.generateTemplate('ai-function', {
-        name: 'loopFunction',
-        params: 'i:number,j:number'
+      const result = await plugin.generateTemplate("ai-function", {
+        name: "loopFunction",
+        params: "i:number,j:number",
       });
 
-      expect(result).toContain('loopFunction');
-      expect(result).toContain('i: number');
-      expect(result).toContain('j: number');
+      expect(result).toContain("loopFunction");
+      expect(result).toContain("i: number");
+      expect(result).toContain("j: number");
     });
 
     test("should warn about potentially large files", async () => {
-      const consoleWarn = jest.spyOn(console, 'warn').mockImplementation();
+      const consoleWarn = jest.spyOn(console, "warn").mockImplementation();
 
-      const result = await plugin.generateTemplate('bun-server', {
-        name: 'largeServer',
+      const result = await plugin.generateTemplate("bun-server", {
+        name: "largeServer",
         async: true,
-        returns: 'Promise<Response>',
-        throws: 'Error'
+        returns: "Promise<Response>",
+        throws: "Error",
       });
 
       expect(consoleWarn).toHaveBeenCalledWith(
-        expect.stringContaining('Generated file may be large')
+        expect.stringContaining("Generated file may be large")
       );
 
       consoleWarn.mockRestore();
     });
 
     test("should warn about missing function descriptions", async () => {
-      const consoleWarn = jest.spyOn(console, 'warn').mockImplementation();
+      const consoleWarn = jest.spyOn(console, "warn").mockImplementation();
 
-      const result = await plugin.generateTemplate('ai-function', {
-        name: 'undocumentedFunction'
+      const result = await plugin.generateTemplate("ai-function", {
+        name: "undocumentedFunction",
         // No description provided
       });
 
-      expect(consoleWarn).toHaveBeenCalledWith(
-        expect.stringContaining("lacks description")
-      );
+      expect(consoleWarn).toHaveBeenCalledWith(expect.stringContaining("lacks description"));
 
       consoleWarn.mockRestore();
     });
 
     test("should detect duplicate parameter names", async () => {
       await expect(
-        plugin.generateTemplate('ai-function', {
-          name: 'duplicateParamsFunction',
-          params: 'data:string,data:number' // Duplicate 'data'
+        plugin.generateTemplate("ai-function", {
+          name: "duplicateParamsFunction",
+          params: "data:string,data:number", // Duplicate 'data'
         })
       ).rejects.toThrow("Duplicate parameter name 'data' detected");
     });
 
     test("should accept valid parameters within limits", async () => {
-      const result = await plugin.generateTemplate('ai-function', {
-        name: 'goodFunction',
-        params: 'userId:string,userData:UserObject,options:ProcessingOptions' // 3 parameters - within limit
+      const result = await plugin.generateTemplate("ai-function", {
+        name: "goodFunction",
+        params: "userId:string,userData:UserObject,options:ProcessingOptions", // 3 parameters - within limit
       });
 
-      expect(result).toContain('goodFunction');
-      expect(result).toContain('userId: string');
-      expect(result).toContain('userData: UserObject');
-      expect(result).toContain('options: ProcessingOptions');
+      expect(result).toContain("goodFunction");
+      expect(result).toContain("userId: string");
+      expect(result).toContain("userData: UserObject");
+      expect(result).toContain("options: ProcessingOptions");
     });
 
     test("should accept functions without parameters", async () => {
-      const result = await plugin.generateTemplate('ai-function', {
-        name: 'noParamsFunction'
+      const result = await plugin.generateTemplate("ai-function", {
+        name: "noParamsFunction",
       });
 
-      expect(result).toContain('noParamsFunction');
-      expect(result).toContain('performNoParamsFunction()');
+      expect(result).toContain("noParamsFunction");
+      expect(result).toContain("performNoParamsFunction()");
     });
   });
 
   describe("Enhanced Auto-fix Functionality for Frequent Lint Problems", () => {
     test("should auto-fix 'any' types to 'unknown'", async () => {
-      const result = await plugin.generateTemplate('ai-function', {
-        name: 'autoFixTest'
-      }, true); // autoFix: true (default)
+      const result = await plugin.generateTemplate(
+        "ai-function",
+        {
+          name: "autoFixTest",
+        },
+        true
+      ); // autoFix: true (default)
 
       // The generated template should not contain 'any' types
-      expect(result).not.toContain(': any');
-      expect(result).not.toContain(': any[]');
+      expect(result).not.toContain(": any");
+      expect(result).not.toContain(": any[]");
     });
 
     test("should organize imports automatically", async () => {
       // Generate template that might have imports
-      const result = await plugin.generateTemplate('ai-function', {
-        name: 'importTest',
+      const result = await plugin.generateTemplate("ai-function", {
+        name: "importTest",
         // Templates typically include imports
       });
 
       // Should have properly organized imports
-      const importLines = result.split('\n').filter(line => line.trim().startsWith('import '));
+      const importLines = result.split("\n").filter(line => line.trim().startsWith("import "));
 
       // Imports should be grouped and sorted
       if (importLines.length > 1) {
@@ -159,20 +162,20 @@ describe("Pre-validation and Auto-fix", () => {
     });
 
     test("should add comprehensive JSDoc with @returns and @throws", async () => {
-      const result = await plugin.generateTemplate('ai-function', {
-        name: 'functionWithDoc'
+      const result = await plugin.generateTemplate("ai-function", {
+        name: "functionWithDoc",
       });
 
       // Should have enhanced JSDoc structure
-      expect(result).toContain('/**');
-      expect(result).toContain('@returns TODO: Document return type');
-      expect(result).toContain('@throws TODO: Document error conditions');
-      expect(result).toContain('FunctionWithDoc function.');
+      expect(result).toContain("/**");
+      expect(result).toContain("@returns TODO: Document return type");
+      expect(result).toContain("@throws TODO: Document error conditions");
+      expect(result).toContain("FunctionWithDoc function.");
     });
 
     test("should remove console.log statements", async () => {
-      const result = await plugin.generateTemplate('test-suite', {
-        component: 'TestComponent'
+      const result = await plugin.generateTemplate("test-suite", {
+        component: "TestComponent",
       });
 
       // Should not contain obvious console.log statements
@@ -191,14 +194,14 @@ function testFunction(param1: string, param2: number, param3: boolean, param4: o
 
       expect(validation.violations).toContainEqual(
         expect.objectContaining({
-          type: 'parameters',
-          message: expect.stringContaining('too many parameters (6, max: 4)')
+          type: "parameters",
+          message: expect.stringContaining("too many parameters (6, max: 4)"),
         })
       );
     });
 
     test("should remove code duplication", async () => {
-      const consoleWarn = jest.spyOn(console, 'warn').mockImplementation();
+      const consoleWarn = jest.spyOn(console, "warn").mockImplementation();
 
       // Simulate duplicate code scenario
       const testCode = `
@@ -211,8 +214,8 @@ const value = someFunction(); // Triple duplicate
 
       expect(validation.violations).toContainEqual(
         expect.objectContaining({
-          type: 'duplication',
-          message: expect.stringContaining('Duplicate code found')
+          type: "duplication",
+          message: expect.stringContaining("Duplicate code found"),
         })
       );
 
@@ -221,7 +224,9 @@ const value = someFunction(); // Triple duplicate
 
     test("should add file size warnings for large files", async () => {
       // Create a large file simulation
-      const manyLines = Array(300).fill('const someVariable = "test"; // Some line of code').join('\n');
+      const manyLines = Array(300)
+        .fill('const someVariable = "test"; // Some line of code')
+        .join("\n");
       const largeCode = `
 ${manyLines}
 
@@ -234,8 +239,8 @@ export function largeFunction() {
 
       expect(validation.violations).toContainEqual(
         expect.objectContaining({
-          type: 'file-size',
-          message: expect.stringContaining('File too large')
+          type: "file-size",
+          message: expect.stringContaining("File too large"),
         })
       );
     });
@@ -251,8 +256,8 @@ export function undocumentedFunction(data: string): number {
 
       expect(validation.violations).toContainEqual(
         expect.objectContaining({
-          type: 'jsdoc',
-          message: 'Exported function lacks JSDoc documentation'
+          type: "jsdoc",
+          message: "Exported function lacks JSDoc documentation",
         })
       );
     });
@@ -272,8 +277,8 @@ export function functionWithDuplicateImports() {
 
       expect(validation.violations).toContainEqual(
         expect.objectContaining({
-          type: 'import',
-          message: expect.stringContaining('Duplicate import from module "./module"')
+          type: "import",
+          message: expect.stringContaining('Duplicate import from module "./module"'),
         })
       );
     });
@@ -292,34 +297,40 @@ import { utils } from './utils';
       const validation = await plugin.validateCode(problematicCode);
 
       // Should have suggestions for each type of violation
-      expect(validation.suggestions).toContain('Add JSDoc comments to all exported functions (@param, @returns, @throws)');
-      expect(validation.suggestions).toContain('Consolidate duplicate imports and organize them according to ESLint rules');
-      expect(validation.suggestions).toContain('Use options object or function decomposition for functions with >4 parameters');
-      expect(validation.suggestions).toContain('Replace "any" types with specific TypeScript types');
+      expect(validation.suggestions).toContain(
+        "Add JSDoc comments to all exported functions (@param, @returns, @throws)"
+      );
+      expect(validation.suggestions).toContain(
+        "Consolidate duplicate imports and organize them according to ESLint rules"
+      );
+      expect(validation.suggestions).toContain(
+        "Use options object or function decomposition for functions with >4 parameters"
+      );
+      expect(validation.suggestions).toContain(
+        'Replace "any" types with specific TypeScript types'
+      );
     });
   });
 
   describe("Quality Score Reporting", () => {
     test("should report quality score in console", async () => {
-      const consoleLog = jest.spyOn(console, 'log').mockImplementation();
+      const consoleLog = jest.spyOn(console, "log").mockImplementation();
 
-      const result = await plugin.generateTemplate('ai-function', {
-        name: 'qualityTest'
+      const result = await plugin.generateTemplate("ai-function", {
+        name: "qualityTest",
       });
 
-      expect(consoleLog).toHaveBeenCalledWith(
-        expect.stringContaining('quality:')
-      );
+      expect(consoleLog).toHaveBeenCalledWith(expect.stringContaining("quality:"));
 
       consoleLog.mockRestore();
     });
 
     test("should warn about quality issues in strict mode", async () => {
-      const consoleWarn = jest.spyOn(console, 'warn').mockImplementation();
+      const consoleWarn = jest.spyOn(console, "warn").mockImplementation();
 
       // Generate template that might have issues
-      const result = await plugin.generateTemplate('bun-server', {
-        name: 'complexServer'
+      const result = await plugin.generateTemplate("bun-server", {
+        name: "complexServer",
       });
 
       // Complex templates might have warnings in strict mode
@@ -332,20 +343,28 @@ import { utils } from './utils';
 
   describe("Auto-fix Toggle", () => {
     test("should allow disabling auto-fix", async () => {
-      const resultWithAutoFix = await plugin.generateTemplate('ai-function', {
-        name: 'autoFixEnabled'
-      }, true);
+      const resultWithAutoFix = await plugin.generateTemplate(
+        "ai-function",
+        {
+          name: "autoFixEnabled",
+        },
+        true
+      );
 
-      const resultWithoutAutoFix = await plugin.generateTemplate('ai-function', {
-        name: 'autoFixDisabled'
-      }, false);
+      const resultWithoutAutoFix = await plugin.generateTemplate(
+        "ai-function",
+        {
+          name: "autoFixDisabled",
+        },
+        false
+      );
 
       // Both should generate valid templates
-      expect(resultWithAutoFix).toContain('autoFixEnabled');
-      expect(resultWithoutAutoFix).toContain('autoFixDisabled');
+      expect(resultWithAutoFix).toContain("autoFixEnabled");
+      expect(resultWithoutAutoFix).toContain("autoFixDisabled");
 
       // The one with auto-fix should have more complete structure
-      expect(resultWithAutoFix).toContain('/**');
+      expect(resultWithAutoFix).toContain("/**");
     });
   });
 
@@ -364,8 +383,8 @@ export function testFunction(result: Result<string, Error>) {
 
       expect(validation.violations).toContainEqual(
         expect.objectContaining({
-          type: 'typescript-property',
-          message: expect.stringContaining('Result type property access without safety check')
+          type: "typescript-property",
+          message: expect.stringContaining("Result type property access without safety check"),
         })
       );
     });
@@ -381,8 +400,8 @@ export function testFunction(): Object {
 
       expect(validation.violations).toContainEqual(
         expect.objectContaining({
-          type: 'typescript-assignment',
-          message: 'Object type instead of Record<string, unknown>'
+          type: "typescript-assignment",
+          message: "Object type instead of Record<string, unknown>",
         })
       );
     });
@@ -398,8 +417,8 @@ export function testFunction(): Function {
 
       expect(validation.violations).toContainEqual(
         expect.objectContaining({
-          type: 'typescript-assignment',
-          message: 'Function type instead of proper function signature'
+          type: "typescript-assignment",
+          message: "Function type instead of proper function signature",
         })
       );
     });
@@ -415,54 +434,54 @@ export function testFunction(arr: string[] | undefined) {
 
       expect(validation.violations).toContainEqual(
         expect.objectContaining({
-          type: 'typescript-null',
-          message: 'Array access without null safety check'
+          type: "typescript-null",
+          message: "Array access without null safety check",
         })
       );
     });
 
     test("should auto-fix Result property access patterns", async () => {
-      const result = await plugin.generateTemplate('ai-function', {
-        name: 'resultTest',
-        description: 'Function that processes result.data and result.error'
+      const result = await plugin.generateTemplate("ai-function", {
+        name: "resultTest",
+        description: "Function that processes result.data and result.error",
       });
 
       // Should replace problematic patterns with safer alternatives
-      expect(result).toContain('result.success ? result.data : undefined');
-      expect(result).not.toContain('result.data');
-      expect(result).not.toContain('result.isOk');
+      expect(result).toContain("result.success ? result.data : undefined");
+      expect(result).not.toContain("result.data");
+      expect(result).not.toContain("result.isOk");
     });
 
     test("should auto-fix type assignments", async () => {
-      const result = await plugin.generateTemplate('ai-function', {
-        name: 'typeTest',
-        description: 'Function with Object and Function parameters'
+      const result = await plugin.generateTemplate("ai-function", {
+        name: "typeTest",
+        description: "Function with Object and Function parameters",
       });
 
       // Should fix problematic type assignments
-      expect(result).toContain('Record<string, unknown>');
-      expect(result).not.toContain(': Object');
-      expect(result).toContain('(...args: unknown[]) => unknown');
-      expect(result).not.toContain(': Function');
+      expect(result).toContain("Record<string, unknown>");
+      expect(result).not.toContain(": Object");
+      expect(result).toContain("(...args: unknown[]) => unknown");
+      expect(result).not.toContain(": Function");
     });
 
     test("should add null safety checks", async () => {
-      const result = await plugin.generateTemplate('ai-function', {
-        name: 'nullTest',
-        description: 'Function that accesses obj.property'
+      const result = await plugin.generateTemplate("ai-function", {
+        name: "nullTest",
+        description: "Function that accesses obj.property",
       });
 
       // Should add null safety comments and optional chaining
-      expect(result).toContain('// TODO: Add null check for obj');
-      expect(result).toContain('obj?.property');
+      expect(result).toContain("// TODO: Add null check for obj");
+      expect(result).toContain("obj?.property");
     });
   });
 
   describe("Integration with Validation", () => {
     test("should pass final validation after auto-fix", async () => {
-      const result = await plugin.generateTemplate('ai-function', {
-        name: 'validatedFunction',
-        params: 'data:string,id:number'
+      const result = await plugin.generateTemplate("ai-function", {
+        name: "validatedFunction",
+        params: "data:string,id:number",
       });
 
       // The generated code should pass validation
@@ -472,8 +491,8 @@ export function testFunction(arr: string[] | undefined) {
     });
 
     test("should show quality improvements", async () => {
-      const result = await plugin.generateTemplate('ai-function', {
-        name: 'improvedFunction'
+      const result = await plugin.generateTemplate("ai-function", {
+        name: "improvedFunction",
       });
 
       const validation = await plugin.validateCode(result);
@@ -482,36 +501,34 @@ export function testFunction(arr: string[] | undefined) {
       expect(validation.score).toBeGreaterThan(85);
 
       // Should have minimal violations
-      expect(validation.violations.filter(v => v.severity === 'error')).toHaveLength(0);
+      expect(validation.violations.filter(v => v.severity === "error")).toHaveLength(0);
     });
   });
 
   describe("Error Prevention", () => {
     test("should prevent template generation with invalid options", async () => {
       const invalidCases = [
-        { params: 'data:any', description: 'any type' },
-        { params: 'x:string', description: 'short name' },
-        { name: '', description: 'empty name' },
+        { params: "data:any", description: "any type" },
+        { params: "x:string", description: "short name" },
+        { name: "", description: "empty name" },
       ];
 
       for (const testCase of invalidCases) {
-        await expect(
-          plugin.generateTemplate('ai-function', testCase)
-        ).rejects.toThrow();
+        await expect(plugin.generateTemplate("ai-function", testCase)).rejects.toThrow();
       }
     });
 
     test("should handle edge cases gracefully", async () => {
       const edgeCases = [
-        { params: '', description: 'empty params' },
-        { params: undefined, description: 'undefined params' },
-        { name: 'test', params: 'data:string', description: 'valid minimal config' },
+        { params: "", description: "empty params" },
+        { params: undefined, description: "undefined params" },
+        { name: "test", params: "data:string", description: "valid minimal config" },
       ];
 
       for (const testCase of edgeCases) {
-        const result = await plugin.generateTemplate('ai-function', testCase);
+        const result = await plugin.generateTemplate("ai-function", testCase);
         expect(result).toBeDefined();
-        expect(result).toContain('test');
+        expect(result).toContain("test");
       }
     });
   });
@@ -520,9 +537,9 @@ export function testFunction(arr: string[] | undefined) {
     test("should complete validation quickly", async () => {
       const startTime = Date.now();
 
-      const result = await plugin.generateTemplate('ai-function', {
-        name: 'performanceTest',
-        params: 'data:string,options:Config'
+      const result = await plugin.generateTemplate("ai-function", {
+        name: "performanceTest",
+        params: "data:string,options:Config",
       });
 
       const endTime = Date.now();
@@ -537,9 +554,9 @@ export function testFunction(arr: string[] | undefined) {
       const startTime = Date.now();
 
       const promises = Array.from({ length: 5 }, (_, i) =>
-        plugin.generateTemplate('ai-function', {
+        plugin.generateTemplate("ai-function", {
           name: `function${i}`,
-          params: `data:string,id${i}:number`
+          params: `data:string,id${i}:number`,
         })
       );
 

@@ -12,7 +12,10 @@ import { REGEX_PATTERNS } from './constants';
  * @param {CompanyData} companyData - The company data object to populate with extracted information
  * @returns {Promise<void>} Promise that resolves when basic information extraction is complete
  */
-export async function extractBasicInfo(searchResult: SearchResult, companyData: CompanyData): Promise<void> {
+export async function extractBasicInfo(
+  searchResult: SearchResult,
+  companyData: CompanyData
+): Promise<void> {
   const text = `${searchResult.title} ${searchResult.snippet}`;
 
   // Extract website
@@ -48,7 +51,10 @@ export async function extractBasicInfo(searchResult: SearchResult, companyData: 
  * @param {CompanyData} companyData - The company data object to populate with leadership information
  * @returns {Promise<void>} Promise that resolves when leadership information extraction is complete
  */
-export async function extractLeadershipInfo(searchResult: SearchResult, companyData: CompanyData): Promise<void> {
+export async function extractLeadershipInfo(
+  searchResult: SearchResult,
+  companyData: CompanyData
+): Promise<void> {
   const text = `${searchResult.title} ${searchResult.snippet}`;
 
   // Extract CEO
@@ -80,7 +86,10 @@ export async function extractLeadershipInfo(searchResult: SearchResult, companyD
  * @param {CompanyData} companyData - The company data object to populate with financial information
  * @returns {Promise<void>} Promise that resolves when financial information extraction is complete
  */
-export async function extractFinancialInfo(searchResult: SearchResult, companyData: CompanyData): Promise<void> {
+export async function extractFinancialInfo(
+  searchResult: SearchResult,
+  companyData: CompanyData
+): Promise<void> {
   const text = `${searchResult.title} ${searchResult.snippet}`;
 
   // Extract revenue
@@ -136,7 +145,10 @@ export async function extractMarketPositionInfo(
  * @param {CompanyData} companyData - The company data object to populate with culture and employment information
  * @returns {Promise<void>} Promise that resolves when culture information extraction is complete
  */
-export async function extractCultureInfo(searchResult: SearchResult, companyData: CompanyData): Promise<void> {
+export async function extractCultureInfo(
+  searchResult: SearchResult,
+  companyData: CompanyData
+): Promise<void> {
   const text = `${searchResult.title} ${searchResult.snippet}`;
 
   // Extract employee satisfaction

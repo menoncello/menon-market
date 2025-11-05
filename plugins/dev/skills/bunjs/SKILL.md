@@ -65,13 +65,13 @@ const server = serve({
     },
     error(ws, error) {
       console.error("WebSocket error:", error);
-    }
+    },
   },
 
   error(error) {
     console.error("Server error:", error);
     return new Response("Internal Server Error", { status: 500 });
-  }
+  },
 });
 
 console.log(`🚀 Server: http://localhost:${server.port}`);
@@ -115,7 +115,7 @@ async function writeFileOperations() {
 
   // Write with options
   await write("./logs/app.log", new Date().toISOString() + "\n", {
-    createPath: true,  // Create directories if needed
+    createPath: true, // Create directories if needed
   });
 }
 
@@ -188,9 +188,7 @@ function transferData(sourceTable: string, targetTable: string) {
     const data = db.query(`SELECT * FROM ${sourceTable}`).all();
 
     for (const row of data) {
-      db.query(`INSERT INTO ${targetTable} VALUES (?, ?, ?)`).run(
-        row.id, row.name, row.value
-      );
+      db.query(`INSERT INTO ${targetTable} VALUES (?, ?, ?)`).run(row.id, row.name, row.value);
     }
 
     db.query(`DELETE FROM ${sourceTable}`).run();
@@ -217,7 +215,7 @@ describe("API Endpoints", () => {
       port: 0,
       fetch(req) {
         return Response.json({ status: "ok", timestamp: Date.now() });
-      }
+      },
     });
   });
 
@@ -236,9 +234,7 @@ describe("API Endpoints", () => {
   });
 
   test("mocking external services", () => {
-    const mockFetch = mock(() =>
-      Promise.resolve(Response.json({ data: "mocked" }))
-    );
+    const mockFetch = mock(() => Promise.resolve(Response.json({ data: "mocked" })));
 
     global.fetch = mockFetch;
 
@@ -253,7 +249,7 @@ describe("API Endpoints", () => {
       id: 1,
       name: "Alice",
       email: "alice@example.com",
-      created: new Date("2024-01-01")
+      created: new Date("2024-01-01"),
     };
 
     expect(user).toMatchSnapshot();
@@ -274,7 +270,7 @@ async function runGitStatus() {
     cmd: ["git", "status", "--porcelain"],
     stdout: "pipe",
     stderr: "pipe",
-    cwd: process.cwd()
+    cwd: process.cwd(),
   });
 
   const output = await new Response(proc.stdout).text();
@@ -342,28 +338,28 @@ const buildConfig = {
   naming: {
     entry: "[dir]/[name].[ext]",
     chunk: "[name]-[hash].[ext]",
-    asset: "[name]-[hash].[ext]"
+    asset: "[name]-[hash].[ext]",
   },
 
   define: {
     "process.env.NODE_ENV": JSON.stringify("production"),
-    "process.env.API_URL": JSON.stringify("https://api.example.com")
+    "process.env.API_URL": JSON.stringify("https://api.example.com"),
   },
 
   plugins: [
     {
       name: "custom-loader",
       setup(build) {
-        build.onLoad({ filter: /\.custom$/ }, async (args) => {
+        build.onLoad({ filter: /\.custom$/ }, async args => {
           const source = await Bun.file(args.path).text();
           return {
             contents: `export default ${JSON.stringify(source)};`,
-            loader: "js"
+            loader: "js",
           };
         });
-      }
-    }
-  ]
+      },
+    },
+  ],
 };
 
 async function buildApplication() {
@@ -398,8 +394,8 @@ async function devBuild() {
         } else {
           console.log("🔄 Rebuilt successfully");
         }
-      }
-    }
+      },
+    },
   });
 
   return result;
@@ -425,7 +421,9 @@ class DatabaseService {
   }
 
   async query(sql: string, params: any[] = []) {
-    return this.getDatabase().query(sql).all(...params);
+    return this.getDatabase()
+      .query(sql)
+      .all(...params);
   }
 }
 
@@ -453,7 +451,7 @@ async function processLargeFile(filePath: string) {
       // Process chunk without loading entire file
       const processed = chunk.toString().toUpperCase();
       controller.enqueue(new TextEncoder().encode(processed));
-    }
+    },
   });
 
   return fileStream.pipeThrough(processor);
@@ -506,32 +504,35 @@ const server = serve({
 
     // Add security headers
     const headers = {
-      'X-Content-Type-Options': 'nosniff',
-      'X-Frame-Options': 'DENY',
-      'Strict-Transport-Security': 'max-age=31536000',
+      "X-Content-Type-Options": "nosniff",
+      "X-Frame-Options": "DENY",
+      "Strict-Transport-Security": "max-age=31536000",
     };
 
-    if (url.pathname === '/api/health') {
-      return Response.json({
-        status: 'ok',
-        timestamp: Date.now(),
-        version: process.env.npm_package_version || '1.0.0'
-      }, { headers });
+    if (url.pathname === "/api/health") {
+      return Response.json(
+        {
+          status: "ok",
+          timestamp: Date.now(),
+          version: process.env.npm_package_version || "1.0.0",
+        },
+        { headers }
+      );
     }
 
-    return new Response('Not Found', { status: 404, headers });
-  }
+    return new Response("Not Found", { status: 404, headers });
+  },
 });
 
 // Graceful shutdown
-process.on('SIGINT', () => {
-  console.log('Shutting down gracefully...');
+process.on("SIGINT", () => {
+  console.log("Shutting down gracefully...");
   server.stop();
   process.exit(0);
 });
 
-process.on('SIGTERM', () => {
-  console.log('SIGTERM received');
+process.on("SIGTERM", () => {
+  console.log("SIGTERM received");
   server.stop();
   process.exit(0);
 });
@@ -546,7 +547,7 @@ interface Config {
   port: number;
   database: string;
   redis?: string;
-  logLevel: 'debug' | 'info' | 'warn' | 'error';
+  logLevel: "debug" | "info" | "warn" | "error";
   cors: {
     origin: string[];
     credentials: boolean;
@@ -557,13 +558,13 @@ function loadConfig(): Config {
   const env = process.env;
 
   return {
-    port: parseInt(env.PORT || '3000'),
-    database: env.DATABASE_URL || 'sqlite:app.db',
+    port: parseInt(env.PORT || "3000"),
+    database: env.DATABASE_URL || "sqlite:app.db",
     redis: env.REDIS_URL,
-    logLevel: (env.LOG_LEVEL as any) || 'info',
+    logLevel: (env.LOG_LEVEL as any) || "info",
     cors: {
-      origin: env.CORS_ORIGIN?.split(',') || ['http://localhost:3000'],
-      credentials: env.CORS_CREDENTIALS === 'true',
+      origin: env.CORS_ORIGIN?.split(",") || ["http://localhost:3000"],
+      credentials: env.CORS_CREDENTIALS === "true",
     },
   };
 }

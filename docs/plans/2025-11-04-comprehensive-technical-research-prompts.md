@@ -1,7 +1,7 @@
 # Comprehensive Technical Research Prompts for Skill Creation
 
-*Created: 2025-11-04*
-*Purpose: Expert-level research prompts for creating implementation skills in Software Engineering*
+_Created: 2025-11-04_
+_Purpose: Expert-level research prompts for creating implementation skills in Software Engineering_
 
 ## Overview
 
@@ -21,6 +21,7 @@ This document contains three specialized research prompts designed to generate c
 **Objective**: Conduct exhaustive research on a specific technology stack to identify high-impact implementation opportunities.
 
 ### Layer 1: Foundation Analysis
+
 - **Historical Evolution**: Trace the complete development timeline from inception to current state
 - **Theoretical Underpinnings**: Explore the computer science theories, mathematical models, and formal methods that inform the stack's design
 - **Core Design Principles**: Identify the fundamental architectural decisions, trade-offs, and design philosophies
@@ -28,6 +29,7 @@ This document contains three specialized research prompts designed to generate c
 - **Breakthrough Moments**: Identify pivotal innovations and paradigm shifts in the stack's evolution
 
 ### Layer 2: Current State Ecosystem
+
 - **Version Landscape**: Analyze current versions, release patterns, stability indicators, and adoption trends
 - **Performance Characteristics**: Comprehensive benchmarking, scalability limits, resource utilization patterns
 - **Technical Debt Assessment**: Identify legacy issues, deprecation cycles, and refactoring needs
@@ -35,6 +37,7 @@ This document contains three specialized research prompts designed to generate c
 - **Comparative Analysis**: Systematic comparison with alternative stacks and migration patterns
 
 ### Layer 3: Research Gaps & Limitations
+
 - **Unsolved Problems**: Identify fundamental challenges without satisfactory solutions
 - **Performance Bottlenecks**: Pinpoint scalability constraints, memory issues, and computational inefficiencies
 - **Security Vulnerabilities**: Assess current security posture, attack vectors, and hardening opportunities
@@ -42,12 +45,14 @@ This document contains three specialized research prompts designed to generate c
 - **Edge Cases**: Identify scenarios and conditions not well-addressed by current implementations
 
 ### Layer 4: Future Research Directions
+
 - **Emerging Trends**: Track experimental features, research projects, and industry R&D initiatives
 - **Academic Research**: Survey recent papers, conference proceedings, and theoretical advances
 - **Paradigm Shifts**: Identify potential fundamental changes in approach or architecture
 - **Technology Intersections**: Explore convergence with AI, quantum computing, blockchain, and other emerging fields
 
 ### Layer 5: Implementation Skill Opportunities
+
 - **High-Impact Tools**: Identify critical gaps where specialized tools could provide significant value
 - **Performance Optimization**: Discover opportunities for acceleration, efficiency improvements, and resource optimization
 - **Security Enhancements**: Design and implement advanced security features and hardening techniques
@@ -61,6 +66,7 @@ This document contains three specialized research prompts designed to generate c
 **Objective**: Conduct comprehensive analysis of specific technical problem domains to identify novel implementation solutions.
 
 ### Layer 1: Foundational Problem Analysis
+
 - **Problem Evolution**: Trace the historical development and changing nature of the problem domain
 - **Theoretical Frameworks**: Explore mathematical models, computational complexity, and theoretical limits
 - **Pioneering Solutions**: Analyze early approaches, their innovations, and fundamental limitations
@@ -68,6 +74,7 @@ This document contains three specialized research prompts designed to generate c
 - **Problem Classification**: Develop taxonomies and categorization schemes for different problem variants
 
 ### Layer 2: Current Solution Landscape
+
 - **State-of-the-Art**: Survey cutting-edge approaches and industry-leading implementations
 - **Performance Characteristics**: Comprehensive analysis of efficiency, scalability, and resource requirements
 - **Tool Ecosystems**: Evaluate available frameworks, libraries, and platform support
@@ -75,6 +82,7 @@ This document contains three specialized research prompts designed to generate c
 - **Success Metrics**: Define and analyze key performance indicators and success criteria
 
 ### Layer 3: Unsolved Challenges & Gaps
+
 - **Critical Problems**: Identify high-impact challenges without satisfactory solutions
 - **Performance Limitations**: Pinpoint fundamental bottlenecks and scalability constraints
 - **Integration Barriers**: Analyze difficulties in combining with other systems and technologies
@@ -82,12 +90,14 @@ This document contains three specialized research prompts designed to generate c
 - **Usability Issues**: Identify user experience problems and adoption barriers
 
 ### Layer 4: Emerging Research Directions
+
 - **Academic Initiatives**: Survey university research, grant projects, and theoretical advances
 - **Industry R&D**: Track corporate research labs, startup innovations, and experimental implementations
 - **Cross-Domain Applications**: Explore applications in other fields and interdisciplinary opportunities
 - **Disruptive Technologies**: Identify emerging technologies that could transform the problem domain
 
 ### Layer 5: Implementation Skill Opportunities
+
 - **Novel Algorithms**: Design new approaches with better performance or scalability characteristics
 - **AI-Enhanced Solutions**: Apply machine learning and AI techniques to solve challenging aspects
 - **Advanced Tooling**: Create sophisticated debugging, monitoring, and optimization systems
@@ -101,6 +111,7 @@ This document contains three specialized research prompts designed to generate c
 **Objective**: Conduct exhaustive analysis of software engineering methodologies and design patterns to identify enhancement and implementation opportunities.
 
 ### Layer 1: Theoretical Foundations
+
 - **Historical Development**: Trace the evolution from early concepts to current formalizations
 - **Formal Specifications**: Analyze mathematical models, axiomatic systems, and formal definitions
 - **Theoretical Frameworks**: Explore connections to computer science theory, systems theory, and organizational theory
@@ -108,6 +119,7 @@ This document contains three specialized research prompts designed to generate c
 - **Relationship Mapping**: Analyze connections to other methodologies and theoretical frameworks
 
 ### Layer 2: Current Implementation Patterns
+
 - **Best Practices**: Document established patterns, guidelines, and heuristics
 - **Tool Support**: Evaluate available automation tools, IDE integrations, and compliance checkers
 - **Success Stories**: Analyze case studies, successful implementations, and measurable benefits
@@ -115,6 +127,7 @@ This document contains three specialized research prompts designed to generate c
 - **Performance Impact**: Assess effects on development speed, code quality, and maintainability
 
 ### Layer 3: Limitations & Anti-Patterns
+
 - **Context Boundaries**: Identify situations where the methodology is inappropriate or ineffective
 - **Scale Limitations**: Analyze performance degradation with team size, codebase size, or complexity
 - **Anti-Patterns**: Document common misapplications and implementation pitfalls
@@ -122,6 +135,7 @@ This document contains three specialized research prompts designed to generate c
 - **Adoption Barriers**: Identify organizational, cultural, and technical obstacles
 
 ### Layer 4: Evolution & Hybrid Approaches
+
 - **Emerging Variations**: Track recent extensions, modifications, and adaptations
 - **Hybrid Methodologies**: Analyze successful combinations with other approaches
 - **Domain Adaptations**: Study adaptations for specific industries, project types, or contexts
@@ -129,6 +143,7 @@ This document contains three specialized research prompts designed to generate c
 - **Research Innovations**: Survey academic research on overcoming fundamental limitations
 
 ### Layer 5: Implementation Skill Opportunities
+
 - **Advanced Tooling**: Create sophisticated automation, compliance checking, and guidance systems
 - **Intelligent Assistants**: Develop AI-powered tools for methodology application and optimization
 - **Code Generation**: Build tools for automatic pattern implementation and refactoring
@@ -159,6 +174,7 @@ This document contains three specialized research prompts designed to generate c
 ### Template Structure
 
 Each template includes:
+
 - **Research Target Section**: Placeholders for specific research topics and goals
 - **5-Layer Framework**: Systematic progression from foundations to implementation
 - **Checklist Items**: Detailed research questions and tasks
@@ -195,6 +211,7 @@ Each template includes:
 ### Output Format
 
 Research results should be structured to directly inform skill creation:
+
 - **Problem Statements**: Clear articulation of challenges to be addressed
 - **Technical Requirements**: Specific technical capabilities needed
 - **Implementation Strategies**: Concrete approaches for building solutions

@@ -17,25 +17,31 @@ import { z } from "zod";
 
 // Quality metrics schema
 const QualityMetricsSchema = z.object({
-  functions: z.array(z.object({
-    name: z.string(),
-    lines: z.number(),
-    complexity: z.number(),
-    hasEarlyValidation: z.boolean(),
-    hasAnyTypes: z.boolean(),
-    hasMagicNumbers: z.boolean(),
-    params: z.array(z.object({
+  functions: z.array(
+    z.object({
       name: z.string(),
-      type: z.string(),
-    })),
-  })),
+      lines: z.number(),
+      complexity: z.number(),
+      hasEarlyValidation: z.boolean(),
+      hasAnyTypes: z.boolean(),
+      hasMagicNumbers: z.boolean(),
+      params: z.array(
+        z.object({
+          name: z.string(),
+          type: z.string(),
+        })
+      ),
+    })
+  ),
   totalLines: z.number(),
-  violations: z.array(z.object({
-    line: z.number(),
-    rule: z.string(),
-    severity: z.enum(['error', 'warning']),
-    message: z.string(),
-  })),
+  violations: z.array(
+    z.object({
+      line: z.number(),
+      rule: z.string(),
+      severity: z.enum(["error", "warning"]),
+      message: z.string(),
+    })
+  ),
   score: z.number().min(0).max(100),
 });
 
@@ -51,19 +57,35 @@ const AI_RULES = {
   MAX_FILE_LINES: 300,
 
   // AI-specific patterns
-  EARLY_VALIDATION_LINES: 5,  // Validation must be in first 5 lines
+  EARLY_VALIDATION_LINES: 5, // Validation must be in first 5 lines
   MAX_NESTING_DEPTH: 3,
   MIN_FUNCTION_NAME_LENGTH: 4,
 };
 
 // Forbidden patterns for AI-generated code
 const FORBIDDEN_PATTERNS = [
-  { pattern: /: any(\s|\[|,|;|$)/g, rule: 'any-type', message: 'Using "any" type is prohibited' },
-  { pattern: /console\.log/g, rule: 'console-log', message: 'Use proper logging instead of console.log' },
-  { pattern: /\/\* eslint-disable/g, rule: 'eslint-disable', message: 'ESLint disable comments are prohibited' },
-  { pattern: /\/\/ eslint-disable/g, rule: 'eslint-disable', message: 'ESLint disable comments are prohibited' },
-  { pattern: /@ts-ignore/g, rule: 'ts-ignore', message: '@ts-ignore comments are prohibited' },
-  { pattern: /@ts-expect-error/g, rule: 'ts-expect-error', message: '@ts-expect-error should be avoided' },
+  { pattern: /: any(\s|\[|,|;|$)/g, rule: "any-type", message: 'Using "any" type is prohibited' },
+  {
+    pattern: /console\.log/g,
+    rule: "console-log",
+    message: "Use proper logging instead of console.log",
+  },
+  {
+    pattern: /\/\* eslint-disable/g,
+    rule: "eslint-disable",
+    message: "ESLint disable comments are prohibited",
+  },
+  {
+    pattern: /\/\/ eslint-disable/g,
+    rule: "eslint-disable",
+    message: "ESLint disable comments are prohibited",
+  },
+  { pattern: /@ts-ignore/g, rule: "ts-ignore", message: "@ts-ignore comments are prohibited" },
+  {
+    pattern: /@ts-expect-error/g,
+    rule: "ts-expect-error",
+    message: "@ts-expect-error should be avoided",
+  },
 ];
 
 // Magic number pattern (excluding common values)
@@ -75,8 +97,8 @@ const MAGIC_NUMBER_PATTERN = /\b(?!0|1|-1|2|10|100|1000)\d+(?!\w)/g;
 async function analyzeCode(filePath: string): Promise<QualityMetrics> {
   try {
     const content = await file(filePath).text();
-    const lines = content.split('\n');
-    const violations: QualityMetrics['violations'] = [];
+    const lines = content.split("\n");
+    const violations: QualityMetrics["violations"] = [];
 
     console.log(`🔍 Analyzing ${filePath}...`);
 
@@ -84,11 +106,11 @@ async function analyzeCode(filePath: string): Promise<QualityMetrics> {
     for (const { pattern, rule, message } of FORBIDDEN_PATTERNS) {
       const matches = content.matchAll(pattern);
       for (const match of matches) {
-        const lineIndex = content.substring(0, match.index!).split('\n').length - 1;
+        const lineIndex = content.substring(0, match.index!).split("\n").length - 1;
         violations.push({
           line: lineIndex + 1,
           rule,
-          severity: 'error',
+          severity: "error",
           message,
         });
       }
@@ -97,11 +119,11 @@ async function analyzeCode(filePath: string): Promise<QualityMetrics> {
     // Check magic numbers
     const magicMatches = content.matchAll(MAGIC_NUMBER_PATTERN);
     for (const match of magicMatches) {
-      const lineIndex = content.substring(0, match.index!).split('\n').length - 1;
+      const lineIndex = content.substring(0, match.index!).split("\n").length - 1;
       violations.push({
         line: lineIndex + 1,
-        rule: 'magic-numbers',
-        severity: 'warning',
+        rule: "magic-numbers",
+        severity: "warning",
         message: `Magic number "${match[0]}" should be replaced with named constant`,
       });
     }
@@ -113,8 +135,8 @@ async function analyzeCode(filePath: string): Promise<QualityMetrics> {
     if (lines.length > AI_RULES.MAX_FILE_LINES) {
       violations.push({
         line: lines.length,
-        rule: 'max-lines',
-        severity: 'warning',
+        rule: "max-lines",
+        severity: "warning",
         message: `File too long: ${lines.length} lines (max: ${AI_RULES.MAX_FILE_LINES})`,
       });
     }
@@ -124,10 +146,13 @@ async function analyzeCode(filePath: string): Promise<QualityMetrics> {
     const deductionPerError = 5;
     const deductionPerWarning = 2;
 
-    const errorCount = violations.filter(v => v.severity === 'error').length;
-    const warningCount = violations.filter(v => v.severity === 'warning').length;
+    const errorCount = violations.filter(v => v.severity === "error").length;
+    const warningCount = violations.filter(v => v.severity === "warning").length;
 
-    const score = Math.max(0, baseScore - (errorCount * deductionPerError) - (warningCount * deductionPerWarning));
+    const score = Math.max(
+      0,
+      baseScore - errorCount * deductionPerError - warningCount * deductionPerWarning
+    );
 
     return {
       functions,
@@ -135,7 +160,6 @@ async function analyzeCode(filePath: string): Promise<QualityMetrics> {
       violations,
       score,
     };
-
   } catch (error) {
     console.error(`❌ Error analyzing ${filePath}:`, error);
     throw error;
@@ -145,9 +169,9 @@ async function analyzeCode(filePath: string): Promise<QualityMetrics> {
 /**
  * Analyze functions within the code
  */
-function analyzeFunctions(content: string, violations: QualityMetrics['violations']) {
+function analyzeFunctions(content: string, violations: QualityMetrics["violations"]) {
   const functions = [];
-  const lines = content.split('\n');
+  const lines = content.split("\n");
 
   // Match function declarations (various patterns)
   const functionPatterns = [
@@ -162,13 +186,18 @@ function analyzeFunctions(content: string, violations: QualityMetrics['violation
 
     for (const match of matches) {
       const functionName = match[1];
-      if (!functionName || functionName === 'if' || functionName === 'for' || functionName === 'while') {
+      if (
+        !functionName ||
+        functionName === "if" ||
+        functionName === "for" ||
+        functionName === "while"
+      ) {
         continue; // Skip false matches
       }
 
       const functionStart = match.index!;
       const functionContent = extractFunctionContent(content, functionStart);
-      const functionLines = functionContent.split('\n');
+      const functionLines = functionContent.split("\n");
 
       const analysis = {
         name: functionName,
@@ -185,36 +214,36 @@ function analyzeFunctions(content: string, violations: QualityMetrics['violation
       // Check function-level violations
       if (analysis.lines > AI_RULES.MAX_LINES_PER_FUNCTION) {
         violations.push({
-          line: content.substring(0, functionStart).split('\n').length,
-          rule: 'max-lines-per-function',
-          severity: 'error',
+          line: content.substring(0, functionStart).split("\n").length,
+          rule: "max-lines-per-function",
+          severity: "error",
           message: `Function "${functionName}" too long: ${analysis.lines} lines (max: ${AI_RULES.MAX_LINES_PER_FUNCTION})`,
         });
       }
 
       if (analysis.complexity > AI_RULES.MAX_FUNCTION_COMPLEXITY) {
         violations.push({
-          line: content.substring(0, functionStart).split('\n').length,
-          rule: 'complexity',
-          severity: 'error',
+          line: content.substring(0, functionStart).split("\n").length,
+          rule: "complexity",
+          severity: "error",
           message: `Function "${functionName}" too complex: ${analysis.complexity} (max: ${AI_RULES.MAX_FUNCTION_COMPLEXITY})`,
         });
       }
 
       if (analysis.params.length > AI_RULES.MAX_PARAMS) {
         violations.push({
-          line: content.substring(0, functionStart).split('\n').length,
-          rule: 'max-params',
-          severity: 'error',
+          line: content.substring(0, functionStart).split("\n").length,
+          rule: "max-params",
+          severity: "error",
           message: `Function "${functionName}" has too many parameters: ${analysis.params.length} (max: ${AI_RULES.MAX_PARAMS})`,
         });
       }
 
       if (!analysis.hasEarlyValidation && analysis.lines > 10) {
         violations.push({
-          line: content.substring(0, functionStart).split('\n').length,
-          rule: 'early-validation',
-          severity: 'warning',
+          line: content.substring(0, functionStart).split("\n").length,
+          rule: "early-validation",
+          severity: "warning",
           message: `Function "${functionName}" lacks early validation (should be in first ${AI_RULES.EARLY_VALIDATION_LINES} lines)`,
         });
       }
@@ -228,15 +257,15 @@ function analyzeFunctions(content: string, violations: QualityMetrics['violation
  * Extract function content between braces
  */
 function extractFunctionContent(content: string, startIndex: number): string {
-  const firstBrace = content.indexOf('{', startIndex);
-  if (firstBrace === -1) return '';
+  const firstBrace = content.indexOf("{", startIndex);
+  if (firstBrace === -1) return "";
 
   let braceCount = 1;
   let endIndex = firstBrace + 1;
 
   while (endIndex < content.length && braceCount > 0) {
-    if (content[endIndex] === '{') braceCount++;
-    else if (content[endIndex] === '}') braceCount--;
+    if (content[endIndex] === "{") braceCount++;
+    else if (content[endIndex] === "}") braceCount--;
     endIndex++;
   }
 
@@ -283,10 +312,7 @@ function hasEarlyValidation(lines: string[]): boolean {
 
   for (const line of validationLines) {
     const trimmed = line.trim();
-    if (
-      trimmed.startsWith('if') &&
-      (trimmed.includes('return') || trimmed.includes('throw'))
-    ) {
+    if (trimmed.startsWith("if") && (trimmed.includes("return") || trimmed.includes("throw"))) {
       return true;
     }
   }
@@ -302,15 +328,18 @@ function extractParameters(functionSignature: string): Array<{ name: string; typ
   if (!paramMatch) return [];
 
   const paramString = paramMatch[1];
-  const params = paramString.split(',').map(p => p.trim()).filter(p => p);
+  const params = paramString
+    .split(",")
+    .map(p => p.trim())
+    .filter(p => p);
 
   return params.map(param => {
-    const [nameAndType] = param.split(':').map(p => p.trim());
-    const [name] = nameAndType.split('=').map(p => p.trim()); // Handle default values
+    const [nameAndType] = param.split(":").map(p => p.trim());
+    const [name] = nameAndType.split("=").map(p => p.trim()); // Handle default values
 
     return {
-      name: name || 'param',
-      type: 'unknown', // Could be enhanced to extract actual type
+      name: name || "param",
+      type: "unknown", // Could be enhanced to extract actual type
     };
   });
 }
@@ -329,8 +358,8 @@ async function runESLint(filePath: string): Promise<string> {
     const output = await new Response(result.stdout).text();
     return output;
   } catch (error) {
-    console.error('ESLint execution failed:', error);
-    return '';
+    console.error("ESLint execution failed:", error);
+    return "";
   }
 }
 
@@ -339,65 +368,64 @@ async function runESLint(filePath: string): Promise<string> {
  */
 function displayResults(filePath: string, metrics: QualityMetrics): void {
   console.log(`\n📊 Quality Analysis: ${filePath}`);
-  console.log('='.repeat(50));
+  console.log("=".repeat(50));
 
   // Overall score
-  const scoreEmoji = metrics.score >= 90 ? '🟢' : metrics.score >= 70 ? '🟡' : '🔴';
+  const scoreEmoji = metrics.score >= 90 ? "🟢" : metrics.score >= 70 ? "🟡" : "🔴";
   console.log(`\n${scoreEmoji} Overall Score: ${metrics.score}/100`);
   console.log(`📁 Total Lines: ${metrics.totalLines}`);
   console.log(`⚡ Functions: ${metrics.functions.length}`);
 
   // Violations summary
-  const errorCount = metrics.violations.filter(v => v.severity === 'error').length;
-  const warningCount = metrics.violations.filter(v => v.severity === 'warning').length;
+  const errorCount = metrics.violations.filter(v => v.severity === "error").length;
+  const warningCount = metrics.violations.filter(v => v.severity === "warning").length;
 
   console.log(`\n❌ Errors: ${errorCount}`);
   console.log(`⚠️  Warnings: ${warningCount}`);
 
   // Critical violations
-  const criticalViolations = metrics.violations.filter(v => v.severity === 'error');
+  const criticalViolations = metrics.violations.filter(v => v.severity === "error");
   if (criticalViolations.length > 0) {
-    console.log('\n🚨 Critical Issues:');
+    console.log("\n🚨 Critical Issues:");
     criticalViolations.forEach(violation => {
       console.log(`   Line ${violation.line}: ${violation.message} (${violation.rule})`);
     });
   }
 
   // Function analysis
-  const problematicFunctions = metrics.functions.filter(f =>
-    f.lines > AI_RULES.MAX_LINES_PER_FUNCTION ||
-    f.complexity > AI_RULES.MAX_FUNCTION_COMPLEXITY ||
-    !f.hasEarlyValidation
+  const problematicFunctions = metrics.functions.filter(
+    f =>
+      f.lines > AI_RULES.MAX_LINES_PER_FUNCTION ||
+      f.complexity > AI_RULES.MAX_FUNCTION_COMPLEXITY ||
+      !f.hasEarlyValidation
   );
 
   if (problematicFunctions.length > 0) {
-    console.log('\n⚡ Function Issues:');
+    console.log("\n⚡ Function Issues:");
     problematicFunctions.forEach(func => {
       const issues = [];
-      if (func.lines > AI_RULES.MAX_LINES_PER_FUNCTION)
-        issues.push(`${func.lines} lines`);
+      if (func.lines > AI_RULES.MAX_LINES_PER_FUNCTION) issues.push(`${func.lines} lines`);
       if (func.complexity > AI_RULES.MAX_FUNCTION_COMPLEXITY)
         issues.push(`complexity ${func.complexity}`);
-      if (!func.hasEarlyValidation && func.lines > 10)
-        issues.push('no early validation');
+      if (!func.hasEarlyValidation && func.lines > 10) issues.push("no early validation");
 
-      console.log(`   ${func.name}(): ${issues.join(', ')}`);
+      console.log(`   ${func.name}(): ${issues.join(", ")}`);
     });
   }
 
   // AI-specific suggestions
-  console.log('\n💡 AI Development Suggestions:');
+  console.log("\n💡 AI Development Suggestions:");
   if (metrics.functions.some(f => f.hasAnyTypes)) {
     console.log('   • Replace "any" types with specific TypeScript types');
   }
   if (metrics.functions.some(f => !f.hasEarlyValidation && f.lines > 10)) {
-    console.log('   • Add input validation in first 5 lines of functions');
+    console.log("   • Add input validation in first 5 lines of functions");
   }
   if (metrics.functions.some(f => f.lines > AI_RULES.MAX_LINES_PER_FUNCTION)) {
-    console.log('   • Split large functions into smaller, focused functions');
+    console.log("   • Split large functions into smaller, focused functions");
   }
-  if (metrics.violations.some(v => v.rule === 'magic-numbers')) {
-    console.log('   • Replace magic numbers with named constants');
+  if (metrics.violations.some(v => v.rule === "magic-numbers")) {
+    console.log("   • Replace magic numbers with named constants");
   }
 }
 
@@ -429,14 +457,14 @@ AI Rules Enforced:
   }
 
   try {
-    if (args[0] === '--all') {
+    if (args[0] === "--all") {
       // Analyze all TypeScript files
-      const files = await glob('**/*.ts');
+      const files = await glob("**/*.ts");
       let totalScore = 0;
       const results = [];
 
       for (const filePath of files) {
-        if (filePath.includes('node_modules') || filePath.includes('dist')) continue;
+        if (filePath.includes("node_modules") || filePath.includes("dist")) continue;
 
         const metrics = await analyzeCode(filePath);
         results.push({ filePath, metrics });
@@ -444,18 +472,16 @@ AI Rules Enforced:
       }
 
       // Display summary
-      console.log('\n📋 Project Quality Summary');
-      console.log('='.repeat(40));
+      console.log("\n📋 Project Quality Summary");
+      console.log("=".repeat(40));
       console.log(`Files analyzed: ${results.length}`);
       console.log(`Average score: ${(totalScore / results.length).toFixed(1)}/100`);
 
       // Display worst files
-      const worstFiles = results
-        .sort((a, b) => a.metrics.score - b.metrics.score)
-        .slice(0, 5);
+      const worstFiles = results.sort((a, b) => a.metrics.score - b.metrics.score).slice(0, 5);
 
       if (worstFiles.length > 0) {
-        console.log('\n🔴 Files needing attention:');
+        console.log("\n🔴 Files needing attention:");
         worstFiles.forEach(({ filePath, metrics }) => {
           console.log(`   ${filePath}: ${metrics.score}/100 (${metrics.violations.length} issues)`);
         });
@@ -464,13 +490,12 @@ AI Rules Enforced:
       // Overall success/failure
       const averageScore = totalScore / results.length;
       if (averageScore >= 80) {
-        console.log('\n✅ Project quality meets standards');
+        console.log("\n✅ Project quality meets standards");
         process.exit(0);
       } else {
-        console.log('\n❌ Project quality needs improvement');
+        console.log("\n❌ Project quality needs improvement");
         process.exit(1);
       }
-
     } else {
       // Analyze single file
       const filePath = args[0];
@@ -479,16 +504,15 @@ AI Rules Enforced:
 
       // Exit with appropriate code
       if (metrics.score >= 80) {
-        console.log('\n✅ Code quality acceptable');
+        console.log("\n✅ Code quality acceptable");
         process.exit(0);
       } else {
-        console.log('\n❌ Code quality needs improvement');
+        console.log("\n❌ Code quality needs improvement");
         process.exit(1);
       }
     }
-
   } catch (error) {
-    console.error('❌ Quality gate analysis failed:', error);
+    console.error("❌ Quality gate analysis failed:", error);
     process.exit(1);
   }
 }

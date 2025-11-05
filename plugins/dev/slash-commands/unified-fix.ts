@@ -6,14 +6,14 @@
  * Workers immediately pick up new tasks when they finish
  */
 
-import { spawn, $ } from 'bun';
-import { file } from 'bun';
-import { join, relative, extname } from 'path';
-import { TestQualityAnalyzer } from './test-quality-analyzer';
+import { spawn, $ } from "bun";
+import { file } from "bun";
+import { join, relative, extname } from "path";
+import { TestQualityAnalyzer } from "./test-quality-analyzer";
 
 interface Task {
   id: string;
-  type: 'format' | 'lint' | 'typecheck' | 'test-quality';
+  type: "format" | "lint" | "typecheck" | "test-quality";
   filePath: string;
   priority: number;
   estimatedComplexity: number;
@@ -27,7 +27,7 @@ interface WorkerResult {
   result: any;
   error?: string;
   duration: number;
-  type: 'format' | 'lint' | 'typecheck' | 'test-quality';
+  type: "format" | "lint" | "typecheck" | "test-quality";
 }
 
 interface WorkerState {
@@ -101,7 +101,7 @@ class DynamicWorkerPool {
       id: workerId,
       busy: false,
       completedTasks: 0,
-      totalProcessingTime: 0
+      totalProcessingTime: 0,
     };
 
     this.workers.set(workerId, workerState);
@@ -146,7 +146,7 @@ class DynamicWorkerPool {
           result: null,
           error: error instanceof Error ? error.message : String(error),
           duration: Date.now() - (workerState.startTime || Date.now()),
-          type: task.type
+          type: task.type,
         };
         this.handleResult(errorResult);
       } finally {
@@ -176,16 +176,16 @@ class DynamicWorkerPool {
       let result: any;
 
       switch (task.type) {
-        case 'format':
+        case "format":
           result = await this.formatFile(task.filePath);
           break;
-        case 'lint':
+        case "lint":
           result = await this.lintFile(task.filePath);
           break;
-        case 'typecheck':
+        case "typecheck":
           result = await this.typecheckFile(task.filePath);
           break;
-        case 'test-quality':
+        case "test-quality":
           result = await this.analyzeTestQuality(task.filePath);
           break;
         default:
@@ -199,9 +199,8 @@ class DynamicWorkerPool {
         success: true,
         result,
         duration: Date.now() - startTime,
-        type: task.type
+        type: task.type,
       };
-
     } catch (error) {
       return {
         taskId: task.id,
@@ -211,7 +210,7 @@ class DynamicWorkerPool {
         result: null,
         error: error instanceof Error ? error.message : String(error),
         duration: Date.now() - startTime,
-        type: task.type
+        type: task.type,
       };
     }
   }
@@ -225,11 +224,11 @@ class DynamicWorkerPool {
 
     // Progress logging
     const progress = Math.round((this.completedCount / this.totalCount) * 100);
-    const status = result.success ? '✅' : '❌';
+    const status = result.success ? "✅" : "❌";
 
     console.log(
       `${status} [${progress}%] ${result.type.toUpperCase()} ${relative(process.cwd(), result.filePath)} ` +
-      `(${result.duration}ms) - ${result.workerId}`
+        `(${result.duration}ms) - ${result.workerId}`
     );
 
     if (result.error) {
@@ -244,10 +243,10 @@ class DynamicWorkerPool {
     const originalContent = await file(filePath).text();
 
     const proc = spawn({
-      cmd: ['bun', 'run', 'format', '--', filePath],
-      stdout: 'pipe',
-      stderr: 'pipe',
-      cwd: process.cwd()
+      cmd: ["bun", "run", "format", "--", filePath],
+      stdout: "pipe",
+      stderr: "pipe",
+      cwd: process.cwd(),
     });
 
     await proc.exited;
@@ -257,7 +256,7 @@ class DynamicWorkerPool {
 
     return {
       formatted: true,
-      changes: changed ? 'File reformatted' : 'No changes needed'
+      changes: changed ? "File reformatted" : "No changes needed",
     };
   }
 
@@ -266,10 +265,10 @@ class DynamicWorkerPool {
    */
   private async lintFile(filePath: string): Promise<{ fixed: boolean; issues: string[] }> {
     const proc = spawn({
-      cmd: ['bun', 'run', 'lint', '--', '--fix', filePath],
-      stdout: 'pipe',
-      stderr: 'pipe',
-      cwd: process.cwd()
+      cmd: ["bun", "run", "lint", "--", "--fix", filePath],
+      stdout: "pipe",
+      stderr: "pipe",
+      cwd: process.cwd(),
     });
 
     const stdout = await new Response(proc.stdout).text();
@@ -277,34 +276,38 @@ class DynamicWorkerPool {
     const exitCode = await proc.exited;
 
     const output = stdout + stderr;
-    const issues = output.split('\n')
+    const issues = output
+      .split("\n")
       .filter(line => line.trim())
-      .filter(line => line.includes('error') || line.includes('warning'));
+      .filter(line => line.includes("error") || line.includes("warning"));
 
     return {
-      fixed: exitCode === 0 || output.includes('fixed'),
-      issues
+      fixed: exitCode === 0 || output.includes("fixed"),
+      issues,
     };
   }
 
   /**
    * Type-check file
    */
-  private async typecheckFile(filePath: string): Promise<{ errors: string[]; suggestions: string[] }> {
+  private async typecheckFile(
+    filePath: string
+  ): Promise<{ errors: string[]; suggestions: string[] }> {
     const proc = spawn({
-      cmd: ['bun', 'run', 'typecheck', '--', '--noEmit', filePath],
-      stdout: 'pipe',
-      stderr: 'pipe',
-      cwd: process.cwd()
+      cmd: ["bun", "run", "typecheck", "--", "--noEmit", filePath],
+      stdout: "pipe",
+      stderr: "pipe",
+      cwd: process.cwd(),
     });
 
     const stdout = await new Response(proc.stdout).text();
     const stderr = await new Response(proc.stderr).text();
 
     const output = stdout + stderr;
-    const errors = output.split('\n')
+    const errors = output
+      .split("\n")
       .filter(line => line.trim())
-      .filter(line => line.includes('error TS') && line.includes(filePath));
+      .filter(line => line.includes("error TS") && line.includes(filePath));
 
     const suggestions = this.generateSuggestions(errors);
 
@@ -318,11 +321,13 @@ class DynamicWorkerPool {
     const suggestions = new Set<string>();
 
     for (const error of errors) {
-      if (error.includes('has no exported member')) suggestions.add('Check import statements and exports');
-      if (error.includes('Property does not exist')) suggestions.add('Add type definitions or optional chaining');
-      if (error.includes('Type is not assignable')) suggestions.add('Review type compatibility');
-      if (error.includes('Object is possibly')) suggestions.add('Add null checks or assertions');
-      if (error.includes('Cannot find module')) suggestions.add('Install missing dependencies');
+      if (error.includes("has no exported member"))
+        suggestions.add("Check import statements and exports");
+      if (error.includes("Property does not exist"))
+        suggestions.add("Add type definitions or optional chaining");
+      if (error.includes("Type is not assignable")) suggestions.add("Review type compatibility");
+      if (error.includes("Object is possibly")) suggestions.add("Add null checks or assertions");
+      if (error.includes("Cannot find module")) suggestions.add("Install missing dependencies");
     }
 
     return Array.from(suggestions);
@@ -331,7 +336,9 @@ class DynamicWorkerPool {
   /**
    * Analyze test quality for a single file
    */
-  private async analyzeTestQuality(filePath: string): Promise<{ qualityScore: number; issues: string[]; suggestions: string[] }> {
+  private async analyzeTestQuality(
+    filePath: string
+  ): Promise<{ qualityScore: number; issues: string[]; suggestions: string[] }> {
     try {
       const analyzer = new TestQualityAnalyzer();
       const fileIssues = await analyzer.analyzeTestFile(filePath);
@@ -344,11 +351,12 @@ class DynamicWorkerPool {
       return {
         qualityScore: metrics.qualityScore,
         issues,
-        suggestions
+        suggestions,
       };
-
     } catch (error) {
-      throw new Error(`Test quality analysis failed: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `Test quality analysis failed: ${error instanceof Error ? error.message : String(error)}`
+      );
     }
   }
 
@@ -366,47 +374,51 @@ class DynamicWorkerPool {
    * Print final statistics
    */
   private printFinalStats(totalDuration: number): void {
-    console.log('\n🎉 Code Quality Fix Complete!');
-    console.log('=' .repeat(60));
+    console.log("\n🎉 Code Quality Fix Complete!");
+    console.log("=".repeat(60));
 
     const byType = {
-      format: this.results.filter(r => r.type === 'format'),
-      lint: this.results.filter(r => r.type === 'lint'),
-      typecheck: this.results.filter(r => r.type === 'typecheck'),
-      'test-quality': this.results.filter(r => r.type === 'test-quality')
+      format: this.results.filter(r => r.type === "format"),
+      lint: this.results.filter(r => r.type === "lint"),
+      typecheck: this.results.filter(r => r.type === "typecheck"),
+      "test-quality": this.results.filter(r => r.type === "test-quality"),
     };
 
-    console.log('📊 Results by type:');
+    console.log("📊 Results by type:");
     Object.entries(byType).forEach(([type, results]) => {
       const success = results.filter(r => r.success).length;
       const total = results.length;
-      const avgTime = results.length > 0
-        ? Math.round(results.reduce((sum, r) => sum + r.duration, 0) / results.length)
-        : 0;
+      const avgTime =
+        results.length > 0
+          ? Math.round(results.reduce((sum, r) => sum + r.duration, 0) / results.length)
+          : 0;
 
       console.log(`   ${type.toUpperCase()}: ${success}/${total} successful (avg: ${avgTime}ms)`);
     });
 
-    console.log('\n👷 Worker Performance:');
+    console.log("\n👷 Worker Performance:");
     Array.from(this.workers.values()).forEach(worker => {
-      const avgTime = worker.completedTasks > 0
-        ? Math.round(worker.totalProcessingTime / worker.completedTasks)
-        : 0;
+      const avgTime =
+        worker.completedTasks > 0
+          ? Math.round(worker.totalProcessingTime / worker.completedTasks)
+          : 0;
 
       console.log(
         `   ${worker.id}: ${worker.completedTasks} tasks ` +
-        `(avg: ${avgTime}ms) ${worker.busy ? '🔄' : '⏸️'}`
+          `(avg: ${avgTime}ms) ${worker.busy ? "🔄" : "⏸️"}`
       );
     });
 
     const successCount = this.results.filter(r => r.success).length;
-    console.log('\n📈 Overall Summary:');
+    console.log("\n📈 Overall Summary:");
     console.log(`   ✅ Total files processed: ${this.results.length}`);
     console.log(`   ✅ Successful fixes: ${successCount}`);
     console.log(`   ❌ Failed: ${this.results.length - successCount}`);
     console.log(`   ⏱️  Total duration: ${totalDuration}ms`);
     console.log(`   🚀 Average per file: ${Math.round(totalDuration / this.results.length)}ms`);
-    console.log(`   ⚡ Throughput: ${Math.round((this.results.length / totalDuration) * 1000)} files/sec`);
+    console.log(
+      `   ⚡ Throughput: ${Math.round((this.results.length / totalDuration) * 1000)} files/sec`
+    );
   }
 
   /**
@@ -427,7 +439,7 @@ class TaskGenerator {
    * Generate all tasks for code quality fixes
    */
   async generateAllTasks(basePath = process.cwd()): Promise<Task[]> {
-    console.log('🔍 Scanning files for code quality tasks...');
+    console.log("🔍 Scanning files for code quality tasks...");
 
     const files = await this.getAllRelevantFiles(basePath);
     const tasks: Task[] = [];
@@ -451,30 +463,30 @@ class TaskGenerator {
     // All files need formatting
     tasks.push({
       id: `format-${filePath}`,
-      type: 'format',
+      type: "format",
       filePath,
       priority: 1, // High priority - quick and beneficial
-      estimatedComplexity: 1
+      estimatedComplexity: 1,
     });
 
     // TypeScript/JavaScript files need linting and type checking
-    if (['.ts', '.tsx', '.js', '.jsx'].includes(ext)) {
+    if ([".ts", ".tsx", ".js", ".jsx"].includes(ext)) {
       tasks.push({
         id: `lint-${filePath}`,
-        type: 'lint',
+        type: "lint",
         filePath,
         priority: 2, // Medium priority
-        estimatedComplexity: 2
+        estimatedComplexity: 2,
       });
 
       // Only TypeScript files need type checking
-      if (ext.startsWith('.ts') || ext.startsWith('.tsx')) {
+      if (ext.startsWith(".ts") || ext.startsWith(".tsx")) {
         tasks.push({
           id: `typecheck-${filePath}`,
-          type: 'typecheck',
+          type: "typecheck",
           filePath,
           priority: 3, // Lower priority - most expensive
-          estimatedComplexity: 3
+          estimatedComplexity: 3,
         });
       }
     }
@@ -483,10 +495,10 @@ class TaskGenerator {
     if (this.isTestFile(filePath)) {
       tasks.push({
         id: `test-quality-${filePath}`,
-        type: 'test-quality',
+        type: "test-quality",
         filePath,
         priority: 4, // Lowest priority - most expensive analysis
-        estimatedComplexity: 4
+        estimatedComplexity: 4,
       });
     }
 
@@ -514,47 +526,55 @@ class TaskGenerator {
   private async getAllRelevantFiles(basePath: string): Promise<string[]> {
     try {
       const extensions = [
-        'ts', 'tsx', 'js', 'jsx',
-        'json', 'md', 'yml', 'yaml',
-        'html', 'css', 'scss', 'less'
+        "ts",
+        "tsx",
+        "js",
+        "jsx",
+        "json",
+        "md",
+        "yml",
+        "yaml",
+        "html",
+        "css",
+        "scss",
+        "less",
       ];
 
       // Include test files with extensions
       const testFindCmd = `find "${basePath}" -name "*.test.*" -o -name "*.spec.*" -o -path "*/__tests__/*" -o -path "*/test/*" -o -path "*/tests/*" | grep -E "\\.(ts|js|tsx|jsx)$"`;
 
       // Build find commands with proper escaping
-      const extPatterns = extensions.map(ext => `-name "*.${ext}"`).join(' -o ');
+      const extPatterns = extensions.map(ext => `-name "*.${ext}"`).join(" -o ");
       const sourceFindCmd = `find "${basePath}" \\( ${extPatterns} \\) -type f`;
       const filterCmd = 'grep -v -E "(node_modules|dist|\\.git|coverage)"';
 
       // Execute both find commands
       const sourceProc = spawn({
-        cmd: ['/bin/bash', '-c', `${sourceFindCmd} | ${filterCmd}`],
-        stdout: 'pipe',
-        stderr: 'pipe'
+        cmd: ["/bin/bash", "-c", `${sourceFindCmd} | ${filterCmd}`],
+        stdout: "pipe",
+        stderr: "pipe",
       });
 
       const testProc = spawn({
-        cmd: ['/bin/bash', '-c', `${testFindCmd} | ${filterCmd}`],
-        stdout: 'pipe',
-        stderr: 'pipe'
+        cmd: ["/bin/bash", "-c", `${testFindCmd} | ${filterCmd}`],
+        stdout: "pipe",
+        stderr: "pipe",
       });
 
       const [sourceOutput, testOutput] = await Promise.all([
         new Response(sourceProc.stdout).text(),
-        new Response(testProc.stdout).text()
+        new Response(testProc.stdout).text(),
       ]);
 
       const output = sourceOutput + testOutput;
 
       return output
-        .split('\n')
+        .split("\n")
         .map(line => line.trim())
         .filter(line => line.length > 0)
         .sort();
-
     } catch (error) {
-      console.warn('Could not find files:', error);
+      console.warn("Could not find files:", error);
       return [];
     }
   }
@@ -564,7 +584,7 @@ class TaskGenerator {
  * Main unified fix command
  */
 export async function runUnifiedFix(args: string[] = []): Promise<void> {
-  console.log('🔧 Starting Unified Code Quality Fix...\n');
+  console.log("🔧 Starting Unified Code Quality Fix...\n");
 
   try {
     // Generate all tasks
@@ -572,13 +592,13 @@ export async function runUnifiedFix(args: string[] = []): Promise<void> {
     const tasks = await taskGenerator.generateAllTasks();
 
     if (tasks.length === 0) {
-      console.log('✅ No files found that need processing!');
+      console.log("✅ No files found that need processing!");
       return;
     }
 
     // Create and run worker pool
     const workerPool = new DynamicWorkerPool(
-      args.includes('--max-workers') ? parseInt(args[args.indexOf('--max-workers') + 1]) : undefined
+      args.includes("--max-workers") ? parseInt(args[args.indexOf("--max-workers") + 1]) : undefined
     );
 
     const results = await workerPool.processAllTasks(tasks);
@@ -587,17 +607,16 @@ export async function runUnifiedFix(args: string[] = []): Promise<void> {
     const failedResults = results.filter(r => !r.success);
 
     if (failedResults.length > 0) {
-      console.log('\n❌ Failed Operations:');
+      console.log("\n❌ Failed Operations:");
       failedResults.forEach(result => {
         console.log(`   ${result.type}: ${result.filePath}`);
         if (result.error) console.log(`     Error: ${result.error}`);
       });
     }
 
-    console.log('\n🎊 All done! Your code is now clean and quality-assured!');
-
+    console.log("\n🎊 All done! Your code is now clean and quality-assured!");
   } catch (error) {
-    console.error('💥 Unified fix failed:', error);
+    console.error("💥 Unified fix failed:", error);
     process.exit(1);
   }
 }

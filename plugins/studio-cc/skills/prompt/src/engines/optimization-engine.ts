@@ -1,8 +1,4 @@
-import {
-  PERFORMANCE_CONSTANTS,
-  TECHNICAL_DOMAINS,
-  REASONING_TEMPLATES,
-} from '../constants.js';
+import { PERFORMANCE_CONSTANTS, TECHNICAL_DOMAINS, REASONING_TEMPLATES } from '../constants.js';
 import {
   PromptAnalysis,
   PromptOptimization,
@@ -99,7 +95,10 @@ export class OptimizationEngine {
    * @param _options.targetModel
    * @returns Array of selected techniques
    */
-  private selectTechniques(analysis: PromptAnalysis, _options: { mode?: string; targetModel?: string }): PromptTechnique[] {
+  private selectTechniques(
+    analysis: PromptAnalysis,
+    _options: { mode?: string; targetModel?: string }
+  ): PromptTechnique[] {
     const techniques: PromptTechnique[] = [];
 
     addComplexityBasedTechniques(analysis, techniques);
@@ -138,7 +137,10 @@ export class OptimizationEngine {
    * @param _enhancements - Enhancement suggestions (unused)
    * @returns Template object
    */
-  private async createTemplate(analysis: PromptAnalysis, _enhancements: string[]): Promise<{
+  private async createTemplate(
+    analysis: PromptAnalysis,
+    _enhancements: string[]
+  ): Promise<{
     structure: string;
     placeholders: string[];
     examples: string[];
@@ -188,7 +190,9 @@ export class OptimizationEngine {
     analysis: PromptAnalysis,
     techniques: PromptTechnique[]
   ): Promise<number> {
-    const baseScore = (analysis.clarity + analysis.specificity + analysis.completeness) / PERFORMANCE_CONSTANTS.BASE_DIVISOR;
+    const baseScore =
+      (analysis.clarity + analysis.specificity + analysis.completeness) /
+      PERFORMANCE_CONSTANTS.BASE_DIVISOR;
 
     // Boost score for applied techniques
     const techniqueBonus = techniques.length * PERFORMANCE_CONSTANTS.TECHNIQUE_BONUS;

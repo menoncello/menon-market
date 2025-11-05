@@ -194,10 +194,9 @@ export class OrchestratorAgent {
           `✅ Discovered ${discoveredSkills.length} skills dynamically`
         );
         return discoveredSkills;
-      } 
-        console.log('⚠️ No dynamic skills found, using fallback static list');
-        return await this.discoverSkillsStatic();
-      
+      }
+      console.log('⚠️ No dynamic skills found, using fallback static list');
+      return await this.discoverSkillsStatic();
     } catch (error) {
       console.error(
         '❌ Error in dynamic skill discovery, using static fallback:',
@@ -252,10 +251,9 @@ export class OrchestratorAgent {
           `✅ Discovered ${discoveredCommands.length} commands dynamically`
         );
         return discoveredCommands;
-      } 
-        console.log('⚠️ No dynamic commands found, using fallback static list');
-        return await this.discoverCommandsStatic();
-      
+      }
+      console.log('⚠️ No dynamic commands found, using fallback static list');
+      return await this.discoverCommandsStatic();
     } catch (error) {
       console.error(
         '❌ Error in dynamic command discovery, using static fallback:',
@@ -301,12 +299,11 @@ export class OrchestratorAgent {
           `✅ Discovered ${discoveredMCPServers.length} MCP servers dynamically`
         );
         return discoveredMCPServers;
-      } 
-        console.log(
-          '⚠️ No dynamic MCP servers found, using fallback static list'
-        );
-        return await this.discoverMCPServersStatic();
-      
+      }
+      console.log(
+        '⚠️ No dynamic MCP servers found, using fallback static list'
+      );
+      return await this.discoverMCPServersStatic();
     } catch (error) {
       console.error(
         '❌ Error in dynamic MCP server discovery, using static fallback:',

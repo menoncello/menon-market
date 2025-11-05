@@ -83,7 +83,9 @@ export class AdvancedPromptCrafter {
         },
       };
     } catch (error: unknown) {
-      throw new Error(`Prompt optimization failed: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `Prompt optimization failed: ${error instanceof Error ? error.message : String(error)}`
+      );
     }
   }
 
@@ -111,7 +113,9 @@ export class AdvancedPromptCrafter {
 
       return result;
     } catch (error: unknown) {
-      throw new Error(`Prompt creation failed: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `Prompt creation failed: ${error instanceof Error ? error.message : String(error)}`
+      );
     }
   }
 

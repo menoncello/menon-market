@@ -25,17 +25,17 @@ describe("Integration Tests", () => {
   describe("Template Generation to Quality Gates Workflow", () => {
     test("should generate and validate AI function template", async () => {
       // Generate template
-      const templateContent = await plugin.generateTemplate('ai-function', {
-        name: 'processUserData',
-        params: 'userId:string,userData:object',
-        returnType: 'UserResult'
+      const templateContent = await plugin.generateTemplate("ai-function", {
+        name: "processUserData",
+        params: "userId:string,userData:object",
+        returnType: "UserResult",
       });
 
       // Template should contain expected elements
-      expect(templateContent).toContain('processUserData');
-      expect(templateContent).toContain('userId: string');
-      expect(templateContent).toContain('userData: object');
-      expect(templateContent).toContain('UserResult');
+      expect(templateContent).toContain("processUserData");
+      expect(templateContent).toContain("userId: string");
+      expect(templateContent).toContain("userData: object");
+      expect(templateContent).toContain("UserResult");
 
       // Validate generated template
       const validation = await plugin.validateCode(templateContent);
@@ -45,14 +45,14 @@ describe("Integration Tests", () => {
     });
 
     test("should generate and validate test suite template", async () => {
-      const templateContent = await plugin.generateTemplate('test-suite', {
-        component: 'UserService',
-        withMocks: true
+      const templateContent = await plugin.generateTemplate("test-suite", {
+        component: "UserService",
+        withMocks: true,
       });
 
       expect(templateContent).toContain('describe("UserService"');
-      expect(templateContent).toContain('beforeAll');
-      expect(templateContent).toContain('afterAll');
+      expect(templateContent).toContain("beforeAll");
+      expect(templateContent).toContain("afterAll");
       expect(templateContent).toContain('test("should');
 
       const validation = await plugin.validateCode(templateContent);
@@ -61,17 +61,17 @@ describe("Integration Tests", () => {
     });
 
     test("should generate and validate server template", async () => {
-      const templateContent = await plugin.generateTemplate('bun-server', {
-        name: 'api',
+      const templateContent = await plugin.generateTemplate("bun-server", {
+        name: "api",
         port: 3000,
         withWebsocket: true,
-        withDatabase: true
+        withDatabase: true,
       });
 
-      expect(templateContent).toContain('port: 3000');
-      expect(templateContent).toContain('websocket:');
-      expect(templateContent).toContain('Database');
-      expect(templateContent).toContain('Bun.serve');
+      expect(templateContent).toContain("port: 3000");
+      expect(templateContent).toContain("websocket:");
+      expect(templateContent).toContain("Database");
+      expect(templateContent).toContain("Bun.serve");
 
       const validation = await plugin.validateCode(templateContent);
       expect(validation.valid).toBe(true);
@@ -139,16 +139,14 @@ export function veryLongFunction(): void {
       expect(validation.score).toBeLessThan(70);
 
       // Should detect specific issues
-      expect(validation.violations.some(v => v.type === 'typescript')).toBe(true); // any types
-      expect(validation.violations.some(v => v.type === 'eslint')).toBe(true); // eslint-disable
-      expect(validation.violations.some(v => v.type === 'logging')).toBe(true); // console.log
-      expect(validation.violations.some(v => v.type === 'complexity')).toBe(true); // long function
+      expect(validation.violations.some(v => v.type === "typescript")).toBe(true); // any types
+      expect(validation.violations.some(v => v.type === "eslint")).toBe(true); // eslint-disable
+      expect(validation.violations.some(v => v.type === "logging")).toBe(true); // console.log
+      expect(validation.violations.some(v => v.type === "complexity")).toBe(true); // long function
 
       // Should provide helpful suggestions
       expect(validation.suggestions.length).toBeGreaterThan(0);
-      expect(validation.suggestions).toContain(
-        expect.stringContaining('any types')
-      );
+      expect(validation.suggestions).toContain(expect.stringContaining("any types"));
     });
   });
 
@@ -157,7 +155,7 @@ export function veryLongFunction(): void {
       // Create plugin with strict limits
       const strictPlugin = new DevPlugin({
         maxFunctionLines: 10, // Very strict
-        maxComplexity: 3,      // Very strict
+        maxComplexity: 3, // Very strict
         aiStrictMode: true,
       });
 
@@ -182,12 +180,12 @@ export function mediumComplexityFunction(data: string): Result {
 
       // Should fail due to strict limits
       expect(validation.score).toBeLessThan(90);
-      expect(validation.violations.some(v => v.type === 'complexity')).toBe(true);
+      expect(validation.violations.some(v => v.type === "complexity")).toBe(true);
     });
 
     test("should handle configuration changes", async () => {
       const initialPractices = plugin.getBestPractices();
-      expect(initialPractices.rules['max-lines-per-function'].limit).toBe(25);
+      expect(initialPractices.rules["max-lines-per-function"].limit).toBe(25);
 
       // Re-initialize with different config
       const newPlugin = new DevPlugin({
@@ -198,8 +196,8 @@ export function mediumComplexityFunction(data: string): Result {
       await newPlugin.initialize();
 
       const newPractices = newPlugin.getBestPractices();
-      expect(newPractices.rules['max-lines-per-function'].limit).toBe(15);
-      expect(newPractices.rules['complexity'].limit).toBe(6);
+      expect(newPractices.rules["max-lines-per-function"].limit).toBe(15);
+      expect(newPractices.rules["complexity"].limit).toBe(6);
     });
   });
 
@@ -207,29 +205,29 @@ export function mediumComplexityFunction(data: string): Result {
     test("should generate templates with various parameter combinations", async () => {
       const testCases = [
         {
-          name: 'noParams',
+          name: "noParams",
           params: undefined,
-          expectContains: ['performTestFunction()'],
+          expectContains: ["performTestFunction()"],
         },
         {
-          name: 'singleParam',
-          params: 'data:string',
-          expectContains: ['data: string', 'data'],
+          name: "singleParam",
+          params: "data:string",
+          expectContains: ["data: string", "data"],
         },
         {
-          name: 'multipleParams',
-          params: 'id:string,name:string,email:string,active:boolean',
-          expectContains: ['id: string', 'name: string', 'email: string', 'active: boolean'],
+          name: "multipleParams",
+          params: "id:string,name:string,email:string,active:boolean",
+          expectContains: ["id: string", "name: string", "email: string", "active: boolean"],
         },
         {
-          name: 'complexParams',
-          params: 'data:UserData[],options:ProcessingOptions,callback:Function',
-          expectContains: ['data: UserData[]', 'options: ProcessingOptions', 'callback: Function'],
+          name: "complexParams",
+          params: "data:UserData[],options:ProcessingOptions,callback:Function",
+          expectContains: ["data: UserData[]", "options: ProcessingOptions", "callback: Function"],
         },
       ];
 
       for (const testCase of testCases) {
-        const template = await plugin.generateTemplate('ai-function', {
+        const template = await plugin.generateTemplate("ai-function", {
           name: testCase.name,
           params: testCase.params,
         });
@@ -251,22 +249,18 @@ export function mediumComplexityFunction(data: string): Result {
   describe("Error Handling Integration", () => {
     test("should handle malformed template requests gracefully", async () => {
       // Test with invalid template names
-      await expect(
-        plugin.generateTemplate('nonexistent-template', {})
-      ).rejects.toThrow();
+      await expect(plugin.generateTemplate("nonexistent-template", {})).rejects.toThrow();
 
       // Test with problematic parameters
-      await expect(
-        plugin.generateTemplate('', {})
-      ).rejects.toThrow();
+      await expect(plugin.generateTemplate("", {})).rejects.toThrow();
     });
 
     test("should handle edge cases in validation", async () => {
       const edgeCases = [
-        { code: '', description: 'empty string' },
-        { code: '   ', description: 'whitespace only' },
-        { code: '// Just a comment', description: 'comment only' },
-        { code: 'export const CONSTANT = 42;', description: 'constant only' },
+        { code: "", description: "empty string" },
+        { code: "   ", description: "whitespace only" },
+        { code: "// Just a comment", description: "comment only" },
+        { code: "export const CONSTANT = 42;", description: "constant only" },
       ];
 
       for (const testCase of edgeCases) {
@@ -274,8 +268,8 @@ export function mediumComplexityFunction(data: string): Result {
 
         // Should handle gracefully without crashing
         expect(validation).toBeDefined();
-        expect(typeof validation.valid).toBe('boolean');
-        expect(typeof validation.score).toBe('number');
+        expect(typeof validation.valid).toBe("boolean");
+        expect(typeof validation.score).toBe("number");
         expect(validation.score).toBeGreaterThanOrEqual(0);
         expect(validation.score).toBeLessThanOrEqual(100);
       }
@@ -288,11 +282,11 @@ export function mediumComplexityFunction(data: string): Result {
 
       // Generate multiple templates
       const templates = await Promise.all([
-        plugin.generateTemplate('ai-function', { name: 'func1', params: 'data:string' }),
-        plugin.generateTemplate('ai-function', { name: 'func2', params: 'id:number' }),
-        plugin.generateTemplate('ai-function', { name: 'func3', params: 'config:object' }),
-        plugin.generateTemplate('test-suite', { component: 'Component1' }),
-        plugin.generateTemplate('test-suite', { component: 'Component2' }),
+        plugin.generateTemplate("ai-function", { name: "func1", params: "data:string" }),
+        plugin.generateTemplate("ai-function", { name: "func2", params: "id:number" }),
+        plugin.generateTemplate("ai-function", { name: "func3", params: "config:object" }),
+        plugin.generateTemplate("test-suite", { component: "Component1" }),
+        plugin.generateTemplate("test-suite", { component: "Component2" }),
       ]);
 
       const generationTime = Date.now() - startTime;
@@ -320,23 +314,23 @@ export function mediumComplexityFunction(data: string): Result {
   describe("Real-world Scenarios", () => {
     test("should handle complete user registration workflow", async () => {
       // Generate user creation function
-      const createUserFunction = await plugin.generateTemplate('ai-function', {
-        name: 'createUser',
-        params: 'userData:UserCreateRequest',
-        returnType: 'UserResponse'
+      const createUserFunction = await plugin.generateTemplate("ai-function", {
+        name: "createUser",
+        params: "userData:UserCreateRequest",
+        returnType: "UserResponse",
       });
 
       // Generate user validation function
-      const validateUserFunction = await plugin.generateTemplate('ai-function', {
-        name: 'validateUserData',
-        params: 'userData:UserCreateRequest',
-        returnType: 'ValidationResult'
+      const validateUserFunction = await plugin.generateTemplate("ai-function", {
+        name: "validateUserData",
+        params: "userData:UserCreateRequest",
+        returnType: "ValidationResult",
       });
 
       // Generate test suite for user service
-      const userTests = await plugin.generateTemplate('test-suite', {
-        component: 'UserService',
-        withMocks: true
+      const userTests = await plugin.generateTemplate("test-suite", {
+        component: "UserService",
+        withMocks: true,
       });
 
       // Validate all generated code
@@ -357,22 +351,22 @@ export function mediumComplexityFunction(data: string): Result {
 
     test("should handle API server generation with all features", async () => {
       const serverConfig = {
-        name: 'userApi',
+        name: "userApi",
         port: 8080,
-        host: '0.0.0.0',
+        host: "0.0.0.0",
         withWebsocket: true,
         withDatabase: true,
         withAuth: true,
       };
 
-      const serverCode = await plugin.generateTemplate('bun-server', serverConfig);
+      const serverCode = await plugin.generateTemplate("bun-server", serverConfig);
 
       // Verify server includes all requested features
-      expect(serverCode).toContain('port: 8080');
+      expect(serverCode).toContain("port: 8080");
       expect(serverCode).toContain('host: "0.0.0.0"');
-      expect(serverCode).toContain('websocket:');
-      expect(serverCode).toContain('Database');
-      expect(serverCode).toContain('authenticateRequest');
+      expect(serverCode).toContain("websocket:");
+      expect(serverCode).toContain("Database");
+      expect(serverCode).toContain("authenticateRequest");
 
       const validation = await plugin.validateCode(serverCode);
       expect(validation.valid).toBe(true);

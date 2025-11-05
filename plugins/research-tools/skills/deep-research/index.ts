@@ -53,7 +53,6 @@ export async function performDeepResearch(
   workflow: ResearchWorkflow,
   config: DeepResearchConfig
 ): Promise<ResearchReport> {
-
   // Execute research workflow
   const researchResult = await executeResearchWorkflow(query, workflow, config);
 
@@ -303,7 +302,7 @@ async function generateStructuredFindings(
     category: mapWorkflowToCategory(workflow),
     insight: finding,
     evidence: [researchResult.summary],
-    impact: index === 0 ? 'high' : (index < 3 ? 'medium' : 'low'),
+    impact: index === 0 ? 'high' : index < 3 ? 'medium' : 'low',
     confidence: researchResult.confidence,
   }));
 }

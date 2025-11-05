@@ -98,7 +98,10 @@ export function addQualityBasedTechniques(
   analysis: PromptAnalysis,
   techniques: PromptTechnique[]
 ): void {
-  if (analysis.clarity < QUALITY_THRESHOLDS.ACCEPTABLE || analysis.specificity < QUALITY_THRESHOLDS.ACCEPTABLE) {
+  if (
+    analysis.clarity < QUALITY_THRESHOLDS.ACCEPTABLE ||
+    analysis.specificity < QUALITY_THRESHOLDS.ACCEPTABLE
+  ) {
     techniques.push('self-consistency');
   }
 }

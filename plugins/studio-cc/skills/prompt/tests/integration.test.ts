@@ -184,7 +184,7 @@ describe('AdvancedPromptCrafter Integration', () => {
     });
 
     it('should handle very long prompts', async () => {
-      const longPrompt = `${'Write '.repeat(1000)  }about technology`;
+      const longPrompt = `${'Write '.repeat(1000)}about technology`;
       const result = await crafter.analyzeAndOptimize(longPrompt);
 
       expect(result).toBeDefined();

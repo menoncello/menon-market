@@ -42,7 +42,6 @@ interface CompanyAnalysisOptions {
   outputFile?: string;
 }
 
-
 interface CompanyData {
   基本信息: {
     company_name: string;
@@ -53,13 +52,26 @@ interface CompanyData {
     industry: string;
     sector: string;
   };
-  leadership: { ceo: string; key_executives: Array<{ name: string; position: string; experience: string }> };
+  leadership: {
+    ceo: string;
+    key_executives: Array<{ name: string; position: string; experience: string }>;
+  };
   financial: { revenue: string; market_cap: string; profit_margin: string; revenue_growth: string };
-  market_position: { market_share: string; competitors: string[]; customer_segments: string[]; geographic_presence: string[] };
+  market_position: {
+    market_share: string;
+    competitors: string[];
+    customer_segments: string[];
+    geographic_presence: string[];
+  };
   recent_developments: Array<{ date: string; type: string; description: string; source: string }>;
-  culture_employment: { employee_satisfaction: string; benefits: string[]; work_life_balance: string; diversity_initiatives: string[] };
+  culture_employment: {
+    employee_satisfaction: string;
+    benefits: string[];
+    work_life_balance: string;
+    diversity_initiatives: string[];
+  };
   sources: Array<{ url: string; title: string; access_date: string; reliability: string }>;
-};
+}
 
 /**
  * Company Analyzer class for comprehensive company research and analysis
@@ -132,9 +144,19 @@ class CompanyAnalyzer {
       },
       leadership: { ceo: '', key_executives: [] },
       financial: { revenue: '', market_cap: '', profit_margin: '', revenue_growth: '' },
-      market_position: { market_share: '', competitors: [], customer_segments: [], geographic_presence: [] },
+      market_position: {
+        market_share: '',
+        competitors: [],
+        customer_segments: [],
+        geographic_presence: [],
+      },
       recent_developments: [],
-      culture_employment: { employee_satisfaction: '', benefits: [], work_life_balance: '', diversity_initiatives: [] },
+      culture_employment: {
+        employee_satisfaction: '',
+        benefits: [],
+        work_life_balance: '',
+        diversity_initiatives: [],
+      },
       sources: [],
     };
   }
@@ -254,7 +276,7 @@ class CompanyAnalyzer {
       generateRecentDevelopmentsSection(companyData),
       generateCultureSection(companyData),
       generateSourcesSection(companyData),
-      generateFooter()
+      generateFooter(),
     ];
 
     return sections.join('\n\n');

@@ -42,9 +42,10 @@ export function generateBasicInfoSection(companyData: CompanyData): string {
  * @returns {string} A formatted Markdown string for the leadership section
  */
 export function generateLeadershipSection(companyData: CompanyData): string {
-  const executives = companyData.leadership.key_executives
-    .map(exec => `- **${exec.position}:** ${exec.name}`)
-    .join('\n') || 'No key executives identified';
+  const executives =
+    companyData.leadership.key_executives
+      .map(exec => `- **${exec.position}:** ${exec.name}`)
+      .join('\n') || 'No key executives identified';
 
   return `## 👥 Leadership
 
@@ -76,13 +77,13 @@ export function generateFinancialSection(companyData: CompanyData): string {
  * @returns {string} A formatted Markdown string for the market position section
  */
 export function generateMarketPositionSection(companyData: CompanyData): string {
-  const competitors = companyData.market_position.competitors
-    .map(comp => `- ${comp}`)
-    .join('\n') || 'No competitors identified';
+  const competitors =
+    companyData.market_position.competitors.map(comp => `- ${comp}`).join('\n') ||
+    'No competitors identified';
 
-  const customerSegments = companyData.market_position.customer_segments
-    .map(seg => `- ${seg}`)
-    .join('\n') || 'No customer segments identified';
+  const customerSegments =
+    companyData.market_position.customer_segments.map(seg => `- ${seg}`).join('\n') ||
+    'No customer segments identified';
 
   return `## 🎯 Market Position
 
@@ -102,9 +103,10 @@ ${customerSegments}`;
  * @returns {string} A formatted Markdown string for the recent developments section
  */
 export function generateRecentDevelopmentsSection(companyData: CompanyData): string {
-  const developments = companyData.recent_developments
-    .map(dev => `- **${dev.date}:** ${dev.description} (${dev.source})`)
-    .join('\n') || 'No recent developments identified';
+  const developments =
+    companyData.recent_developments
+      .map(dev => `- **${dev.date}:** ${dev.description} (${dev.source})`)
+      .join('\n') || 'No recent developments identified';
 
   return `## 📈 Recent Developments
 
@@ -118,9 +120,9 @@ ${developments}`;
  * @returns {string} A formatted Markdown string for the culture and employment section
  */
 export function generateCultureSection(companyData: CompanyData): string {
-  const benefits = companyData.culture_employment.benefits
-    .map(benefit => `- ${benefit}`)
-    .join('\n') || 'No benefits information available';
+  const benefits =
+    companyData.culture_employment.benefits.map(benefit => `- ${benefit}`).join('\n') ||
+    'No benefits information available';
 
   return `## 🏢 Culture & Employment
 
@@ -138,8 +140,9 @@ ${benefits}`;
  */
 export function generateSourcesSection(companyData: CompanyData): string {
   const sources = companyData.sources
-    .map((source, index) =>
-      `${index + 1}. [${source.title}](${source.url}) - ${source.reliability} reliability - Accessed ${new Date(source.access_date).toLocaleDateString()}`
+    .map(
+      (source, index) =>
+        `${index + 1}. [${source.title}](${source.url}) - ${source.reliability} reliability - Accessed ${new Date(source.access_date).toLocaleDateString()}`
     )
     .join('\n');
 

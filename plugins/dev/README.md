@@ -19,6 +19,7 @@ This plugin was created specifically to solve the common problems that occur whe
 ## 🎯 Key Features
 
 ### 🤖 AI-Safe Code Generation
+
 - **Template System**: Handlebars-powered templates with AI-safe patterns
 - **Pre-validation**: Validates inputs before code generation to prevent ESLint errors
 - **Auto-fix**: Automatically fixes common issues in generated code
@@ -27,12 +28,14 @@ This plugin was created specifically to solve the common problems that occur whe
 - **Complexity Control**: Enforces maximum function size and complexity
 
 ### ⚡ Bun.js Integration
+
 - **Performance Optimization**: Bun-specific patterns and utilities
 - **Native APIs**: Leverages Bun's built-in SQLite, HTTP server, and bundler
 - **Speed Benefits**: 3-10x faster than Node.js equivalents
 - **Single Binary**: Compile applications to standalone executables
 
 ### 🛠 Development Workflow
+
 - **Template Generation**: Generate code with proper patterns
 - **Quality Analysis**: Real-time code quality scoring
 - **Automated Validation**: Integrated linting, formatting, and testing
@@ -56,7 +59,7 @@ bun run dev
 ### Basic Usage
 
 ```typescript
-import { devPlugin } from '@menon/dev';
+import { devPlugin } from "@menon/dev";
 
 // Initialize plugin with custom config
 await devPlugin.initialize({
@@ -67,31 +70,33 @@ await devPlugin.initialize({
 });
 
 // Generate AI-safe function template
-const functionTemplate = await devPlugin.generateTemplate('ai-function', {
-  name: 'processUserData',
-  params: 'userId:string,userData:object',
-  returnType: 'UserResult'
+const functionTemplate = await devPlugin.generateTemplate("ai-function", {
+  name: "processUserData",
+  params: "userId:string,userData:object",
+  returnType: "UserResult",
 });
 
 // Analyze code quality
-const quality = await devPlugin.analyzeCode('./src/api.ts');
+const quality = await devPlugin.analyzeCode("./src/api.ts");
 console.log(`Quality Score: ${quality.score}/100`);
 
 // Validate code against AI standards
 const validation = await devPlugin.validateCode(code);
 if (!validation.valid) {
-  console.log('Violations:', validation.violations);
+  console.log("Violations:", validation.violations);
 }
 ```
 
 ## 📝 Available Templates
 
 ### 1. AI-Safe Function (`ai-function`)
+
 ```bash
 bun run template:function --name=createUser --params="userId:string,userData:object"
 ```
 
 Generates functions with:
+
 - Early validation in first 5 lines
 - Maximum 15 lines total
 - Complexity < 5
@@ -99,11 +104,13 @@ Generates functions with:
 - Proper error handling
 
 ### 2. Bun Server (`bun-server`)
+
 ```bash
 bun run template:server --name=api --port=3000 --withWebsocket --withDatabase
 ```
 
 Creates optimized Bun servers with:
+
 - HTTP/HTTPS support
 - WebSocket integration
 - Database connectivity
@@ -111,11 +118,13 @@ Creates optimized Bun servers with:
 - Graceful shutdown
 
 ### 3. Test Suite (`test-suite`)
+
 ```bash
 bun run template:test --component=User --withMocks
 ```
 
 Comprehensive test suites with:
+
 - Unit and integration tests
 - Mocking utilities
 - Snapshot testing
@@ -125,6 +134,7 @@ Comprehensive test suites with:
 ## 🔧 Scripts & Commands
 
 ### Template Generation
+
 ```bash
 # Interactive template generation
 bun run template
@@ -136,6 +146,7 @@ bun run template:test         # Test suite
 ```
 
 ### Code Quality
+
 ```bash
 # Analyze single file
 bun run quality src/api.ts
@@ -148,6 +159,7 @@ bun run validate             # format:check + lint + typecheck + test
 ```
 
 ### Development
+
 ```bash
 # Development with hot reload
 bun run dev
@@ -171,15 +183,16 @@ The quality gates system enforces the same 232 ESLint rules that cause most AI-g
 
 ### AI-Specific Rules
 
-| Rule | Limit | Purpose |
-|------|-------|---------|
-| `max-lines-per-function` | 15 lines | Prevents monolithic functions |
-| `complexity` | 5 | Controls cyclomatic complexity |
-| `sonarjs/cognitive-complexity` | 15 | Measures mental complexity |
-| `max-params` | 4 | Prevents parameter bloat |
-| `@typescript-eslint/no-explicit-any` | Forbidden | Forces proper typing |
+| Rule                                 | Limit     | Purpose                        |
+| ------------------------------------ | --------- | ------------------------------ |
+| `max-lines-per-function`             | 15 lines  | Prevents monolithic functions  |
+| `complexity`                         | 5         | Controls cyclomatic complexity |
+| `sonarjs/cognitive-complexity`       | 15        | Measures mental complexity     |
+| `max-params`                         | 4         | Prevents parameter bloat       |
+| `@typescript-eslint/no-explicit-any` | Forbidden | Forces proper typing           |
 
 ### Anti-Pattern Detection
+
 - **Any Types**: Detects and prevents `any` usage
 - **ESLint Disable**: Blocks `eslint-disable` comments
 - **Magic Numbers**: Identifies unnamed constants
@@ -187,25 +200,27 @@ The quality gates system enforces the same 232 ESLint rules that cause most AI-g
 - **Early Validation**: Ensures input validation patterns
 
 ### Quality Scoring
+
 - **90-100**: Excellent code quality
 - **80-89**: Good (meets standards)
 - **70-79**: Needs improvement
 - **Below 70**: Requires refactoring
 
 ### Pre-validation System
+
 The plugin validates inputs **before** generating code:
 
 ```typescript
 // ❌ This will be rejected
-await devPlugin.generateTemplate('ai-function', {
-  name: 'badFunc',
-  params: 'data:any' // Rejected: 'any' types not allowed
+await devPlugin.generateTemplate("ai-function", {
+  name: "badFunc",
+  params: "data:any", // Rejected: 'any' types not allowed
 });
 
 // ✅ This will pass validation and be auto-fixed
-const template = await devPlugin.generateTemplate('ai-function', {
-  name: 'goodFunc',
-  params: 'data:string, id:number'
+const template = await devPlugin.generateTemplate("ai-function", {
+  name: "goodFunc",
+  params: "data:string, id:number",
 });
 
 // Generated code is automatically cleaned:
@@ -216,6 +231,7 @@ const template = await devPlugin.generateTemplate('ai-function', {
 ```
 
 ### Auto-fix Features
+
 - **Type Correction**: `any` → `unknown` (rejects invalid input)
 - **Documentation**: Adds missing JSDoc comments
 - **Logging**: Removes console.log from templates
@@ -225,6 +241,7 @@ const template = await devPlugin.generateTemplate('ai-function', {
 ## 🎨 Bun.js Integration
 
 ### Performance Optimizations
+
 ```typescript
 // Use Bun's native APIs instead of external packages
 import { file, Database, serve } from "bun";
@@ -238,11 +255,14 @@ const db = new Database("app.db");
 // High-performance HTTP server
 const server = serve({
   port: 3000,
-  fetch(req) { /* ... */ }
+  fetch(req) {
+    /* ... */
+  },
 });
 ```
 
 ### Single Binary Deployment
+
 ```bash
 # Compile application with Bun runtime included
 bun build --compile --target bun ./src/index.ts --outfile ./app
@@ -252,6 +272,7 @@ bun build --compile --target bun ./src/index.ts --outfile ./app
 ```
 
 ### Development Benefits
+
 - **3-10x faster** than Node.js startup
 - **Lower memory** usage
 - **Native TypeScript** support
@@ -261,15 +282,19 @@ bun build --compile --target bun ./src/index.ts --outfile ./app
 ## 📚 Skill Integration
 
 ### bunjs Skill
+
 Comprehensive Bun.js development guidance including:
+
 - Core API patterns
 - Performance optimizations
 - Migration strategies from Node.js
 - Best practices and anti-patterns
 
 ### Usage
+
 ```markdown
 Claude will automatically use the bunjs skill when:
+
 - Creating Bun servers with Bun.serve()
 - Working with SQLite databases
 - Building applications with Bun.build()
@@ -281,14 +306,16 @@ Claude will automatically use the bunjs skill when:
 ### AI Development Patterns
 
 1. **Early Validation**
+
    ```typescript
    // ✅ Validate inputs in first 5 lines
    if (!userId || userId.trim().length === 0) {
-     return { success: false, error: 'User ID required' };
+     return { success: false, error: "User ID required" };
    }
    ```
 
 2. **Function Size Control**
+
    ```typescript
    // ✅ Keep functions focused and small
    export async function createUser(userData: UserData): Promise<UserResult> {
@@ -300,12 +327,13 @@ Claude will automatically use the bunjs skill when:
    ```
 
 3. **Explicit Typing**
+
    ```typescript
    // ❌ Avoid any types
-   function process(data: any): any
+   function process(data: any): any;
 
    // ✅ Use specific types
-   function process(data: UserData): ProcessedResult
+   function process(data: UserData): ProcessedResult;
    ```
 
 ### Code Quality Checklist
@@ -323,14 +351,15 @@ Claude will automatically use the bunjs skill when:
 
 ### Benchmarks (Bun vs Node.js)
 
-| Operation | Node.js | Bun | Improvement |
-|-----------|---------|-----|-------------|
-| Cold Start | 250ms | 45ms | **5.6x faster** |
-| File Read | 12ms | 3ms | **4x faster** |
-| JSON Parse | 8ms | 2ms | **4x faster** |
+| Operation   | Node.js     | Bun         | Improvement     |
+| ----------- | ----------- | ----------- | --------------- |
+| Cold Start  | 250ms       | 45ms        | **5.6x faster** |
+| File Read   | 12ms        | 3ms         | **4x faster**   |
+| JSON Parse  | 8ms         | 2ms         | **4x faster**   |
 | HTTP Server | 1,200 req/s | 3,800 req/s | **3.2x faster** |
 
 ### Memory Usage
+
 - **Node.js**: 45MB base memory
 - **Bun**: 15MB base memory
 - **Reduction**: 67% less memory usage
@@ -338,6 +367,7 @@ Claude will automatically use the bunjs skill when:
 ## 🛠 Configuration
 
 ### Plugin Configuration
+
 ```typescript
 const config = {
   // AI Quality Controls
@@ -362,6 +392,7 @@ const config = {
 ```
 
 ### ESLint Integration
+
 The plugin integrates seamlessly with your existing ESLint configuration, adding:
 
 - AI-specific rule enforcement
@@ -372,25 +403,28 @@ The plugin integrates seamlessly with your existing ESLint configuration, adding
 ## 🔧 Advanced Usage
 
 ### Custom Templates
+
 ```typescript
 // Create custom template with Handlebars
-const customTemplate = await devPlugin.generateTemplate('ai-function', {
-  name: 'customProcessor',
-  params: 'input:CustomType,options:ProcessingOptions',
-  returnType: 'ProcessedResult'
+const customTemplate = await devPlugin.generateTemplate("ai-function", {
+  name: "customProcessor",
+  params: "input:CustomType,options:ProcessingOptions",
+  returnType: "ProcessedResult",
 });
 ```
 
 ### Quality Monitoring
+
 ```typescript
 // Monitor code quality over time
-const qualityReport = await devPlugin.analyzeCode('./src/');
+const qualityReport = await devPlugin.analyzeCode("./src/");
 console.log(`Project Score: ${qualityReport.score}/100`);
 console.log(`Functions Analyzed: ${qualityReport.functions.length}`);
 console.log(`Violations Found: ${qualityReport.violations.length}`);
 ```
 
 ### Integration with CI/CD
+
 ```yaml
 # .github/workflows/quality-check.yml
 - name: Run AI Quality Gates
@@ -406,6 +440,7 @@ console.log(`Violations Found: ${qualityReport.violations.length}`);
 ## 🤝 Contributing
 
 ### Development Setup
+
 ```bash
 # Clone the repository
 git clone <repository-url>
@@ -425,6 +460,7 @@ bun run dev
 ```
 
 ### Adding New Templates
+
 1. Create `.hbs` template file in `templates/`
 2. Update template registry in `scripts/template-generator.ts`
 3. Add documentation and examples

@@ -41,7 +41,8 @@ export const TEMPLATE_SECTIONS = {
   REQUIREMENTS: 'Requirements:\n- {requirements}\n\n',
   CONSTRAINTS: 'Constraints:\n- {constraints}\n\n',
   OUTPUT_FORMAT: 'Output Format:\n{outputFormat}\n\n',
-  HIGH_COMPLEXITY_APPROACH: 'Approach:\n1. Analyze the problem systematically\n2. Consider multiple solution paths\n3. Evaluate and select the best approach\n4. Implement the solution\n\n',
+  HIGH_COMPLEXITY_APPROACH:
+    'Approach:\n1. Analyze the problem systematically\n2. Consider multiple solution paths\n3. Evaluate and select the best approach\n4. Implement the solution\n\n',
 } as const;
 
 // Framework types
@@ -54,12 +55,15 @@ export const FRAMEWORK_TYPES = {
 
 // Reasoning templates
 export const REASONING_TEMPLATES = {
-  TECHNIQUE_SELECTION: (count: number) => `Selected ${count} optimization techniques based on task complexity and domain requirements`,
-  TECHNIQUE_APPLICATION: (techniques: string[]) => `Applied ${techniques.join(', ')} to improve response quality and consistency`,
+  TECHNIQUE_SELECTION: (count: number) =>
+    `Selected ${count} optimization techniques based on task complexity and domain requirements`,
+  TECHNIQUE_APPLICATION: (techniques: string[]) =>
+    `Applied ${techniques.join(', ')} to improve response quality and consistency`,
   CLARITY_ENHANCEMENT: 'Enhanced clarity by adding specific instructions and action verbs',
   SPECIFICITY_IMPROVEMENT: 'Improved specificity through concrete examples and constraints',
   COMPLETENESS_INCREASE: 'Increased completeness by adding context and success criteria',
-  PERFORMANCE_IMPROVEMENT: (score: number) => `Estimated performance improvement: ${Math.round(score * PERCENTAGE_CONSTANTS.PERCENTAGE_MULTIPLIER)}%`,
+  PERFORMANCE_IMPROVEMENT: (score: number) =>
+    `Estimated performance improvement: ${Math.round(score * PERCENTAGE_CONSTANTS.PERCENTAGE_MULTIPLIER)}%`,
 } as const;
 
 // Percentage constants

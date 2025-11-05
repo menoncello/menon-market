@@ -9,13 +9,13 @@ import { DevPlugin } from "../index";
 import type { PluginConfig } from "../index";
 
 // Mock the template generator and quality gates for testing
-jest.mock('../scripts/template-generator', () => ({
+jest.mock("../scripts/template-generator", () => ({
   generateTemplate: jest.fn(),
   parseParams: jest.fn(),
   generateOutputPath: jest.fn(),
 }));
 
-jest.mock('../scripts/quality-gates', () => ({
+jest.mock("../scripts/quality-gates", () => ({
   analyzeCode: jest.fn(),
 }));
 
@@ -29,19 +29,19 @@ describe("DevPlugin", () => {
     jest.clearAllMocks();
 
     // Get mock functions
-    const { generateTemplate: genTemplate } = require('../scripts/template-generator');
-    const { analyzeCode: analyzeCodeFn } = require('../scripts/quality-gates');
+    const { generateTemplate: genTemplate } = require("../scripts/template-generator");
+    const { analyzeCode: analyzeCodeFn } = require("../scripts/quality-gates");
 
     mockGenerateTemplate = genTemplate as jest.Mock;
     mockAnalyzeCode = analyzeCodeFn as jest.Mock;
 
     // Setup mock return values
-    mockGenerateTemplate.mockResolvedValue('mock-template-content');
+    mockGenerateTemplate.mockResolvedValue("mock-template-content");
     mockAnalyzeCode.mockResolvedValue({
       functions: [],
       totalLines: 50,
       violations: [],
-      score: 95
+      score: 95,
     });
   });
 
@@ -138,35 +138,35 @@ describe("DevPlugin", () => {
     });
 
     test("should generate template successfully", async () => {
-      mockGenerateTemplate.mockResolvedValue('generated-template-content');
+      mockGenerateTemplate.mockResolvedValue("generated-template-content");
 
-      const result = await plugin.generateTemplate('ai-function', {
-        name: 'testFunction',
-        params: 'data:string'
+      const result = await plugin.generateTemplate("ai-function", {
+        name: "testFunction",
+        params: "data:string",
       });
 
-      expect(result).toBe('generated-template-content');
-      expect(mockGenerateTemplate).toHaveBeenCalledWith('ai-function', {
-        template: 'ai-function',
-        name: 'testFunction',
-        params: 'data:string'
+      expect(result).toBe("generated-template-content");
+      expect(mockGenerateTemplate).toHaveBeenCalledWith("ai-function", {
+        template: "ai-function",
+        name: "testFunction",
+        params: "data:string",
       });
     });
 
     test("should reject template generation when not initialized", async () => {
       plugin = new DevPlugin(); // Don't initialize
 
-      await expect(
-        plugin.generateTemplate('ai-function', { name: 'test' })
-      ).rejects.toThrow('Plugin not initialized');
+      await expect(plugin.generateTemplate("ai-function", { name: "test" })).rejects.toThrow(
+        "Plugin not initialized"
+      );
     });
 
     test("should handle template generation errors", async () => {
-      mockGenerateTemplate.mockRejectedValue(new Error('Template not found'));
+      mockGenerateTemplate.mockRejectedValue(new Error("Template not found"));
 
-      await expect(
-        plugin.generateTemplate('invalid-template', { name: 'test' })
-      ).rejects.toThrow('Template not found');
+      await expect(plugin.generateTemplate("invalid-template", { name: "test" })).rejects.toThrow(
+        "Template not found"
+      );
     });
   });
 
@@ -180,34 +180,34 @@ describe("DevPlugin", () => {
       const mockMetrics = {
         functions: [
           {
-            name: 'testFunction',
+            name: "testFunction",
             lines: 15,
             complexity: 3,
             hasEarlyValidation: true,
             hasAnyTypes: false,
             hasMagicNumbers: false,
-            params: [{ name: 'data', type: 'string' }]
-          }
+            params: [{ name: "data", type: "string" }],
+          },
         ],
         totalLines: 20,
         violations: [],
-        score: 95
+        score: 95,
       };
 
       mockAnalyzeCode.mockResolvedValue(mockMetrics);
 
-      const result = await plugin.analyzeCode('/path/to/file.ts');
+      const result = await plugin.analyzeCode("/path/to/file.ts");
 
       expect(result).toEqual(mockMetrics);
-      expect(mockAnalyzeCode).toHaveBeenCalledWith('/path/to/file.ts');
+      expect(mockAnalyzeCode).toHaveBeenCalledWith("/path/to/file.ts");
     });
 
     test("should reject code analysis when not initialized", async () => {
       plugin = new DevPlugin(); // Don't initialize
 
-      await expect(
-        plugin.analyzeCode('/path/to/file.ts')
-      ).rejects.toThrow('Plugin not initialized');
+      await expect(plugin.analyzeCode("/path/to/file.ts")).rejects.toThrow(
+        "Plugin not initialized"
+      );
     });
 
     test("should show warning for low quality scores in strict mode", async () => {
@@ -217,20 +217,18 @@ describe("DevPlugin", () => {
       const mockMetrics = {
         functions: [],
         totalLines: 50,
-        violations: [
-          { line: 1, rule: 'any-type', severity: 'error', message: 'Using any' }
-        ],
-        score: 75 // Below 80 threshold
+        violations: [{ line: 1, rule: "any-type", severity: "error", message: "Using any" }],
+        score: 75, // Below 80 threshold
       };
 
       mockAnalyzeCode.mockResolvedValue(mockMetrics);
 
-      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
+      const consoleSpy = jest.spyOn(console, "warn").mockImplementation();
 
-      const result = await plugin.analyzeCode('/path/to/file.ts');
+      const result = await plugin.analyzeCode("/path/to/file.ts");
 
       expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Code quality score 75/100 below threshold (80)')
+        expect.stringContaining("Code quality score 75/100 below threshold (80)")
       );
 
       consoleSpy.mockRestore();
@@ -268,7 +266,7 @@ export function process(data: any): any {
       const result = await plugin.validateCode(anyTypeCode);
 
       expect(result.valid).toBe(false);
-      expect(result.violations.some(v => v.type === 'typescript')).toBe(true);
+      expect(result.violations.some(v => v.type === "typescript")).toBe(true);
       expect(result.score).toBeLessThan(100);
     });
 
@@ -285,7 +283,7 @@ export function problematic(data: any): any {
       const result = await plugin.validateCode(eslintDisableCode);
 
       expect(result.valid).toBe(false);
-      expect(result.violations.some(v => v.type === 'eslint')).toBe(true);
+      expect(result.violations.some(v => v.type === "eslint")).toBe(true);
       expect(result.score).toBeLessThan(90);
     });
 
@@ -299,7 +297,7 @@ export function debugFunction(data: string): void {
 
       const result = await plugin.validateCode(consoleLogCode);
 
-      expect(result.violations.some(v => v.type === 'logging')).toBe(true);
+      expect(result.violations.some(v => v.type === "logging")).toBe(true);
       expect(result.score).toBeLessThan(100);
     });
 
@@ -348,7 +346,7 @@ export function veryLongFunction(): void {
 
       const result = await plugin.validateCode(longFunction);
 
-      expect(result.violations.some(v => v.type === 'complexity')).toBe(true);
+      expect(result.violations.some(v => v.type === "complexity")).toBe(true);
       expect(result.score).toBeLessThan(95);
     });
 
@@ -365,10 +363,8 @@ export function processLargeData(data: string[]): Result {
 
       const result = await plugin.validateCode(noValidationCode);
 
-      expect(result.violations.some(v => v.type === 'pattern')).toBe(true);
-      expect(result.suggestions).toContain(
-        'Add input validation at the beginning of functions'
-      );
+      expect(result.violations.some(v => v.type === "pattern")).toBe(true);
+      expect(result.suggestions).toContain("Add input validation at the beginning of functions");
     });
 
     test("should provide relevant suggestions", async () => {
@@ -381,12 +377,8 @@ export function processData(data: any): any {
 
       const result = await plugin.validateCode(problematicCode);
 
-      expect(result.suggestions).toContain(
-        'Replace "any" types with specific TypeScript types'
-      );
-      expect(result.suggestions).toContain(
-        'Use proper logging instead of console.log'
-      );
+      expect(result.suggestions).toContain('Replace "any" types with specific TypeScript types');
+      expect(result.suggestions).toContain("Use proper logging instead of console.log");
     });
   });
 
@@ -399,43 +391,43 @@ export function processData(data: any): any {
     test("should return available templates", () => {
       const templates = plugin.getAvailableTemplates();
 
-      expect(templates).toContain('ai-function');
-      expect(templates).toContain('bun-server');
-      expect(templates).toContain('test-suite');
-      expect(templates).toContain('database-service');
-      expect(templates).toContain('api-route');
-      expect(templates).toContain('websocket-handler');
-      expect(templates).toContain('cli-command');
+      expect(templates).toContain("ai-function");
+      expect(templates).toContain("bun-server");
+      expect(templates).toContain("test-suite");
+      expect(templates).toContain("database-service");
+      expect(templates).toContain("api-route");
+      expect(templates).toContain("websocket-handler");
+      expect(templates).toContain("cli-command");
     });
 
     test("should return best practices", () => {
       const practices = plugin.getBestPractices();
 
-      expect(practices.patterns).toContain('Validate inputs early (first 5 lines)');
-      expect(practices.patterns).toContain('Use explicit TypeScript types');
-      expect(practices.patterns).toContain('Keep functions under 30 lines');
+      expect(practices.patterns).toContain("Validate inputs early (first 5 lines)");
+      expect(practices.patterns).toContain("Use explicit TypeScript types");
+      expect(practices.patterns).toContain("Keep functions under 30 lines");
 
       expect(practices.antiPatterns).toContain('Using "any" types');
-      expect(practices.antiPatterns).toContain('Functions longer than 30 lines');
+      expect(practices.antiPatterns).toContain("Functions longer than 30 lines");
 
-      expect(practices.rules).toHaveProperty('max-lines-per-function');
-      expect(practices.rules).toHaveProperty('complexity');
-      expect(practices.rules).toHaveProperty('max-params');
+      expect(practices.rules).toHaveProperty("max-lines-per-function");
+      expect(practices.rules).toHaveProperty("complexity");
+      expect(practices.rules).toHaveProperty("max-params");
 
-      expect(practices.rules['max-lines-per-function'].limit).toBe(30);
-      expect(practices.rules['complexity'].limit).toBe(10);
+      expect(practices.rules["max-lines-per-function"].limit).toBe(30);
+      expect(practices.rules["complexity"].limit).toBe(10);
     });
 
     test("should customize best practices based on config", () => {
       plugin = new DevPlugin({
         maxFunctionLines: 25,
-        maxComplexity: 8
+        maxComplexity: 8,
       });
 
       const practices = plugin.getBestPractices();
 
-      expect(practices.rules['max-lines-per-function'].limit).toBe(25);
-      expect(practices.rules['complexity'].limit).toBe(8);
+      expect(practices.rules["max-lines-per-function"].limit).toBe(25);
+      expect(practices.rules["complexity"].limit).toBe(8);
     });
   });
 
@@ -444,16 +436,16 @@ export function processData(data: any): any {
       plugin = new DevPlugin();
       await plugin.initialize();
 
-      mockGenerateTemplate.mockRejectedValue(new Error('Template generation failed'));
+      mockGenerateTemplate.mockRejectedValue(new Error("Template generation failed"));
 
-      const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+      const consoleSpy = jest.spyOn(console, "error").mockImplementation();
 
-      await expect(
-        plugin.generateTemplate('invalid-template', {})
-      ).rejects.toThrow('Template generation failed');
+      await expect(plugin.generateTemplate("invalid-template", {})).rejects.toThrow(
+        "Template generation failed"
+      );
 
       expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Failed to generate template'),
+        expect.stringContaining("Failed to generate template"),
         expect.any(Error)
       );
 
@@ -464,16 +456,14 @@ export function processData(data: any): any {
       plugin = new DevPlugin();
       await plugin.initialize();
 
-      mockAnalyzeCode.mockRejectedValue(new Error('File not found'));
+      mockAnalyzeCode.mockRejectedValue(new Error("File not found"));
 
-      const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+      const consoleSpy = jest.spyOn(console, "error").mockImplementation();
 
-      await expect(
-        plugin.analyzeCode('/nonexistent/file.ts')
-      ).rejects.toThrow('File not found');
+      await expect(plugin.analyzeCode("/nonexistent/file.ts")).rejects.toThrow("File not found");
 
       expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Failed to analyze code'),
+        expect.stringContaining("Failed to analyze code"),
         expect.any(Error)
       );
 
@@ -485,7 +475,7 @@ export function processData(data: any): any {
     test("should handle complete workflow", async () => {
       plugin = new DevPlugin({
         aiQualityGates: true,
-        maxFunctionLines: 20
+        maxFunctionLines: 20,
       });
       await plugin.initialize();
 
@@ -497,12 +487,12 @@ export function testFunction(data: string): Result {
 }
 `);
 
-      const template = await plugin.generateTemplate('ai-function', {
-        name: 'testFunction',
-        params: 'data:string'
+      const template = await plugin.generateTemplate("ai-function", {
+        name: "testFunction",
+        params: "data:string",
       });
 
-      expect(template).toContain('testFunction');
+      expect(template).toContain("testFunction");
       expect(mockGenerateTemplate).toHaveBeenCalled();
 
       // Validate generated code
@@ -515,15 +505,15 @@ export function testFunction(data: string): Result {
       const config = {
         aiStrictMode: true,
         maxFunctionLines: 15,
-        maxComplexity: 5
+        maxComplexity: 5,
       };
 
       plugin = new DevPlugin(config);
       await plugin.initialize();
 
       const practices = plugin.getBestPractices();
-      expect(practices.rules['max-lines-per-function'].limit).toBe(15);
-      expect(practices.rules['complexity'].limit).toBe(5);
+      expect(practices.rules["max-lines-per-function"].limit).toBe(15);
+      expect(practices.rules["complexity"].limit).toBe(5);
     });
   });
 });

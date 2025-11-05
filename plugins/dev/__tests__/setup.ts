@@ -38,24 +38,27 @@ expect.extend({
     const pass = new RegExp(pattern).test(received);
     return {
       pass,
-      message: () => `expected ${received} ${pass ? 'not ' : ''}to contain pattern ${pattern}`,
+      message: () => `expected ${received} ${pass ? "not " : ""}to contain pattern ${pattern}`,
     };
   },
 
   // Custom matcher for checking if a function exists in code
   toContainFunction(received: string, functionName: string) {
-    const functionPattern = new RegExp(`(?:function\\s+${functionName}|const\\s+${functionName}\\s*=)`);
+    const functionPattern = new RegExp(
+      `(?:function\\s+${functionName}|const\\s+${functionName}\\s*=)`
+    );
     const pass = functionPattern.test(received);
     return {
       pass,
-      message: () => `expected ${received} ${pass ? 'not ' : ''}to contain function ${functionName}`,
+      message: () =>
+        `expected ${received} ${pass ? "not " : ""}to contain function ${functionName}`,
     };
   },
 });
 
 // Global test utilities
 export const testUtils = {
-  createTempFile: (content: string, suffix: string = '.ts'): string => {
+  createTempFile: (content: string, suffix: string = ".ts"): string => {
     // In a real implementation, this would create temporary files
     return `/tmp/test-${Date.now()}${suffix}`;
   },

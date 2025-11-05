@@ -295,12 +295,14 @@ export class ValidationEngine {
   private async identifyIssues(
     prompt: string,
     metrics: Record<QualityMetric, number>
-  ): Promise<Array<{
-    type: 'warning' | 'error' | 'suggestion';
-    message: string;
-    severity: 'low' | 'medium' | 'high';
-    suggestion?: string;
-  }>> {
+  ): Promise<
+    Array<{
+      type: 'warning' | 'error' | 'suggestion';
+      message: string;
+      severity: 'low' | 'medium' | 'high';
+      suggestion?: string;
+    }>
+  > {
     const issues: Array<{
       type: 'warning' | 'error' | 'suggestion';
       message: string;

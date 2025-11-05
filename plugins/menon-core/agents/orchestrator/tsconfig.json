@@ -13,6 +13,5 @@
     "rootDir": "./src"
   },
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": [
-    "../../../agents/orchestrator/node_modules", "dist"]
+  "exclude": ["../../../agents/orchestrator/node_modules", "dist"]
 }

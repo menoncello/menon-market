@@ -40,7 +40,6 @@ class WebResearcher {
    * @returns Array of search results
    */
   async performResearch(options: ResearchOptions): Promise<SearchResult[]> {
-
     try {
       // Simulate web search results
       const results = await this.simulateWebSearch(options);
@@ -136,9 +135,7 @@ class WebResearcher {
     // Filter by specific sources
     if (options.sources && options.sources.length > 0) {
       filtered = filtered.filter(result =>
-        options.sources!.some(source =>
-          result.source.toLowerCase().includes(source.toLowerCase())
-        )
+        options.sources!.some(source => result.source.toLowerCase().includes(source.toLowerCase()))
       );
     }
 
@@ -168,7 +165,8 @@ class WebResearcher {
       }
 
       // Tertiary sort: source authority
-      const sourceAuthority = this.getSourceAuthorityScore(a.source) - this.getSourceAuthorityScore(b.source);
+      const sourceAuthority =
+        this.getSourceAuthorityScore(a.source) - this.getSourceAuthorityScore(b.source);
       if (sourceAuthority !== 0) {
         return sourceAuthority;
       }
@@ -204,13 +202,13 @@ class WebResearcher {
   private getSourceAuthorityScore(source: string): number {
     const authorityScores: Record<string, number> = {
       'Official Website': 10,
-      'Wikipedia': 9,
-      'Reuters': 9,
-      'Bloomberg': 9,
+      Wikipedia: 9,
+      Reuters: 9,
+      Bloomberg: 9,
       'Yahoo Finance': 8,
-      'Crunchbase': 8,
+      Crunchbase: 8,
       'Industry Analysis': 7,
-      'News': 6,
+      News: 6,
     };
 
     return authorityScores[source] || 5;
@@ -234,8 +232,7 @@ class WebResearcher {
   /**
    * Closes the researcher and cleans up resources
    */
-  close(): void {
-  }
+  close(): void {}
 
   /**
    * Utility function to create delays

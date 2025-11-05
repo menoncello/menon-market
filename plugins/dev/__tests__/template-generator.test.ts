@@ -5,7 +5,12 @@
  */
 
 import { test, expect, describe, beforeAll, afterAll } from "bun:test";
-import { generateTemplate, parseParams, generateOutputPath, type TemplateOptions } from "../scripts/template-generator";
+import {
+  generateTemplate,
+  parseParams,
+  generateOutputPath,
+  type TemplateOptions,
+} from "../scripts/template-generator";
 
 describe("Template Generator", () => {
   describe("parseParams", () => {
@@ -16,9 +21,7 @@ describe("Template Generator", () => {
 
     test("should parse single parameter", () => {
       const result = parseParams("name:string");
-      expect(result).toEqual([
-        { name: "name", type: "string", docs: "name" }
-      ]);
+      expect(result).toEqual([{ name: "name", type: "string", docs: "name" }]);
     });
 
     test("should parse multiple parameters", () => {
@@ -26,22 +29,20 @@ describe("Template Generator", () => {
       expect(result).toEqual([
         { name: "userId", type: "string", docs: "user id" },
         { name: "userData", type: "object", docs: "user data" },
-        { name: "enabled", type: "boolean", docs: "enabled" }
+        { name: "enabled", type: "boolean", docs: "enabled" },
       ]);
     });
 
     test("should handle parameter without type", () => {
       const result = parseParams("simpleParam");
-      expect(result).toEqual([
-        { name: "simpleParam", type: "unknown", docs: "simple param" }
-      ]);
+      expect(result).toEqual([{ name: "simpleParam", type: "unknown", docs: "simple param" }]);
     });
 
     test("should handle complex type names", () => {
       const result = parseParams("data:UserData[],callback:Function");
       expect(result).toEqual([
         { name: "data", type: "UserData[]", docs: "data" },
-        { name: "callback", type: "Function", docs: "callback" }
+        { name: "callback", type: "Function", docs: "callback" },
       ]);
     });
   });
@@ -51,7 +52,7 @@ describe("Template Generator", () => {
       const options = {
         template: "ai-function",
         name: "testFunction",
-        output: "/custom/path/function.ts"
+        output: "/custom/path/function.ts",
       } as TemplateOptions;
 
       const result = generateOutputPath("ai-function", options);
@@ -61,7 +62,7 @@ describe("Template Generator", () => {
     test("should generate default path for ai-function", () => {
       const options = {
         template: "ai-function",
-        name: "createUser"
+        name: "createUser",
       } as TemplateOptions;
 
       const result = generateOutputPath("ai-function", options);
@@ -71,7 +72,7 @@ describe("Template Generator", () => {
     test("should generate default path for bun-server", () => {
       const options = {
         template: "bun-server",
-        name: "api"
+        name: "api",
       } as TemplateOptions;
 
       const result = generateOutputPath("bun-server", options);
@@ -80,7 +81,7 @@ describe("Template Generator", () => {
 
     test("should use template name when no name provided", () => {
       const options = {
-        template: "test-suite"
+        template: "test-suite",
       } as TemplateOptions;
 
       const result = generateOutputPath("test-suite", options);
@@ -99,7 +100,7 @@ describe("Template Generator", () => {
         template: "ai-function",
         name: "processUserData",
         params: "userId:string,userData:object",
-        returnType: "UserResult"
+        returnType: "UserResult",
       };
 
       const result = await generateTemplate("ai-function", options);
@@ -116,7 +117,7 @@ describe("Template Generator", () => {
       const options: TemplateOptions = {
         template: "ai-function",
         name: "healthCheck",
-        returnType: "HealthStatus"
+        returnType: "HealthStatus",
       };
 
       const result = await generateTemplate("ai-function", options);
@@ -131,7 +132,7 @@ describe("Template Generator", () => {
         template: "ai-function",
         name: "complexHandler",
         params: "data:UserData[],options:ProcessingOptions,callback:Function",
-        returnType: "ProcessedData"
+        returnType: "ProcessedData",
       };
 
       const result = await generateTemplate("ai-function", options);
@@ -146,28 +147,28 @@ describe("Template Generator", () => {
       const options: TemplateOptions = {
         template: "test-suite",
         component: "UserService",
-        withMocks: true
+        withMocks: true,
       };
 
       const result = await generateTemplate("test-suite", options);
 
-      expect(result).toContain("describe(\"UserService\"");
+      expect(result).toContain('describe("UserService"');
       expect(result).toContain("beforeAll");
       expect(result).toContain("afterAll");
       expect(result).toContain("mockDatabase");
-      expect(result).toContain("test(\"should");
+      expect(result).toContain('test("should');
     });
 
     test("should generate test suite without mocks", async () => {
       const options: TemplateOptions = {
         template: "test-suite",
         component: "SimpleService",
-        withMocks: false
+        withMocks: false,
       };
 
       const result = await generateTemplate("test-suite", options);
 
-      expect(result).toContain("describe(\"SimpleService\"");
+      expect(result).toContain('describe("SimpleService"');
       // Should not contain mock-specific content
       expect(result).not.toContain("mockDatabase");
     });
@@ -175,11 +176,11 @@ describe("Template Generator", () => {
     test("should include current date in generated templates", async () => {
       const options: TemplateOptions = {
         template: "ai-function",
-        name: "testFunction"
+        name: "testFunction",
       };
 
       const result = await generateTemplate("ai-function", options);
-      const currentDate = new Date().toISOString().split('T')[0];
+      const currentDate = new Date().toISOString().split("T")[0];
 
       expect(result).toContain(currentDate);
     });
@@ -187,7 +188,7 @@ describe("Template Generator", () => {
     test("should reject invalid template names", async () => {
       const options: TemplateOptions = {
         template: "invalid-template",
-        name: "testFunction"
+        name: "testFunction",
       };
 
       await expect(generateTemplate("invalid-template", options)).rejects.toThrow();
@@ -196,12 +197,12 @@ describe("Template Generator", () => {
     test("should generate unique IDs in templates", async () => {
       const options1: TemplateOptions = {
         template: "ai-function",
-        name: "function1"
+        name: "function1",
       };
 
       const options2: TemplateOptions = {
         template: "ai-function",
-        name: "function2"
+        name: "function2",
       };
 
       const result1 = await generateTemplate("ai-function", options1);
@@ -224,7 +225,7 @@ describe("Template Generator", () => {
     test("AI function should include ESLint rule comments", async () => {
       const options: TemplateOptions = {
         template: "ai-function",
-        name: "testFunction"
+        name: "testFunction",
       };
 
       const result = await generateTemplate("ai-function", options);
@@ -238,7 +239,7 @@ describe("Template Generator", () => {
       const options: TemplateOptions = {
         template: "ai-function",
         name: "validateUser",
-        params: "userId:string"
+        params: "userId:string",
       };
 
       const result = await generateTemplate("ai-function", options);
@@ -251,7 +252,7 @@ describe("Template Generator", () => {
     test("AI function should include error handling pattern", async () => {
       const options: TemplateOptions = {
         template: "ai-function",
-        name: "processData"
+        name: "processData",
       };
 
       const result = await generateTemplate("ai-function", options);
@@ -264,13 +265,13 @@ describe("Template Generator", () => {
     test("Test suite should include proper test structure", async () => {
       const options: TemplateOptions = {
         template: "test-suite",
-        component: "TestComponent"
+        component: "TestComponent",
       };
 
       const result = await generateTemplate("test-suite", options);
 
-      expect(result).toContain("describe(\"TestComponent\"");
-      expect(result).toContain("test(\"should");
+      expect(result).toContain('describe("TestComponent"');
+      expect(result).toContain('test("should');
       expect(result).toContain("expect(");
       expect(result).toContain("afterAll");
       expect(result).toContain("beforeEach");

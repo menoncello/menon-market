@@ -2,12 +2,12 @@
  * Test Quality Analyzer - Simplified Version for Integration
  */
 
-import { file } from 'bun';
-import { spawn } from 'bun';
+import { file } from "bun";
+import { spawn } from "bun";
 
 interface TestIssue {
-  type: 'useless-test' | 'mock-loop' | 'no-real-behavior' | 'trivial-assertion' | 'dead-code';
-  severity: 'error' | 'warning' | 'info';
+  type: "useless-test" | "mock-loop" | "no-real-behavior" | "trivial-assertion" | "dead-code";
+  severity: "error" | "warning" | "info";
   filePath: string;
   lineNumber: number;
   description: string;
@@ -46,7 +46,7 @@ export class TestQualityAnalyzer {
   async analyzeTestFile(filePath: string): Promise<TestIssue[]> {
     try {
       const content = await file(filePath).text();
-      const lines = content.split('\n');
+      const lines = content.split("\n");
       const issues: TestIssue[] = [];
 
       lines.forEach((line, index) => {
@@ -55,45 +55,44 @@ export class TestQualityAnalyzer {
         // Detect useless test patterns
         if (this.isUselessTest(line)) {
           issues.push({
-            type: 'useless-test',
-            severity: 'error',
+            type: "useless-test",
+            severity: "error",
             filePath,
             lineNumber,
-            description: 'Test appears to be testing trivial behavior',
-            suggestion: 'Add meaningful assertions that verify real behavior',
-            code: line.trim()
+            description: "Test appears to be testing trivial behavior",
+            suggestion: "Add meaningful assertions that verify real behavior",
+            code: line.trim(),
           });
         }
 
         // Detect mock loops
         if (this.isMockLoop(line)) {
           issues.push({
-            type: 'mock-loop',
-            severity: 'error',
+            type: "mock-loop",
+            severity: "error",
             filePath,
             lineNumber,
-            description: 'Test may be mocking and verifying the same behavior',
-            suggestion: 'Test real behavior instead of mock internals',
-            code: line.trim()
+            description: "Test may be mocking and verifying the same behavior",
+            suggestion: "Test real behavior instead of mock internals",
+            code: line.trim(),
           });
         }
 
         // Detect trivial assertions
         if (this.hasTrivialAssertion(line)) {
           issues.push({
-            type: 'trivial-assertion',
-            severity: 'warning',
+            type: "trivial-assertion",
+            severity: "warning",
             filePath,
             lineNumber,
-            description: 'Assertion only checks basic type or existence',
-            suggestion: 'Add more specific assertions that validate meaningful behavior',
-            code: line.trim()
+            description: "Assertion only checks basic type or existence",
+            suggestion: "Add more specific assertions that validate meaningful behavior",
+            code: line.trim(),
           });
         }
       });
 
       return issues;
-
     } catch (error) {
       console.warn(`Could not analyze test file ${filePath}:`, error);
       return [];
@@ -106,7 +105,7 @@ export class TestQualityAnalyzer {
   async parseTestsInFile(filePath: string): Promise<ParsedTest[]> {
     try {
       const content = await file(filePath).text();
-      const lines = content.split('\n');
+      const lines = content.split("\n");
       const tests: ParsedTest[] = [];
 
       let currentTest: Partial<ParsedTest> | null = null;
@@ -122,7 +121,7 @@ export class TestQualityAnalyzer {
           // Start new test
           const testName = this.extractTestName(line);
           currentTest = {
-            name: testName || 'unnamed',
+            name: testName || "unnamed",
             filePath,
             lineNumber: index + 1,
             hasAssertions: false,
@@ -131,7 +130,7 @@ export class TestQualityAnalyzer {
             hasRealBehavior: false,
             assertions: [],
             mockCalls: [],
-            complexity: 0
+            complexity: 0,
           };
         }
 
@@ -166,7 +165,6 @@ export class TestQualityAnalyzer {
       }
 
       return tests;
-
     } catch (error) {
       console.warn(`Could not parse tests in ${filePath}:`, error);
       return [];
@@ -178,9 +176,8 @@ export class TestQualityAnalyzer {
    */
   calculateMetrics(tests: ParsedTest[], testFiles: string[]): TestMetrics {
     const totalTests = tests.length;
-    const usefulTests = tests.filter(test =>
-      test.hasAssertions &&
-      (test.hasRealBehavior || test.hasVerifications)
+    const usefulTests = tests.filter(
+      test => test.hasAssertions && (test.hasRealBehavior || test.hasVerifications)
     ).length;
     const uselessTests = totalTests - usefulTests;
 
@@ -190,7 +187,7 @@ export class TestQualityAnalyzer {
     // Calculate quality score (0-100)
     const qualityScore = Math.round(
       (usefulTests / Math.max(totalTests, 1)) * 60 + // 60% for useful tests
-      Math.min(40, coverage * 0.4) // 40% for coverage
+        Math.min(40, coverage * 0.4) // 40% for coverage
     );
 
     return {
@@ -198,7 +195,7 @@ export class TestQualityAnalyzer {
       usefulTests,
       uselessTests,
       coverage,
-      qualityScore
+      qualityScore,
     };
   }
 
@@ -206,11 +203,7 @@ export class TestQualityAnalyzer {
    * Check if line defines a test
    */
   private isTestDefinition(line: string): boolean {
-    const patterns = [
-      /test\s*\(\s*['"`]/,
-      /it\s*\(\s*['"`]/,
-      /describe\s*\(\s*['"`]/,
-    ];
+    const patterns = [/test\s*\(\s*['"`]/, /it\s*\(\s*['"`]/, /describe\s*\(\s*['"`]/];
 
     return patterns.some(pattern => pattern.test(line));
   }
@@ -220,7 +213,7 @@ export class TestQualityAnalyzer {
    */
   private extractTestName(line: string): string {
     const match = line.match(/['"`]([^'"`]+)['"`]/);
-    return match ? match[1] : 'unnamed';
+    return match ? match[1] : "unnamed";
   }
 
   /**
@@ -240,17 +233,17 @@ export class TestQualityAnalyzer {
    * Check if line indicates a mock loop
    */
   private isMockLoop(line: string): boolean {
-    return /mock.*toHaveBeenCalled.*toHaveBeenCalled/.test(line) ||
-           line.includes('vi.mock') && line.includes('toHaveBeenCalled');
+    return (
+      /mock.*toHaveBeenCalled.*toHaveBeenCalled/.test(line) ||
+      (line.includes("vi.mock") && line.includes("toHaveBeenCalled"))
+    );
   }
 
   /**
    * Check if line has trivial assertions
    */
   private hasTrivialAssertion(line: string): boolean {
-    const trivialPatterns = [
-      /expect\s*\([^)]+\)\.toBe\s*\(\s*(undefined|null|true|false)\s*\)/,
-    ];
+    const trivialPatterns = [/expect\s*\([^)]+\)\.toBe\s*\(\s*(undefined|null|true|false)\s*\)/];
 
     return trivialPatterns.some(pattern => pattern.test(line));
   }
@@ -259,26 +252,21 @@ export class TestQualityAnalyzer {
    * Check if line contains assertions
    */
   private hasAssertion(line: string): boolean {
-    return /expect\s*\(/.test(line) ||
-           /assert\./.test(line) ||
-           /should\./.test(line);
+    return /expect\s*\(/.test(line) || /assert\./.test(line) || /should\./.test(line);
   }
 
   /**
    * Check if line contains mocks
    */
   private hasMock(line: string): boolean {
-    return /mock\s*\(/.test(line) ||
-           /jest\.mock/.test(line) ||
-           /vi\.mock/.test(line);
+    return /mock\s*\(/.test(line) || /jest\.mock/.test(line) || /vi\.mock/.test(line);
   }
 
   /**
    * Check if line contains verifications
    */
   private hasVerification(line: string): boolean {
-    return /toHaveBeenCalled/.test(line) ||
-           /toHaveBeenCalledTimes/.test(line);
+    return /toHaveBeenCalled/.test(line) || /toHaveBeenCalledTimes/.test(line);
   }
 
   /**
@@ -312,7 +300,7 @@ export class TestQualityAnalyzer {
  * Standalone test quality analysis function
  */
 export async function analyzeTestQuality(basePath = process.cwd()): Promise<void> {
-  console.log('🧪 Starting Test Quality Analysis...\n');
+  console.log("🧪 Starting Test Quality Analysis...\n");
 
   try {
     const analyzer = new TestQualityAnalyzer();
@@ -321,19 +309,19 @@ export async function analyzeTestQuality(basePath = process.cwd()): Promise<void
     const findCmd = `find "${basePath}" -name "*.test.*" -o -name "*.spec.*" -o -path "*/__tests__/*" | grep -E "\\.(ts|js|tsx|jsx)$" | grep -v -E "(node_modules|dist|coverage)"`;
 
     const proc = spawn({
-      cmd: ['/bin/bash', '-c', findCmd],
-      stdout: 'pipe',
-      stderr: 'pipe'
+      cmd: ["/bin/bash", "-c", findCmd],
+      stdout: "pipe",
+      stderr: "pipe",
     });
 
     const output = await new Response(proc.stdout).text();
     const testFiles = output
-      .split('\n')
+      .split("\n")
       .map(line => line.trim())
       .filter(line => line.length > 0);
 
     if (testFiles.length === 0) {
-      console.log('✅ No test files found!');
+      console.log("✅ No test files found!");
       return;
     }
 
@@ -361,18 +349,19 @@ export async function analyzeTestQuality(basePath = process.cwd()): Promise<void
       }
     }
 
-    console.log('\n📊 Summary:');
+    console.log("\n📊 Summary:");
     console.log(`   Total test files: ${testFiles.length}`);
     console.log(`   Total tests: ${totalTests}`);
-    console.log(`   Useful tests: ${totalUseful} (${Math.round(totalUseful/totalTests*100)}%)`);
+    console.log(
+      `   Useful tests: ${totalUseful} (${Math.round((totalUseful / totalTests) * 100)}%)`
+    );
     console.log(`   Quality issues: ${totalIssues}`);
 
     if (totalIssues > 0) {
-      console.log('\n💡 Consider fixing test quality issues to improve reliability.');
+      console.log("\n💡 Consider fixing test quality issues to improve reliability.");
     }
-
   } catch (error) {
-    console.error('💥 Test quality analysis failed:', error);
+    console.error("💥 Test quality analysis failed:", error);
     process.exit(1);
   }
 }

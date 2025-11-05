@@ -5,17 +5,17 @@
  * Validates the slash command functionality
  */
 
-import { runUnifiedFix } from '../slash-commands/unified-fix';
+import { runUnifiedFix } from "../slash-commands/unified-fix";
 
 async function testUnifiedFix() {
-  console.log('🧪 Testing unified fix command...\n');
+  console.log("🧪 Testing unified fix command...\n");
 
   try {
     // Test with dry run simulation
-    console.log('📊 Testing task generation and worker pool...');
+    console.log("📊 Testing task generation and worker pool...");
 
     // Import the classes to test them individually
-    const { TaskGenerator, DynamicWorkerPool } = await import('../slash-commands/unified-fix');
+    const { TaskGenerator, DynamicWorkerPool } = await import("../slash-commands/unified-fix");
 
     // Test task generation
     const taskGenerator = new TaskGenerator();
@@ -30,15 +30,14 @@ async function testUnifiedFix() {
     console.log(`🚀 Testing worker pool with ${smallSubset.length} tasks...`);
 
     // Note: This would actually run the fixes - for testing we'll just validate structure
-    console.log('✅ Worker pool structure validated');
+    console.log("✅ Worker pool structure validated");
 
-    console.log('\n🎉 All tests passed! The unified fix command is ready to use.');
-    console.log('\n💡 To run the actual command, use:');
-    console.log('   /fix-all');
-    console.log('   /fix-all --max-workers 4');
-
+    console.log("\n🎉 All tests passed! The unified fix command is ready to use.");
+    console.log("\n💡 To run the actual command, use:");
+    console.log("   /fix-all");
+    console.log("   /fix-all --max-workers 4");
   } catch (error) {
-    console.error('❌ Test failed:', error);
+    console.error("❌ Test failed:", error);
     process.exit(1);
   }
 }

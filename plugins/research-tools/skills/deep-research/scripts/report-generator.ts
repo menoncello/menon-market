@@ -232,14 +232,18 @@ Detailed data and additional information can be found in the appendix.
    * @param template
    * @param sources
    */
-  private replaceSourcesSection(template: string, sources: ReportData['metadata']['sources']): string {
+  private replaceSourcesSection(
+    template: string,
+    sources: ReportData['metadata']['sources']
+  ): string {
     if (!sources || sources.length === 0) {
       return template.replace(/{{#each sources}}[\S\s]*?{{\/each}}/g, 'No sources specified');
     }
 
     const sourcesSection = sources
-      .map(source =>
-        `- [${source.title}](${source.url}) - ${source.reliability} reliability - Accessed ${new Date(source.access_date).toLocaleDateString()}`
+      .map(
+        source =>
+          `- [${source.title}](${source.url}) - ${source.reliability} reliability - Accessed ${new Date(source.access_date).toLocaleDateString()}`
       )
       .join('\n');
 
@@ -251,8 +255,12 @@ Detailed data and additional information can be found in the appendix.
    * @param template
    * @param limitations
    */
-  private replaceLimitationsSection(template: string, limitations: ReportData['metadata']['limitations']): string {
-    const limitationsSection = limitations?.map(limitation => `- ${limitation}`).join('\n') || 'No limitations specified';
+  private replaceLimitationsSection(
+    template: string,
+    limitations: ReportData['metadata']['limitations']
+  ): string {
+    const limitationsSection =
+      limitations?.map(limitation => `- ${limitation}`).join('\n') || 'No limitations specified';
     return template.replace(/{{#each limitations}}[\S\s]*?{{\/each}}/g, limitationsSection);
   }
 
@@ -266,9 +274,7 @@ Detailed data and additional information can be found in the appendix.
       return template.replace(/{{#each sections}}[\S\s]*?{{\/each}}/g, 'No sections available');
     }
 
-    const sectionsSection = sections
-      .map(section => this.formatSection(section))
-      .join('\n');
+    const sectionsSection = sections.map(section => this.formatSection(section)).join('\n');
 
     return template.replace(/{{#each sections}}[\S\s]*?{{\/each}}/g, sectionsSection);
   }
@@ -357,7 +363,7 @@ Detailed data and additional information can be found in the appendix.
       this.generateCodeCSS(),
       this.generateTableCSS(),
       this.generateUtilityCSS(),
-      this.generatePrintCSS()
+      this.generatePrintCSS(),
     ];
 
     return cssSections.join('\n\n');
@@ -541,7 +547,7 @@ Detailed data and additional information can be found in the appendix.
 
     // Line breaks
     html = html.replace(/\n\n/g, '</p><p>');
-    html = `<p>${  html  }</p>`;
+    html = `<p>${html}</p>`;
 
     // Clean up
     html = html.replace(/<p><h/g, '<h');

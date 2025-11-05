@@ -38,7 +38,7 @@ export async function processUser(userId: string): Promise<UserResult> {
 `;
 
       // Create a mock file path for testing
-      const mockFilePath = '/tmp/test-valid-function.ts';
+      const mockFilePath = "/tmp/test-valid-function.ts";
 
       // Mock the file reading since we can't easily create real files in this environment
       const originalFileRead = global.Bun?.file;
@@ -80,7 +80,7 @@ export async function processData(data: any): Promise<any> {
 }
 `;
 
-      const mockFilePath = '/tmp/test-invalid-function.ts';
+      const mockFilePath = "/tmp/test-invalid-function.ts";
 
       const originalFileRead = global.Bun?.file;
       if (global.Bun) {
@@ -92,7 +92,7 @@ export async function processData(data: any): Promise<any> {
       try {
         const metrics = await analyzeCode(mockFilePath);
 
-        expect(metrics.violations.some(v => v.rule === 'any-type')).toBe(true);
+        expect(metrics.violations.some(v => v.rule === "any-type")).toBe(true);
         expect(metrics.score).toBeLessThan(90); // Should be penalized for any types
 
         const func = metrics.functions[0];
@@ -115,7 +115,7 @@ export async function complexProcess(data: object, options: Config): Promise<Res
 }
 `;
 
-      const mockFilePath = '/tmp/test-no-validation.ts';
+      const mockFilePath = "/tmp/test-no-validation.ts";
 
       const originalFileRead = global.Bun?.file;
       if (global.Bun) {
@@ -132,7 +132,7 @@ export async function complexProcess(data: object, options: Config): Promise<Res
         expect(func.lines).toBeGreaterThan(10); // Long function without validation
 
         // Should have early validation warning
-        expect(metrics.violations.some(v => v.rule === 'early-validation')).toBe(true);
+        expect(metrics.violations.some(v => v.rule === "early-validation")).toBe(true);
       } finally {
         if (originalFileRead) {
           global.Bun!.file = originalFileRead;
@@ -183,7 +183,7 @@ export async function veryLongFunction(input: string): Promise<string> {
 }
 `;
 
-      const mockFilePath = '/tmp/test-long-function.ts';
+      const mockFilePath = "/tmp/test-long-function.ts";
 
       const originalFileRead = global.Bun?.file;
       if (global.Bun) {
@@ -199,7 +199,7 @@ export async function veryLongFunction(input: string): Promise<string> {
         expect(func.lines).toBeGreaterThan(15); // Exceeds limit
 
         // Should have max-lines violation
-        expect(metrics.violations.some(v => v.rule === 'max-lines-per-function')).toBe(true);
+        expect(metrics.violations.some(v => v.rule === "max-lines-per-function")).toBe(true);
         expect(metrics.score).toBeLessThan(90); // Should be penalized
       } finally {
         if (originalFileRead) {
@@ -222,7 +222,7 @@ export function calculateTax(amount: number): number {
 }
 `;
 
-      const mockFilePath = '/tmp/test-magic-numbers.ts';
+      const mockFilePath = "/tmp/test-magic-numbers.ts";
 
       const originalFileRead = global.Bun?.file;
       if (global.Bun) {
@@ -235,7 +235,7 @@ export function calculateTax(amount: number): number {
         const metrics = await analyzeCode(mockFilePath);
 
         // Should detect magic numbers (0, 1, -1 are ignored)
-        expect(metrics.violations.some(v => v.rule === 'magic-numbers')).toBe(true);
+        expect(metrics.violations.some(v => v.rule === "magic-numbers")).toBe(true);
         expect(func.hasMagicNumbers).toBe(true);
       } finally {
         if (originalFileRead) {
@@ -259,7 +259,7 @@ export async function complexOperation(
 }
 `;
 
-      const mockFilePath = '/tmp/test-many-params.ts';
+      const mockFilePath = "/tmp/test-many-params.ts";
 
       const originalFileRead = global.Bun?.file;
       if (global.Bun) {
@@ -275,7 +275,7 @@ export async function complexOperation(
         expect(func.params.length).toBeGreaterThan(4); // Exceeds limit
 
         // Should have max-params violation
-        expect(metrics.violations.some(v => v.rule === 'max-params')).toBe(true);
+        expect(metrics.violations.some(v => v.rule === "max-params")).toBe(true);
       } finally {
         if (originalFileRead) {
           global.Bun!.file = originalFileRead;
@@ -300,7 +300,7 @@ export function calculateComplexity(input: number): number {
 }
 `;
 
-      const mockFilePath = '/tmp/test-complexity.ts';
+      const mockFilePath = "/tmp/test-complexity.ts";
 
       const originalFileRead = global.Bun?.file;
       if (global.Bun) {
@@ -326,9 +326,9 @@ export function calculateComplexity(input: number): number {
     });
 
     test("should handle edge case of empty file", async () => {
-      const emptyCode = '';
+      const emptyCode = "";
 
-      const mockFilePath = '/tmp/test-empty.ts';
+      const mockFilePath = "/tmp/test-empty.ts";
 
       const originalFileRead = global.Bun?.file;
       if (global.Bun) {
@@ -370,7 +370,7 @@ export async function validateEmail(email: string): Promise<ValidationResult> {
 }
 `;
 
-      const mockFilePath = '/tmp/test-good-code.ts';
+      const mockFilePath = "/tmp/test-good-code.ts";
 
       const originalFileRead = global.Bun?.file;
       if (global.Bun) {
@@ -383,7 +383,7 @@ export async function validateEmail(email: string): Promise<ValidationResult> {
         const metrics = await analyzeCode(mockFilePath);
 
         expect(metrics.score).toBeGreaterThan(85); // Should be high score
-        expect(metrics.violations.filter(v => v.severity === 'error')).toHaveLength(0);
+        expect(metrics.violations.filter(v => v.severity === "error")).toHaveLength(0);
       } finally {
         if (originalFileRead) {
           global.Bun!.file = originalFileRead;
@@ -401,7 +401,7 @@ export async function badFunction(data: any): any {
 }
 `;
 
-      const mockFilePath = '/tmp/test-bad-code.ts';
+      const mockFilePath = "/tmp/test-bad-code.ts";
 
       const originalFileRead = global.Bun?.file;
       if (global.Bun) {
@@ -417,9 +417,9 @@ export async function badFunction(data: any): any {
         expect(metrics.violations.length).toBeGreaterThan(2); // Multiple violations
 
         // Should detect specific violations
-        expect(metrics.violations.some(v => v.rule === 'any-type')).toBe(true);
-        expect(metrics.violations.some(v => v.rule === 'eslint-disable')).toBe(true);
-        expect(metrics.violations.some(v => v.rule === 'console-log')).toBe(true);
+        expect(metrics.violations.some(v => v.rule === "any-type")).toBe(true);
+        expect(metrics.violations.some(v => v.rule === "eslint-disable")).toBe(true);
+        expect(metrics.violations.some(v => v.rule === "console-log")).toBe(true);
       } finally {
         if (originalFileRead) {
           global.Bun!.file = originalFileRead;

@@ -11,7 +11,10 @@ import { getTechniqueEnhancement, getTechniqueOptimization } from './technique-u
  * @param analysis
  * @param enhancements
  */
-export function addQualityBasedEnhancements(analysis: PromptAnalysis, enhancements: string[]): void {
+export function addQualityBasedEnhancements(
+  analysis: PromptAnalysis,
+  enhancements: string[]
+): void {
   if (analysis.clarity < QUALITY_THRESHOLDS.ACCEPTABLE) {
     enhancements.push('Add specific details and clear action verbs');
     enhancements.push('Define the desired output format explicitly');
@@ -33,7 +36,10 @@ export function addQualityBasedEnhancements(analysis: PromptAnalysis, enhancemen
  * @param techniques
  * @param enhancements
  */
-export function addTechniqueBasedEnhancements(techniques: PromptTechnique[], enhancements: string[]): void {
+export function addTechniqueBasedEnhancements(
+  techniques: PromptTechnique[],
+  enhancements: string[]
+): void {
   for (const technique of techniques) {
     const enhancement = getTechniqueEnhancement(technique);
     if (enhancement) {
@@ -66,7 +72,10 @@ export function addBasicOptimizations(analysis: PromptAnalysis, optimizations: s
  * @param techniques
  * @param optimizations
  */
-export function addTechniqueOptimizations(techniques: PromptTechnique[], optimizations: string[]): void {
+export function addTechniqueOptimizations(
+  techniques: PromptTechnique[],
+  optimizations: string[]
+): void {
   for (const technique of techniques) {
     const optimization = getTechniqueOptimization(technique);
     if (optimization) {

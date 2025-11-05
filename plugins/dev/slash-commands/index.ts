@@ -5,14 +5,14 @@
  * Uses worker threads and subprocesses for optimal performance
  */
 
-import { spawn, $ } from 'bun';
-import { Worker, isMainThread, parentPort, workerData } from 'worker_threads';
-import { file } from 'bun';
-import { join, relative } from 'path';
+import { spawn, $ } from "bun";
+import { Worker, isMainThread, parentPort, workerData } from "worker_threads";
+import { file } from "bun";
+import { join, relative } from "path";
 
 interface WorkerTask {
   id: string;
-  type: 'format' | 'lint' | 'typecheck';
+  type: "format" | "lint" | "typecheck";
   filePath: string;
   content?: string;
 }
@@ -53,9 +53,11 @@ export class ParallelFileProcessor {
    */
   async processFiles(
     files: string[],
-    processor: 'format' | 'lint' | 'typecheck'
+    processor: "format" | "lint" | "typecheck"
   ): Promise<WorkerResult[]> {
-    console.log(`🔄 Processing ${files.length} files with ${this.maxWorkers} workers for ${processor}`);
+    console.log(
+      `🔄 Processing ${files.length} files with ${this.maxWorkers} workers for ${processor}`
+    );
 
     const startTime = Date.now();
     const results: WorkerResult[] = [];
@@ -63,10 +65,12 @@ export class ParallelFileProcessor {
 
     // Process batches in parallel
     const batchPromises = batches.map(async (batch, batchIndex) => {
-      console.log(`📦 Processing batch ${batchIndex + 1}/${batches.length} (${batch.length} files)`);
+      console.log(
+        `📦 Processing batch ${batchIndex + 1}/${batches.length} (${batch.length} files)`
+      );
 
       // Process files within batch in parallel
-      const batchPromises = batch.map(async (filePath) => {
+      const batchPromises = batch.map(async filePath => {
         return this.processSingleFile(filePath, processor);
       });
 
@@ -74,7 +78,7 @@ export class ParallelFileProcessor {
 
       // Extract results from settled promises
       return batchResults.map((result, index) => {
-        if (result.status === 'fulfilled') {
+        if (result.status === "fulfilled") {
           return result.value;
         } else {
           return {
@@ -82,8 +86,8 @@ export class ParallelFileProcessor {
             filePath: batch[index],
             success: false,
             result: null,
-            error: result.reason?.message || 'Unknown error',
-            duration: 0
+            error: result.reason?.message || "Unknown error",
+            duration: 0,
           } as WorkerResult;
         }
       });
@@ -112,22 +116,22 @@ export class ParallelFileProcessor {
    */
   private async processSingleFile(
     filePath: string,
-    processor: 'format' | 'lint' | 'typecheck'
+    processor: "format" | "lint" | "typecheck"
   ): Promise<WorkerResult> {
     const startTime = Date.now();
-    const id = `${processor}-${relative(process.cwd(), filePath).replace(/[^a-zA-Z0-9]/g, '_')}`;
+    const id = `${processor}-${relative(process.cwd(), filePath).replace(/[^a-zA-Z0-9]/g, "_")}`;
 
     try {
       let result: any;
 
       switch (processor) {
-        case 'format':
+        case "format":
           result = await this.formatFile(filePath);
           break;
-        case 'lint':
+        case "lint":
           result = await this.lintFile(filePath);
           break;
-        case 'typecheck':
+        case "typecheck":
           result = await this.typecheckFile(filePath);
           break;
         default:
@@ -139,9 +143,8 @@ export class ParallelFileProcessor {
         filePath,
         success: true,
         result,
-        duration: Date.now() - startTime
+        duration: Date.now() - startTime,
       };
-
     } catch (error) {
       return {
         id,
@@ -149,7 +152,7 @@ export class ParallelFileProcessor {
         success: false,
         result: null,
         error: error instanceof Error ? error.message : String(error),
-        duration: Date.now() - startTime
+        duration: Date.now() - startTime,
       };
     }
   }
@@ -164,10 +167,10 @@ export class ParallelFileProcessor {
 
       // Run prettier with timeout
       const proc = spawn({
-        cmd: ['bun', 'run', 'format', '--', filePath],
-        stdout: 'pipe',
-        stderr: 'pipe',
-        cwd: process.cwd()
+        cmd: ["bun", "run", "format", "--", filePath],
+        stdout: "pipe",
+        stderr: "pipe",
+        cwd: process.cwd(),
       });
 
       const result = await Promise.race([
@@ -175,8 +178,8 @@ export class ParallelFileProcessor {
           proc.exited.then(resolve).catch(reject);
         }),
         new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('Format timeout')), this.timeout / 3)
-        )
+          setTimeout(() => reject(new Error("Format timeout")), this.timeout / 3)
+        ),
       ]);
 
       // Check if file was changed
@@ -185,9 +188,8 @@ export class ParallelFileProcessor {
 
       return {
         formatted: true,
-        changes: changed ? 'File was reformatted' : 'No changes needed'
+        changes: changed ? "File was reformatted" : "No changes needed",
       };
-
     } catch (error) {
       throw new Error(`Format failed: ${error instanceof Error ? error.message : String(error)}`);
     }
@@ -196,14 +198,16 @@ export class ParallelFileProcessor {
   /**
    * Lint a single file and attempt auto-fixes
    */
-  private async lintFile(filePath: string): Promise<{ fixed: boolean; errors: string[]; warnings: string[] }> {
+  private async lintFile(
+    filePath: string
+  ): Promise<{ fixed: boolean; errors: string[]; warnings: string[] }> {
     try {
       // Run ESLint with auto-fix
       const proc = spawn({
-        cmd: ['bun', 'run', 'lint', '--', '--fix', filePath],
-        stdout: 'pipe',
-        stderr: 'pipe',
-        cwd: process.cwd()
+        cmd: ["bun", "run", "lint", "--", "--fix", filePath],
+        stdout: "pipe",
+        stderr: "pipe",
+        cwd: process.cwd(),
       });
 
       const stdout = await new Response(proc.stdout).text();
@@ -211,16 +215,15 @@ export class ParallelFileProcessor {
       const exitCode = await proc.exited;
 
       // Parse results
-      const lines = (stdout + stderr).split('\n').filter(line => line.trim());
-      const errors = lines.filter(line => line.includes('error') || line.includes('✖'));
-      const warnings = lines.filter(line => line.includes('warning') || line.includes('⚠'));
+      const lines = (stdout + stderr).split("\n").filter(line => line.trim());
+      const errors = lines.filter(line => line.includes("error") || line.includes("✖"));
+      const warnings = lines.filter(line => line.includes("warning") || line.includes("⚠"));
 
       return {
-        fixed: exitCode === 0 || lines.some(line => line.includes('fixed')),
+        fixed: exitCode === 0 || lines.some(line => line.includes("fixed")),
         errors,
-        warnings
+        warnings,
       };
-
     } catch (error) {
       throw new Error(`Lint failed: ${error instanceof Error ? error.message : String(error)}`);
     }
@@ -229,36 +232,36 @@ export class ParallelFileProcessor {
   /**
    * Type-check a single file for TypeScript errors
    */
-  private async typecheckFile(filePath: string): Promise<{ errors: string[]; suggestions: string[] }> {
+  private async typecheckFile(
+    filePath: string
+  ): Promise<{ errors: string[]; suggestions: string[] }> {
     try {
       // Run TypeScript compiler on single file
       const proc = spawn({
-        cmd: ['bun', 'run', 'typecheck', '--', '--noEmit', filePath],
-        stdout: 'pipe',
-        stderr: 'pipe',
-        cwd: process.cwd()
+        cmd: ["bun", "run", "typecheck", "--", "--noEmit", filePath],
+        stdout: "pipe",
+        stderr: "pipe",
+        cwd: process.cwd(),
       });
 
       const stdout = await new Response(proc.stdout).text();
       const stderr = await new Response(proc.stderr).text();
 
       // Parse TypeScript errors
-      const lines = (stdout + stderr).split('\n').filter(line => line.trim());
-      const errors = lines.filter(line =>
-        line.includes('error TS') &&
-        line.includes(filePath)
-      );
+      const lines = (stdout + stderr).split("\n").filter(line => line.trim());
+      const errors = lines.filter(line => line.includes("error TS") && line.includes(filePath));
 
       // Generate suggestions based on common error patterns
       const suggestions = this.generateTypeScriptSuggestions(errors);
 
       return {
         errors,
-        suggestions
+        suggestions,
       };
-
     } catch (error) {
-      throw new Error(`Typecheck failed: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `Typecheck failed: ${error instanceof Error ? error.message : String(error)}`
+      );
     }
   }
 
@@ -301,15 +304,16 @@ export class ParallelFileProcessor {
    */
   async getTypeScriptFiles(basePath = process.cwd()): Promise<string[]> {
     try {
-      const result = await $`find ${basePath} -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" | grep -v node_modules | grep -v dist | grep -v .git`.text();
+      const result =
+        await $`find ${basePath} -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" | grep -v node_modules | grep -v dist | grep -v .git`.text();
 
       return result
-        .split('\n')
+        .split("\n")
         .map(line => line.trim())
         .filter(line => line.length > 0)
         .sort();
     } catch (error) {
-      console.warn('Could not find TypeScript files:', error);
+      console.warn("Could not find TypeScript files:", error);
       return [];
     }
   }
@@ -320,30 +324,42 @@ export class ParallelFileProcessor {
   async getAllSourceFiles(basePath = process.cwd()): Promise<string[]> {
     try {
       const extensions = [
-        'ts', 'tsx', 'js', 'jsx',
-        'json', 'md', 'yml', 'yaml',
-        'html', 'css', 'scss', 'less'
+        "ts",
+        "tsx",
+        "js",
+        "jsx",
+        "json",
+        "md",
+        "yml",
+        "yaml",
+        "html",
+        "css",
+        "scss",
+        "less",
       ];
 
-      const findCommands = extensions.map(ext =>
-        `find ${basePath} -name "*.${ext}" 2>/dev/null`
-      ).join(' ');
+      const findCommands = extensions
+        .map(ext => `find ${basePath} -name "*.${ext}" 2>/dev/null`)
+        .join(" ");
 
       const result = await spawn({
-        cmd: ['/bin/bash', '-c', `${findCommands} | grep -v node_modules | grep -v dist | grep -v .git | grep -v coverage | sort`],
-        stdout: 'pipe',
-        stderr: 'pipe'
+        cmd: [
+          "/bin/bash",
+          "-c",
+          `${findCommands} | grep -v node_modules | grep -v dist | grep -v .git | grep -v coverage | sort`,
+        ],
+        stdout: "pipe",
+        stderr: "pipe",
       });
 
       const output = await new Response(result.stdout).text();
 
       return output
-        .split('\n')
+        .split("\n")
         .map(line => line.trim())
         .filter(line => line.length > 0);
-
     } catch (error) {
-      console.warn('Could not find source files:', error);
+      console.warn("Could not find source files:", error);
       return [];
     }
   }

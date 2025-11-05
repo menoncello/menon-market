@@ -18,8 +18,8 @@
 
 export async function processUserData(
   userId: string, // Required: User identifier
-  action: 'create' | 'update' | 'delete', // Required: Action to perform
-  data?: unknown, // Optional: User data for create/update
+  action: "create" | "update" | "delete", // Required: Action to perform
+  data?: unknown // Optional: User data for create/update
 ): Promise<{
   success: boolean;
   data?: unknown;
@@ -30,51 +30,51 @@ export async function processUserData(
   if (!userId || userId.trim().length === 0) {
     return {
       success: false,
-      error: 'User ID is required and cannot be empty',
-      code: 'INVALID_USER_ID'
+      error: "User ID is required and cannot be empty",
+      code: "INVALID_USER_ID",
     };
   }
 
-  if (!['create', 'update', 'delete'].includes(action)) {
+  if (!["create", "update", "delete"].includes(action)) {
     return {
       success: false,
-      error: 'Invalid action. Must be create, update, or delete',
-      code: 'INVALID_ACTION'
+      error: "Invalid action. Must be create, update, or delete",
+      code: "INVALID_ACTION",
     };
   }
 
-  if (['create', 'update'].includes(action) && !data) {
+  if (["create", "update"].includes(action) && !data) {
     return {
       success: false,
-      error: 'Data is required for create and update actions',
-      code: 'MISSING_DATA'
+      error: "Data is required for create and update actions",
+      code: "MISSING_DATA",
     };
   }
 
   // 🚨 Main logic (keep simple, max 10 more lines)
   try {
     switch (action) {
-      case 'create':
+      case "create":
         return await createUser(userId, data as Record<string, unknown>);
-      case 'update':
+      case "update":
         return await updateUser(userId, data as Record<string, unknown>);
-      case 'delete':
+      case "delete":
         return await deleteUser(userId);
       default:
         // This should never happen due to validation above
         return {
           success: false,
-          error: 'Unsupported action',
-          code: 'UNSUPPORTED_ACTION'
+          error: "Unsupported action",
+          code: "UNSUPPORTED_ACTION",
         };
     }
   } catch (error) {
     // 🚨 Proper error handling with specific error codes
-    const errorCode = error instanceof Error ? getErrorCode(error) : 'UNKNOWN_ERROR';
+    const errorCode = error instanceof Error ? getErrorCode(error) : "UNKNOWN_ERROR";
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Unknown error occurred',
-      code: errorCode
+      error: error instanceof Error ? error.message : "Unknown error occurred",
+      code: errorCode,
     };
   }
 }
@@ -98,9 +98,7 @@ async function updateUser(
   return { success: true, data: updatedUser };
 }
 
-async function deleteUser(
-  userId: string
-): Promise<{ success: boolean }> {
+async function deleteUser(userId: string): Promise<{ success: boolean }> {
   // Implementation goes here - keep it simple
   console.log(`User ${userId} deleted`);
   return { success: true };
@@ -108,8 +106,8 @@ async function deleteUser(
 
 // 🚨 Error code mapper - small, focused function
 function getErrorCode(error: Error): string {
-  if (error.message.includes('not found')) return 'USER_NOT_FOUND';
-  if (error.message.includes('duplicate')) return 'DUPLICATE_USER';
-  if (error.message.includes('permission')) return 'PERMISSION_DENIED';
-  return 'UNKNOWN_ERROR';
+  if (error.message.includes("not found")) return "USER_NOT_FOUND";
+  if (error.message.includes("duplicate")) return "DUPLICATE_USER";
+  if (error.message.includes("permission")) return "PERMISSION_DENIED";
+  return "UNKNOWN_ERROR";
 }
