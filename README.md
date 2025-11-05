@@ -35,7 +35,7 @@ Menon Marketplace is a comprehensive ecosystem of high-quality plugins, agents, 
 
 ```bash
 # Clone the repository
-git clone https://github.com/menoncello/marketplace.git
+git clone https://github.com/menoncello/menon-market.git
 cd marketplace
 
 # Install dependencies

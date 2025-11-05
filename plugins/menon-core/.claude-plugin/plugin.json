@@ -7,6 +7,6 @@
     "email": "eduardo@menoncello.com"
   },
   "license": "MIT",
-  "repository": "https://github.com/menoncello/marketplace.git",
+  "repository": "https://github.com/menoncello/menon-market.git",
   "skills": ["./agents/orchestrator"]
 }

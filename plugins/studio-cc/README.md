@@ -52,7 +52,7 @@ claude marketplace install studio-cc
 ### From Git Repository
 
 ```bash
-claude marketplace install https://github.com/menoncello/marketplace.git
+claude marketplace install https://github.com/menoncello/menon-market.git
 ```
 
 ### From Local Directory
@@ -108,7 +108,7 @@ Studio CC can be configured through the standard Claude Code plugin configuratio
 
 ```bash
 # Clone the repository
-git clone https://github.com/menoncello/marketplace.git
+git clone https://github.com/menoncello/menon-market.git
 cd marketplace/plugins/studio-cc
 
 # Install dependencies
@@ -149,9 +149,9 @@ MIT License - see LICENSE file for details.
 
 ## Support
 
-- GitHub Issues: [Report bugs and request features](https://github.com/menoncello/marketplace/issues)
-- Documentation: [Full documentation](https://github.com/menoncello/marketplace/wiki)
-- Discussions: [Community discussions](https://github.com/menoncello/marketplace/discussions)
+- GitHub Issues: [Report bugs and request features](https://github.com/menoncello/menon-market/issues)
+- Documentation: [Full documentation](https://github.com/menoncello/menon-market/wiki)
+- Discussions: [Community discussions](https://github.com/menoncello/menon-market/discussions)
 
 ## Acknowledgments
 

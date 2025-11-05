@@ -64,13 +64,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/menoncello/marketplace",
+    "url": "https://github.com/menoncello/menon-market",
     "directory": "plugins/dev"
   },
   "bugs": {
-    "url": "https://github.com/menoncello/marketplace/issues"
+    "url": "https://github.com/menoncello/menon-market/issues"
   },
-  "homepage": "https://github.com/menoncello/marketplace/tree/main/plugins/dev",
+  "homepage": "https://github.com/menoncello/menon-market/tree/main/plugins/dev",
   "files": [
     "*.ts",
     "*.js",

@@ -191,7 +191,7 @@ The Menon Marketplace is a comprehensive ecosystem for Claude Code plugins, agen
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/menoncello/marketplace
+   git clone https://github.com/menoncello/menon-market
    cd marketplace
    ```
 
@@ -401,7 +401,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 **Last Updated**: 2025-11-04
 **Next Review**: 2025-12-04
 
-**Repository**: https://github.com/menoncello/marketplace
+**Repository**: https://github.com/menoncello/menon-market
 **Total Components**: 4 Plugins, 1 Agent, 10 Skills
 **Total Test Files**: 13
 **TypeScript Files**: 52
