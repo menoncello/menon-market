@@ -10,9 +10,10 @@ Studio CC is a powerful plugin development environment for Claude Code that prov
 
 ### Built-in Skills
 
-- **claude-code-plugin**: Comprehensive plugin development guidance
-- **prompt**: Advanced prompt crafting and optimization
-- **claude-code-marketplace**: Marketplace creation and management
+- **claude-code-plugin**: Comprehensive plugin development guidance and best practices
+- **prompt**: Advanced prompt crafting, analysis, and optimization
+- **claude-code-marketplace**: Marketplace creation, management, and distribution
+- **agent-creator**: AI agent generation, configuration, and management tools
 
 ### Plugin Structure
 
@@ -51,7 +52,7 @@ claude marketplace install studio-cc
 ### From Git Repository
 
 ```bash
-claude marketplace install https://github.com/menoncello/studio-cc.git
+claude marketplace install https://github.com/menoncello/marketplace.git
 ```
 
 ### From Local Directory
@@ -69,6 +70,7 @@ Once installed, Studio CC provides several skills and commands to help with plug
 1. **Plugin Development Expert**: Use when creating, maintaining, or troubleshooting Claude Code plugins
 2. **Advanced Prompt Crafter**: Use for sophisticated prompt engineering and optimization
 3. **Marketplace Expert**: Use for creating and managing marketplace plugins
+4. **Agent Creator**: Use for generating and configuring AI agents with specialized capabilities
 
 ### Development Workflow
 
@@ -106,8 +108,8 @@ Studio CC can be configured through the standard Claude Code plugin configuratio
 
 ```bash
 # Clone the repository
-git clone https://github.com/menoncello/studio-cc.git
-cd studio-cc
+git clone https://github.com/menoncello/marketplace.git
+cd marketplace/plugins/studio-cc
 
 # Install dependencies
 bun install
@@ -147,9 +149,9 @@ MIT License - see LICENSE file for details.
 
 ## Support
 
-- GitHub Issues: [Report bugs and request features](https://github.com/menoncello/studio-cc/issues)
-- Documentation: [Full documentation](https://github.com/menoncello/studio-cc/wiki)
-- Discussions: [Community discussions](https://github.com/menoncello/studio-cc/discussions)
+- GitHub Issues: [Report bugs and request features](https://github.com/menoncello/marketplace/issues)
+- Documentation: [Full documentation](https://github.com/menoncello/marketplace/wiki)
+- Discussions: [Community discussions](https://github.com/menoncello/marketplace/discussions)
 
 ## Acknowledgments
 

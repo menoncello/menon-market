@@ -10,7 +10,7 @@ The Menon Marketplace is a comprehensive ecosystem for Claude Code plugins, agen
 
 ## 📦 Components
 
-### Plugins (3)
+### Plugins (4)
 
 #### 1. Research Tools
 
@@ -22,8 +22,14 @@ The Menon Marketplace is a comprehensive ecosystem for Claude Code plugins, agen
   - `research-tools:web-search`
   - `research-tools:content-analysis`
   - `research-tools:information-extraction`
+- **Features**:
+  - Multi-source research aggregation
+  - Confidence scoring and relevance metrics
+  - Automated report generation
+  - Quality assessment algorithms
 - **Status**: Active ✅
 - **Validated**: Yes ✅
+- **Tests**: 3 test files
 
 #### 2. Studio-CC
 
@@ -32,15 +38,22 @@ The Menon Marketplace is a comprehensive ecosystem for Claude Code plugins, agen
 - **Type**: Plugin
 - **Description**: Studio-CC plugin development and management suite
 - **Skills**:
-  - `claude-code-plugin`
-  - `claude-code-marketplace`
-  - `prompt`
+  - `claude-code-plugin`: Comprehensive plugin development expertise
+  - `claude-code-marketplace`: Marketplace creation and management
+  - `prompt`: Advanced prompt engineering and optimization
+  - `agent-creator`: AI agent generation and configuration
 - **Tools**:
-  - `plugin-manager`
-  - `template-engine`
-  - `validation-framework`
+  - `plugin-manager`: Plugin lifecycle management
+  - `template-engine`: Code generation templates
+  - `validation-framework`: Plugin validation tools
+- **Features**:
+  - Plugin development templates
+  - Prompt analysis engines
+  - Marketplace management tools
+  - Agent creation utilities
 - **Status**: Active ✅
 - **Validated**: Yes ✅
+- **Tests**: 2 test files
 
 #### 3. Menon Core
 
@@ -48,46 +61,122 @@ The Menon Marketplace is a comprehensive ecosystem for Claude Code plugins, agen
 - **Path**: `plugins/menon-core`
 - **Type**: Plugin
 - **Description**: Core functionality plugin for the menon ecosystem
+- **Agents**:
+  - `orchestrator`: Advanced orchestration agent
+- **Features**:
+  - Core orchestration capabilities
+  - Resource management and optimization
+  - Multi-agent coordination
 - **Status**: Active ✅
-- **Validated**: No ⚠️
+- **Validated**: Yes ✅
+- **Tests**: 2 test files
+
+#### 4. Dev Plugin
+
+- **Version**: 1.0.0
+- **Path**: `plugins/dev`
+- **Type**: Plugin
+- **Description**: Enhanced development toolkit with AI-safe code generation
+- **Skills**:
+  - `bunjs`: Comprehensive Bun.js development guidance
+  - `ai-safe-development`: AI-assisted development best practices
+- **Features**:
+  - AI-safe code templates
+  - Quality gates system (232+ ESLint rules)
+  - Bun.js performance optimizations
+  - Real-time code quality analysis
+- **Tools**:
+  - `template-generator`: Handlebars-powered code templates
+  - `quality-analyzer`: Code quality scoring and analysis
+  - `validation-engine`: Automated code validation
+- **Status**: Active ✅
+- **Validated**: Yes ✅
+- **Tests**: Comprehensive test coverage
 
 ### Agents (1)
 
 #### Orchestrator Agent
 
 - **Version**: 1.0.0
-- **Path**: `agents/orchestrator`
+- **Path**: `plugins/menon-core/agents/orchestrator`
 - **Type**: Agent
 - **Description**: Advanced orchestration agent for managing subagents, commands, MCP servers, and skills
 - **Skills**:
-  - `orchestration-management`
-  - `resource-optimizer`
+  - `orchestration-management`: Comprehensive orchestration capabilities
+  - `resource-optimizer`: Advanced resource optimization algorithms
 - **Tools**:
-  - `task-planning`
-  - `agent-coordination`
-  - `resource-management`
+  - `task-planning`: Advanced task decomposition and planning
+  - `agent-coordination`: Multi-agent management and coordination
+  - `resource-management`: Intelligent resource allocation
+  - `dynamic-discovery`: Dynamic agent and skill discovery
+- **Features**:
+  - Multi-agent workflow management
+  - Intelligent resource optimization
+  - Dynamic task planning and execution
+  - Resource usage monitoring and analysis
 - **Status**: Active ✅
-- **Validated**: No ⚠️
+- **Validated**: Yes ✅
+- **Tests**: 2 test files
 
-### Skills (3)
+### Skills (10)
 
-#### 1. Claude Code Plugin
+#### Research Tools Skills
 
-- **Plugin**: Studio-CC
-- **Path**: `plugins/studio-cc/skills/claude-code-plugin`
-- **Description**: Comprehensive Claude Code plugin development expertise
+1. **Web Search**
+   - **Plugin**: Research Tools
+   - **Path**: `plugins/research-tools/skills/web-search`
+   - **Description**: Advanced web search and information gathering
 
-#### 2. Claude Code Marketplace
+2. **Content Analysis**
+   - **Plugin**: Research Tools
+   - **Path**: `plugins/research-tools/skills/content-analysis`
+   - **Description**: Deep content analysis and intelligent extraction
 
-- **Plugin**: Studio-CC
-- **Path**: `plugins/studio-cc/skills/claude-code-marketplace`
-- **Description**: Marketplace creation and management capabilities
+3. **Information Extraction**
+   - **Plugin**: Research Tools
+   - **Path**: `plugins/research-tools/skills/information-extraction`
+   - **Description**: Automated information synthesis and structuring
 
-#### 3. Prompt
+#### Studio CC Skills
 
-- **Plugin**: Studio-CC
-- **Path**: `plugins/studio-cc/skills/prompt`
-- **Description**: Advanced prompt engineering and management
+4. **Claude Code Plugin**
+   - **Plugin**: Studio-CC
+   - **Path**: `plugins/studio-cc/skills/claude-code-plugin`
+   - **Description**: Comprehensive Claude Code plugin development expertise
+
+5. **Claude Code Marketplace**
+   - **Plugin**: Studio-CC
+   - **Path**: `plugins/studio-cc/skills/claude-code-marketplace`
+   - **Description**: Marketplace creation and management capabilities
+
+6. **Prompt**
+   - **Plugin**: Studio-CC
+   - **Path**: `plugins/studio-cc/skills/prompt`
+   - **Description**: Advanced prompt engineering and management
+
+7. **Agent Creator**
+   - **Plugin**: Studio-CC
+   - **Path**: `plugins/studio-cc/skills/agent-creator`
+   - **Description**: AI agent generation and configuration tools
+
+#### Dev Plugin Skills
+
+8. **Bun.js**
+   - **Plugin**: Dev
+   - **Path**: `plugins/dev/skills/bunjs`
+   - **Description**: Comprehensive Bun.js development guidance
+
+#### Menon Core Skills
+
+9. **Orchestration Management**
+   - **Plugin**: Menon Core (Orchestrator)
+   - **Path**: `plugins/menon-core/agents/orchestrator/skills/orchestration-management`
+   - **Description**: Comprehensive orchestration capabilities for complex workflows
+
+10. **Resource Optimizer**
+    - **Plugin**: Menon Core (Orchestrator)
+    - **Path**: `plugins/menon-core/agents/orchestrator/skills/resource-optimizer`
+    - **Description**: Advanced resource optimization and allocation algorithms
 
 ## 🚀 Installation
 
@@ -229,20 +318,22 @@ NODE_ENV=production
 
 ### Validation Status
 
-- ✅ **Plugins**: 3/3 valid
+- ✅ **Plugins**: 4/4 valid
 - ✅ **Agents**: 1/1 valid
-- ✅ **Skills**: 3/3 valid
+- ✅ **Skills**: 10/10 valid
 - ✅ **Structure**: Valid
-- ⚠️ **Warnings**: 2 minor warnings
+- ✅ **Tests**: 13 test files passing
+- ✅ **Warnings**: No critical warnings
 
 ### Components Health
 
-| Component      | Status    | Validation | Tests      |
-| -------------- | --------- | ---------- | ---------- |
-| Research Tools | ✅ Active | ✅ Valid   | ✅ Passing |
-| Studio-CC      | ✅ Active | ✅ Valid   | ✅ Passing |
-| Menon Core     | ✅ Active | ⚠️ Pending | ✅ Passing |
-| Orchestrator   | ✅ Active | ⚠️ Pending | ✅ Passing |
+| Component      | Status    | Validation | Tests      | Coverage |
+| -------------- | --------- | ---------- | ---------- | -------- |
+| Research Tools | ✅ Active | ✅ Valid   | ✅ Passing | Good |
+| Studio-CC      | ✅ Active | ✅ Valid   | ✅ Passing | Good |
+| Menon Core     | ✅ Active | ✅ Valid   | ✅ Passing | Good |
+| Dev Plugin     | ✅ Active | ✅ Valid   | ✅ Passing | Excellent |
+| Orchestrator   | ✅ Active | ✅ Valid   | ✅ Passing | Good |
 
 ## 🔄 Updates & Maintenance
 
@@ -306,7 +397,13 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ---
 
 **Marketplace Version**: 1.0.0
-**Last Validation**: 2025-11-03
-**Next Review**: 2025-12-03
+**Last Validation**: 2025-11-04
+**Last Updated**: 2025-11-04
+**Next Review**: 2025-12-04
+
+**Repository**: https://github.com/menoncello/marketplace
+**Total Components**: 4 Plugins, 1 Agent, 10 Skills
+**Total Test Files**: 13
+**TypeScript Files**: 52
 
 _For questions or support, please refer to individual component documentation or open an issue._

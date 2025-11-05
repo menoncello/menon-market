@@ -1,6 +1,6 @@
 # Research Tools Plugin for Claude Code
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/menoncello/menon-marketplace)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/menoncello/marketplace)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-4.9+-blue.svg)](https://www.typescriptlang.org/)
 [![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](#testing)
@@ -51,10 +51,10 @@ A comprehensive research tools plugin for Claude Code with advanced data analysi
 
 ```bash
 # Clone the repository
-git clone https://github.com/menoncello/menon-marketplace.git
+git clone https://github.com/menoncello/marketplace.git
 
 # Navigate to the plugin directory
-cd menon-marketplace/plugins/research-tools
+cd marketplace/plugins/research-tools
 
 # Install dependencies
 bun install
@@ -223,10 +223,10 @@ research-tools/
 
 ```bash
 # Clone repository
-git clone https://github.com/menoncello/menon-marketplace.git
+git clone https://github.com/menoncello/marketplace.git
 
 # Navigate to plugin
-cd menon-marketplace/plugins/research-tools
+cd marketplace/plugins/research-tools
 
 # Install dependencies
 bun install
@@ -294,8 +294,8 @@ bun run build
 
 ### Community
 
-- [GitHub Issues](https://github.com/menoncello/menon-marketplace/issues)
-- [Discussions](https://github.com/menoncello/menon-marketplace/discussions)
+- [GitHub Issues](https://github.com/menoncello/marketplace/issues)
+- [Discussions](https://github.com/menoncello/marketplace/discussions)
 
 ### Reporting Issues
 
