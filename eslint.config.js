@@ -165,7 +165,7 @@ export default [
       ],
 
       // Core ESLint - Code Quality
-      complexity: ['error', 10],
+      complexity: ['error', 5],
       'max-depth': ['error', 3],
       'max-lines': ['error', { max: 300, skipBlankLines: true, skipComments: true }],
       'max-lines-per-function': ['error', { max: 30, skipBlankLines: true, skipComments: true }],

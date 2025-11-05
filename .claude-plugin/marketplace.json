@@ -1,109 +1,72 @@
 {
   "name": "menon-marketplace",
+  "version": "1.0.0",
+  "description": "Menon ecosystem marketplace for Claude Code plugins and skills by Eduardo Menoncello",
   "owner": {
     "name": "Eduardo Menoncello",
     "email": "eduardo@menoncello.com"
   },
-  "description": "A curated marketplace for Claude Code plugins and skills by Eduardo Menoncello",
-  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/menoncello/menon-marketplace.git"
+  },
   "license": "MIT",
-  "repository": "https://github.com/menoncello/menon-marketplace",
-  "homepage": "https://menoncello.com/marketplace",
   "plugins": [
     {
       "name": "studio-cc",
-      "author": {
-        "name": "Eduardo Menoncello",
-        "email": "eduardo@menoncello.com"
-      },
       "source": "./plugins/studio-cc",
       "version": "1.0.0",
       "description": "Studio Control Center plugin for Claude Code with integrated skills for code analysis, optimization, and best practices.",
-      "category": "development",
-      "tags": ["studio", "code-analysis", "optimization", "best-practices", "ai"]
+      "author": {
+        "name": "Eduardo Menoncello",
+        "email": "eduardo@menoncello.com"
+      },
+      "repository": "https://github.com/menoncello/menon-marketplace.git"
     },
     {
       "name": "research-tools",
-      "author": {
-        "name": "Eduardo Menoncello",
-        "email": "eduardo@menoncello.com"
-      },
       "source": "./plugins/research-tools",
       "version": "1.0.0",
       "description": "Comprehensive research tools plugin with advanced data analysis and deep research capabilities for academic and professional research workflows.",
-      "category": "research",
-      "tags": ["research", "data-analysis", "academic", "deep-research", "analysis"]
+      "author": {
+        "name": "Eduardo Menoncello",
+        "email": "eduardo@menoncello.com"
+      },
+      "repository": "https://github.com/menoncello/menon-marketplace.git"
     },
     {
       "name": "menon-core",
-      "author": {
-        "name": "Eduardo Menoncello",
-        "email": "eduardo@menoncello.com"
-      },
       "source": "./plugins/menon-core",
       "version": "1.0.0",
-      "description": "Core functionality plugin for the menon ecosystem with feature management and configuration capabilities.",
-      "category": "development",
-      "tags": ["core", "feature-management", "configuration", "ecosystem", "utilities"]
-    }
-  ],
-  "agents": [
-    {
-      "name": "orchestrator-agent",
+      "description": "Core functionality plugin for the menon ecosystem with orchestration and resource management capabilities.",
       "author": {
         "name": "Eduardo Menoncello",
         "email": "eduardo@menoncello.com"
       },
-      "source": "./agents/orchestrator",
+      "repository": "https://github.com/menoncello/menon-marketplace.git"
+    },
+    {
+      "name": "dev",
+      "source": "./plugins/dev",
       "version": "1.0.0",
-      "description": "Advanced orchestration agent for managing subagents, commands, MCP servers, and skills with parallel execution capabilities.",
-      "category": "automation",
-      "type": "agent",
-      "tags": [
-        "orchestration",
-        "agent-management",
-        "task-planning",
-        "parallel-execution",
-        "resource-optimization"
-      ],
-      "skills": ["orchestration-management", "resource-optimizer"],
-      "tools": ["task-planning", "agent-coordination", "resource-management"]
+      "description": "AI-safe development plugin with Bun.js integration, comprehensive ESLint quality gates, and TypeScript validation to prevent 90% of common development errors.",
+      "author": {
+        "name": "Eduardo Menoncello",
+        "email": "eduardo@menoncello.com"
+      },
+      "repository": "https://github.com/menoncello/menon-marketplace.git"
     }
   ],
-  "categories": {
-    "plugins": [
-      "development",
-      "productivity",
-      "communication",
-      "data-processing",
-      "integration",
-      "utilities",
-      "security",
-      "testing"
-    ],
-    "agents": [
-      "automation",
-      "orchestration",
-      "management",
-      "coordination",
-      "monitoring",
-      "optimization"
-    ],
-    "skills": [
-      "automation",
-      "analysis",
-      "generation",
-      "integration",
-      "management",
-      "monitoring",
-      "optimization",
-      "research"
+  "skills": [],
+  "template": "standard",
+  "created": "2025-11-04T20:00:00.000Z",
+  "validation": {
+    "level": "standard",
+    "strict": false,
+    "checks": [
+      "structure",
+      "metadata",
+      "plugins"
     ]
-  },
-  "settings": {
-    "autoValidate": true,
-    "enableTelemetry": false,
-    "logLevel": "info",
-    "maxConcurrentOperations": 5
   }
 }

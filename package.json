@@ -65,6 +65,7 @@
     "lint:fix": "eslint . --fix",
     "lint:report": "bun scripts/lint-report-simple.ts",
     "lint:list": "bun scripts/lint-report-minimal.ts",
+    "lint:rules": "bun scripts/eslint-rules-simple.ts",
     "lint:plugins": "eslint plugins/ --fix",
     "lint:agents": "eslint agents/ --fix",
     "format": "./node_modules/.bin/prettier --write .",
